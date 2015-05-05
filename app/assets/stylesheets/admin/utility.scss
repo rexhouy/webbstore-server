@@ -1,0 +1,55 @@
+@import "variables";
+// Centralize
+.table-center-wrap {
+    display: table !important;
+    table-layout: fixed;
+}
+.table-center {
+    display: table-cell !important;
+    vertical-align: middle;
+}
+
+// Display by screen size
+.large-screen, .middle-screen, .small-screen, .not-large-screen, .not-middle-screen, .not-small-screen {
+    display: none;
+}
+@media (max-width: 768px) {
+    .small-screen, .not-large-screen, .not-middle-screen {
+        display: block;
+    }
+}
+@media (min-width:768px) and (max-width: 1200px) {
+    .middle-screen, .not-small-screen, .not-large-screen {
+        display: block;
+    }
+}
+@media (min-width: 1200px) {
+    .large-screen, .not-small-screen, .not-middle-screen {
+        display: block;
+    }
+}
+.inherit-height {
+    height: inherit !important;
+}
+.number {
+    text-align: right;
+}
+.no-list-style {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.icon {
+    color: $brand-primary;
+    padding: 5px;
+}
+
+.spinner {
+    background-image: image-url("spinner.gif");
+    background-size: contain;
+    height: 50px;
+    width: 50px;
+    display: block;
+    margin: 0 auto;
+}

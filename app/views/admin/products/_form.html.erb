@@ -1,0 +1,93 @@
+<%= form_for [:admin, @product], :html => {:class => "form-horizontal"} do |p| %>
+<% if @product.errors.any? %>
+<div id="error_explanation">
+  <h2>保存失败</h2>
+  <ul>
+    <% @product.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+<div class="form-group">
+  <%= p.label :name, "名字", :class => "col-sm-2 control-label"  %>
+  <div class="col-sm-6">
+    <%= p.text_field :name, :class => "form-control" %>
+  </div>
+</div>
+<div class="form-group">
+  <%= p.label :price, "销售价", :class => "col-sm-2 control-label"  %>
+  <div class="col-sm-3">
+    <%= p.number_field :price, :class => "form-control" %>
+  </div>
+</div>
+<div class="form-group">
+  <%= p.label :storage, "上架数量", :class => "col-sm-2 control-label"  %>
+  <div class="col-sm-3">
+    <%= p.number_field :storage, :class => "form-control" %>
+  </div>
+</div>
+<div class="form-group">
+  <%= p.label :description, :class => "col-sm-2 control-label" do  %>
+    描述  <span class="glyphicon glyphicon-info-sign icon" title="使用「|」分割的描述内容将会显示在不同行"></span>
+  <% end %>
+  <div class="col-sm-8">
+    <%= p.text_field :description, :class => "form-control" %>
+  </div>
+</div>
+<div class="form-group">
+  <%= p.label :images, :class => "col-sm-2 control-label" do %>
+      图片  <span class="glyphicon glyphicon-info-sign icon" title="第一张图片将作为产品封面，为了保证显示效果，请使用1024*1024的图片并使用透明背景"></span>
+  <% end %>
+  <div class="col-sm-5">
+    <%= p.fields_for :images do |image| %>
+    <%= image.hidden_field :id %>
+    <%= image.text_field :url, :class => "form-control ", :placeholder =>"http://" %>
+    <% end %>
+  </div>
+</div>
+<div class="form-group">
+  <div class="col-sm-5 col-sm-offset-2">
+    <%= p.check_box :recommend %>
+    <%= p.label :recommend, :class => "control-label" do %>
+    主推商品  <span class="glyphicon glyphicon-info-sign icon" title="是否显示在主页的显著位置"></span>
+    <% end %>
+  </div>
+</div>
+<div class="form-group">
+  <%= p.label :article, "详情", :class => "col-sm-2 control-label"  %>
+  <div class="col-sm-10">
+    <%= p.text_area :article, :class => "editor" %>
+  </div>
+</div>
+
+<!-- Preview -->
+
+<div class="modal fade" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">预览</h4>
+      </div>
+      <div class="modal-body">
+        <i class="spinner" id="spinner"></i>
+        <iframe id="preview" name="preview" class="preview-frame" src=""></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <%= submit_tag "确认",  data: { disable_with: "请稍后..."},  :class => "btn btn-primary" %>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#previewModal">预览</button>
+      <%= link_to "取消", admin_products_path, :class => "btn btn-default" %>
+  </div>
+</div>
+
+<% end %>

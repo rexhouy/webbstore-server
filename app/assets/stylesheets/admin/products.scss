@@ -1,0 +1,30 @@
+// Place all the styles related to the products controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.editor {
+    overflow:scroll;
+    width: 100%;
+}
+
+.preview {
+    iframe {
+        border: 1px solid #eee;
+        width: 100%;
+        min-height: 600px;
+    }
+}
+
+.preview-frame {
+        border: 0;
+        width: 100%;
+        display: none;
+}
+
+.control-panel {
+    height: 50px;
+    .btn {
+        margin: 0 20px 0 0;
+        float: left;
+    }
+}

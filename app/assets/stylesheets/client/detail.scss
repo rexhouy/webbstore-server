@@ -1,0 +1,31 @@
+// Variable define
+@import "variable.scss";
+
+.carousel {
+    img {
+        width: 100%;
+        max-width: 512px !important;
+        margin: 0 auto;
+    }
+    .glyphicon {
+        color: #555;
+    }
+    .carousel-control {
+        background: transparent;
+    }
+    .carousel-indicators {
+        li {
+            border-color: #555;
+        }
+        .active {
+            background-color: #555;
+        }
+    }
+}
+
+article {
+    padding: 20px 60px;
+    @media(max-width:768px) {
+        padding: 20px;
+    }
+}

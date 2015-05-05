@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>Webstore</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body ng-app="webStore">
+
+    <header>
+      <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header" style="height:50px">
+
+          <section class="inherit-height pull-left">
+            <button class="btn pull-left icon table-center inherit-height" ng-click="showMenu=true">
+              <i class="glyphicon glyphicon-menu-hamburger"></i>
+            </button>
+          </section>
+
+          <section class="navbar-brand pull-left inherit-height">
+            <a class="" href="/">Web Store</a>
+          </section>
+
+          <section class="inherit-height table-center-wrap search-container ng-cloak" ng-show="showSearch" ng-cloak>
+            <button class="btn icon inherit-height highlight-icon" ng-click=""><i class="glyphicon glyphicon-search"></i></button>
+            <button class="btn icon inherit-height" style="right:0" ng-click="showSearch=false"><i class="glyphicon glyphicon-remove"></i></button>
+            <input  type="search" class="search table-center inherit-height pull-left" placeholder="搜索商铺" focus-me="focusSearch">
+          </section>
+
+          <section class="pull-right inherit-height table-center-wrap" ng-hide="showSearch">
+            <a type="button" class="icon btn btn-lg table-center" ng-click="showSearch=true;focusSearch=true">
+              <i class="glyphicon glyphicon-search"></i>
+            </a>
+            <%= link_to carts_url, :type => "button",  :class => "icon btn btn-lg table-center" do %>
+            <i class="glyphicon glyphicon-shopping-cart"></i>
+            <% end %>
+          </section>
+
+        </div>
+      </div>
+    </header>
+
+    <nav class="navbar-side ng-cloak animate-hide animate-hide-left" ng-show="showMenu" ng-cloak>
+      <header>
+        <a ng-href="#/login" class="inherit-height pull-left">
+          <%= image_tag "user.png" %>
+          <p class="inherit-height nav-header-link-text"><span class="table-center inherit-height">LogIn</span></p>
+        </a>
+        <button type="button" class="icon btn btn-lg pull-right inherit-height" ng-click="showMenu=false">
+          <i class="glyphicon glyphicon-remove"></i>
+        </button>
+      </header>
+
+      <section class="nav-section">
+        <p class="title">我的WebStore</p>
+        <ul class="nav">
+          <li><a ng-href="#/order" ng-click="showMenu=false" class="icon-link-left"><i class="glyphicon glyphicon-list-alt"></i>订单</a></li>
+          <li><a ng-href="#/cart" ng-click="showMenu=false" class="icon-link-left"><i class="glyphicon glyphicon-shopping-cart"></i>购物车</a></li>
+        </ul>
+      </section>
+    </nav>
+    <div class="block-layer ng-cloak" ng-show="showMenu" ng-cloak ng-click="showMenu=false"></div>
+
+
+    <div class="container" style="background-color: #fff;">
+      <%= yield %>
+    </div>
+
+    <footer>
+      <div class="container">
+        <p>© rexhouy 2015</p>
+      </div>
+    </footer>
+    <%= javascript_include_tag "http://lib.sinaapp.com/js/angular.js/angular-1.2.19/angular.min.js" %>
+        <%= javascript_include_tag "http://lib.sinaapp.com/js/angular.js/angular-1.2.19/angular-animate.min.js" %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+</body>
+</html>

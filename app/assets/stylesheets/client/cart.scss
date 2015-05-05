@@ -1,0 +1,75 @@
+// Variable define
+@import "variable.scss";
+
+.cart {
+    height: 128px;
+    margin: 20px 0;
+    background-color: #fff;
+    img {
+        width: 100%;
+        max-width: 96px;
+        @media(max-width:768px) {
+            max-width: 64px;
+        }
+    }
+    .price {
+        font-size: 16px;
+        @media(max-width:768px) {
+            font-size: 14px;
+        }
+    }
+    .order-item-name {
+        font-size: 18px;
+        padding: 15px 0;
+        @media(max-width:768px) {
+            font-size: 16px;
+        }
+    }
+    .list-item {
+        margin: 10px 0;
+        font-size: 16px;
+        text-align: right;
+        @media(max-width:768px) {
+            font-size: 14px;
+        }
+    }
+    .cart-image {
+        vertical-align: top !important;
+        padding-top: 12px;
+    }
+}
+
+.subtotal {
+    border-top: 2px solid #ccc;
+    margin: 10px 0;
+    padding: 20px 0;
+    .label {
+        font-size: 18px;
+        color: $font-color;
+    }
+    .price {
+        font-size: 18px;
+        color: $theme-color;
+    }
+}
+
+.empty-cart {
+    height: 400px;
+    width: 100%;
+    position: relative;
+    text-align: center;
+    .bg-img {
+        color: $bg-color;
+        font-size: 300px;
+        width: 100%;
+    }
+    .empty-cart-desc {
+        color: #555;
+        font-size: 26px;
+        position: absolute;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}

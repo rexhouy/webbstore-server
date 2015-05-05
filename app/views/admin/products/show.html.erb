@@ -1,0 +1,8 @@
+<h1 class="page-header">预览</h1>
+<div class="control-panel">
+  <%= link_to "编辑", edit_admin_product_path(@product), class: "btn btn-primary"%>
+  <%= link_to "返回", admin_products_path, class: "btn btn-default" %>
+</div>
+<div class="preview">
+  <iframe src="/products/<%=@product.id%>" />
+</div>

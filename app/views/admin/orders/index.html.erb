@@ -1,0 +1,38 @@
+<h1 class="page-header">订单管理</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <td>#</td>
+      <td>订单号</td>
+      <td class="number">总价</td>
+      <td>状态</td>
+      <td>操作</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @orders.each_with_index do |order, index| %>
+    <tr>
+      <td><%= index %></td>
+      <td><%= order.order_id  %></td>
+      <td class="number"><%= order.subtotal  %></td>
+      <td class="number"><%= order.status %></td>
+      <td>
+        <%= link_to '<span class="glyphicon glyphicon-trash"></span></button>',
+            admin_order_path(order),
+            method: :delete %>
+        <%= link_to '<span class="glyphicon glyphicon-pencil"></span></button>',
+            edit_admin_order_path(order) %>
+        <%= link_to '<span class="glyphicon glyphicon-plus"></span></button>',
+            new_admin_order_path %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+  <tfooter>
+    <tr>
+      <td colspan="6">
+        <%= will_paginate @orders %>
+      </td>
+    </tr>
+  </tfooter>
+</table>

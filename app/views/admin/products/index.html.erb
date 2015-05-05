@@ -1,0 +1,46 @@
+<h1 class="page-header">产品管理</h1>
+<%= link_to new_admin_product_path,  :class => "btn btn-primary" do %>
+<span class="glyphicon glyphicon-plus"></span> 新建
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <td>#</td>
+      <td>名称</td>
+      <td class="number">售价</td>
+      <td class="number">上架数量</td>
+      <td class="number">销售量</td>
+      <td>操作</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @products.each_with_index do |product, index| %>
+    <tr>
+      <td><%= index+1 %></td>
+      <td><%= product.name  %></td>
+      <td class="number"><%= number_to_currency(product.price, locale: :'zh-CN')  %></td>
+      <td class="number"><%= number_with_delimiter(product.storage) %></td>
+      <td class="number"><%= number_with_delimiter(product.sales) %></td>
+      <td>
+        <%= link_to admin_product_path(product) do %>
+        <span class="glyphicon glyphicon-eye-open icon"></span>
+        <% end %>
+        <%= link_to edit_admin_product_path(product) do %>
+        <span class="glyphicon glyphicon-pencil icon"></span>
+        <% end %>
+        <%= link_to admin_product_path(product), method: :delete do %>
+        <span class="glyphicon glyphicon-trash icon"></span>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="6">
+        <%= will_paginate @products %>
+      </td>
+    </tr>
+    </tfoot>
+</table>

@@ -1,0 +1,57 @@
+<!-- Banner -->
+<div class="banner row">
+  <div class="col-md-8 col-sm-8 col-xs-7 inherit-height">
+    <h2 class="inherit-height table-center-wrap">
+      <div class="table-center">
+        <span><%= @product.name%></span>
+        <p class="desc"><%= @product.description %></p>
+      </div>
+    </h2>
+  </div>
+  <div class="col-md-4 col-sm-4 col-xs-5 inherit-height pull-right">
+    <%= form_tag carts_add_product_url, :class => "inherit-height table-center-wrap pull-right"  do%>
+    <%= hidden_field_tag :id, @product.id %>
+      <div class="table-center">
+        <button class="btn btn-primary pull-right" ng-click="buy();">
+          立即购买 <%= number_to_currency @product.price, locale: :'zh-CN', precision: 0 %>
+        </button>
+      </div>
+      <% end %>
+  </div>
+</div>
+
+<!-- Slide -->
+<div id="sketch-carousel" class="row">
+  <div class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <% @product.images.each_with_index do |image, index| %>
+      <li data-target="#sketch-carousel" data-slide-to="0" class="<%='active' if index.eql?(0)%>"></li>
+      <% end %>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+      <% @product.images.each_with_index do |image, index| %>
+      <div class="item <%='active' if index.eql?(0)%>">
+        <%= image_tag image.url %>
+      </div>
+      <% end %>
+    </div>
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#sketch-carousel" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#sketch-carousel" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+
+<!-- Article -->
+<article class="row">
+  <%=raw @product.article %>
+</article>
