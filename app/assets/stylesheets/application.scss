@@ -11,6 +11,6 @@
  * file per style scope.
  *
  *= require_self
- *= require ./client/bootstrap_custom
- *= require_tree ./client
+ *= require ./api/bootstrap_custom
+ *= require_tree ./api
  */

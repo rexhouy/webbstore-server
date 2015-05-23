@@ -1,0 +1,5 @@
+<div class="address entry"  ng-class="{selected: selectedAddress == <%= item.id%>}" ng-click="selectedAddress = <%= item.id%>">
+  <%= hidden_field_tag "address_id", item.id %>
+  <div class="header"><span class="pull-left name"><%= item.name %></span><span class="pull-right"><%= phone_number item.tel %></span></div>
+  <div><%= item.state %><%= item.city %><%= item.street %></div>
+</div>

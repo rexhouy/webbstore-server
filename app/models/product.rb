@@ -3,10 +3,12 @@ class Product < ActiveRecord::Base
         accepts_nested_attributes_for :images
         belongs_to :owner, class_name: "User", foreign_key: :owner_id
 
-        enum status: [ :off, :on_sale ]
-
         def self.recommend
-                on_sale.where(recommend: true)
+                where(recommend: true, on_sale: true)
+        end
+
+        def self.valid
+                where(on_sale: true)
         end
 
 end

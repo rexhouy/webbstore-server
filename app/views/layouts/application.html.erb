@@ -34,9 +34,9 @@
             <a type="button" class="icon btn btn-lg table-center" ng-click="showSearch=true;focusSearch=true">
               <i class="glyphicon glyphicon-search"></i>
             </a>
-            <%= link_to carts_url, :type => "button",  :class => "icon btn btn-lg table-center" do %>
-            <i class="glyphicon glyphicon-shopping-cart"></i>
-            <% end %>
+            <a type="button" class="icon btn btn-lg table-center" ng-href="/carts">
+              <i class="glyphicon glyphicon-shopping-cart"></i>
+            </a>
           </section>
 
         </div>
@@ -45,10 +45,17 @@
 
     <nav class="navbar-side ng-cloak animate-hide animate-hide-left" ng-show="showMenu" ng-cloak>
       <header>
-        <a ng-href="#/login" class="inherit-height pull-left">
+        <% if user_signed_in? %>
+        <a  class="inherit-height pull-left" ng-href="/me"  ng-click="showMenu=false">
           <%= image_tag "user.png" %>
-          <p class="inherit-height nav-header-link-text"><span class="table-center inherit-height">LogIn</span></p>
+          <p class="inherit-height nav-header-link-text"><span class="table-center inherit-height"><%= current_user.email %></span></p>
         </a>
+        <% else %>
+        <a href="/users/sign_in" target="_self" class="inherit-height pull-left">
+          <%= image_tag "user.png" %>
+          <p class="inherit-height nav-header-link-text"><span class="table-center inherit-height">登录</span></p>
+        </a>
+        <% end %>
         <button type="button" class="icon btn btn-lg pull-right inherit-height" ng-click="showMenu=false">
           <i class="glyphicon glyphicon-remove"></i>
         </button>
@@ -57,16 +64,20 @@
       <section class="nav-section">
         <p class="title">我的WebStore</p>
         <ul class="nav">
-          <li><a ng-href="#/order" ng-click="showMenu=false" class="icon-link-left"><i class="glyphicon glyphicon-list-alt"></i>订单</a></li>
-          <li><a ng-href="#/cart" ng-click="showMenu=false" class="icon-link-left"><i class="glyphicon glyphicon-shopping-cart"></i>购物车</a></li>
+          <li><a ng-href="/orders/all" ng-click="showMenu=false" class="icon-link-left"><i class="glyphicon glyphicon-list-alt"></i>订单</a></li>
+          <li><a ng-href="/carts" ng-click="showMenu=false" class="icon-link-left"><i class="glyphicon glyphicon-shopping-cart"></i>购物车</a></li>
         </ul>
       </section>
     </nav>
     <div class="block-layer ng-cloak" ng-show="showMenu" ng-cloak ng-click="showMenu=false"></div>
 
-
-    <div class="container" style="background-color: #fff;">
+    <div class="container" style="background-color: #fff;min-height:200px;" ng-view save-my-content>
       <%= yield %>
+    </div>
+
+    <div><!-- Loading animation -->
+      <div class="block-layer block-layer-light ng-cloak" ng-show="layout.loading" ng-cloak></div>
+      <div class="spinner ng-cloak" ng-show="layout.loading" ng-cloak></div>
     </div>
 
     <footer>
@@ -74,8 +85,12 @@
         <p>© rexhouy 2015</p>
       </div>
     </footer>
+
+    <%= javascript_include_tag "https://lib.sinaapp.com/js/jquery/2.0.3/jquery-2.0.3.min.js" %>
     <%= javascript_include_tag "http://lib.sinaapp.com/js/angular.js/angular-1.2.19/angular.min.js" %>
-        <%= javascript_include_tag "http://lib.sinaapp.com/js/angular.js/angular-1.2.19/angular-animate.min.js" %>
+    <%= javascript_include_tag "http://lib.sinaapp.com/js/angular.js/angular-1.2.19/angular-animate.min.js" %>
+    <%= javascript_include_tag "http://lib.sinaapp.com/js/angular.js/angular-1.2.19/angular-route.min.js" %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
 </body>
 </html>

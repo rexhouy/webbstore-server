@@ -1,31 +1,49 @@
 Rails.application.routes.draw do
         devise_for :users
+
         # The priority is based upon order of creation: first created -> highest priority.
         # See how all your routes lay out with "rake routes".
 
         # You can have the root of your site routed with "root"
         root 'home#index'
 
-        # User address
-        resources :addresses
-        # Product detail
-        get 'products/:id' => 'products#show', as: :products_detail
-        # Cart
-        get 'carts' => 'carts#show', as: :carts
-        post 'carts' => 'carts#add', as: :carts_add_product
-        put 'carts' => 'carts#update', as: :carts_mod_product
-        delete 'carts' => 'carts#delete', as: :carts_del_product
-        # Purchase
-        resources :purchase
+        namespace :api do
+                # User address
+                resources :addresses
+                # Product detail
+                get 'products' => 'products#index', as: :products
+                get 'products/all' => 'products#all'
+                get 'products/:id' => 'products#show', as: :products_detail
+                # Cart
+                get 'carts' => 'carts#show', as: :carts
+                post 'carts' => 'carts#add', as: :carts_add_product
+                put 'carts' => 'carts#update', as: :carts_mod_product
+                delete 'carts' => 'carts#delete', as: :carts_del_product
+                get 'carts/confirm' => 'carts#confirm'
+
+                # Order
+                post 'orders' => 'orders#add'
+                get 'orders' => 'orders#index'
+                get 'orders/:id' => 'orders#show'
+                put 'orders/:id' => 'orders#cancel', as: :orders_cancel
+
+                # User home
+                get 'me' => 'me#index'
+        end
 
         namespace :admin do
                 resources :products do
                         resources :images
                 end
                 resources :orders
+                put 'orders/cancel/:id' => 'orders#cancel', as: :orders_cancel
+                put 'orders/shipping/:id' => 'orders#shipping', as: :orders_shipping
+                put 'orders/deliver/:id' => 'orders#deliver', as: :orders_deliver
 
                 post 'product/preview' => 'products#preview', as: :product_preview
         end
+
+        get '*path' => 'home#index'
 
         # Example of regular route:
         #   get 'products/:id' => 'catalog#view'

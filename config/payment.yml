@@ -1,0 +1,13 @@
+# 现在支付接口
+ipaynow:
+  key: OZTOsDcXpuTiZbb7guiimIkdmphQudgS
+  params:
+    funcode: WP001
+    appId: 1431422249025754
+    mhtOrderType: '01'
+    mhtCurrencyType: 156
+    notifyUrl: http://www.tenhs.com/payment/notify
+    frontNotifyUrl: http://www.tenhs.com/payment/front_notify
+    mhtCharset: UTF-8
+    deviceType: '06'
+    mhtSignType: MD5

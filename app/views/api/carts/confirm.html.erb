@@ -1,0 +1,81 @@
+<div class="banner row">
+  <h2 class="pull-left inherit-height table-center-wrap"><span class="table-center">购买</span></h2>
+  <a class="btn btn-lg pull-right highlight-link icon-link-left inherit-height table-center-wrap" ng-href="/carts">
+    <span class="table-center"><i class="glyphicon glyphicon-arrow-left"></i>取消</span>
+  </a>
+</div>
+<div class="main row">
+  <form class="form-horizontal">
+    <section class="form-group">
+      <h3 class="col-md-2 col-sm-2 col-xs-12 icon-link-left form-group-title"><span class="circle highlight">1</span>确认订单</h3>
+      <div class="col-md-8 col-sm-8 col-xs-12 ">
+        <div class="confirm-content">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>商品</th><th class="number-align">数量</th><th class="number-align">单价</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @cart.each do |product| %>
+              <tr>
+                <td><%= product["detail"].name %></td>
+                <td class="number-align"><%= product["count"] %></td>
+                <td class="number-align"><%= number_to_currency product_price(product), locale: :'zh-CN', precision: 0 %></td>
+              </tr>
+              <% end %>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3" class="number-align">
+                  总价：<%= number_to_currency cart_price(@cart), locale: :'zh-CN', precision: 0 %>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 配送 -->
+    <section class="form-group">
+      <h3 class="col-md-2 col-sm-2 col-xs-12 icon-link-left form-group-title"><span class="circle highlight">2</span>配送地址</h3>
+      <div class="col-md-8 col-sm-8 col-xs-12">
+        <div class="confirm-content">
+          <p style="margin-left:10px;">绿色的为选中的地址</p>
+          <div id="addresses">
+            <% @user.addresses.each do |address| %>
+            <%= render partial: "/api/addresses/item", object: address %>
+            <% end %>
+          </div>
+          <div class="create-address">
+            <a class="btn btn-default block" ng-click="" data-toggle="modal" data-target="#address_modal">新建地址</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 支付 -->
+    <section class="form-group">
+      <h3 class="col-md-2 col-sm-2 col-xs-12 icon-link-left form-group-title"><span class="circle highlight">3</span>支付方式</h3>
+      <div class="col-md-8 col-sm-8 col-xs-12">
+        <div class="confirm-content">
+          <div class="col-md-2 col-sm-3 col-xs-5 entry payment-type" ng-click="onlinePay=true" ng-class="{selected: onlinePay}">
+            在线支付
+          </div>
+          <div class="col-md-2 col-sm-3 col-xs-5 entry payment-type" ng-click="onlinePay=false" ng-class="{selected: !onlinePay}">
+            货到付款
+          </div>
+        </div>
+    </section>
+
+    <div class="form-group">
+      <div class="col-md-offset-2 col-md-8 col-sm-8 col-xs-12 vertical-btn-group">
+        <a class="btn btn-lg btn-default" ng-href="/carts">取消</a>
+        <a class="btn btn-lg btn-primary" ng-click="confirm()">确认</a>
+      </div>
+    </div>
+  </form>
+
+<%= render partial: "/api/addresses/form" %>
+  </div>

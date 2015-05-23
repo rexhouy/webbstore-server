@@ -53,3 +53,21 @@
     display: block;
     margin: 0 auto;
 }
+
+.filter-link.highlight {
+    color: $theme-color;
+    border-bottom: 1px solid $theme-color;
+    &:hover {
+        border-bottom: 1px solid $theme-color;
+    }
+}
+
+.filter-link {
+    text-decoration: none;
+    margin: 10px;
+    line-height: 30px;
+    &:hover {
+        border-bottom: 1px solid $brand-primary;
+        text-decoration: none;
+    }
+}

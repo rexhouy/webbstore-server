@@ -28,7 +28,6 @@ class Admin::ProductsController < AdminController
 
         def create
                 @product = Product.new(product_params)
-                @product.on_sale!
                 if @product.save
                         redirect_to :action => "show", :id => @product.id
                 else
@@ -38,7 +37,7 @@ class Admin::ProductsController < AdminController
 
         def preview
                 @product = Product.new(preview_params)
-                render "/products/show", :layout => "application"
+                render "/api/products/show", :layout => "application"
         end
 
         def destroy
@@ -48,7 +47,7 @@ class Admin::ProductsController < AdminController
 
         private
         def product_params
-                params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend,
+                params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale,
                                                 images_attributes: [:id, :url])
         end
 

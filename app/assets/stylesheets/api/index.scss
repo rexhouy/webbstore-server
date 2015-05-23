@@ -1,0 +1,123 @@
+// Variable define
+@import "variable.scss";
+
+.navbar {
+    margin: 0;
+}
+
+.navbar-header {
+    width: 100%;
+    position: relative;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    a {
+        color: $link-color;
+    }
+    margin-left: 0 !important;
+}
+
+// Settings
+.navbar-side {
+    width: 90%;
+    max-width: 300px;
+    box-shadow: $shadow;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    background-color: #fff;
+    min-height: 100%;
+    font-size: 16px;
+    header {
+        background-color: $theme-color;
+        box-shadow: none;
+        height: 70px;
+        a {
+            color: #fff;
+            padding: 0 10px;
+        }
+        i {
+            color: #fff;
+        }
+        .nav-header-link-text {
+            // Centralize the image
+            display: inline-block;
+            margin: 0;
+            vertical-align: middle;
+        }
+        img {
+            height: 32px;
+            width: 32px;
+        }
+    }
+    li {
+        float: initial;
+        a {
+            padding: 12px 40px;
+            color: $font-color;
+        }
+        a:hover {
+            background-color: $theme-color;
+            color: #fff;
+        }
+    }
+    .nav-section {
+        border-top: 1px solid #f1f1f1;
+        font-size: 14px;
+        .title {
+            padding:12px 40px 0 40px;
+        }
+    }
+}
+
+// navbar for header
+.header-navbar {
+    ul, li {
+        float: left;
+    }
+}
+
+
+.search-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 800px;
+    background-color: #F8F8F8;
+    .btn {
+        position: absolute;
+    }
+    .search {
+        border: 0;
+        font-size: 16px;
+        width: inherit;
+        display: inline-block !important;
+        width: 100%;
+        padding-left: 40px;
+        padding-right: 50px;
+        background-color: #F8F8F8;
+        &:focus {
+            outline: none;
+            border: 0;
+        }
+    }
+}
+
+.block-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-height: 100%;
+    min-width: 100%;
+    z-index: 999;
+    background-color: #000;
+    opacity: .2;
+}
+
+.block-layer.block-layer-light {
+    background: #fff;
+    opacity: .3;
+}

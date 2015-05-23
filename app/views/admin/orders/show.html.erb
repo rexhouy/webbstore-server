@@ -1,0 +1,82 @@
+<h1 class="page-header">订单详情</h1>
+<div>
+  <% if !@order.delivered? and !@order.canceled? %>
+    <%= form_tag admin_orders_cancel_url, method: :put, style: "display:inline-block" do %>
+    <% submit_tag "取消订单", class: "btn btn-danger" %>
+    <% end %>
+  <% end %>
+  <% if @order.paid? or (@order.placed? and @order.offline_pay?) %>
+    <%= form_tag admin_orders_shipping_url, method: :put, style: "display:inline-block" do %>
+      <% submit_tag "确认发货", class: "btn btn-default"%>
+    <% end %>
+  <% end %>
+  <% if @order.shipping? %>
+    <%= form_tag admin_orders_deliver_url, method: :put, style: "display:inline-block" do %>
+      <% submit_tag "确认完成", class: "btn btn-default"%>
+    <% end %>
+  <% end %>
+  <%= link_to admin_orders_url, class: "btn btn-primary" do %>
+    <i class="glyphicon glyphicon-arrow-left"></i> 返回
+  <% end %>
+</div>
+<div class="form-horizontal" style="padding-top:10px;">
+  <div class="form-group">
+    <label class="col-sm-2 control-label">订单编号</label>
+    <div class="col-sm-9">
+      <label class="control-label"><%= @order.order_id %></label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">状态</label>
+    <div class="col-sm-9">
+      <label class="control-label"><%= order_status @order %></label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">支付方式</label>
+    <div class="col-sm-9">
+      <label class="control-label"><%= order_payment @order %></label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">商品</label>
+    <div class="col-sm-9">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>项目</th><th class="number-align">数量</th><th class="number-align">单价</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @order.orders_products.each do |orders_products| %>
+          <tr>
+            <td><%= orders_products.product.name %></td>
+            <td class="number-align"><%= orders_products.count %></td>
+            <td class="number-align"><%= number_to_currency orders_products.count*orders_products.price, locale: :'zh-CN', precision: 2 %></td>
+          </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3" class="number-align">
+              总价：<%= number_to_currency @order.subtotal, locale: :'zh-CN', precision: 2 %>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+    <div class="form-group">
+    <label class="col-sm-2 control-label">配送地址</label>
+    <div class="col-sm-9">
+      <address>
+        <div class="header">
+          <span class="pull-left name"><%= @order.address.name %></span>
+          <span class="pull-right"><%= phone_number @order.address.tel %></span>
+        </div>
+        <div><%= @order.address.state %><%= @order.address.city %><%= @order.address.street %></div>
+      </address>
+    </div>
+  </div>
+</div>

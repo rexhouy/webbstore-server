@@ -1,3 +1,3 @@
 class OrdersProducts < ActiveRecord::Base
-        has_one :product
+        belongs_to :product
 end
