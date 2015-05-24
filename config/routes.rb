@@ -32,15 +32,22 @@ Rails.application.routes.draw do
         end
 
         namespace :admin do
+                root 'welcome#index'
                 resources :products do
                         resources :images
                 end
                 resources :orders
+                resources :users
+                resources :groups
                 put 'orders/cancel/:id' => 'orders#cancel', as: :orders_cancel
                 put 'orders/shipping/:id' => 'orders#shipping', as: :orders_shipping
                 put 'orders/deliver/:id' => 'orders#deliver', as: :orders_deliver
 
                 post 'product/preview' => 'products#preview', as: :product_preview
+
+                get 'unauthorized_access' => 'unauthorized_access#index', as: :unauthorized_access
+
+                get '*path' => 'welcome#index'
         end
 
         get '*path' => 'home#index'

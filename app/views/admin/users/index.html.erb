@@ -1,0 +1,39 @@
+<h1 class="page-header">用户管理</h1>
+<%= link_to new_admin_user_path,  :class => "btn btn-primary" do %>
+<span class="glyphicon glyphicon-plus"></span> 新建
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <td>名字</td>
+      <td>角色</td>
+      <td>所属卖家</td>
+      <td>操作</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+    <tr>
+      <td><%= user.email  %></td>
+      <td><%= role_name user  %></td>
+      <td><%= user.group.name %></td>
+      <td>
+        <%= link_to edit_admin_user_path(user) do %>
+          <span class="glyphicon glyphicon-pencil icon"></span>
+        <% end %>
+        <%= link_to admin_user_path(user), method: :delete do %>
+          <span class="glyphicon glyphicon-trash icon"></span>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="6">
+        <%= will_paginate @users %>
+      </td>
+    </tr>
+    </tfoot>
+</table>

@@ -1,0 +1,56 @@
+<%= form_for [:admin, @user], :html => {:class => "form-horizontal"} do |u| %>
+<% if @user.errors.any? %>
+<div class="alert alert-danger" role="alert">
+  <strong>保存失败</strong>
+  <ul>
+    <% @user.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+<div class="form-group">
+  <%= u.label :email, "名字", :class => "col-sm-2 control-label"  %>
+  <div class="col-sm-6">
+    <%= u.email_field :email, :class => "form-control" %>
+  </div>
+</div>
+<div class="form-group">
+  <%= u.label :role, "角色", class: "col-sm-2 control-label"  %>
+  <div class="col-sm-3">
+    <%= u.select :role, [], {}, {class: "form-control"} do %>
+    <option value="seller">卖家</option>
+    <option value="admin">管理员</option>
+    <% end %>
+  </div>
+</div>
+<div class="form-group">
+  <%= u.label :group_id, "所属卖家", :class => "col-sm-2 control-label"  %>
+  <div class="col-sm-3">
+    <%= u.select :group_id, options_from_collection_for_select(@groups, :id, :name), {}, {class: "form-control"} %>
+  </div>
+</div>
+<div class="form-group">
+  <%= u.label :password, "密码", class: "col-sm-2 control-label" %>
+  <div class="col-sm-3">
+    <% if @validatable %>
+    <em>(最少<%= @minimum_password_length %>个字符)</em>
+    <% end %>
+    <%= u.password_field :password, autocomplete: "off", class: "form-control" %>
+  </div>
+</div>
+<div class="form-group">
+  <%= u.label :password_confirmation, "确认密码", class: "col-sm-2 control-label" %>
+  <div class="col-sm-3">
+    <%= u.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
+  </div>
+</div>
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <%= submit_tag "确认",  data: { disable_with: "请稍后..."},  :class => "btn btn-primary" %>
+    <%= link_to "取消", admin_users_path, :class => "btn btn-default" %>
+  </div>
+</div>
+
+<% end %>

@@ -1,1 +1,28 @@
-<h1>Welcome to rexhouy's webstore</h1>
+<h1>欢迎使用WebStore管控端</h1>
+<div class="form">
+  <div class="form-group">
+    <label class="col-sm-2">用户名：</label>
+    <div class="col-sm-10">
+      <p><%= current_user.email %></p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">角色：</label>
+    <div class="col-sm-10">
+      <p><%= role_name current_user %></p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">所属机构：</label>
+    <div class="col-sm-10">
+      <p><%= current_user.group.name %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">上次登录时间：</label>
+    <div class="col-sm-10">
+      <p><%= current_user.last_sign_in_at %></p>
+    </div>
+  </div>
+</div>

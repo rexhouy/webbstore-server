@@ -1,0 +1,35 @@
+<h1 class="page-header">机构管理</h1>
+<%= link_to new_admin_group_path,  :class => "btn btn-primary" do %>
+<span class="glyphicon glyphicon-plus"></span> 新建
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <td>名字</td>
+      <td>操作</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @groups.each do |group| %>
+    <tr>
+      <td><%= group.name  %></td>
+      <td>
+        <%= link_to edit_admin_group_path(group) do %>
+          <span class="glyphicon glyphicon-pencil icon"></span>
+        <% end %>
+        <%= link_to admin_group_path(group), method: :delete do %>
+          <span class="glyphicon glyphicon-trash icon"></span>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="6">
+        <%= will_paginate @groups %>
+      </td>
+    </tr>
+    </tfoot>
+</table>

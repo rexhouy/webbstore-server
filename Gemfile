@@ -34,7 +34,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Auth
 gem 'devise'
-gem 'cancan'
+gem 'cancancan'
 
 # Bootstrap
 gem 'bootstrap-sass', '~> 3.3.4'

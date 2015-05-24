@@ -1,7 +1,7 @@
 <%= form_for [:admin, @product], :html => {:class => "form-horizontal"} do |p| %>
 <% if @product.errors.any? %>
-<div id="error_explanation">
-  <h2>保存失败</h2>
+<div class="alert alert-danger" role="alert">
+  <strong>保存失败</strong>
   <ul>
     <% @product.errors.full_messages.each do |msg| %>
     <li><%= msg %></li>

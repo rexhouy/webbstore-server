@@ -1,5 +1,7 @@
 class Admin::OrdersController < AdminController
 
+        load_and_authorize_resource
+
         def index
                 @order_id = params[:order_id] || ""
                 if @order_id.empty?

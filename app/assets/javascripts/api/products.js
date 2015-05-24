@@ -8,18 +8,21 @@
  * Controller of the webStoreApp
  */
 angular.module('webStore')
-        .controller('ProductsCtrl', function ($scope, $rootScope, $http, $location, $templateCache) {
+        .controller('ProductsCtrl', function ($scope, $rootScope, $http, $location, $templateCache, $route) {
                 $scope.addToCart = function() {
                         $rootScope.layout.loading = true;
                         var formData = $('#add_to_cart_form').serializeObject();
-                        $http.post('/api/carts', formData)
-                                .success(function(data, status, headers, config) {
-                                        $templateCache.remove('/api/carts');
-                                        $location.path('/carts');
-                                })
-                                .error(function(data, status, headers, config) {
-                                        $rootScope.layout.loading = false;
-                                });
+                        $.ajax('/api/carts/', {
+                                method : 'post',
+                                headers : {
+                                        'X-CSRF-Token' : utility.getCSRFtoken()
+                                },
+                                data : formData
+                        }).done(function(data){
+                                $templateCache.remove('/api/carts');
+                                $location.path('/carts');
+                                $route.reload();
+                        });
                 };
 
                 var page = 1;

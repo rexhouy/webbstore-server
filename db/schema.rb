@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150522075108) do
+ActiveRecord::Schema.define(version: 20150524080728) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -25,6 +25,13 @@ ActiveRecord::Schema.define(version: 20150522075108) do
   end
 
   add_index "addresses", ["user_id"], name: "fk_rails_12809c9026", using: :btree
+
+  create_table "groups", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "status",     limit: 4
+  end
 
   create_table "images", force: :cascade do |t|
     t.string   "url",        limit: 255
@@ -50,7 +57,7 @@ ActiveRecord::Schema.define(version: 20150522075108) do
 
   add_index "orders", ["address_id"], name: "fk_rails_a6ba8c8794", using: :btree
   add_index "orders", ["customer_id"], name: "fk_rails_c2426400ce", using: :btree
-  add_index "orders", ["seller_id"], name: "fk_rails_8784ace20d", using: :btree
+  add_index "orders", ["seller_id"], name: "fk_rails_4498acc18a", using: :btree
 
   create_table "orders_products", force: :cascade do |t|
     t.integer  "count",      limit: 4
@@ -79,7 +86,7 @@ ActiveRecord::Schema.define(version: 20150522075108) do
     t.boolean  "on_sale",     limit: 1
   end
 
-  add_index "products", ["owner_id"], name: "fk_rails_8fad8a61b3", using: :btree
+  add_index "products", ["owner_id"], name: "fk_rails_718105988b", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -94,23 +101,22 @@ ActiveRecord::Schema.define(version: 20150522075108) do
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "role",                   limit: 4
+    t.integer  "group_id",               limit: 4
+    t.integer  "status",                 limit: 4
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["group_id"], name: "index_users_on_group_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["role"], name: "index_users_on_role", using: :btree
 
-  add_foreign_key "addresses", "users"
-  add_foreign_key "addresses", "users"
   add_foreign_key "images", "products"
   add_foreign_key "orders", "addresses"
+  add_foreign_key "orders", "groups", column: "seller_id"
   add_foreign_key "orders", "users", column: "customer_id"
-  add_foreign_key "orders", "users", column: "customer_id"
-  add_foreign_key "orders", "users", column: "seller_id"
-  add_foreign_key "orders", "users", column: "seller_id"
-  add_foreign_key "orders_products", "orders"
   add_foreign_key "orders_products", "orders"
   add_foreign_key "orders_products", "products"
-  add_foreign_key "orders_products", "products"
-  add_foreign_key "products", "users", column: "owner_id"
-  add_foreign_key "products", "users", column: "owner_id"
+  add_foreign_key "products", "groups", column: "owner_id"
+  add_foreign_key "users", "groups"
 end

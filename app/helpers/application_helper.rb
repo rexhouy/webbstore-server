@@ -1,6 +1,17 @@
 # -*- coding: utf-8 -*-
 module ApplicationHelper
 
+        def current_namespace
+                controller.class.name.split("::").first
+        end
+
+        def role_name(user)
+                return "管理员" if user.admin?
+                return "卖家" if user.seller?
+                return "买家" if user.customer?
+                ""
+        end
+
         def phone_number(number)
                 if number && number.size == 11
                         return "#{number.slice(0,3)}-#{number.slice(3, 4)}-#{number.slice(7,4)}"
