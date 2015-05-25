@@ -3,6 +3,33 @@ class Api::AddressesController < ApiController
         before_action :auth_user
 
         def index
+                @addresses = current_user.addresses
+                @address = Address.new
+                render layout: false
+        end
+
+        def show
+                @address = Address.find(params[:id])
+                render json: @address
+        end
+
+        def update
+                address = Address.find(params[:id])
+                if address and address.update(address_params)
+                        render json: {success: true}
+                else
+                        render json: {success: false}
+                end
+        end
+
+        def destroy
+                address = Address.find(params[:id])
+                if address and address.user.id.eql? current_user.id
+                        address.update(status: Address.statuses[:disabled])
+                        render json: {success: true}
+                else
+                        render json: {success: false}
+                end
         end
 
         def create

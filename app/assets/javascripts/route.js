@@ -34,6 +34,16 @@ angular
                                 templateUrl: '/api/me',
                                 controller: 'MeCtrl'
                         })
+                        .when('/address', {
+                                templateUrl: '/api/addresses',
+                                controller: 'AddressCtrl'
+                        })
+                        .when('/address/:id/edit', {
+                                templateUrl: function(attr) {
+                                        return "/api/addresses/"+attr.id+"/edit";
+                                },
+                                controller: 'AddressCtrl'
+                        })
                         .when('/admin/product/preview', {
                                 templateUrl: 'tmp.html'
                         });

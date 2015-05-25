@@ -6,60 +6,33 @@
  * Controller of the webStore
  */
 angular.module('webStore')
-        .controller('CartConfirmCtrl', function ($scope, $rootScope, $http, $location, $templateCache, $route, $compile) {
-
-
-                var addresses = [{
-                        name : "云南",
-                        cities : ["昆明","曲靖","保山"]
-                }, {
-                        name : "贵州",
-                        cities : ["贵阳","六盘水"]
-                }];
-
-                var getStates = function() {
-                        return addresses.map(function(address) {
-                                return address.name;
-                        });
-                };
-
-                var findCitiesByState = function(state) {
-                        for (var i = 0; i < addresses.length; i++) {
-                                if (addresses[i].name === state) {
-                                        return addresses[i].cities;
-                                }
-                        }
-                };
+        .controller('CartConfirmCtrl', function ($scope, $rootScope, $http, $location, $templateCache, $route, $compile, addressService) {
 
                 (function init() {
                         // Payment
                         $scope.onlinePay = true;
                         // Address state list(select options)
-                        $scope.states = getStates();
+                        $scope.states = addressService.getStates();
                         // Address city list by state(select options)
                         $scope.cities = [];
                         // User selected address
                         $scope.address = {
+                                name : "",
+                                tel : "",
                                 state : "",
-                                city : ""
+                                city : "",
+                                street : ""
                         };
                         var firstAddress = document.getElementsByName("address_id")[0];
                         $scope.selectedAddress = firstAddress && firstAddress.value;
                 })();
 
-
                 $scope.stateChange = function() {
-                        $scope.cities = findCitiesByState($scope.address.state);
+                        $scope.cities = addressService.findCitiesByState($scope.address.state);
                 };
 
                 $scope.saveAddress = function() {
-                        $.ajax('/api/addresses', {
-                                method : 'post',
-                                headers : {
-                                        'X-CSRF-Token' : utility.getCSRFtoken()
-                                },
-                                data : $("#new_address").serializeObject()
-                        }).done(function(data){
+                        addressService.save($("#new_address").serializeObject(), function(data) {
                                 if (data.success) {
                                         $("#addresses").append($compile($(data.data))($scope));
                                         $("#address_modal").modal("hide"); // Close dialog

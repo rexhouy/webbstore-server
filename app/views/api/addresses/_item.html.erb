@@ -1,5 +1,16 @@
-<div class="address entry"  ng-class="{selected: selectedAddress == <%= item.id%>}" ng-click="selectedAddress = <%= item.id%>">
+<div class="address entry"  ng-class="{selected: selectedAddress == <%= item.id%>}"
+     <% unless controller_name.eql? "addresses" %>ng-click="selectedAddress = <%= item.id%>" <% end %>>
   <%= hidden_field_tag "address_id", item.id %>
   <div class="header"><span class="pull-left name"><%= item.name %></span><span class="pull-right"><%= phone_number item.tel %></span></div>
   <div><%= item.state %><%= item.city %><%= item.street %></div>
+  <% if controller_name.eql? "addresses" %>
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <button class="btn btn-default btn-block" ng-click="edit(<%=item.id%>)">编辑</button>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <button class="btn btn-danger btn-block" ng-click="delete(<%=item.id%>)">删除</button>
+    </div>
+  </div>
+  <% end %>
 </div>
