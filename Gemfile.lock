@@ -82,6 +82,7 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.2)
+    log4r (1.1.10)
     loofah (2.0.1)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -176,6 +177,7 @@ DEPENDENCIES
   devise
   jbuilder (~> 2.0)
   jquery-rails
+  log4r
   mysql2
   rails (= 4.2.0)
   sass-rails (~> 5.0)

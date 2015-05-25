@@ -2,7 +2,7 @@
 @import "variable.scss";
 
 section.recommand {
-    background: repeating-linear-gradient(to bottom, $bg-color, #fff);
+    background: repeating-linear-gradient(to bottom, #eee, #fff);
     padding: 40px 80px;
     @media(max-width:800px) {
         padding: 0;

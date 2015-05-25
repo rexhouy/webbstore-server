@@ -36,6 +36,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
 gem 'cancancan'
 
+# Logger
+gem 'log4r'
+
 # Bootstrap
 gem 'bootstrap-sass', '~> 3.3.4'
 

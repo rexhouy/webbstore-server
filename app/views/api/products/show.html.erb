@@ -20,38 +20,9 @@
   </div>
 </div>
 
-<!-- Slide -->
-<div id="sketch-carousel" class="row">
-  <div class="carousel slide" data-ride="carousel">
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-      <% @product.images.each_with_index do |image, index| %>
-      <li data-target="#sketch-carousel" data-slide-to="0" class="<%='active' if index.eql?(0)%>"></li>
-      <% end %>
-    </ol>
-
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner" role="listbox">
-      <% @product.images.each_with_index do |image, index| %>
-      <div class="item <%='active' if index.eql?(0)%>">
-        <%= image_tag image.url %>
-      </div>
-      <% end %>
-    </div>
-
-    <!-- Controls -->
-    <a class="left carousel-control" href="#sketch-carousel" role="button" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#sketch-carousel" role="button" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
-  </div>
-</div>
-
 <!-- Article -->
 <article class="row">
-  <%=raw @product.article %>
+  <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 col-sm-10 col-sm-1">
+    <%=raw @product.article %>
+  </div>
 </article>

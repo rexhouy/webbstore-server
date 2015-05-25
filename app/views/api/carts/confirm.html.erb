@@ -5,6 +5,7 @@
   </a>
 </div>
 <div class="main row">
+
   <form class="form-horizontal">
     <section class="form-group">
       <h3 class="col-md-2 col-sm-2 col-xs-12 icon-link-left form-group-title"><span class="circle highlight">1</span>确认订单</h3>
@@ -76,6 +77,13 @@
       </div>
     </div>
   </form>
+
+  <div class="alert alert-danger ng-cloak" role="alert" ng-cloak ng-show="showError">
+    <strong>{{info}}</strong>
+    <ul>
+      <li ng-repeat="error in errors">{{error}}</li>
+    </ul>
+  </div>
 
 <%= render partial: "/api/addresses/form" %>
   </div>

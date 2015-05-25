@@ -37,14 +37,11 @@
   </div>
 </div>
 <div class="form-group">
-  <%= p.label :images, :class => "col-sm-2 control-label" do %>
-      图片  <span class="glyphicon glyphicon-info-sign icon" title="第一张图片将作为产品封面，为了保证显示效果，请使用1024*1024的图片并使用透明背景"></span>
+  <%= p.label :cover_image, :class => "col-sm-2 control-label" do %>
+      图片  <span class="glyphicon glyphicon-info-sign icon" title="该图片将作为产品封面，为了保证显示效果，请使用1024*1024的图片并使用透明背景"></span>
   <% end %>
   <div class="col-sm-5">
-    <%= p.fields_for :images do |image| %>
-    <%= image.hidden_field :id %>
-    <%= image.text_field :url, :class => "form-control ", :placeholder =>"http://" %>
-    <% end %>
+    <%= p.text_field :cover_image, class: "form-control" %>
   </div>
 </div>
 <div class="form-group">

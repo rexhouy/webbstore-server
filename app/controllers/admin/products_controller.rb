@@ -49,13 +49,11 @@ class Admin::ProductsController < AdminController
 
         private
         def product_params
-                params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale,
-                                                images_attributes: [:id, :url])
+                params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale, :cover_image)
         end
 
         def preview_params
-                params.require(:product).permit(:name, :price, :storage, :description, :article, :recommend,
-                                                images_attributes: [:url])
+                params.require(:product).permit(:name, :price, :storage, :description, :article, :recommend, :cover_image)
         end
 
 end

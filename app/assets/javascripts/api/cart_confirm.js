@@ -85,6 +85,7 @@ angular.module('webStore')
                                 return;
                         }
                         $rootScope.layout.loading = true;
+                        $scope.showError = false;
                         $.ajax('/api/orders', {
                                 method : 'post',
                                 headers : {
@@ -92,7 +93,7 @@ angular.module('webStore')
                                 },
                                 data : {
                                         addressId : $scope.selectedAddress,
-                                        paymentType : $scope.onlinePay ? 0 : 1
+                                        paymentType : $scope.onlinePay ? "online_pay" : "offline_pay"
                                 }
                         }).done(function(data) {
                                 if (data.success) {
@@ -101,11 +102,13 @@ angular.module('webStore')
                                         } else {
                                                 $location.path("/orders/all"); // to order page
                                         }
-                                        $scope.$apply();
                                 } else {
                                         $rootScope.layout.loading = false;
-                                        alert("创建订单失败");
+                                        $scope.showError = true;
+                                        $scope.info = data.info;
+                                        $scope.errors = data.errors;
                                 }
+                                $scope.$apply();
                         });
 
                 };

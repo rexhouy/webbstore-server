@@ -78,10 +78,8 @@
       <% end %>
 
       <% if is_cancelable? @order %>
-      <br>
-      <%= form_tag api_orders_cancel_url(@order) do %>
-      <%= submit_tag "取消订单", class: "btn btn-danger btn-block" %>
-      <% end %>
+        <br>
+        <a ng-click="cancel(<%=@order.id%>)" class="btn btn-danger btn-block">取消订单</a>
       <% end %>
 
     </section>
