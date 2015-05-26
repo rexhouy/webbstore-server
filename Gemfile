@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -34,6 +34,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Auth
 gem 'devise'
+gem 'devise-i18n'
 gem 'cancancan'
 
 # Logger
@@ -47,6 +48,8 @@ gem 'will_paginate', '~> 3.0.6'
 
 # Editor
 gem 'bootstrap-wysihtml5-rails', '~> 0.3.3.7'
+# Image upload
+gem "paperclip", "~> 4.2"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

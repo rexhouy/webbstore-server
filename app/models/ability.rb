@@ -5,7 +5,7 @@ class Ability
 		if user.admin?
 			can :manage, [User, Group]
 		elsif user.seller?
-			can :manage, [Product, Order, Image]
+			can :manage, [Product, Order]
 		end
 	end
 	

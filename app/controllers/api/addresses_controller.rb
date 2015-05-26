@@ -16,7 +16,10 @@ class Api::AddressesController < ApiController
         def update
                 address = Address.find(params[:id])
                 if address and address.update(address_params)
-                        render json: {success: true}
+                        render json: {
+                                success: true,
+                                data: render_to_string(partial: "/api/addresses/item", object: address),
+                                id: address.id}
                 else
                         render json: {success: false}
                 end
@@ -26,7 +29,8 @@ class Api::AddressesController < ApiController
                 address = Address.find(params[:id])
                 if address and address.user.id.eql? current_user.id
                         address.update(status: Address.statuses[:disabled])
-                        render json: {success: true}
+                        render json: {success: true,
+                                id: address.id}
                 else
                         render json: {success: false}
                 end

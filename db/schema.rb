@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150525132859) do
+ActiveRecord::Schema.define(version: 20150526063542) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -27,21 +27,26 @@ ActiveRecord::Schema.define(version: 20150525132859) do
 
   add_index "addresses", ["user_id"], name: "fk_rails_12809c9026", using: :btree
 
+  create_table "bootsy_image_galleries", force: :cascade do |t|
+    t.integer  "bootsy_resource_id",   limit: 4
+    t.string   "bootsy_resource_type", limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "bootsy_images", force: :cascade do |t|
+    t.string   "image_file",       limit: 255
+    t.integer  "image_gallery_id", limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "groups", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "status",     limit: 4
   end
-
-  create_table "images", force: :cascade do |t|
-    t.string   "url",        limit: 255
-    t.integer  "product_id", limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  add_index "images", ["product_id"], name: "fk_rails_ba13ebbede", using: :btree
 
   create_table "orders", force: :cascade do |t|
     t.integer  "status",       limit: 4
@@ -112,7 +117,6 @@ ActiveRecord::Schema.define(version: 20150525132859) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["role"], name: "index_users_on_role", using: :btree
 
-  add_foreign_key "images", "products"
   add_foreign_key "orders", "addresses"
   add_foreign_key "orders", "groups", column: "seller_id"
   add_foreign_key "orders", "users", column: "customer_id"

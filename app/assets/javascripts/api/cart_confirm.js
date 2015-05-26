@@ -31,6 +31,11 @@ angular.module('webStore')
                         $scope.cities = addressService.findCitiesByState($scope.address.state);
                 };
 
+                $scope.closeModal = function() {
+                        $("#new_address")[0].reset(); // Clear form
+                        $("#address_modal").modal("hide");
+                };
+
                 $scope.saveAddress = function() {
                         addressService.save($("#new_address").serializeObject(), function(data) {
                                 if (data.success) {

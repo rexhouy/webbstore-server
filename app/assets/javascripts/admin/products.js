@@ -1,5 +1,5 @@
 (function($){
-        $('#product_article').wysihtml5();
+        $('#product_article').wysihtml5().css("height", "600px");
 
         var previewFrame = $("#preview");
         var spinner = $("#spinner");

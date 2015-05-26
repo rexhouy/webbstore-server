@@ -21,7 +21,6 @@ class Admin::ProductsController < AdminController
 
         def new
                 @product = Product.new
-                @product.images.build
         end
 
         def show

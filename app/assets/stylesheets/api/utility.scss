@@ -232,16 +232,3 @@
 .animate-hide-left.ng-hide {
   left: -100%;
 }
-
-.spinner {
-    background-image: image-url("spinner.gif");
-    background-size: contain;
-    z-index: 1000;
-    height: 50px;
-    width: 50px;
-    display: block;
-    margin: 0 auto;
-    position: fixed;
-    left: 50%;
-    top: 50%;
-}

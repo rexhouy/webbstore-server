@@ -41,14 +41,20 @@ angular.module('webStore')
                         addressService.save(data, function(data) {
                                 if (data.success) {
                                         $("#address_modal").modal("hide");
-                                        setTimeout(function(){
-                                                $templateCache.remove('/api/addresses');
-                                                $route.reload();
-                                        }, 500);
+                                        clearForm();
+                                        var html = $compile($(data.data))($scope).hide();
+                                        $("#addresses").prepend(html);
+                                        html.show("slow");
                                 } else {
                                         alert("保存地址失败");
                                 }
                         });
+                };
+
+                $scope.closeModal = function() {
+                        clearForm();
+                        $scope.activeId = null;
+                        $("#address_modal").modal("hide");
                 };
 
                 $scope.edit = function(id) {
@@ -66,8 +72,10 @@ angular.module('webStore')
                 $scope.delete = function(id) {
                         addressService.delete(id, function(data) {
                                 if (data.success) {
-                                        $templateCache.remove('/api/addresses');
-                                        $route.reload();
+                                        var address = $("#address_"+data.id);
+                                        address.hide("slow", function(){
+                                                address.remove();
+                                        });
                                 }
                         });
                 };

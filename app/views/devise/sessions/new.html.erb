@@ -1,6 +1,7 @@
 <h2>登录</h2>
 
 <%= form_for resource, as: resource_name, url: session_path(resource_name), html: {class: "form-group"} do |f| %>
+  <%= devise_error_messages! %>
   <div class="form-group">
     <%= f.label :email, "邮箱" %><br />
     <%= f.email_field :email, autofocus: true, class: "form-control" %>

@@ -75,9 +75,11 @@
       <%= yield %>
     </div>
 
-    <div><!-- Loading animation -->
-      <div class="block-layer block-layer-light ng-cloak" ng-show="layout.loading" ng-cloak></div>
-      <div class="spinner ng-cloak" ng-show="layout.loading" ng-cloak></div>
+    <div class="ng-cloak" ng-show="layout.loading" ng-cloak><!-- Loading animation -->
+      <div class="block-layer block-layer-light"></div>
+      <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" >
+        <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+      </svg>
     </div>
 
     <footer>

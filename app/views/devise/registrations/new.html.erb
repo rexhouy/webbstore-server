@@ -1,7 +1,7 @@
 <h2>注册</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-<%= devise_error_messages! %>
+  <%= devise_error_messages! %>
 
 <div class="form-group">
   <%= f.label :email, "邮箱" %><br />

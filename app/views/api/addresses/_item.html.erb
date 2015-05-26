@@ -1,4 +1,4 @@
-<div class="address entry"  ng-class="{selected: selectedAddress == <%= item.id%>}"
+<address id="address_<%=item.id%>" class="address entry"  ng-class="{selected: selectedAddress == <%= item.id%>}"
      <% unless controller_name.eql? "addresses" %>ng-click="selectedAddress = <%= item.id%>" <% end %>>
   <%= hidden_field_tag "address_id", item.id %>
   <div class="header"><span class="pull-left name"><%= item.name %></span><span class="pull-right"><%= phone_number item.tel %></span></div>
@@ -13,4 +13,4 @@
     </div>
   </div>
   <% end %>
-</div>
+</address>
