@@ -1,79 +1,124 @@
 <%= form_for [:admin, @product], :html => {:class => "form-horizontal"} do |p| %>
-<% if @product.errors.any? %>
-<div class="alert alert-danger" role="alert">
-  <strong>保存失败</strong>
-  <ul>
-    <% @product.errors.full_messages.each do |msg| %>
-    <li><%= msg %></li>
-    <% end %>
-  </ul>
-</div>
-<% end %>
+  <% if @product.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <strong>保存失败</strong>
+      <ul>
+        <% @product.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-<div class="form-group">
-  <%= p.label :name, "名字", :class => "col-sm-2 control-label"  %>
-  <div class="col-sm-6">
-    <%= p.text_field :name, :class => "form-control" %>
+  <div class="form-group">
+    <%= p.label :name, "名字", :class => "col-sm-2 control-label"  %>
+    <div class="col-sm-6">
+      <%= p.text_field :name, :class => "form-control", required: true %>
+    </div>
   </div>
-</div>
-<div class="form-group">
-  <%= p.label :price, "销售价", :class => "col-sm-2 control-label"  %>
-  <div class="col-sm-3">
-    <%= p.number_field :price, :class => "form-control" %>
-  </div>
-</div>
-<div class="form-group">
-  <%= p.label :storage, "上架数量", :class => "col-sm-2 control-label"  %>
-  <div class="col-sm-3">
-    <%= p.number_field :storage, :class => "form-control" %>
-  </div>
-</div>
-<div class="form-group">
-  <%= p.label :description, :class => "col-sm-2 control-label" do  %>
-    描述  <span class="glyphicon glyphicon-info-sign icon" title="使用「|」分割的描述内容将会显示在不同行"></span>
+
+  <div class="form-group">
+    <%= p.label :description, :class => "col-sm-2 control-label" do  %>
+      <span class="glyphicon glyphicon-info-sign icon" title="使用「|」分割的描述内容将会显示在不同行"></span> 描述
   <% end %>
   <div class="col-sm-8">
     <%= p.text_field :description, :class => "form-control" %>
   </div>
-</div>
-<div class="form-group">
-  <%= p.label :cover_image, :class => "col-sm-2 control-label" do %>
-      图片  <span class="glyphicon glyphicon-info-sign icon" title="该图片将作为产品封面，为了保证显示效果，请使用1024*1024的图片并使用透明背景"></span>
+  </div>
+
+  <div class="form-group">
+    <%= p.label :price, :class => "col-sm-2 control-label" do  %>
+      价格
+  <% end %>
+  <div class="col-sm-4">
+    <%= p.number_field :price, :class => "form-control" %>
+  </div>
+  </div>
+
+    <div class="form-group">
+      <%= p.label :storage, :class => "col-sm-2 control-label" do  %>
+          <span class="glyphicon glyphicon-info-sign icon" title="有规格的情况下不需要填写"></span> 上架数量
+      <% end %>
+      <div class="col-sm-4">
+              <%= p.number_field :storage, :class => "form-control" %>
+      </div>
+   </div>
+
+  <div class="form-group" id="specifications">
+    <label class="col-sm-2 control-label">规格</label>
+    <div class="col-sm-10">
+      <table class="table table-bordered" id="doors_info">
+        <thead>
+          <tr>
+            <th style="display:none"></th><th>名称</th><th>值</th><th>价格</th><th>上架数量</th><th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="specification_tbody">
+          <%= p.fields_for :specifications do |spec| %>
+            <tr>
+              <td style="display:none"><input type="hidden" value="<%= spec.object.id%>"></td>
+              <td><input type="text" class="form-control" value="<%= spec.object.name %>"></td>
+              <td><input type="text" class="form-control" value="<%= spec.object.value %>"></td>
+              <td><input type="number" class="form-control" value="<%= spec.object.price %>"></td>
+              <td><input type="number" class="form-control" value="<%= spec.object.storage %>"></td>
+              <td>
+                <button type="button" class="btn btn-danger" onclick="product.removeSpec(this)" title="删除">
+                  <span class='glyphicon glyphicon-trash' style='color:#fff;'></span>
+                </button>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="9">
+              <a href="javascript:product.addSpec()" class="btn btn-default" id="add_spec">
+                <span class='glyphicon glyphicon-plus'></span> 增加规格
+              </a>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= p.label :cover_image, :class => "col-sm-2 control-label" do %>
+      <span class="glyphicon glyphicon-info-sign icon" title="该图片将作为产品封面，为了保证显示效果，请使用1024*1024的图片并使用透明背景"></span> 图片
   <% end %>
   <div class="col-sm-5">
     <%= p.text_field :cover_image, class: "form-control" %>
   </div>
-</div>
-<div class="form-group">
-  <div class="col-sm-5 col-sm-offset-2">
-    <%= p.check_box :recommend %>
-    <%= p.label :recommend, :class => "control-label" do %>
-    主推商品  <span class="glyphicon glyphicon-info-sign icon" title="是否显示在主页的显著位置"></span>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-5 col-sm-offset-2">
+      <%= p.check_box :recommend %>
+      <%= p.label :recommend, :class => "control-label" do %>
+        主推商品  <span class="glyphicon glyphicon-info-sign icon" title="是否显示在主页的显著位置"></span>
     <% end %>
+    </div>
   </div>
-</div>
-<div class="form-group">
-  <div class="col-sm-5 col-sm-offset-2">
-    <%= p.check_box :on_sale %>
-    <%= p.label :on_sale, :class => "control-label" do %>
-    上架  <span class="glyphicon glyphicon-info-sign icon" title="是否上架销售"></span>
+  <div class="form-group">
+    <div class="col-sm-5 col-sm-offset-2">
+      <%= p.check_box :on_sale %>
+      <%= p.label :on_sale, :class => "control-label" do %>
+        上架  <span class="glyphicon glyphicon-info-sign icon" title="是否上架销售"></span>
     <% end %>
+    </div>
   </div>
-</div>
-<div class="form-group">
-  <%= p.label :article, "详情", :class => "col-sm-2 control-label"  %>
-  <div class="col-sm-10">
-    <%= p.text_area :article, :class => "editor" %>
+  <div class="form-group">
+    <%= p.label :article, "详情", :class => "col-sm-2 control-label"  %>
+    <div class="col-sm-10">
+      <%= p.text_area :article, :class => "editor" %>
+    </div>
   </div>
-</div>
 
-<div class="form-group">
-  <div class="col-sm-offset-2 col-sm-10">
-    <%= submit_tag "确认",  data: { disable_with: "请稍后..."},  :class => "btn btn-primary" %>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#previewModal">预览</button>
-      <%= link_to "取消", admin_products_path, :class => "btn btn-default" %>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= submit_tag "确认",  data: { disable_with: "请稍后..."},  :class => "btn btn-primary", :onclick => "product.setFormParams()" %>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#previewModal">预览</button>
+        <%= link_to "取消", admin_products_path, :class => "btn btn-default" %>
+    </div>
   </div>
-</div>
 
 <% end %>
 
@@ -98,3 +143,19 @@
     </div>
   </div>
 </section>
+
+<!-- Template -->
+<script type="text/template" id="specification_template">
+  <tr>
+    <td style="display:none"><input type="hidden"></td>
+    <td><input class="form-control" type="text"></td>
+    <td><input class="form-control" type="text"></td>
+    <td><input class="form-control" type="number"></td>
+    <td><input class="form-control" type="number"></td>
+    <td>
+      <button type="button" class="btn btn-danger" onclick="product.removeSpec(this)" title="删除">
+        <span class="glyphicon glyphicon-trash" style="color:#fff;"></span>
+      </button>
+    </td>
+  </tr>
+</script>

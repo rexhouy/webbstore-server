@@ -9,9 +9,19 @@
  */
 angular.module('webStore')
         .controller('ProductsCtrl', function ($scope, $rootScope, $http, $location, $templateCache, $route) {
+                $scope.chooseSpecs = function() {
+                        var hasSpecs = $("#specbar")[0];
+                        if (hasSpecs) {
+                                $scope.showSpecs = true;
+                        } else {
+                                $scope.addToCart();
+                        }
+                };
+
                 $scope.addToCart = function() {
                         $rootScope.layout.loading = true;
                         var formData = $('#add_to_cart_form').serializeObject();
+                        formData["spec_id"] = $scope.selectedSpec;
                         $.ajax('/api/carts/', {
                                 method : 'post',
                                 headers : {

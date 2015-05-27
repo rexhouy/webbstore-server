@@ -69,8 +69,13 @@ class Api::OrdersController < ApiController
         private
         def update_product_sales(orders_products, func)
                 orders_products.each do |order_product|
-                        order_product.product.sales = order_product.product.sales.send(func, order_product.count)
-                        order_product.product.save!
+                        if order_product.specification.nil?
+                                order_product.product.sales = order_product.product.sales.send(func, order_product.count)
+                                order_product.product.save!
+                        else
+                                order_product.specification.sales = order_product.specification.sales.send(func, order_product.count)
+                                order_product.specification.save!
+                        end
                 end
         end
         def order_name(orders_products)
@@ -121,11 +126,19 @@ class Api::OrdersController < ApiController
                         p = Product.find(product["id"])
                         op.price = p.price
                         op.product = p
+                        unless product["spec_id"].nil?
+                                op.specification = Specification.find(product["spec_id"])
+                                op.price = op.specification.price
+                        end
                         if has_enough_storage? op
                                 orders_products << op
                         else
                                 @errors ||= []
-                                @errors << "产品[#{p.name}]仅剩#{p.storage-p.sales}件"
+                                if product["spec_id"].nil?
+                                        @errors << "产品[#{p.name}]仅剩#{p.storage-p.sales}件"
+                                else
+                                        @errors << "产品[#{p.name}]仅剩#{op.specification.storage-op.specification.sales}件"
+                                end
                         end
                 end
                 raise "产品剩余数量不足" unless @errors.nil?
@@ -133,7 +146,9 @@ class Api::OrdersController < ApiController
         end
 
         def has_enough_storage?(order_product)
-                storage = order_product.product.storage - order_product.product.sales
+                storage = (order_product.specification.nil?) ?
+                order_product.product.storage - order_product.product.sales :
+                        order_product.specification.storage - order_product.specification.sales
                 storage >= order_product.count
         end
 

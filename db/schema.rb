@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150526063542) do
+ActiveRecord::Schema.define(version: 20150527072316) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -26,20 +26,6 @@ ActiveRecord::Schema.define(version: 20150526063542) do
   end
 
   add_index "addresses", ["user_id"], name: "fk_rails_12809c9026", using: :btree
-
-  create_table "bootsy_image_galleries", force: :cascade do |t|
-    t.integer  "bootsy_resource_id",   limit: 4
-    t.string   "bootsy_resource_type", limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "bootsy_images", force: :cascade do |t|
-    t.string   "image_file",       limit: 255
-    t.integer  "image_gallery_id", limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "groups", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -66,33 +52,49 @@ ActiveRecord::Schema.define(version: 20150526063542) do
   add_index "orders", ["seller_id"], name: "fk_rails_4498acc18a", using: :btree
 
   create_table "orders_products", force: :cascade do |t|
-    t.integer  "count",      limit: 4
-    t.decimal  "price",                precision: 10, scale: 2
-    t.integer  "order_id",   limit: 4
-    t.integer  "product_id", limit: 4
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
+    t.integer  "count",            limit: 4
+    t.decimal  "price",                      precision: 10, scale: 2
+    t.integer  "order_id",         limit: 4
+    t.integer  "product_id",       limit: 4
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+    t.integer  "specification_id", limit: 4
   end
 
   add_index "orders_products", ["order_id"], name: "fk_rails_889bfce267", using: :btree
   add_index "orders_products", ["product_id"], name: "fk_rails_331586c13a", using: :btree
+  add_index "orders_products", ["specification_id"], name: "index_orders_products_on_specification_id", using: :btree
 
   create_table "products", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
     t.text     "article",     limit: 65535
-    t.decimal  "price",                     precision: 10, scale: 2
     t.string   "cover_image", limit: 255
     t.integer  "owner_id",    limit: 4
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
-    t.integer  "storage",     limit: 4
-    t.integer  "sales",       limit: 4
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
     t.boolean  "recommend",   limit: 1
     t.boolean  "on_sale",     limit: 1
+    t.decimal  "price",                     precision: 8, scale: 2
+    t.integer  "storage",     limit: 4
+    t.integer  "sales",       limit: 4
+    t.integer  "status",      limit: 4
   end
 
   add_index "products", ["owner_id"], name: "fk_rails_718105988b", using: :btree
+
+  create_table "specifications", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "value",      limit: 255
+    t.integer  "product_id", limit: 4
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.decimal  "price",                  precision: 8, scale: 2
+    t.integer  "storage",    limit: 4
+    t.integer  "sales",      limit: 4
+  end
+
+  add_index "specifications", ["product_id"], name: "fk_rails_9b321d46dc", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -122,6 +124,8 @@ ActiveRecord::Schema.define(version: 20150526063542) do
   add_foreign_key "orders", "users", column: "customer_id"
   add_foreign_key "orders_products", "orders"
   add_foreign_key "orders_products", "products"
+  add_foreign_key "orders_products", "specifications", on_delete: :cascade
   add_foreign_key "products", "groups", column: "owner_id"
+  add_foreign_key "specifications", "products", on_delete: :cascade
   add_foreign_key "users", "groups"
 end

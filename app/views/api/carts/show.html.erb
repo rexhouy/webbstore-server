@@ -34,18 +34,21 @@
           <div class="col-md-6 col-sm-6 col-xs-6 order-item-name">
             <a ng-href="/products/<%= product['id']%>" class="table-center inherit-height cart-image">
               <div><%= product['detail'].name%></div>
+              <% unless product["spec"].nil? %>
+              <div style="color: #999;font-size: 12px;"><%= product["spec"].value %></div>
+              <% end %>
             </a>
           </div>
           <div class="col-md-3 col-sm-3 col-xs-3">
             <div class="list-item" style="overflow:hidden;">
-              <div class="price "><%= number_to_currency product_price(product), locale: :'zh-CN', precision: 0 %></div>
+              <div class="price "><%= number_to_currency product_price(product), precision: 2 %></div>
               <%= select_tag "count",
                   options_for_select(1..10, product["count"]),
-                  :onchange => "cart.updateCount(this, #{product['id']})",
+                  :onchange => "cart.updateCount(this, #{product['id']}, #{product['spec_id']})",
                   :class => "list-item" %>
             </div>
             <div class="list-item">
-              <a ng-click="remove(<%=product['id']%>)" class="btn icon icon-danger"><i class="glyphicon glyphicon-trash"></i></a>
+              <a ng-click="remove(<%=product['id']%>, <%=product['spec_id']%>)" class="btn icon icon-danger"><i class="glyphicon glyphicon-trash"></i></a>
             </div>
           </div>
         </div>

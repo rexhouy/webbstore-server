@@ -1,7 +1,8 @@
 module Api::CartsHelper
 
         def product_price(product)
-                product["count"].to_i * product["detail"].price.to_i
+                unit_price = (product["spec"].nil?) ? product["detail"].price.to_i : product["spec"].price.to_i
+                product["count"].to_i * unit_price
         end
 
         def cart_price(cart)

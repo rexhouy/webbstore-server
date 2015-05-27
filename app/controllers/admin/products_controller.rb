@@ -3,7 +3,7 @@ class Admin::ProductsController < AdminController
         load_and_authorize_resource
 
         def index
-                @products = Product.paginate(:page => params[:page])
+                @products = Product.available.paginate(:page => params[:page])
         end
 
         def edit
@@ -29,6 +29,7 @@ class Admin::ProductsController < AdminController
 
         def create
                 @product = Product.new(product_params)
+                @product.owner_id = current_user.group.id
                 if @product.save
                         redirect_to :action => "show", :id => @product.id
                 else
@@ -42,13 +43,15 @@ class Admin::ProductsController < AdminController
         end
 
         def destroy
-                Product.destroy(params[:id])
+                @product = Product.find(params[:id])
+                @product.update(status: Product.statuses[:disabled], on_sale: false)
                 redirect_to admin_products_path
         end
 
         private
         def product_params
-                params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale, :cover_image)
+                params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale, :cover_image,
+                                                specifications_attributes: [:id, :name, :value, :price, :storage])
         end
 
         def preview_params

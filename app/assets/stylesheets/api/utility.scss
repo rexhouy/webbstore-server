@@ -232,3 +232,7 @@
 .animate-hide-left.ng-hide {
   left: -100%;
 }
+
+.disable-scroll {
+    overflow: hidden;
+}

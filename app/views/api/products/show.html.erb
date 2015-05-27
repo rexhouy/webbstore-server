@@ -12,8 +12,8 @@
     <%= form_tag '', :class => 'inherit-height table-center-wrap pull-right', :id => 'add_to_cart_form'  do%>
     <%= hidden_field_tag :id, @product.id %>
     <div class="table-center">
-      <button class="btn btn-primary pull-right" ng-click="addToCart()" type="submit">
-        立即购买 <%= number_to_currency @product.price, locale: :'zh-CN', precision: 0 %>
+      <button class="btn btn-primary pull-right" ng-click="chooseSpecs()" type="submit">
+        <%= number_to_currency @product.price, locale: :'zh-CN', precision: 2 %> <%= "起" unless @product.specifications.empty?%>
       </button>
     </div>
   <% end %>
@@ -26,3 +26,41 @@
     <%=raw @product.article %>
   </div>
 </article>
+
+<!-- Specification Selection -->
+<% unless @product.specifications.empty? %>
+<article class="specbar container" ng-show="showSpecs" id="specbar">
+  <header>
+    <div class="col-md-10 col-sm-10 col-xs-8 inherit-height table-center-wrap">
+      <h3 class="table-center"><%= @product.name %></h3>
+    </div>
+    <div class="col-md-2 col-sm-2 col-xs-4 inherit-height">
+      <button type="button" class="icon btn btn-lg pull-right inherit-height" ng-click="showSpecs=false">
+        <i class="glyphicon glyphicon-remove"></i>
+      </button>
+    </div>
+  </header>
+  <section class="col-md-12 spec-section">
+    <% specification_group(@product.specifications).each do |group_name, specs| %>
+    <p class="title"><%= group_name %></p>
+    <ul>
+      <% specs.each do |spec| %>
+      <li class="selectable" ng-class="{selected: selectedSpec == <%=spec.id%>}" ng-click="selectedSpec=<%=spec.id%>"><%= spec.value %></li>
+      <% end %>
+    </ul>
+    <% end %>
+    <div style="padding-left:40px;margin:10px 0;">
+      <% specification_group(@product.specifications).each do |group_name, specs| %>
+      <% specs.each do |spec| %>
+      <div ng-show="selectedSpec == <%=spec.id%>"><strong>单价： <%=number_to_currency spec.price, precision: 2%></strong></div>
+      <% end %>
+      <% end %>
+    </div>
+    <div style="padding-left:40px;">
+      <button class="btn btn-primary btn-block" ng-disabled="selectedSpec == null" ng-click="addToCart()">
+        <span class="glyphicon glyphicon-shopping-cart"></span> 加入购物车
+      </button>
+    </div>
+  </section>
+</article>
+<% end %>

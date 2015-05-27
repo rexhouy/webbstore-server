@@ -1,7 +1,7 @@
 class Api::ProductsController < ApiController
 
         def index
-                @recommendProducts = Product.recommend.all
+                @recommendProducts = Product.recommend.available.valid.all
                 render layout: false
         end
 
@@ -11,7 +11,7 @@ class Api::ProductsController < ApiController
         end
 
         def all
-                products = Product.paginate(:page => params[:page])
+                products = Product.available.valid.paginate(:page => params[:page])
                 render json: products
         end
 

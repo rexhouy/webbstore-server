@@ -20,7 +20,11 @@
             <tbody>
               <% @cart.each do |product| %>
               <tr>
-                <td><%= product["detail"].name %></td>
+                <td><%= product["detail"].name %>
+                  <% unless product["spec"].nil? %>
+                  <em>(<%= product["spec"].value %>)</em>
+                  <% end %>
+                </td>
                 <td class="number-align"><%= product["count"] %></td>
                 <td class="number-align"><%= number_to_currency product_price(product), locale: :'zh-CN', precision: 0 %></td>
               </tr>

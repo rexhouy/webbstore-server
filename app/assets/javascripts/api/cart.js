@@ -9,7 +9,7 @@
  */
 angular.module('webStore')
         .controller('CartCtrl', function ($scope, $rootScope, $http, $location, $templateCache, $route) {
-                $scope.remove = function(id) {
+                $scope.remove = function(id, spec_id) {
                         $.ajax('/api/carts', {
                                 method : 'post',
                                 headers : {
@@ -17,7 +17,8 @@ angular.module('webStore')
                                 },
                                 data : {
                                         _method : "delete",
-                                        id : id
+                                        id : id,
+                                        spec_id : spec_id
                                 }
                         }).done(function(data){
                                 $templateCache.remove('/api/carts');
@@ -27,7 +28,7 @@ angular.module('webStore')
                 };
 
                 window.cart = {
-                        updateCount: function(select, id) {
+                        updateCount: function(select, id, spec_id) {
                                 $.ajax('/api/carts', {
                                         method : 'post',
                                         headers : {
@@ -36,6 +37,7 @@ angular.module('webStore')
                                         data : {
                                                 _method : "put",
                                                 id : id,
+                                                spec_id : spec_id,
                                                 count : select.value
                                         }
                                 }).done(function(data){

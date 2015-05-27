@@ -8,7 +8,7 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
   </head>
-  <body ng-app="webStore">
+  <body ng-app="webStore" ng-class="{'disable-scroll': showMenu || showSpecification}">
 
     <header>
       <div class="navbar navbar-default" role="navigation">
@@ -69,7 +69,7 @@
         </ul>
       </section>
     </nav>
-    <div class="block-layer ng-cloak" ng-show="showMenu" ng-cloak ng-click="showMenu=false"></div>
+    <div class="block-layer ng-cloak" ng-show="showMenu || showSpecs" ng-cloak ng-click="showMenu=false; showSpecs=false"></div>
 
     <div class="container" style="background-color: #fff;min-height:200px;" ng-view save-my-content>
       <%= yield %>
