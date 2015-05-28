@@ -63,14 +63,14 @@ class Api::CartsController < ApiController
         def change_product_count(id, spec_id, count)
                 cart = get_cart
                 matchedProduct = cart.bsearch do |product|
-                        product["id"].eql? id.to_s and product["spec_id"].eql? spec_id.to_s
+                        product["id"].eql? id.to_s and (product["spec_id"].nil? or product["spec_id"].eql?(spec_id.to_s))
                 end
                 matchedProduct["count"] = count unless matchedProduct.nil?
         end
         def add_product_to_cart(id, spec_id)
                 cart = get_cart
                 existProduct = cart.bsearch do |product|
-                        product["id"].eql? id and product["spec_id"].eql? spec_id
+                        product["id"].eql? id and (product["spec_id"].nil? or product["spec_id"].eql?(spec_id.to_s))
                 end
                 if existProduct.nil?
                         cart << { "id" => id, "count" => 1, "spec_id" => spec_id }

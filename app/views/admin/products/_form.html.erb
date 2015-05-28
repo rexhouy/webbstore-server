@@ -31,7 +31,7 @@
       价格
   <% end %>
   <div class="col-sm-4">
-    <%= p.number_field :price, :class => "form-control" %>
+    <%= p.number_field :price, :class => "form-control", step: "any", min: 0 %>
   </div>
   </div>
 

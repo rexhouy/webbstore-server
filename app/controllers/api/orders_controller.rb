@@ -88,7 +88,7 @@ class Api::OrdersController < ApiController
                 params = @@payment_config["ipaynow"]["params"].clone
                 params["mhtOrderNo"] = order.order_id
                 params["mhtOrderName"] = order.name
-                params["mhtOrderAmt"] = (order.subtotal * 100).to_i
+                params["mhtOrderAmt"] = (order.subtotal * 100).to_f
                 params["mhtOrderDetail"] = order.detail
                 params["mhtOrderStartTime"] = order.created_at.strftime("%Y%m%d%H%M%S")
                 params["mhtSignature"] = SignatureService.new.sign(params)
@@ -97,7 +97,7 @@ class Api::OrdersController < ApiController
 
         def subtotal(products)
                 products.reduce(0) do |sum, p|
-                        sum += p.price.to_i * p.count.to_i
+                        sum += p.price.to_f * p.count.to_f
                 end
         end
 

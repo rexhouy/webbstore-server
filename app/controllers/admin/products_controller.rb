@@ -55,6 +55,10 @@ class Admin::ProductsController < AdminController
 
         private
         def destroyed_specs(specs)
+                specs ||= []
+                if params[:product][:specifications_attributes].nil?
+                        return specs
+                end
                 new_spec_ids = params[:product][:specifications_attributes].map do |p|
                         p[1][:id].to_i
                 end

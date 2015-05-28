@@ -44,11 +44,11 @@
               <div class="price "><%= number_to_currency product_price(product), precision: 2 %></div>
               <%= select_tag "count",
                   options_for_select(1..10, product["count"]),
-                  :onchange => "cart.updateCount(this, #{product['id']}, #{product['spec_id']})",
+                  :onchange => "cart.updateCount(this, #{product['id']}, '#{product['spec_id']}')",
                   :class => "list-item" %>
             </div>
             <div class="list-item">
-              <a ng-click="remove(<%=product['id']%>, <%=product['spec_id']%>)" class="btn icon icon-danger"><i class="glyphicon glyphicon-trash"></i></a>
+              <a ng-click="remove(<%=product['id']%>, '<%= product['spec_id']%>')" class="btn icon icon-danger"><i class="glyphicon glyphicon-trash"></i></a>
             </div>
           </div>
         </div>
