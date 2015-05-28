@@ -12,10 +12,15 @@ class Admin::ProductsController < AdminController
 
         def update
                 @product = Product.find(params[:id])
-                if @product.update(product_params)
-                        redirect_to :action => "show", :id => @product.id
-                else
-                        render "edit"
+                Product.transaction do
+                        destroyed_specs(@product.specifications).each do |spec|
+                                spec.update(status: Specification.statuses[:disabled])
+                        end
+                        if @product.update(product_params)
+                                redirect_to :action => "show", :id => @product.id
+                        else
+                                render "edit"
+                        end
                 end
         end
 
@@ -49,6 +54,15 @@ class Admin::ProductsController < AdminController
         end
 
         private
+        def destroyed_specs(specs)
+                new_spec_ids = params[:product][:specifications_attributes].map do |p|
+                        p[1][:id].to_i
+                end
+                specs.select do |spec|
+                        !new_spec_ids.include?(spec.id)
+                end
+        end
+
         def product_params
                 params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale, :cover_image,
                                                 specifications_attributes: [:id, :name, :value, :price, :storage])

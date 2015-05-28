@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class Product < ActiveRecord::Base
         belongs_to :owner, class_name: "Group", foreign_key: :owner_id
-        has_many :specifications, dependent: :delete_all
+        has_many :specifications, -> { where(status: Specification.statuses[:available]) }
         accepts_nested_attributes_for :specifications
 
         enum status: [:available, :disabled]

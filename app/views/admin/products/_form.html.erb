@@ -54,13 +54,13 @@
           </tr>
         </thead>
         <tbody id="specification_tbody">
-          <%= p.fields_for :specifications do |spec| %>
+          <% p.object.specifications.each do |spec| %>
             <tr>
-              <td style="display:none"><input type="hidden" value="<%= spec.object.id%>"></td>
-              <td><input type="text" class="form-control" value="<%= spec.object.name %>"></td>
-              <td><input type="text" class="form-control" value="<%= spec.object.value %>"></td>
-              <td><input type="number" class="form-control" value="<%= spec.object.price %>"></td>
-              <td><input type="number" class="form-control" value="<%= spec.object.storage %>"></td>
+              <td style="display:none"><input type="hidden" value="<%= spec.id%>"></td>
+              <td><input type="text" class="form-control" value="<%= spec.name %>"></td>
+              <td><input type="text" class="form-control" value="<%= spec.value %>"></td>
+              <td><input type="number" class="form-control" value="<%= spec.price %>"></td>
+              <td><input type="number" class="form-control" value="<%= spec.storage %>"></td>
               <td>
                 <button type="button" class="btn btn-danger" onclick="product.removeSpec(this)" title="删除">
                   <span class='glyphicon glyphicon-trash' style='color:#fff;'></span>

@@ -8,8 +8,11 @@ class Specification < ActiveRecord::Base
         validates :price, presence: true, numericality: true
         validates :storage, presence: true, numericality: { only_integer: true }
 
+        enum status: [:available, :disabled]
+
         before_create do
                 self.sales = 0
+                self.status = Specification.statuses[:available]
         end
 
 end
