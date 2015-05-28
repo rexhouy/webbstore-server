@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: undecided -*-
 require "securerandom"
 
 class Api::OrdersController < ApiController
@@ -90,7 +90,7 @@ class Api::OrdersController < ApiController
                 params["mhtOrderName"] = order.name
                 params["mhtOrderAmt"] = (order.subtotal * 100).to_i
                 params["mhtOrderDetail"] = order.detail
-                params["mhtOrderStartTime"] = "20150528205334"#order.created_at.strftime("%Y%m%d%H%M%S")
+                params["mhtOrderStartTime"] = order.created_at.strftime("%Y%m%d%H%M%S")
                 params["mhtSignature"] = SignatureService.new.sign(params)
                 params
         end
