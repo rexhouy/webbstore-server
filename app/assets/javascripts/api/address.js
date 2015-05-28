@@ -8,7 +8,7 @@
  * Controller of the webStoreApp
  */
 angular.module('webStore')
-        .controller('AddressCtrl', function ($scope, $compile, $templateCache, $location, $route, addressService) {
+        .controller('AddressCtrl', ["$scope", "$compile", "$templateCache", "$location", "$route", "addressService", function ($scope, $compile, $templateCache, $location, $route, addressService) {
 
                 (function init(){
                         $scope.states = addressService.getStates();
@@ -152,4 +152,4 @@ angular.module('webStore')
                                 });
                         }
                 };
-        });
+        }]);

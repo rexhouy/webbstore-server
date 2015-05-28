@@ -8,5 +8,5 @@
  * Controller of the webStoreApp
  */
 angular.module('webStore')
-  .controller('MeCtrl', function ($scope) {
-  });
+  .controller('MeCtrl', ["$scope", function ($scope) {
+  }]);

@@ -8,7 +8,7 @@
  * Controller of the webStoreApp
  */
 angular.module('webStore')
-        .controller('OrderCtrl', function ($scope, $location, $templateCache, $route) {
+        .controller('OrderCtrl', ["$scope", "$location", "$templateCache", "$route", function ($scope, $location, $templateCache, $route) {
                 $scope.toDetail = function(id) {
                         $location.path("/orders/"+id);
                 };
@@ -24,4 +24,4 @@ angular.module('webStore')
 			        $route.reload();
 		        });
 	        };
-        });
+        }]);

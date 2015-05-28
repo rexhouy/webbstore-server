@@ -6,7 +6,7 @@
  * Controller of the webStore
  */
 angular.module('webStore')
-        .controller('CartConfirmCtrl', function ($scope, $rootScope, $http, $location, $templateCache, $route, $compile, addressService) {
+        .controller('CartConfirmCtrl', ["$scope", "$rootScope", "$http", "$location", "$templateCache", "$route", "$compile", "addressService", function ($scope, $rootScope, $http, $location, $templateCache, $route, $compile, addressService) {
 
                 (function init() {
                         // Payment
@@ -91,4 +91,4 @@ angular.module('webStore')
 
                 };
 
-        });
+        }]);

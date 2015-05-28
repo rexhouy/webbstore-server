@@ -8,5 +8,5 @@
  * Controller of the webStoreApp
  */
 angular.module('webStore')
-  .controller('HomeCtrl', function ($scope) {
-  });
+  .controller('HomeCtrl', ["$scope", function ($scope) {
+  }]);

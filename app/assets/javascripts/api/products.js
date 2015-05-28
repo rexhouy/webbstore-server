@@ -8,7 +8,7 @@
  * Controller of the webStoreApp
  */
 angular.module('webStore')
-        .controller('ProductsCtrl', function ($scope, $rootScope, $http, $location, $templateCache, $route) {
+        .controller('ProductsCtrl', ["$scope", "$rootScope", "$http", "$location", "$templateCache", "$route", function ($scope, $rootScope, $http, $location, $templateCache, $route) {
                 $scope.chooseSpecs = function() {
                         var hasSpecs = $("#specbar")[0];
                         if (hasSpecs) {
@@ -63,4 +63,4 @@ angular.module('webStore')
                                         $scope.loading = false;
                                 });
                 };
-        });
+        }]);

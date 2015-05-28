@@ -1,5 +1,5 @@
 angular
-        .module('webStore').config(function($routeProvider, $locationProvider) {
+        .module('webStore').config(["$routeProvider", "$locationProvider", function($routeProvider, $locationProvider) {
                 $routeProvider
                         .when('/', {
                                 templateUrl: '/api/products',
@@ -48,4 +48,4 @@ angular
                                 templateUrl: 'tmp.html'
                         });
                 $locationProvider.html5Mode(true);
-        });
+        }]);

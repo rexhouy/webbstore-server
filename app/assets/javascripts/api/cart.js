@@ -8,7 +8,7 @@
  * Controller of the webStore
  */
 angular.module('webStore')
-        .controller('CartCtrl', function ($scope, $rootScope, $http, $location, $templateCache, $route) {
+        .controller('CartCtrl', ["$scope", "$rootScope", "$http", "$location", "$templateCache", "$route", function ($scope, $rootScope, $http, $location, $templateCache, $route) {
                 $scope.remove = function(id, spec_id) {
                         $.ajax('/api/carts', {
                                 method : 'post',
@@ -47,4 +47,4 @@ angular.module('webStore')
                         }
                 };
 
-        });
+        }]);

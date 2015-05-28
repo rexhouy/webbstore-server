@@ -8,6 +8,6 @@
  * Controller of the webStoreApp
  */
 angular.module('webStore')
-        .controller('PaymentsCtrl', function ($scope) {
+        .controller('PaymentsCtrl', ["$scope", function ($scope) {
 
-        });
+        }]);
