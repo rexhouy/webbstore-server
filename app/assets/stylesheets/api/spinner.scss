@@ -16,8 +16,14 @@ $duration: 1.5s;
 .spinner {
     animation: rotator $duration linear infinite;
     position: fixed;
-    left: 50%;
-    top: 50%;
+    left: 48%;
+    top: 45%;
+    width: 45px;
+    height: 45px;
+    @media (max-width: 768px) {
+        width: 30px;
+        height: 30px;
+    }
 }
 
 @keyframes rotator {

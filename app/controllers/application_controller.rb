@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
         # For APIs, you may want to use :null_session instead.
         protect_from_forgery with: :exception
 
+        before_action do
+                sleep(1)
+        end
+
         ## Devise strong parameters
         before_filter :configure_permitted_parameters, if: :devise_controller?
         def configure_permitted_parameters

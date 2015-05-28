@@ -38,7 +38,7 @@ class Api::CartsController < ApiController
         def delete
                 cart = get_cart
                 cart.delete_if do |product|
-                        product["id"].eql? params[:id].to_s and product["spec_id"].eql? params[:spec_id].to_s
+                        same_product? product, params[:id], params[:spec_id]
                 end
                 render json: { succeed: true }
         end
@@ -52,6 +52,9 @@ class Api::CartsController < ApiController
         end
 
         private
+        def same_product?(product, id, spec_id)
+                product["id"].eql? id.to_s and (product["spec_id"].nil? or product["spec_id"].eql?(spec_id.to_s))
+        end
         def get_cart_products_detail(cart)
                 cart.map do |product|
                         p = product.clone
@@ -63,14 +66,14 @@ class Api::CartsController < ApiController
         def change_product_count(id, spec_id, count)
                 cart = get_cart
                 matchedProduct = cart.bsearch do |product|
-                        product["id"].eql? id.to_s and (product["spec_id"].nil? or product["spec_id"].eql?(spec_id.to_s))
+                        same_product? product, id, spec_id
                 end
                 matchedProduct["count"] = count unless matchedProduct.nil?
         end
         def add_product_to_cart(id, spec_id)
                 cart = get_cart
                 existProduct = cart.bsearch do |product|
-                        product["id"].eql? id and (product["spec_id"].nil? or product["spec_id"].eql?(spec_id.to_s))
+                        same_product? product, id, spec_id
                 end
                 if existProduct.nil?
                         cart << { "id" => id, "count" => 1, "spec_id" => spec_id }
