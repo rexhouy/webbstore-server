@@ -1,4 +1,4 @@
-# -*- coding: undecided -*-
+# -*- coding: utf-8 -*-
 require "securerandom"
 
 class Api::OrdersController < ApiController
