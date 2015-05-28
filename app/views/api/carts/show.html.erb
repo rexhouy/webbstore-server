@@ -56,7 +56,7 @@
 
         <div class="subtotal">
           <label class="pull-left label">合计</label>
-          <div class="pull-right price"><%= number_to_currency cart_price(@cart), locale: :'zh-CN', precision: 0 %></div>
+          <div class="pull-right price"><%= number_to_currency cart_price(@cart), locale: :'zh-CN', precision: 2 %></div>
         </div>
 
         <div class="vertical-btn-group">

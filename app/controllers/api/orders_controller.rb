@@ -92,6 +92,7 @@ class Api::OrdersController < ApiController
                 params["mhtOrderDetail"] = order.detail
                 params["mhtOrderStartTime"] = order.created_at.strftime("%Y%m%d%H%M%S")
                 params["mhtSignature"] = SignatureService.new.sign(params)
+                params
         end
 
         def subtotal(products)

@@ -58,21 +58,21 @@
     <section>
       <% unless @payment_params.nil? %>
       <form action="https://api.ipaynow.cn" method="post">
-        <input type="hidden" name="funcode" value="#{@payment_params.funcode}">
-        <input type="hidden" name="appId" value="#{@payment_params.appId}">
-        <input type="hidden" name="mhtOrderNo" value="#{@payment_params.mhtOrderNo}">
-        <input type="hidden" name="mhtOrderName" value="#{@payment_params.mhtOrderName}">
-        <input type="hidden" name="mhtOrderType" value="#{@payment_params.mhtOrderType}">
-        <input type="hidden" name="mhtCurrencyType" value="#{@payment_params.mhtCurrencyType}">
-        <input type="hidden" name="mhtOrderAmt" value="#{@payment_params.mhtOrderAmt}">
-        <input type="hidden" name="mhtOrderDetail" value="#{@payment_params.mhtOrderDetail}">
-        <input type="hidden" name="mhtOrderStartTime" value="#{@payment_params.mhtOrderStartTime}">
-        <input type="hidden" name="notifyUrl" value="#{@payment_params.notifyUrl}">
-        <input type="hidden" name="frontNotifyUrl" value="#{@payment_params.frontNotifyUrl}">
-        <input type="hidden" name="mhtCharset" value="#{@payment_params.mhtCharset}">
-        <input type="hidden" name="deviceType" value="#{@payment_params.deviceType}">
-        <input type="hidden" name="mhtSignType" value="#{@payment_params.mhtSignType}">
-        <input type="hidden" name="mhtSignature" value="#{@payment_paramsy.mhtSignature}">
+        <input type="hidden" name="funcode" value="<%=@payment_params['funcode']%>">
+        <input type="hidden" name="appId" value="<%=@payment_params['appId']%>">
+        <input type="hidden" name="mhtOrderNo" value="<%=@payment_params['mhtOrderNo']%>">
+        <input type="hidden" name="mhtOrderName" value="<%=@payment_params['mhtOrderName']%>">
+        <input type="hidden" name="mhtOrderType" value="<%=@payment_params['mhtOrderType']%>">
+        <input type="hidden" name="mhtCurrencyType" value="<%=@payment_params['mhtCurrencyType']%>">
+        <input type="hidden" name="mhtOrderAmt" value="<%=@payment_params['mhtOrderAmt']%>">
+        <input type="hidden" name="mhtOrderDetail" value="<%=@payment_params['mhtOrderDetail']%>">
+        <input type="hidden" name="mhtOrderStartTime" value="<%=@payment_params['mhtOrderStartTime']%>">
+        <input type="hidden" name="notifyUrl" value="<%=@payment_params['notifyUrl']%>">
+        <input type="hidden" name="frontNotifyUrl" value="<%=@payment_params['frontNotifyUrl']%>">
+        <input type="hidden" name="mhtCharset" value="<%=@payment_params['mhtCharset']%>">
+        <input type="hidden" name="deviceType" value="<%=@payment_params['deviceType']%>">
+        <input type="hidden" name="mhtSignType" value="<%=@payment_params['mhtSignType']%>">
+        <input type="hidden" name="mhtSignature" value="<%=@payment_params['mhtSignature']%>">
         <input type="submit" value="立即支付" class="btn btn-primary btn-block">
       </form>
       <% end %>

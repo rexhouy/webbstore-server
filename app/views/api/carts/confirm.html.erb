@@ -26,14 +26,14 @@
                   <% end %>
                 </td>
                 <td class="number-align"><%= product["count"] %></td>
-                <td class="number-align"><%= number_to_currency product_price(product), locale: :'zh-CN', precision: 0 %></td>
+                <td class="number-align"><%= number_to_currency product_price(product), locale: :'zh-CN', precision: 2 %></td>
               </tr>
               <% end %>
             </tbody>
             <tfoot>
               <tr>
                 <td colspan="3" class="number-align">
-                  总价：<%= number_to_currency cart_price(@cart), locale: :'zh-CN', precision: 0 %>
+                  总价：<%= number_to_currency cart_price(@cart), locale: :'zh-CN', precision: 2 %>
                 </td>
               </tr>
             </tfoot>
