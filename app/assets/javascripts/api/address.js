@@ -80,7 +80,7 @@ angular.module('webStore')
                         });
                 };
 
-        });
+        }]);
 
 angular.module('webStore')
         .factory("addressService", function () {
@@ -152,4 +152,4 @@ angular.module('webStore')
                                 });
                         }
                 };
-        }]);
+        });
