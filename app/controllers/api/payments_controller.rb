@@ -1,7 +1,7 @@
 class Api::PaymentsController < ApiController
 
         def front_notify
-                if valid? [:funcode, :appId, :mhtOrderNo, :mhtCharset, :tradeStatus, :mhtReserved]
+                if valid? [:funcode, :appId, :mhtOrderNo, :mhtCharset, :tradeStatus, :mhtReserved, :transStatus]
                         update_order_status(params[:mhtOrderNo])
                         @success = true
                 end
@@ -9,7 +9,7 @@ class Api::PaymentsController < ApiController
         end
 
         def notify
-                if valid? [:funcode, :appId, :mhtOrderNo, :mhtCharset, :tradeStatus, :mhtReserved]
+                if valid? [:funcode, :appId, :mhtOrderNo, :mhtCharset, :tradeStatus, :mhtReserved, :transStatus]
                         update_order_status(params[:mhtOrderNo])
                         render plain: "success=Y"
                 else
@@ -34,6 +34,7 @@ class Api::PaymentsController < ApiController
                 keys.each do |key|
                         valid_params[key] = params[key]
                 end
+                logger.debug "received notify params: #{valid_params.inspect}"
                 valid_params
         end
 

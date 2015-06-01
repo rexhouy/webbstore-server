@@ -14,7 +14,7 @@ class SignatureService
         def sign(params)
                 sign_param = params.keys.sort.reduce("") do |param_string, key|
                         value = params[key]
-                        is_empty_field = value.nil? or (value.is_a? String and value.empty?)
+                        is_empty_field = (value.nil? or (value.is_a?(String) and value.strip.empty?))
                         is_none_sign_field = @@none_sign_field.include? key
                         param_string << "#{key}=#{value}&" unless (is_empty_field or is_none_sign_field)
                         param_string
