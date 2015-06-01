@@ -21,7 +21,14 @@ table {
 .sign-out-btn {
     border: none;
     background: transparent;
-    color: #62b4f9;
+    color: #304FFE;
     position: relative;
     top: 20px;
+}
+
+
+.auth-container {
+    @media (min-width: 768px) {
+        margin-top: 70px;
+    }
 }

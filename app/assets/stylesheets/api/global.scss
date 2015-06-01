@@ -18,6 +18,7 @@ body {
 }
 
 header {
+    background: $theme-color;
     box-shadow: $shadow;
     z-index: 100;
     position: relative;
@@ -67,5 +68,22 @@ img {
 table {
     a {
         color: #337AB7;
+    }
+}
+
+a.navbar-brand {
+    color: #fff !important;
+}
+
+.auth-cover {
+    background: image-url("auth-cover.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 320px;
+}
+
+.auth-container {
+    @media (min-width: 768px) {
+        margin-top: 70px;
     }
 }

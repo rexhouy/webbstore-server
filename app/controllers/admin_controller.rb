@@ -15,7 +15,7 @@ class AdminController < ApplicationController
         end
 
         def auth_user
-                redirect_to :user_session_url  unless user_signed_in?
+                redirect_to :user_session  unless user_signed_in?
                 unless public_resources?
                         redirect_to :admin_unauthorized_access if current_user.customer?
                 end

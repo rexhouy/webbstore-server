@@ -2,7 +2,15 @@
 @import "variable.scss";
 
 .navbar {
+    border: 0;
+    background: $theme-color;
     margin: 0;
+    a, i {
+        color: #fff;
+        &:hover {
+            color: $accent-color;
+        }
+    }
 }
 
 .navbar-header {
@@ -13,7 +21,10 @@
 .navbar-brand {
     font-weight: bold;
     a {
-        color: $link-color;
+        color: #fff;
+        &:hover {
+            color: $accent-color;
+        }
     }
     margin-left: 0 !important;
 }
@@ -34,9 +45,12 @@
         background-color: $theme-color;
         box-shadow: none;
         height: 70px;
-        a {
+        a, i {
             color: #fff;
             padding: 0 10px;
+            &:hover {
+                color: $accent-color;
+            }
         }
         i {
             color: #fff;
@@ -60,7 +74,7 @@
         }
         a:hover {
             background-color: $theme-color;
-            color: #fff;
+            color: $accent-color;
         }
     }
     .nav-section {
