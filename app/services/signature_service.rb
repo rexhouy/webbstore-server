@@ -4,7 +4,8 @@ require "digest"
 class SignatureService
 
         def initialize
-                @@config = YAML.load_file("#{Rails.root}/config/payment.yml")
+                payment_config = ERB.new File.new("#{Rails.root}/config/payment.yml").read
+                @@config = YAML.load(payment_config.result)
                 @@encrypted_key = md5(@@config["ipaynow"]["key"])
                 @@none_sign_field = ["funcode", "deviceType", "mhtSignType", "mhtSignature"]
         end

@@ -6,7 +6,8 @@ class Api::OrdersController < ApiController
         before_action :auth_user
 
         def initialize
-                @@payment_config = YAML.load_file("#{Rails.root}/config/payment.yml")
+                payment_config = ERB.new File.new("#{Rails.root}/config/payment.yml").read
+                @@payment_config = YAML.load(payment_config.result)
         end
 
         def index
