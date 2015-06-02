@@ -34,6 +34,10 @@ angular
                                 templateUrl: '/api/me',
                                 controller: 'MeCtrl'
                         })
+                        .when('/about', {
+                                templateUrl: '/api/about',
+                                controller: 'AboutCtrl'
+                        })
                         .when('/address', {
                                 templateUrl: '/api/addresses',
                                 controller: 'AddressCtrl'

@@ -73,8 +73,7 @@
             color: $font-color;
         }
         a:hover {
-            background-color: $theme-color;
-            color: $accent-color;
+            background-color: $theme-color-light;
         }
     }
     .nav-section {
@@ -103,6 +102,12 @@
     background-color: #F8F8F8;
     .btn {
         position: absolute;
+    }
+    a, i {
+        color: $theme-color;
+        &:hover {
+            color: $theme-color-dark;
+        }
     }
     .search {
         border: 0;

@@ -63,10 +63,13 @@
       </header>
 
       <section class="nav-section">
-        <p class="title">我的WebStore</p>
         <ul class="nav">
+          <% if user_signed_in? %>
+          <li><a ng-href="/me" ng-click="showMenu=false" class="icon-link-left"><i class="glyphicon glyphicon-home"></i>我的拾惠社</a></li>
+          <% end %>
           <li><a ng-href="/orders/all" ng-click="showMenu=false" class="icon-link-left"><i class="glyphicon glyphicon-list-alt"></i>订单</a></li>
           <li><a ng-href="/carts" ng-click="showMenu=false" class="icon-link-left"><i class="glyphicon glyphicon-shopping-cart"></i>购物车</a></li>
+          <li><a ng-href="/about" ng-click="showMenu=false" class="icon-link-left">关于</a></li>
         </ul>
       </section>
     </nav>
@@ -85,7 +88,7 @@
 
     <footer>
       <div class="container">
-        <p>© rexhouy 2015</p>
+        <p>© 拾惠社 2015</p>
       </div>
     </footer>
 
