@@ -17,7 +17,7 @@
     <tr>
       <td><%= user.email  %></td>
       <td><%= role_name user  %></td>
-      <td><%= user.group.name %></td>
+      <td><%= user.group.name unless user.group.nil? %></td>
       <td>
         <%= link_to edit_admin_user_path(user) do %>
           <span class="glyphicon glyphicon-pencil icon"></span>
