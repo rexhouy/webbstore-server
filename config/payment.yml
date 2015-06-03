@@ -6,8 +6,8 @@ ipaynow:
     appId: <%= ENV['WEBSTORE_IPAYNOW_APPID'] %>
     mhtOrderType: '01'
     mhtCurrencyType: 156
-    notifyUrl: http://www.wolinked.com/api/payment/notify
-    frontNotifyUrl: http://www.wolinked.com/api/payment/front_notify
+    notifyUrl: http://www.tenhs.com/api/payment/notify
+    frontNotifyUrl: http://www.tenhs.com/api/payment/front_notify
     mhtCharset: UTF-8
     deviceType: '06'
     mhtSignType: MD5
