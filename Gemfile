@@ -51,6 +51,9 @@ gem 'bootstrap-wysihtml5-rails', '~> 0.3.3.7'
 # Image upload
 gem "paperclip", "~> 4.2"
 
+# Full text search
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
 
 group :development, :test do
 	# Call 'byebug' anywhere in the code to stop execution and get a debugger console

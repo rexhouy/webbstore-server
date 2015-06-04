@@ -12,7 +12,7 @@ class Api::ProductsController < ApiController
 
         def search
                 @search_text = params[:text]
-                @products = Product.where("match(name, description, article) against(?)", @search_text).all
+                @products = Product.search @search_text
                 render layout: false
         end
 

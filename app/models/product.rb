@@ -4,6 +4,10 @@ class Product < ActiveRecord::Base
         has_many :specifications, -> { where(status: Specification.statuses[:available]) }
         accepts_nested_attributes_for :specifications
 
+        # full text index
+        include Elasticsearch::Model
+        include Elasticsearch::Model::Callbacks
+
         enum status: [:available, :disabled]
 
         before_create do
@@ -38,3 +42,4 @@ class Product < ActiveRecord::Base
         end
 
 end
+Product.import # for auto sync model with elastic search
