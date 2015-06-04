@@ -67,6 +67,15 @@ var app = angular
                         }
                 });
 
+                /**
+                 * Search
+                 */
+                $rootScope.searchText = "";
+                $rootScope.search = function() {
+                        if ($rootScope.searchText) {
+                                $location.path("/search").search("text", $rootScope.searchText);
+                        }
+                };
         }]);
 
 /**

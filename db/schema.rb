@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150527084153) do
+ActiveRecord::Schema.define(version: 20150604015512) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 20150527084153) do
     t.integer  "status",      limit: 4
   end
 
+  add_index "products", ["name", "description", "article"], name: "fulltext_index", type: :fulltext
   add_index "products", ["owner_id"], name: "fk_rails_718105988b", using: :btree
 
   create_table "specifications", force: :cascade do |t|

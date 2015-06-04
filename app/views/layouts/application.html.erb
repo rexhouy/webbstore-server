@@ -25,10 +25,12 @@
             <a class="" href="/">拾惠社</a>
           </section>
 
-          <section class="inherit-height table-center-wrap search-container ng-cloak" ng-show="showSearch" ng-cloak>
-            <button class="btn icon inherit-height highlight-icon" ng-click=""><i class="glyphicon glyphicon-search"></i></button>
-            <button class="btn icon inherit-height" style="right:0" ng-click="showSearch=false"><i class="glyphicon glyphicon-remove"></i></button>
-            <input  type="search" class="search table-center inherit-height pull-left" placeholder="搜索商铺" focus-me="focusSearch">
+          <section class="inherit-height search-container ng-cloak" ng-show="showSearch" ng-cloak>
+            <form ng-submit="search()" class="inherit-height table-center-wrap">
+              <button class="btn icon inherit-height highlight-icon" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+              <button class="btn icon inherit-height" style="right:0" ng-click="showSearch=false"><i class="glyphicon glyphicon-remove"></i></button>
+              <input  type="search" class="search table-center inherit-height pull-left" placeholder="搜索商铺" focus-me="focusSearch" ng-model="searchText">
+            </form>
           </section>
 
           <section class="pull-right inherit-height table-center-wrap" ng-hide="showSearch">

@@ -10,6 +10,12 @@ class Api::ProductsController < ApiController
                 render layout: false
         end
 
+        def search
+                @search_text = params[:text]
+                @products = Product.where("match(name, description, article) against(?)", @search_text).all
+                render layout: false
+        end
+
         def all
                 products = Product.available.valid.paginate(:page => params[:page])
                 render json: products

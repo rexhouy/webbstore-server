@@ -10,8 +10,9 @@ Rails.application.routes.draw do
         namespace :api do
                 # User address
                 resources :addresses
-                # Product detail
+                # Products
                 get 'products' => 'products#index', as: :products
+                get 'products/search' => 'products#search'
                 get 'products/all' => 'products#all'
                 get 'products/:id' => 'products#show', as: :products_detail
                 # Cart

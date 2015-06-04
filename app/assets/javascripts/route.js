@@ -48,6 +48,12 @@ angular
                                 },
                                 controller: 'AddressCtrl'
                         })
+                        .when ('/search', {
+                                templateUrl: function(attr) {
+                                        return "/api/products/search?text="+attr.text;
+                                },
+                                controller: 'ProductsCtrl'
+                        })
                         .when('/admin/product/preview', {
                                 templateUrl: 'tmp.html'
                         });
