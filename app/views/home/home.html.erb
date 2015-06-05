@@ -1,0 +1,62 @@
+<div>
+  <!-- Slide -->
+  <div id="sketch-carousel" class="row" style="height:300px; overflow: hidden;">
+    <div class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#sketch-carousel" data-slide-to="0" class="active"></li>
+        <li data-target="#sketch-carousel" data-slide-to="1"></li>
+      </ol>
+
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner" role="listbox">
+        <div class="item active">
+          <%= image_tag "preview.jpg" %>
+        </div>
+        <div class="item">
+          <%= image_tag "cover.jpg" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row home-nav" style="margin-top: 20px;">
+    <section class="col-sm-3 col-md-3 col-xs-4 card">
+      <a  ng-href="/about">
+        <div class="image">
+          <%= image_tag "logo-large.jpg", alt: "拾惠社", class: "img-circle"%>
+        </div>
+        <h3>公司简介</h3>
+      </a>
+    </section>
+
+    <section class="col-sm-3 col-md-3 col-xs-4 card">
+      <a ng-href="/products">
+        <div class="image">
+          <%= image_tag "cart.png", alt: "拾惠社", class: "img-circle"%>
+        </div>
+        <h3>线上商店</h3>
+      </a>
+    </section>
+
+    <section class="col-sm-3 col-md-3 col-xs-4 card">
+      <a  href="/">
+        <div class="image">
+          <%= image_tag "video.png", alt: "拾惠社", class: "img-circle"%>
+        </div>
+        <h3>视频中心</h3>
+      </a>
+    </section>
+
+    <section class="col-sm-3 col-md-3 col-xs-4 card">
+      <a href="/">
+        <div class="image">
+          <%= image_tag "video.png", alt: "拾惠社", class: "img-circle"%>
+        </div>
+        <h3>视频中心</h3>
+      </a>
+    </section>
+
+  </div>
+</div>

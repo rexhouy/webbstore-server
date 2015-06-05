@@ -2,6 +2,10 @@ angular
         .module('webStore').config(["$routeProvider", "$locationProvider", function($routeProvider, $locationProvider) {
                 $routeProvider
                         .when('/', {
+                                templateUrl: '/home',
+                                controller: 'HomeCtrl'
+                        })
+                        .when('/products', {
                                 templateUrl: '/api/products',
                                 controller: 'ProductsCtrl'
                         })

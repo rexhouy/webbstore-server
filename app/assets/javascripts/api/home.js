@@ -8,5 +8,6 @@
  * Controller of the webStoreApp
  */
 angular.module('webStore')
-  .controller('HomeCtrl', ["$scope", function ($scope) {
-  }]);
+        .controller('HomeCtrl', ["$scope", function ($scope) {
+                $('.carousel').carousel();
+        }]);
