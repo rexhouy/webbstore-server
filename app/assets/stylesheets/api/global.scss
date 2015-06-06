@@ -87,22 +87,22 @@ a.navbar-brand {
 }
 
 #sketch-carousel img {
-    height: 300px !important;
+    max-height: 300px !important;
     margin: 0 auto;
     width: 100%;
+    background:#f7f9eb;
 }
 
-.home-nav .card {
-    @media (max-width:800px) {
+.home-nav {
+    img {
         height: 200px;
-        a {
-            padding: 30px 25px;
-        }
-        .image {
-            height: 85px;
-        }
-        h3 {
-            font-size: 12px;
-        }
+    }
+    h3 {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        font-size: 25px;
+        color: #fff;
+        letter-spacing: 8px;
     }
 }

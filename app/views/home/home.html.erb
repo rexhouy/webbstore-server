@@ -1,9 +1,9 @@
 <div>
   <!-- Slide -->
-  <div id="sketch-carousel" class="row" style="height:300px; overflow: hidden;">
+  <div id="sketch-carousel" class="row" style="max-height:300px; overflow: hidden; background:#f7f9eb; padding-bottom: 40px;">
     <div class="carousel slide" data-ride="carousel">
       <!-- Indicators -->
-      <ol class="carousel-indicators">
+      <ol class="carousel-indicators" style="position:absolute;bottom:-30px;">
         <li data-target="#sketch-carousel" data-slide-to="0" class="active"></li>
         <li data-target="#sketch-carousel" data-slide-to="1"></li>
       </ol>
@@ -20,43 +20,35 @@
     </div>
   </div>
 
-
-  <div class="row home-nav" style="margin-top: 20px;">
-    <section class="col-sm-3 col-md-3 col-xs-4 card">
-      <a  ng-href="/about">
-        <div class="image">
-          <%= image_tag "logo-large.jpg", alt: "拾惠社", class: "img-circle"%>
-        </div>
-        <h3>公司简介</h3>
-      </a>
-    </section>
-
-    <section class="col-sm-3 col-md-3 col-xs-4 card">
-      <a ng-href="/products">
-        <div class="image">
-          <%= image_tag "cart.png", alt: "定制平台", class: "img-circle"%>
-        </div>
+  <div class="row home-nav" style="background:#fff;">
+    <section class="col-sm-6 col-md-6 col-xs-12 col-lg-3" style="padding: 0; margin: 2px 0;">
+      <a ng-href="/products" style="" class="products">
+        <%= image_tag "platform.jpg", alt: "定制平台"%>
         <h3>定制平台</h3>
       </a>
     </section>
 
-    <section class="col-sm-3 col-md-3 col-xs-4 card">
+    <section class="col-sm-6 col-md-6 col-xs-12 col-lg-3" style="padding: 0; margin: 2px 0;">
       <a  href="/">
-        <div class="image">
-          <%= image_tag "video.png", alt: "视觉互动", class: "img-circle"%>
-        </div>
-        <h3>视觉互动</h3>
+          <%= image_tag "farm.jpg", alt: "视觉互动"%>
+          <h3>视觉互动</h3>
       </a>
     </section>
 
-    <section class="col-sm-3 col-md-3 col-xs-4 card">
+    <section class="col-sm-6 col-md-6 col-xs-12 col-lg-3" style="padding: 0; margin: 2px 0;">
       <a href="/">
-        <div class="image">
-          <%= image_tag "video.png", alt: "活动播报", class: "img-circle"%>
-        </div>
+        <%= image_tag "anounce.jpg", alt: "活动播报"%>
         <h3>活动播报</h3>
       </a>
     </section>
+
+
+      <section class="col-sm-6 col-md-6 col-xs-12 col-lg-3" style="padding: 0; margin: 2px 0;">
+        <a  ng-href="/about">
+          <%= image_tag "about.jpg", alt: "拾惠社"%>
+          <h3 style="color:#777;">公司简介</h3>
+        </a>
+      </section>
 
   </div>
 </div>
