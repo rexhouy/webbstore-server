@@ -25,7 +25,6 @@ angular.module('webStore')
                                                          $templateCache.remove('/api/carts');
                                                          $route.reload();
                                                  });
-
                                          };
 
                                          window.cart = {

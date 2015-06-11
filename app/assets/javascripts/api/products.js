@@ -31,7 +31,7 @@ angular.module('webStore')
                         }).done(function(data){
                                 $templateCache.remove('/api/carts');
                                 $location.path('/carts');
-                                $route.reload();
+                                $scope.$apply();
                         });
                 };
 

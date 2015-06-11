@@ -68,3 +68,12 @@ section.recommand {
     text-align: center;
     font-size: 18px;
 }
+
+.products-spinner {
+    width: 100%;
+    height: 80px;
+    text-align: center;
+    .spinner {
+        position: inherit;
+    }
+}

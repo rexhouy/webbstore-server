@@ -21,7 +21,7 @@ angular.module('webStore')
 			        data : { _method : "put" }
 		        }).done(function(data){
 			        $templateCache.remove('/api/orders/'+id);
-			        $route.reload();
+			        $scope.$apply();
 		        });
 	        };
         }]);
