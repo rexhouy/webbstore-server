@@ -20,18 +20,20 @@ angular.module('webStore')
 
                 $scope.addToCart = function() {
                         $rootScope.layout.loading = true;
-                        var formData = $('#add_to_cart_form').serializeObject();
-                        formData["spec_id"] = $scope.selectedSpec;
-                        $.ajax('/api/carts/', {
-                                method : 'post',
-                                headers : {
-                                        'X-CSRF-Token' : utility.getCSRFtoken()
-                                },
-                                data : formData
-                        }).done(function(data){
-                                $templateCache.remove('/api/carts');
-                                $location.path('/carts');
-                                $scope.$apply();
+                        setTimeout(function(){
+                                var formData = $('#add_to_cart_form').serializeObject();
+                                formData["spec_id"] = $scope.selectedSpec;
+                                $.ajax('/api/carts/', {
+                                        method : 'post',
+                                        headers : {
+                                                'X-CSRF-Token' : utility.getCSRFtoken()
+                                        },
+                                        data : formData
+                                }).done(function(data){
+                                        $templateCache.remove('/api/carts');
+                                        $location.path('/carts');
+                                        $scope.$apply();
+                                });
                         });
                 };
 
