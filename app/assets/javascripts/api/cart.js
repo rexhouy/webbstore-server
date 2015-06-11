@@ -11,6 +11,7 @@ angular.module('webStore')
         .controller('CartCtrl', ["$scope", "$rootScope", "$http", "$location", "$templateCache", "$route",
                                  function ($scope, $rootScope, $http, $location, $templateCache, $route) {
                                          $scope.remove = function(id, spec_id) {
+                                                 $rootScope.layout.loading = true;
                                                  $.ajax('/api/carts', {
                                                          method : 'post',
                                                          headers : {
@@ -29,6 +30,7 @@ angular.module('webStore')
 
                                          window.cart = {
                                                  updateCount: function(select, id, spec_id) {
+                                                         $rootScope.layout.loading = true;
                                                          $.ajax('/api/carts', {
                                                                  method : 'post',
                                                                  headers : {
