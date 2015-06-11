@@ -16,6 +16,7 @@
 $offset: 187;
 $duration: 1.5s;
 .spinner {
+    z-index: 1001;
     animation: rotator $duration linear infinite;
     position: fixed;
     left: 48%;
