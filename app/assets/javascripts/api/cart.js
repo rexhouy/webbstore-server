@@ -31,6 +31,7 @@ angular.module('webStore')
                                          window.cart = {
                                                  updateCount: function(select, id, spec_id) {
                                                          $rootScope.layout.loading = true;
+                                                         $scope.$apply();
                                                          $.ajax('/api/carts', {
                                                                  method : 'post',
                                                                  headers : {
