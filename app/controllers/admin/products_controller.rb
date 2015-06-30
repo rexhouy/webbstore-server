@@ -3,15 +3,17 @@ class Admin::ProductsController < AdminController
         load_and_authorize_resource
 
         def index
-                @products = Product.available.paginate(:page => params[:page])
+                @products = Product.owner(owner).available.paginate(:page => params[:page])
         end
 
         def edit
                 @product = Product.find(params[:id])
+                return head(:forbidden) unless @product.owner_id.eql? owner
         end
 
         def update
                 @product = Product.find(params[:id])
+                return head(:forbidden) unless @product.owner_id.eql? owner
                 Product.transaction do
                         destroyed_specs(@product.specifications).each do |spec|
                                 spec.update(status: Specification.statuses[:disabled])
@@ -30,6 +32,7 @@ class Admin::ProductsController < AdminController
 
         def show
                 @product = Product.find(params[:id])
+                return head(:forbidden) unless @product.owner_id.eql? owner
         end
 
         def create
@@ -44,11 +47,13 @@ class Admin::ProductsController < AdminController
 
         def preview
                 @product = Product.new(preview_params)
+                return head(:forbidden) unless @product.owner_id.eql? owner
                 render "/api/products/show", :layout => "application"
         end
 
         def destroy
                 @product = Product.find(params[:id])
+                return head(:forbidden) unless @product.owner_id.eql? owner
                 @product.update(status: Product.statuses[:disabled], on_sale: false)
                 redirect_to admin_products_path
         end
@@ -74,6 +79,10 @@ class Admin::ProductsController < AdminController
 
         def preview_params
                 params.require(:product).permit(:name, :price, :storage, :description, :article, :recommend, :cover_image)
+        end
+
+        def owner
+                current_user.group.id
         end
 
 end

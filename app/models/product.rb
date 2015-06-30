@@ -26,6 +26,10 @@ class Product < ActiveRecord::Base
                 where(recommend: true, on_sale: true)
         end
 
+        def self.owner(owner_id)
+                where(owner_id: owner_id)
+        end
+
         def self.valid
                 where(on_sale: true)
         end
