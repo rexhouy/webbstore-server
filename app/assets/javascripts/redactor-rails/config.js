@@ -1,4 +1,4 @@
-window.init_redactor = function(){
+var init_redactor = function(){
         var csrf_token = $('meta[name=csrf-token]').attr('content');
         var csrf_param = $('meta[name=csrf-param]').attr('content');
         var params;
@@ -11,13 +11,16 @@ window.init_redactor = function(){
                 // application.js and application.css files and uncomment the line below:
                 // "plugins": ['fontsize', 'fontcolor', 'fontfamily', 'fullscreen', 'textdirection', 'clips'],
                 "imageUpload":"/admin/image?" + params,
-                "imageGetJson":"/redactor_rails/pictures",
-                "fileUpload":"/redactor_rails/documents?" + params,
-                "fileGetJson":"/redactor_rails/documents",
-                "path":"/assets/redactor-rails",
-                "css":"style.css",
+                // "imageGetJson":"/redactor_rails/pictures",
+                // "fileUpload":"/redactor_rails/documents?" + params,
+                // "fileGetJson":"/redactor_rails/documents",
+                // "path":"/assets/redactor-rails",
+                // "css":"style.css",
                 "lang":"zh_cn"
         });
-}
+};
 
-$(document).on( 'ready page:load', window.init_redactor );
+$(function(){
+        console.log("+++++++++++++++++");
+        init_redactor();
+});
