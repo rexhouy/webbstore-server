@@ -3,11 +3,11 @@ require "digest"
 
 class SignatureService
 
+        # Class variables
         def initialize
-                payment_config = ERB.new File.new("#{Rails.root}/config/payment.yml").read
-                @@config = YAML.load(payment_config.result)
-                @@encrypted_key = md5(@@config["ipaynow"]["key"])
-                @@none_sign_field = ["funcode", "deviceType", "mhtSignType", "mhtSignature"]
+                @@config ||= YAML.load((ERB.new File.new("#{Rails.root}/config/payment.yml").read).result)
+                @@encrypted_key ||= md5(@@config["ipaynow"]["key"])
+                @@none_sign_field ||= ["funcode", "deviceType", "mhtSignType", "mhtSignature"]
         end
 
         ## Empty fileds are not sign fields.

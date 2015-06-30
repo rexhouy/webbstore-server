@@ -12,7 +12,6 @@
 //
 //= require bootstrap-sprockets
 //= require turbolinks
-//= require bootstrap-wysihtml5
 //= require ng-infinite-scroll.min.js
 //= require_self
 //= require route

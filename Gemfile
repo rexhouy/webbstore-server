@@ -1,8 +1,8 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.0'
+gem 'rails', '4.2.1'
 # Use mysql as the database for Active Record
 gem 'mysql2'
 # Use SCSS for stylesheets
@@ -47,9 +47,12 @@ gem 'bootstrap-sass', '~> 3.3.4'
 gem 'will_paginate', '~> 3.0.6'
 
 # Editor
-gem 'bootstrap-wysihtml5-rails', '~> 0.3.3.7'
-# Image upload
-gem "paperclip", "~> 4.2"
+gem 'redactor-rails'
+# gem 'bootstrap-wysihtml5-rails', '~> 0.3.3.7'
+
+# File upload
+gem 'carrierwave'
+gem "mini_magick"
 
 # Full text search
 gem 'elasticsearch-model'

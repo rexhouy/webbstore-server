@@ -1,0 +1,12 @@
+# File upload configuration
+development:
+  base_url: http://localuploads/
+  storage_path: /var/uploads/
+
+test:
+  base_url: http://localuploads/
+  storage_path: /var/uploads/
+
+production:
+  base_url: http://uploads.tenhs.com/
+  storage_path: /var/uploads/

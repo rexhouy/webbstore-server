@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-        devise_for :users
+  mount RedactorRails::Engine => '/redactor_rails'
+              devise_for :users
 
         # The priority is based upon order of creation: first created -> highest priority.
         # See how all your routes lay out with "rake routes".
@@ -56,6 +57,9 @@ Rails.application.routes.draw do
                 post 'product/preview' => 'products#preview', as: :product_preview
 
                 get 'unauthorized_access' => 'unauthorized_access#index', as: :unauthorized_access
+
+                # Image
+                post 'image' => 'images#create'
 
                 get '*path' => 'welcome#index'
         end
