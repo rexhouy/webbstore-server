@@ -6,9 +6,7 @@
                 if (csrf_param !== undefined && csrf_token !== undefined) {
                         params = csrf_param + "=" + encodeURIComponent(csrf_token);
                 }
-                // Debug online.
-                console.debug($('.redactor')[0] + "=====================");
-                $('.redactor').redactor({
+                $('#product_article').redactor({
                         "imageUpload":"/admin/image?" + params,
                         "lang":"zh_cn"
                 });

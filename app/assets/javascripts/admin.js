@@ -15,4 +15,5 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require redactor-rails
+//= require_tree ./redactor-rails
 //= require redactor-rails/langs/zh_cn
