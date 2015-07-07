@@ -1,6 +1,16 @@
 Rails.application.routes.draw do
-  mount RedactorRails::Engine => '/redactor_rails'
-              devise_for :users
+        mount RedactorRails::Engine => '/redactor_rails'
+
+        devise_for :users, controllers: {
+                sessions: "auth/sessions",
+                confirmations: "auth/sessions",
+                omniauth: "auth/omniauth",
+                passwords: "auth/passwords",
+                registrations: "auth/registrations",
+                unlocks: "auth/unlocks"
+        }
+
+        get 'users/captcha' => 'auth/captcha#index'
 
         # The priority is based upon order of creation: first created -> highest priority.
         # See how all your routes lay out with "rake routes".

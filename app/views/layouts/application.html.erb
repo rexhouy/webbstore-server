@@ -51,7 +51,7 @@
         <% if user_signed_in? %>
         <a  class="inherit-height pull-left" ng-href="/me"  ng-click="showMenu=false">
           <%= image_tag "user.png" %>
-          <p class="inherit-height nav-header-link-text"><span class="table-center inherit-height"><%= current_user.email %></span></p>
+          <p class="inherit-height nav-header-link-text"><span class="table-center inherit-height"><%= current_user.tel %></span></p>
         </a>
         <% else %>
         <a href="/users/sign_in" target="_self" class="inherit-height pull-left">

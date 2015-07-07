@@ -4,9 +4,7 @@ class ApplicationController < ActionController::Base
         # For APIs, you may want to use :null_session instead.
         protect_from_forgery with: :exception
 
-        before_action do
-                sleep(1)
-        end
+        before_action :store_location
 
         ## Devise strong parameters
         before_filter :configure_permitted_parameters, if: :devise_controller?
@@ -26,28 +24,9 @@ class ApplicationController < ActionController::Base
                     request.path != "/users/password/new" &&
                     request.path != "/users/password/edit" &&
                     request.path != "/users/confirmation" &&
-                    request.path != "/users/sign_out" &&
-                    !request.xhr?) # don't store ajax calls
+                    request.path != "/users/sign_out")
                         session[:last_location] = request.fullpath
                 end
-        end
-
-        ## Need to redirect user to '/xxx' instead of '/api/xxx'
-        def after_sign_in_path_for(resource)
-                sign_in_url = new_user_session_url
-                if request.referer == sign_in_url
-                        super
-                else
-                        last_location =  session[:last_location]
-                        unless last_location.nil? or last_location.empty?
-                                last_location.gsub!(/\/api\//, "/")
-                        end
-                        last_location || root_path
-                end
-        end
-
-        def after_sign_out_path_for(resource)
-                user_session_url
         end
 
 end

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module DeviseHelper
 
         def devise_error_messages!
@@ -12,12 +13,16 @@ module DeviseHelper
                 end
 
                 return "" if resource.errors.empty? && flash_alerts.empty?
+
+                style = (resource.errors.empty? && !flash[:error]) ? "alert-info" : "alert-danger"
                 errors = resource.errors.empty? ? flash_alerts : resource.errors.full_messages
 
-                messages = errors.map { |msg| content_tag(:li, msg) }.join
+                messages = errors.map { |msg|
+                        content_tag(:li, msg).gsub(/Password/, "密码").gsub(/Tel/, "手机号")
+                }.join
 
                 html = <<-HTML
-    <div class="alert alert-danger">
+    <div class="alert #{style}">
       <ul>#{messages}</ul>
     </div>
     HTML

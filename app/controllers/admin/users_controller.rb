@@ -53,7 +53,7 @@ class Admin::UsersController < AdminController
 
         private
         def user_params
-                params.require(:user).permit(:id, :email, :role, :group_id, :password, :password_confirmation)
+                params.require(:user).permit(:id, :role, :group_id, :password, :password_confirmation, :tel)
         end
 
 end

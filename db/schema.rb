@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150630162746) do
+ActiveRecord::Schema.define(version: 20150706125739) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -26,6 +26,16 @@ ActiveRecord::Schema.define(version: 20150630162746) do
   end
 
   add_index "addresses", ["user_id"], name: "fk_rails_12809c9026", using: :btree
+
+  create_table "captchas", force: :cascade do |t|
+    t.string   "tel",              limit: 11, null: false
+    t.string   "register_token",   limit: 6,  null: false
+    t.datetime "register_sent_at",            null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "captchas", ["tel"], name: "index_captchas_on_tel", unique: true, using: :btree
 
   create_table "groups", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -84,22 +94,6 @@ ActiveRecord::Schema.define(version: 20150630162746) do
   add_index "products", ["name", "description", "article"], name: "fulltext_index", type: :fulltext
   add_index "products", ["owner_id"], name: "fk_rails_718105988b", using: :btree
 
-  create_table "redactor_assets", force: :cascade do |t|
-    t.string   "data_file_name",    limit: 255, null: false
-    t.string   "data_content_type", limit: 255
-    t.integer  "data_file_size",    limit: 4
-    t.integer  "assetable_id",      limit: 4
-    t.string   "assetable_type",    limit: 30
-    t.string   "type",              limit: 30
-    t.integer  "width",             limit: 4
-    t.integer  "height",            limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "redactor_assets", ["assetable_type", "assetable_id"], name: "idx_redactor_assetable", using: :btree
-  add_index "redactor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_redactor_assetable_type", using: :btree
-
   create_table "specifications", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.string   "value",      limit: 255
@@ -115,7 +109,7 @@ ActiveRecord::Schema.define(version: 20150630162746) do
   add_index "specifications", ["product_id"], name: "fk_rails_9b321d46dc", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "email",                  limit: 255, default: ""
     t.string   "encrypted_password",     limit: 255, default: "", null: false
     t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
@@ -130,12 +124,13 @@ ActiveRecord::Schema.define(version: 20150630162746) do
     t.integer  "role",                   limit: 4
     t.integer  "group_id",               limit: 4
     t.integer  "status",                 limit: 4
+    t.string   "tel",                    limit: 11,               null: false
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["group_id"], name: "index_users_on_group_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["role"], name: "index_users_on_role", using: :btree
+  add_index "users", ["tel"], name: "index_users_on_tel", unique: true, using: :btree
 
   add_foreign_key "orders", "addresses"
   add_foreign_key "orders", "groups", column: "seller_id"
