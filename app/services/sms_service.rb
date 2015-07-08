@@ -22,12 +22,12 @@ class SmsService
                 path = "#{@@url}?sig=#{sig_parameter(time)}"
                 http = Net::HTTP.new(@@host, @@port)
                 http.use_ssl = true
-                http.set_debug_output($stdout)
+                http.set_debug_output(Rails.logger)
                 req = Net::HTTP::Post.new(path)
                 req.body = data(tel, captcha)
                 set_header(req, time)
                 resp = http.request(req)
-                Rails.logger.info "Send CAPTCHA response #{resp}"
+                Rails.logger.info "Send CAPTCHA response #{resp.inspect}"
         end
 
         private

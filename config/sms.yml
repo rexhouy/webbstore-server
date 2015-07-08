@@ -2,7 +2,7 @@
 development:
   host: "sandboxapp.cloopen.com"
   port: "8883"
-  url: "/2013-12-26/Accounts/<%= ENV['WEBSTORE_SMS_SID'] %>/SMS/TemplateSMS"
+  url: "/2013-12-26/Accounts/<%= ENV['WEBSTORE_SMS_ACCOUNT_ID'] %>/SMS/TemplateSMS"
   auth_token: <%= ENV['WEBSTORE_SMS_AUTH_TOKEN'] %>
   app_id: <%= ENV['WEBSTORE_SMS_APP_ID'] %>
   account_id: <%= ENV['WEBSTORE_SMS_ACCOUNT_ID'] %>
@@ -10,7 +10,7 @@ development:
 test:
   host: "sandboxapp.cloopen.com"
   port: "8883"
-  url: "/2013-12-26/Accounts/<%= ENV['WEBSTORE_SMS_SID'] %>/SMS/TemplateSMS"
+  url: "/2013-12-26/Accounts/<%= ENV['WEBSTORE_SMS_ACCOUNT_ID'] %>/SMS/TemplateSMS"
   auth_token: <%= ENV['WEBSTORE_SMS_AUTH_TOKEN'] %>
   app_id: <%= ENV['WEBSTORE_SMS_APP_ID'] %>
   account_id: <%= ENV['WEBSTORE_SMS_ACCOUNT_ID'] %>
@@ -18,7 +18,7 @@ test:
 production:
   host: "app.cloopen.com"
   port: "8883"
-  url: "/2013-12-26/Accounts/<%= ENV['WEBSTORE_SMS_SID'] %>/SMS/TemplateSMS"
+  url: "/2013-12-26/Accounts/<%= ENV['WEBSTORE_SMS_ACCOUNT_ID'] %>/SMS/TemplateSMS"
   auth_token: <%= ENV['WEBSTORE_SMS_AUTH_TOKEN'] %>
   app_id: <%= ENV['WEBSTORE_SMS_APP_ID'] %>
   account_id: <%= ENV['WEBSTORE_SMS_ACCOUNT_ID'] %>
