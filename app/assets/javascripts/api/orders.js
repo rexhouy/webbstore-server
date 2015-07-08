@@ -11,6 +11,7 @@ angular.module('webStore')
         .controller('OrderCtrl', ["$scope", "$location", "$templateCache", "$route", function ($scope, $location, $templateCache, $route) {
                 $scope.toDetail = function(id) {
                         $location.path("/orders/"+id);
+	                $scope.$apply();
                 };
 	        $scope.cancel = function(id) {
 		        $.ajax('/api/orders/'+id, {
@@ -21,7 +22,7 @@ angular.module('webStore')
 			        data : { _method : "put" }
 		        }).done(function(data){
 			        $templateCache.remove('/api/orders/'+id);
-			        $scope.$apply();
+			        $route.reload();
 		        });
 	        };
         }]);

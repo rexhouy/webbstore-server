@@ -1,6 +1,14 @@
 class Auth::SessionsController < Devise::SessionsController
         # before_filter :configure_sign_in_params, only: [:create]
 
+        def initialize
+                super
+                @@redirect_path_mapper = {
+                        "/home" => "/",
+                        "/api/orders" => "/orders/all"
+                }
+        end
+
         # GET /resource/sign_in
         # def new
         #   super
@@ -20,7 +28,9 @@ class Auth::SessionsController < Devise::SessionsController
         def after_sign_in_path_for(resource)
                 last_location =  session[:last_location]
                 unless last_location.nil? or last_location.empty?
-                        last_location = "/orders/all" if last_location.start_with?("/api/orders")
+                        @@redirect_path_mapper.each do |key, value|
+                                return last_location = value if last_location.start_with?(key)
+                        end
                         last_location.gsub!(/\/api\//, "/")
                 end
                 last_location || root_path
@@ -37,4 +47,6 @@ class Auth::SessionsController < Devise::SessionsController
         # def configure_sign_in_params
         #   devise_parameter_sanitizer.for(:sign_in) << :attribute
         # end
+
+
 end
