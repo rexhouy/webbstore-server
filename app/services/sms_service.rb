@@ -54,8 +54,8 @@ class SmsService
                 {
                         "to": tel,
                         "appId": @@app_id,
-                        "templateId": "1",
-                        "datas": [captcha, "1"]
+                        "templateId": "25599",
+                        "datas": [captcha]
                 }.to_json
         end
 
