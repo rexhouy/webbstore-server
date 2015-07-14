@@ -15,7 +15,7 @@
   <tbody>
     <% @users.each do |user| %>
     <tr>
-      <td><%= user.email  %></td>
+      <td><%= user.tel  %></td>
       <td><%= role_name user  %></td>
       <td><%= user.group.name unless user.group.nil? %></td>
       <td>
