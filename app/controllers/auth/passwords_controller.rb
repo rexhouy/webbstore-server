@@ -43,7 +43,8 @@ class Auth::PasswordsController < Devise::PasswordsController
                 if !c.nil? && c.register_token.eql?(captcha)
                         # CAPTCHA correct
                 else
-                        build_resource(sign_up_params)
+                        self.resource = User.new
+                        self.resource.tel = tel
                         flash[:error] = "验证码不正确."
                         render "new"
                 end
