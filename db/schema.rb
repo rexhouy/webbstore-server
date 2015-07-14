@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150706125739) do
+ActiveRecord::Schema.define(version: 20150714091350) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -93,6 +93,15 @@ ActiveRecord::Schema.define(version: 20150706125739) do
 
   add_index "products", ["name", "description", "article"], name: "fulltext_index", type: :fulltext
   add_index "products", ["owner_id"], name: "fk_rails_718105988b", using: :btree
+
+  create_table "simple_captcha_data", force: :cascade do |t|
+    t.string   "key",        limit: 40
+    t.string   "value",      limit: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "simple_captcha_data", ["key"], name: "idx_key", using: :btree
 
   create_table "specifications", force: :cascade do |t|
     t.string   "name",       limit: 255

@@ -9,10 +9,14 @@
 </div>
 
 <div class="form-group">
-  <%= label_tag :captcha, "验证码" %><br />
+  <label>图形验证码</label>
+  <%= show_simple_captcha %>
+</div>
+<div class="form-group">
+  <%= label_tag :tel_captcha, "手机验证码" %><br />
   <div>
     <div class="input-group">
-      <%= text_field_tag :captcha, nil, class: "form-control", maxlength: 6, minlength: 6 %>
+      <%= text_field_tag :tel_captcha, nil, class: "form-control", maxlength: 6, minlength: 6 %>
       <span class="input-group-btn">
         <button id="wizard" class="btn btn-default" type="button" style="height: auto;" onclick="auth.castCaptcha()">获取验证码</button>
       </span>

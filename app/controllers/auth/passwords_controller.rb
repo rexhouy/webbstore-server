@@ -38,9 +38,7 @@ class Auth::PasswordsController < Devise::PasswordsController
 
         def check_captcha
                 tel = params[:user][:tel]
-                captcha = params[:captcha]
-                puts tel
-                puts "++++++++++++++++++"
+                captcha = params[:tel_captcha]
                 c = Captcha.find_by_tel(tel)
                 if !c.nil? && c.register_token.eql?(captcha)
                         # CAPTCHA correct

@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
 require "securerandom"
 class Auth::CaptchaController < ApplicationController
 
         def index
+                return render(text: "图形验证码不正确") unless check_photo_captcha
                 captcha = Captcha.find_by_tel(params[:tel])
                 captcha ||= Captcha.new
                 captcha.tel = params[:tel]
@@ -12,6 +14,12 @@ class Auth::CaptchaController < ApplicationController
 
                 captcha.save
                 render text: "ok".html_safe
+        end
+
+        private
+
+        def check_photo_captcha
+                simple_captcha_valid?
         end
 
 end

@@ -15,12 +15,12 @@ angular.module('webStore')
                 };
         }])
         .directive('saveMyContent', ['$templateCache', function($templateCache)
-                           {
-                                   return {
-                                           restrict: 'A',
-                                           compile:  function (element)
-                                           {
-                                                   $templateCache.put('tmp.html', element.html());
-                                           }
-                                   };
-                           }]);
+                                     {
+                                             return {
+                                                     restrict: 'A',
+                                                     compile:  function (element)
+                                                     {
+                                                             $templateCache.put('tmp.html', element.html());
+                                                     }
+                                             };
+                                     }]);

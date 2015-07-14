@@ -26,9 +26,11 @@
 		return tel;
 	};
 
+	var cancelCoolDown = false;
 	var coolDown = function(time) {
-		if (time === 0) {
+		if (time === 0 || cancelCoolDown) {
 			$("#wizard").removeAttr("disabled").html("获取验证码");
+			cancelCoolDown = false;
 			return;
 		}
 		$("#wizard").html("获取验证码("+time+")");
@@ -37,7 +39,20 @@
 		}, 1000);
 	};
 
+	var checkPhotoCaptcha = function() {
+		var captcha = $("#captcha").val();
+		if (!captcha) {
+			alert("请输入图形验证码");
+			return null;
+		}
+		return captcha;
+	};
+
 	auth.castCaptcha = function() {
+		var photoCaptcha = checkPhotoCaptcha();
+		if (!photoCaptcha) {
+			return;
+		}
 		var tel = checkTel();
 		if (!tel) {
 			return;
@@ -45,10 +60,25 @@
 		$("#wizard").attr("disabled", "disabled");
 		coolDown(60);
 		$.get("/users/captcha", {
-			tel : tel
+			tel : tel,
+			captcha : photoCaptcha
+		}).done(function(data){
+			if (data != "ok") {
+				cancelCoolDown = true;
+				alert(data);
+			}
 		});
 	};
 
 	window.auth = auth;
+
+	$(function(){
+		$(".simple_captcha_image").click(function() {
+			var href = $(".simple_captcha_refresh_button a").attr("href");
+			$.get(href).done(function(data){
+				eval(data);
+			});
+		});
+	});
 
 })();
