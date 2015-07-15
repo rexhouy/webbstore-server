@@ -9,15 +9,10 @@ class ImageUploader < CarrierWave::Uploader::Base
         storage :file
         # storage :fog
 
-        # Class variables
-        def initialize
-                @@config ||= YAML.load((ERB.new File.new("#{Rails.root}/config/uploads.yml").read).result)[Rails.env]
-        end
-
         # Override the directory where uploaded files will be stored.
         # This is a sensible default for uploaders that are meant to be mounted:
         def store_dir
-                @@config["storage_path"] + "images/" + DateTime.now.strftime("%Y%m%d")
+                Config::UPLOADS["storage_path"] + "images/" + DateTime.now.strftime("%Y%m%d")
         end
 
         # Provide a default URL as a default if there hasn't been a file uploaded:

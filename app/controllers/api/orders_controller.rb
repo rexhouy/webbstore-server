@@ -5,11 +5,6 @@ class Api::OrdersController < ApiController
 
         before_action :auth_user
 
-        def initialize
-                payment_config = ERB.new File.new("#{Rails.root}/config/payment.yml").read
-                @@payment_config = YAML.load(payment_config.result)
-        end
-
         def index
                 @type = params[:type]
                 @orders = Order.where(customer: current_user).type(@type).order(id: :desc).paginate(:page => params[:page])
@@ -86,7 +81,7 @@ class Api::OrdersController < ApiController
         end
 
         def payment(order)
-                params = @@payment_config["ipaynow"]["params"].clone
+                params = Config::PAYMENT["ipaynow"]["params"].clone
                 params["mhtOrderNo"] = order.order_id
                 params["mhtOrderName"] = order.name
                 params["mhtOrderAmt"] = (order.subtotal * 100).to_i

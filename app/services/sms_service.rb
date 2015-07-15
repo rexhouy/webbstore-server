@@ -5,22 +5,18 @@ require 'digest/md5'
 
 class SmsService
 
-        # Class variables
-        def initialize
-                @@config ||= YAML.load((ERB.new File.new("#{Rails.root}/config/sms.yml").read).result)[Rails.env]
-                @@host = @@config["host"]
-                @@port = @@config["port"]
-                @@url = @@config["url"]
-                @@auth_token = @@config["auth_token"]
-                @@app_id = @@config["app_id"]
-                @@account_id = @@config["account_id"]
-        end
+        HOST = Config::SMS["host"]
+        PORT = Config::SMS["port"]
+        URL = Config::SMS["url"]
+        AUTH_TOKEN = Config::SMS["auth_token"]
+        APP_ID = Config::SMS["app_id"]
+        ACCOUNT_ID = Config::SMS["account_id"]
 
         def send_captcha(captcha, tel)
                 Rails.logger.info "Send CAPTCHA(#{captcha}) to #{tel}"
                 time = time_stamp
-                path = "#{@@url}?sig=#{sig_parameter(time)}"
-                http = Net::HTTP.new(@@host, @@port)
+                path = "#{URL}?sig=#{sig_parameter(time)}"
+                http = Net::HTTP.new(HOST, PORT)
                 http.use_ssl = true
                 http.set_debug_output(Rails.logger)
                 req = Net::HTTP::Post.new(path)
@@ -37,11 +33,11 @@ class SmsService
         end
 
         def sig_parameter(timestamp)
-                Digest::MD5.hexdigest(@@account_id + @@auth_token + timestamp)
+                Digest::MD5.hexdigest(ACCOUNT_ID + AUTH_TOKEN + timestamp)
         end
 
         def authorization(timestamp)
-                Base64.urlsafe_encode64(@@account_id + ":" + timestamp)
+                Base64.urlsafe_encode64(ACCOUNT_ID + ":" + timestamp)
         end
 
         def set_header(req, timestamp)
@@ -53,7 +49,7 @@ class SmsService
         def data(tel, captcha)
                 {
                         "to": tel,
-                        "appId": @@app_id,
+                        "appId": APP_ID,
                         "templateId": "25599",
                         "datas": [captcha]
                 }.to_json
