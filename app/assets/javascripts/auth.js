@@ -58,7 +58,6 @@
 			return;
 		}
 		$("#wizard").attr("disabled", "disabled");
-		coolDown(60);
 		$.get("/users/captcha", {
 			tel : tel,
 			captcha : photoCaptcha
@@ -67,6 +66,7 @@
 				cancelCoolDown = true;
 				alert(data);
 			}
+			coolDown(60);
 		});
 	};
 
