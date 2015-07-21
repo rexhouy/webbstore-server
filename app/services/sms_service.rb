@@ -12,7 +12,7 @@ class SmsService
         APP_ID = Config::SMS["app_id"]
         ACCOUNT_ID = Config::SMS["account_id"]
 
-        def send_captcha(captcha, tel)
+        def send_captcha(captcha, tel, template_id)
                 Rails.logger.info "Send CAPTCHA(#{captcha}) to #{tel}"
                 time = time_stamp
                 path = "#{URL}?sig=#{sig_parameter(time)}"
@@ -20,7 +20,7 @@ class SmsService
                 http.use_ssl = true
                 http.set_debug_output(Rails.logger)
                 req = Net::HTTP::Post.new(path)
-                req.body = data(tel, captcha)
+                req.body = data(tel, captcha, template_id)
                 set_header(req, time)
                 resp = http.request(req)
                 Rails.logger.info "Send CAPTCHA response #{resp.inspect}"
@@ -46,11 +46,11 @@ class SmsService
                 req["Authorization"] = authorization(timestamp)
         end
 
-        def data(tel, captcha)
+        def data(tel, captcha, template_id)
                 {
                         "to": tel,
                         "appId": APP_ID,
-                        "templateId": "25599",
+                        "templateId": template_id,
                         "datas": [captcha]
                 }.to_json
         end

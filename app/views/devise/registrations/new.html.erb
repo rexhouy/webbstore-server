@@ -17,6 +17,7 @@
   <div>
     <div class="input-group">
       <%= text_field_tag :tel_captcha, nil, class: "form-control", maxlength: 6, minlength: 6 %>
+      <input type="hidden" id="template_id" value="26325">
       <span class="input-group-btn">
         <button id="wizard" class="btn btn-default" type="button" style="height: auto;" onclick="auth.castCaptcha()">获取验证码</button>
       </span>

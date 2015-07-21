@@ -60,7 +60,8 @@
 		$("#wizard").attr("disabled", "disabled");
 		$.get("/users/captcha", {
 			tel : tel,
-			captcha : photoCaptcha
+			captcha : photoCaptcha,
+			template_id : $("#template_id").val()
 		}).done(function(data){
 			if (data != "ok") {
 				cancelCoolDown = true;
