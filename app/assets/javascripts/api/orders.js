@@ -27,7 +27,7 @@ angular.module('webStore')
 	        };
 	        $scope.wechatPay = function() {
 		        var appId = $("#appId").val();
-		        var redirectURI = encodeURIComponent("http://114.215.116.1/api/orders/payment/wechat_redirect");
+		        var redirectURI = encodeURIComponent("http://www.tenhs.com/api/orders/payment/wechat_redirect");
 		        var orderId = $("#orderId").val();
 		        var auth_url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri="+redirectURI+"&response_type=code&scope=snsapi_base&state="+orderId+"#wechat_redirect";
 		        window.location = auth_url;

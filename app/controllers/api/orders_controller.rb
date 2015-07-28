@@ -14,6 +14,7 @@ class Api::OrdersController < ApiController
         def show
                 @order = Order.find(params[:id])
                 @payment_params = payment(@order) if @order.placed?
+                @appid = Config::PAYMENT["weixin"]["appid"]
                 render layout: false
         end
 
