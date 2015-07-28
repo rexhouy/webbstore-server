@@ -17,6 +17,10 @@ class Api::PaymentsController < ApiController
                 end
         end
 
+        def wechat_notify
+
+        end
+
         private
         def update_order_status(order_id)
                 order = Order.find_by_order_id(order_id)

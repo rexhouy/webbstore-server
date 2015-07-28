@@ -3,8 +3,7 @@ module Api::OrdersHelper
 
         def order_status(order)
                 if order.placed?
-                        return "等待付款" if order.online_pay?
-                        return "已下单"
+                        return "等待付款"
                 elsif order.paid?
                         return "已付款"
                 elsif order.shipping?
@@ -19,7 +18,7 @@ module Api::OrdersHelper
         end
 
         def need_online_pay?(order)
-                order.placed? && order.online_pay?
+                order.placed?
         end
 
         def is_cancelable?(order)
@@ -27,8 +26,8 @@ module Api::OrdersHelper
         end
 
         def payment_name(order)
-                return "线上支付" if order.online_pay?
-                "货到付款"
+                return "微信支付" if order.wechat?
+                "支付宝"
         end
 
 end

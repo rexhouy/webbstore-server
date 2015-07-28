@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
         get 'home' => 'home#home'
 
+
         namespace :api do
                 # User address
                 resources :addresses
@@ -40,6 +41,9 @@ Rails.application.routes.draw do
                 get 'orders' => 'orders#index'
                 get 'orders/:id' => 'orders#show'
                 put 'orders/:id' => 'orders#cancel', as: :orders_cancel
+
+                # Wechat payment
+                get 'orders/payment/wechat_redirect' => 'orders#wechat_pay'
 
                 # User home
                 get 'me' => 'me#index'

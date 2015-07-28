@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>拾惠社--微信支付</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link href="<%=image_url('favicon.ico')%>" rel="icon">
+  </head>
+  <body>
+    <p>
+      正在跳转到微信支付，请稍后...
+    </p>
+    <p>
+      <a href="javascript:go()">GO</a>
+    </p>
+     <script stype="text/javascript">
+       function go() {
+       WeixinJSBridge.invoke(
+                'getBrandWCPayRequest', {
+                        "appId" : "<%= @wechat_params['appId'] %>",
+                        "timeStamp": "<%= @wechat_params['timeStamp'] %>",
+                        "nonceStr" : "<%= @wechat_params['nonceStr'] %>",
+                        "package" : "<%= @wechat_params['package'] %>",
+                        "signType" : "<%= @wechat_params['signType'] %>",
+                        "paySign" : "<%= @wechat_params['paySign'] %>"
+                },
+                function(res){
+                        if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                                alert("ok");
+                        }
+                }
+        );
+       }
+
+     </script>
+</body>
+</html>

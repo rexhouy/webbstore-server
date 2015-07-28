@@ -13,7 +13,14 @@ class Api::OrdersController < ApiController
 
         def show
                 @order = Order.find(params[:id])
-                @payment_params = payment(@order) if @order.placed? && @order.online_pay?
+                @payment_params = payment(@order) if @order.placed?
+                render layout: false
+        end
+
+        def wechat_pay
+                code = params[:code]
+                id = params[:state]
+                @wechat_params = WechatService.new.pay(Order.find(id), request.remote_ip, code)
                 render layout: false
         end
 
@@ -88,7 +95,7 @@ class Api::OrdersController < ApiController
                 params["mhtOrderDetail"] = order.detail
                 params["mhtOrderStartTime"] = DateTime.now.strftime("%Y%m%d%H%M%S")
                 params["mhtSignature"] = SignatureService.new.sign(params)
-                params
+                return params
         end
 
         def subtotal(products)

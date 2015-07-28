@@ -11,3 +11,17 @@ ipaynow:
     mhtCharset: UTF-8
     deviceType: '06'
     mhtSignType: MD5
+
+weixin:
+  appid: <%= ENV['WECHAT_APP_ID'] %>
+  appsecret: <%= ENV['WECHAT_APP_SECRET'] %>
+  mch_id: <%= ENV['WECHAT_MCHID'] %>
+  notify_url: http://114.215.116.1/api/payment/weixin/notify
+  prepay:
+    host: api.mch.weixin.qq.com
+    port: 443
+    path: /pay/unifiedorder
+  access_token:
+    host: api.weixin.qq.com
+    port: 443
+    path: /sns/oauth2/access_token

@@ -72,15 +72,11 @@ angular.module('webStore')
                                                                 },
                                                                 data : {
                                                                         addressId : $scope.selectedAddress,
-                                                                        paymentType : $scope.onlinePay ? "online_pay" : "offline_pay"
+                                                                        paymentType : $scope.wechat ? "wechat" : "alipay"
                                                                 }
                                                         }).done(function(data) {
                                                                 if (data.success) {
-                                                                        if ($scope.onlinePay) {
-                                                                                $location.path("/orders/"+data.id); // to payment page
-                                                                        } else {
-                                                                                $location.path("/orders/all"); // to order page
-                                                                        }
+                                                                        $location.path("/orders/"+data.id); // to payment page
                                                                 } else {
                                                                         $rootScope.layout.loading = false;
                                                                         $scope.showError = true;

@@ -6,7 +6,7 @@ class Order < ActiveRecord::Base
         belongs_to :address
 
         enum status: [:placed, :paid, :shipping, :delivered, :canceled]
-        enum payment_type: [:online_pay, :offline_pay]
+        enum payment_type: [:wechat, :alipay]
 
 
         def self.type(type)
