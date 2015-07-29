@@ -15,24 +15,37 @@
       <a href="javascript:go()">GO</a>
     </p>
      <script stype="text/javascript">
-       function go() {
-       WeixinJSBridge.invoke(
-                'getBrandWCPayRequest', {
-                        "appId" : "<%= @wechat_params['appId'] %>",
-                        "timeStamp": "<%= @wechat_params['timeStamp'] %>",
-                        "nonceStr" : "<%= @wechat_params['nonceStr'] %>",
-                        "package" : "<%= @wechat_params['package'] %>",
-                        "signType" : "<%= @wechat_params['signType'] %>",
-                        "paySign" : "<%= @wechat_params['paySign'] %>"
-                },
+       function onBridgeReady(){
+       var params = {
+                        "appId" : "<%= @wechat_params[:appId] %>",
+                        "timeStamp": "<%= @wechat_params[:timeStamp] %>",
+                        "nonceStr" : "<%= @wechat_params[:nonceStr] %>",
+                        "package" : "<%= @wechat_params[:package] %>",
+                        "signType" : "<%= @wechat_params[:signType] %>",
+                        "paySign" : "<%= @wechat_params[:paySign] %>"
+                };
+       WeixinJSBridge.invoke("getBrandWCPayRequest", params,
                 function(res){
                         if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-                                alert("ok");
+                               // 操作成功，跳转到成功页面
+                               window.location.href = "/api/payment/<%=@order_id%>?success=true"
+                        } else {
+                               // 用户放弃操作或操作是失败，跳转到失败页面
+                               window.location.href = "/api/payment/<%=@order_id%>?success=false"
                         }
                 }
         );
        }
-
+       if (typeof WeixinJSBridge == "undefined"){
+           if ( document.addEventListener ) {
+               document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+           } else if (document.attachEvent) {
+               document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+               document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+           }
+       } else {
+           onBridgeReady();
+       }
      </script>
 </body>
 </html>

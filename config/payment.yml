@@ -16,7 +16,7 @@ weixin:
   appid: <%= ENV['WECHAT_APP_ID'] %>
   appsecret: <%= ENV['WECHAT_APP_SECRET'] %>
   mch_id: <%= ENV['WECHAT_MCHID'] %>
-  notify_url: http://114.215.116.1/api/payment/weixin/notify
+  notify_url: http://www.tenhs.com/api/payment/wechat/notify
   prepay:
     host: api.mch.weixin.qq.com
     port: 443

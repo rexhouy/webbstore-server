@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 require "rubygems"
 require "json"
+require 'active_support/core_ext'
 
 class WechatService
 
-        WECHAT = Config::PAYMENT["weixin"]
+        # WECHAT = Config::PAYMENT["weixin"]
 
         def pay(order, client_ip, code)
                 Rails.logger.debug "Start handle wechat payment, client_ip: #{client_ip}, code: #{code}"
@@ -44,7 +45,7 @@ class WechatService
                 resp = http.request(req)
                 Rails.logger.debug "Get prepay id response: #{resp.body}"
                 resp_xml = Hash.from_xml(resp.body.gsub("\n", ""))
-                return resp_xml[:prepay_id] if "success".eql? resp_xml[:return_code]
+                return resp_xml["xml"]["prepay_id"] if "SUCCESS".eql? resp_xml["xml"]["return_code"].upcase
                 nil
         end
 
@@ -82,6 +83,7 @@ class WechatService
                         signType: "MD5",
                 }
                 params[:paySign] = sign(params)
+                Rail.logger.debug "JSAPI params: #{params}"
                 params
         end
 
@@ -93,7 +95,7 @@ class WechatService
                         param_string << "#{key}=#{value}&" unless is_empty_field
                         param_string
                 end
-                sign_param << "key=#{WECHAT['api_secret']}"
+                sign_param << "key=#{WECHAT['prepay']['api_secret']}"
                 Rails.logger.debug "Sign param: #{sign_param}"
                 value = md5(sign_param).upcase
                 Rails.logger.debug "Signature: #{value}"

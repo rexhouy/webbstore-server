@@ -20,8 +20,8 @@ class Api::OrdersController < ApiController
 
         def wechat_pay
                 code = params[:code]
-                id = params[:state]
-                @wechat_params = WechatService.new.pay(Order.find(id), request.remote_ip, code)
+                @order_id = params[:state]
+                @wechat_params = WechatService.new.pay(Order.find(@order_id), request.remote_ip, code)
                 render layout: false
         end
 

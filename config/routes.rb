@@ -51,6 +51,8 @@ Rails.application.routes.draw do
                 # Payment callback
                 post 'payment/notify' => 'payments#notify'
                 get 'payment/front_notify' => 'payments#front_notify'
+                get 'payment/:id' => 'payments#result'
+                post 'payment/wechat/notify' => 'payments#wechat_notify'
 
                 # About
                 get 'about' => 'about#index'
