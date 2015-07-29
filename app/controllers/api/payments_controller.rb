@@ -20,7 +20,7 @@ class Api::PaymentsController < ApiController
         def wechat_notify
                 result = request.body.read
                 logger.debug "Notification received from wechat: #{result}"
-                resp_xml = Hash.from_xml(resp.body.gsub("\n", ""))
+                resp_xml = Hash.from_xml(result.gsub("\n", ""))
                 if "SUCCESS".eql? resp_xml["xml"]["return_code"].upcase
                         order_id = resp_xml['xml']['out_trade_no']
                         logger.info "Payment succeed [#{order_id}]."
