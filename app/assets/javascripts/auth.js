@@ -17,7 +17,7 @@
 	
 	var auth = {};
 
-	var checkTel = function() {
+	var checkTel = function(checkTelExistence) {
 		var tel = $("#user_tel").val();
 		if (tel == null || tel.length != 11 || isNaN(tel)) {
 			alert("请输入合法的手机号");

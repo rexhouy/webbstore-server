@@ -14,7 +14,7 @@
           <table class="table">
             <thead>
               <tr>
-                <th>商品</th><th class="number-align">数量</th><th class="number-align">单价</th>
+                <th>商品</th><th class="number-align" style="min-width: 45px;">数量</th><th class="number-align">单价</th>
               </tr>
             </thead>
             <tbody>
@@ -47,7 +47,6 @@
       <h3 class="col-md-2 col-sm-2 col-xs-12 icon-link-left form-group-title"><span class="circle highlight">2</span>配送地址</h3>
       <div class="col-md-8 col-sm-8 col-xs-12">
         <div class="confirm-content">
-          <p style="margin-left:10px;">绿色的为选中的地址</p>
           <div id="addresses">
             <% @user.addresses.each do |address| %>
             <%= render partial: "/api/addresses/item", object: address %>

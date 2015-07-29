@@ -26,12 +26,12 @@
       <div class="col-sm-10 col-md-9 col-xs-12">
         <% @cart.each do |product| %>
         <div class="cart row">
-          <div class="col-md-3 col-sm-3 col-xs-3 talbe-center-wrap inherit-height">
+          <div class="col-md-3 col-sm-3 talbe-center-wrap inherit-height not-small-screen">
             <a ng-href="/products/<%= product['id']%>" class="table-center inherit-height cart-image">
               <%= image_tag product['detail'].cover_image %>
             </a>
           </div>
-          <div class="col-md-6 col-sm-6 col-xs-6 order-item-name">
+          <div class="col-md-6 col-sm-6 col-xs-8 order-item-name">
             <a ng-href="/products/<%= product['id']%>" class="table-center inherit-height cart-image">
               <div><%= product['detail'].name%></div>
               <% unless product["spec"].nil? %>
@@ -39,7 +39,7 @@
               <% end %>
             </a>
           </div>
-          <div class="col-md-3 col-sm-3 col-xs-3">
+          <div class="col-md-3 col-sm-3 col-xs-4">
             <div class="list-item" style="overflow:hidden;">
               <div class="price "><%= number_to_currency product_price(product), precision: 2 %></div>
               <%= select_tag "count",

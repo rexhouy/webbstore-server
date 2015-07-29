@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>拾惠社</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width,user-scalable=no">
     <link href="<%=image_url('favicon.ico')%>" rel="icon">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
@@ -77,15 +77,19 @@
     </nav>
     <div class="block-layer ng-cloak" ng-show="showMenu || showSpecs" ng-cloak ng-click="showMenu=false; showSpecs=false"></div>
 
-    <div class="container" style="background-color: #fff;min-height:200px;" ng-view save-my-content>
+    <div class="container" style="background-color: #fff;min-height:200px;" ng-view save-my-content  autoscroll="true">
       <%= yield %>
     </div>
 
-    <div class="ng-cloak" ng-show="layout.loading" ng-cloak><!-- Loading animation -->
+    <img src="/images/spinner.gif" style="position:fixed;left:-1000px;"></img>
+    <div  class="ng-cloak" ng-show="layout.loading" ng-cloak><!-- Loading animation  -->
       <div class="block-layer block-layer-light"></div>
-      <svg class="spinner" viewBox="0 0 66 66" >
-        <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
-      </svg>
+      <div class="spinner-container img-circle">
+        <div class="spinner"></div>
+      </div>
+      <!-- <svg class="spinner" viewBox="0 0 66 66" > -->
+      <!--   <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle> -->
+      <!-- </svg> -->
     </div>
 
     <footer>

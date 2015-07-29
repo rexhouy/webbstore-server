@@ -2,7 +2,7 @@
   <div class="form-group">
     <%= p.label :name, "名字",  :class => "col-sm-2 control-label" %>
     <div class="col-sm-4">
-      <%= p.telephone_field :name, :class => "form-control", "ng-model": "address.name" %>
+      <%= p.text_field :name, :class => "form-control", "ng-model": "address.name" %>
     </div>
   </div>
   <div class="form-group">
@@ -12,13 +12,13 @@
     </div>
   </div>
   <div class="form-group">
-    <%= p.label :state, "省",  :class => "col-sm-2 control-label"  %>
+    <%= p.label :state, "市",  :class => "col-sm-2 control-label"  %>
     <div class="col-sm-4">
       <%= p.select :state, [], {}, {class: "form-control", "ng-model": "address.state", "ng-options": "state for state in states track by state", "ng-change": "stateChange()"} %>
     </div>
   </div>
   <div class="form-group">
-    <%= p.label :city, "市", :class => "col-sm-2 control-label"  %>
+    <%= p.label :city, "区", :class => "col-sm-2 control-label"  %>
     <div class="col-sm-4">
       <%= p.select :city, {}, {}, {class: "form-control", "ng-model": "address.city", "ng-options": "city for city in cities track by city"} %>
     </div>

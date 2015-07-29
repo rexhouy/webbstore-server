@@ -85,11 +85,8 @@ angular.module('webStore')
 angular.module('webStore')
         .factory("addressService", function () {
                 var addresses = [{
-                        name : "云南",
-                        cities : ["昆明","曲靖","保山"]
-                }, {
-                        name : "贵州",
-                        cities : ["贵阳","六盘水"]
+                        name : "北京",
+                        cities : ["东城区","丰台区","大兴区","平谷区","怀柔区","房山区","昌平区","朝阳区","海淀区","石景山区","西城区","通州区","门头沟区","顺义区"]
                 }];
                 return {
                         getStates : function() {
