@@ -21,6 +21,7 @@ weixin:
     host: api.mch.weixin.qq.com
     port: 443
     path: /pay/unifiedorder
+    api_secret: <%= ENV['WECHAT_API_SECRET'] %>
   access_token:
     host: api.weixin.qq.com
     port: 443

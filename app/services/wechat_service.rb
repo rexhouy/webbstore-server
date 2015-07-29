@@ -76,7 +76,7 @@ class WechatService
                 # "paySign" : "70EA570631E4BB79628FBCA90534C63FF7FADD89" //微信签名
                 params = {
                         appId: WECHAT["appid"],
-                        timeStamp: Date.now.to_time.to_i,
+                        timeStamp: Time.now.to_i,
                         nonceStr: Random::DEFAULT.rand(10 ** 16),
                         package: "prepay_id=#{prepay_id}",
                         signType: "MD5",
@@ -93,9 +93,9 @@ class WechatService
                         param_string << "#{key}=#{value}&" unless is_empty_field
                         param_string
                 end
-                sign_param << "&key=#{WECHAT['appsecret']}"
+                sign_param << "key=#{WECHAT['api_secret']}"
                 Rails.logger.debug "Sign param: #{sign_param}"
-                value = md5 sign_param
+                value = md5(sign_param).upcase
                 Rails.logger.debug "Signature: #{value}"
                 value
         end
