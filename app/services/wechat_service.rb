@@ -5,7 +5,7 @@ require 'active_support/core_ext'
 
 class WechatService
 
-        # WECHAT = Config::PAYMENT["weixin"]
+        WECHAT = Config::PAYMENT["weixin"]
 
         def pay(order, client_ip, code)
                 Rails.logger.debug "Start handle wechat payment, client_ip: #{client_ip}, code: #{code}"
@@ -83,7 +83,7 @@ class WechatService
                         signType: "MD5",
                 }
                 params[:paySign] = sign(params)
-                Rail.logger.debug "JSAPI params: #{params}"
+                Rails.logger.debug "JSAPI params: #{params}"
                 params
         end
 

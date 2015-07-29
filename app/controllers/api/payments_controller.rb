@@ -32,7 +32,7 @@ class Api::PaymentsController < ApiController
         end
 
         def result
-                @order_id = params[:order_id]
+                @order_id = params[:id]
                 @success = params[:success].eql? "true"
                 render layout: false
         end
@@ -40,6 +40,7 @@ class Api::PaymentsController < ApiController
         private
         def update_order_status(order_id)
                 order = Order.find_by_order_id(order_id)
+                logger.error "Order not found #{order_id}" if order.nil?
                 return order.update(status: Order.statuses[:paid]) if order.placed?
                 logger.error "Update order status to paid has failed. Order status incorrect. order id [#{order.order_id}], status [#{order.status}]"
         end
