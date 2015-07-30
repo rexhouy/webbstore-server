@@ -68,7 +68,7 @@
           <% @payment_params.each do |k, v| %>
             <%= hidden_field_tag k, v %>
           <% end %>
-          <%= submit_tag "立即支付", class: "btn btn-primary btn-block" %>
+          <input type="submit" value="立即支付" class="btn btn-primary btn-block">
         </form>
         <% end %>
       <% end %>

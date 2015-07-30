@@ -16,7 +16,7 @@ class AlipayService
                         return_url: MOBILE_PAY["return_url"],
                         out_trade_no: order.order_id,
                         subject: order.name,
-                        total_fee: order.subtotal,
+                        total_fee: sprintf("%0.2f", order.subtotal),
                         seller_id: ALIPAY["seller_id"],
                         payment_type: MOBILE_PAY["payment_type"],
                         body: order.detail
@@ -27,14 +27,14 @@ class AlipayService
         end
 
         private
-        def sign
+        def sign(params)
                 sign_param = params.keys.sort.reduce("") do |param_string, key|
                         value = params[key]
                         is_empty_field = (value.nil? or (value.is_a?(String) and value.strip.empty?))
                         param_string << "#{key}=#{value}&" unless is_empty_field
                         param_string
                 end
-                sign_param << "key=#{ALIPAY['key']}"
+                sign_param = sign_param[0...-1] << ALIPAY['key']
                 Rails.logger.debug "Sign param: #{sign_param}"
                 value = md5(sign_param)
                 Rails.logger.debug "Signature: #{value}"

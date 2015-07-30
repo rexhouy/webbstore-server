@@ -29,7 +29,7 @@ weixin:
 
 alipay:
   pid: <%= ENV['ALIPAY_PARTNER_ID']%>
-  seller_id: <%= ENV['ALIPAY__ID'] %>
+  seller_id: <%= ENV['ALIPAY_USER_ID'] %>
   key: <%= ENV['ALIPAY_KEY']%>
   mobile_pay:
     url: https://mapi.alipay.com/gateway.do

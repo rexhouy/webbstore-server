@@ -6,7 +6,12 @@ class ApplicationController < ActionController::Base
         skip_before_action :verify_authenticity_token, if: :skip_forgery_protection?
 
         def skip_forgery_protection?
-                params[:controller].eql? "api/payments" and action_name.eql? "wechat_notify"
+                [
+                 {controller: "api/payments", action: "wechat_notify"},
+                 {controller: "api/payments", action: "alipay_notify"}
+                ].any? do |p|
+                        params[:controller].eql? p[:controller] and action_name.eql? p[:action]
+                end
         end
 
         include SimpleCaptcha::ControllerHelpers
