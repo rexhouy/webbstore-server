@@ -1,3 +1,4 @@
+require "json"
 class Api::PaymentsController < ApiController
 
         def wechat_notify
@@ -7,7 +8,7 @@ class Api::PaymentsController < ApiController
                 if "SUCCESS".eql? resp_xml["xml"]["return_code"].upcase
                         order_id = resp_xml['xml']['out_trade_no']
                         logger.info "Payment succeed [#{order_id}]."
-                        update_order_status(order_id)
+                        update_order_status(order_id, resp_xml.to_json)
                 else
                         logger.warn "Payment result: failed. #{resp_xml['xml']['return_msg']}"
                 end
@@ -22,7 +23,7 @@ class Api::PaymentsController < ApiController
 
         def alipay_notify
                 if ["TRADE_FINISHED", "TRADE_SUCCESS"].include?(params[:trade_status])
-                        update_order_status(params[:out_trade_no])
+                        update_order_status(params[:out_trade_no], params.to_json)
                         logger.info "Payment succeed [#{params[:out_trade_no]}]."
                 end
                 render plain: "success"
@@ -36,10 +37,10 @@ class Api::PaymentsController < ApiController
         end
 
         private
-        def update_order_status(order_id)
+        def update_order_status(order_id, payment)
                 order = Order.find_by_order_id(order_id)
                 logger.error "Order not found #{order_id}" if order.nil?
-                return order.update(status: Order.statuses[:paid]) if order.placed?
+                return order.update(status: Order.statuses[:paid], payment: payment) if order.placed?
                 logger.error "Update order status to paid has failed. Order status incorrect. order id [#{order.order_id}], status [#{order.status}]"
         end
 
