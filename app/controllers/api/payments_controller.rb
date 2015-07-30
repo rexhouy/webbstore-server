@@ -1,22 +1,5 @@
 class Api::PaymentsController < ApiController
 
-        def front_notify
-                if valid? [:funcode, :appId, :mhtOrderNo, :mhtCharset, :tradeStatus, :mhtReserved, :transStatus]
-                        update_order_status(params[:mhtOrderNo])
-                        @success = true
-                end
-                render layout: false
-        end
-
-        def notify
-                if valid? [:funcode, :appId, :mhtOrderNo, :mhtCharset, :tradeStatus, :mhtReserved, :transStatus]
-                        update_order_status(params[:mhtOrderNo])
-                        render plain: "success=Y"
-                else
-                        render plain: "success=N"
-                end
-        end
-
         def wechat_notify
                 result = request.body.read
                 logger.debug "Notification received from wechat: #{result}"
@@ -31,10 +14,25 @@ class Api::PaymentsController < ApiController
                 render plain: "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>"
         end
 
-        def result
+        def wechat_front_notify
                 @order_id = params[:id]
                 @success = params[:success].eql? "true"
-                render layout: false
+                render "result", layout: false
+        end
+
+        def alipay_notify
+                if ["TRADE_FINISHED", "TRADE_SUCCESS"].include?(params[:trade_status])
+                        update_order_status(params[:out_trade_no])
+                        logger.info "Payment succeed [#{params[:out_trade_no]}]."
+                end
+                render plain: "success"
+        end
+
+        def alipay_front_notify
+                order = Order.find_by_order_id(params[:out_trade_no])
+                @order_id = order.id
+                @success = ["TRADE_FINISHED", "TRADE_SUCCESS"].include?(params[:trade_status])
+                render "result", layout: false
         end
 
         private

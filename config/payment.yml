@@ -26,3 +26,14 @@ weixin:
     host: api.weixin.qq.com
     port: 443
     path: /sns/oauth2/access_token
+
+alipay:
+  pid: <%= ENV['ALIPAY_PARTNER_ID']%>
+  seller_id: <%= ENV['ALIPAY__ID'] %>
+  key: <%= ENV['ALIPAY_KEY']%>
+  mobile_pay:
+    url: https://mapi.alipay.com/gateway.do
+    service: alipay.wap.create.direct.pay.by.user
+    payment_type: 1
+    notify_url: http://www.tenhs.com/api/payment/alipay/notify
+    return_url: http://www.tenhs.com/api/payment/alipay/front_notify

@@ -49,10 +49,10 @@ Rails.application.routes.draw do
                 get 'me' => 'me#index'
 
                 # Payment callback
-                post 'payment/notify' => 'payments#notify'
-                get 'payment/front_notify' => 'payments#front_notify'
-                get 'payment/:id' => 'payments#result'
+                get 'payment/wechat/front_notify' => 'payments#wechat_front_notify'
                 post 'payment/wechat/notify' => 'payments#wechat_notify'
+                get 'payment/alipay/front_notify' => 'payments#alipay_front_notify'
+                post 'payment/alipay/notify' => 'payments#alipay_notify'
 
                 # About
                 get 'about' => 'about#index'
