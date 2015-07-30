@@ -56,7 +56,7 @@
     </section>
 
     <section>
-      <% unless @payment_params.nil? %>
+      <% if @order.placed? %>
         <% if @order.wechat? %>
         <div id="wechat_payment">
           <input type="hidden" id="appId" value="<%=@appid%>">

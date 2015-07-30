@@ -8,7 +8,7 @@ class Api::PaymentsController < ApiController
                 if "SUCCESS".eql? resp_xml["xml"]["return_code"].upcase
                         order_id = resp_xml['xml']['out_trade_no']
                         logger.info "Payment succeed [#{order_id}]."
-                        update_order_status(order_id, resp_xml.to_json)
+                        update_order_status(order_id, resp_xml["xml"].to_json)
                 else
                         logger.warn "Payment result: failed. #{resp_xml['xml']['return_msg']}"
                 end

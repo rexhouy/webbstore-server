@@ -10,6 +10,7 @@
 angular.module('webStore')
         .controller('OrderCtrl', ["$scope", "$location", "$templateCache", "$route", function ($scope, $location, $templateCache, $route) {
                 $scope.toDetail = function(id) {
+	                $templateCache.remove('/api/orders/'+id);
                         $location.path("/orders/"+id);
 	                $scope.$apply();
                 };
