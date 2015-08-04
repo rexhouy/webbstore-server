@@ -45,7 +45,7 @@ angular.module('webStore')
                         }
                         $scope.loading = true;
                         // Load new products
-                        $http.get('/api/products/all?page='+page)
+                        $http.get('/api/products/'+utility.getUrlParam("channel")+'?page='+page)
                                 .success(function(data, status, headers, config) {
                                         if (!data) {
                                                 alert("加载商品出错");

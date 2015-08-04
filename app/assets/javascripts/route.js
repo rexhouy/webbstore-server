@@ -10,7 +10,7 @@ angular
                                 controller: 'ProductsCtrl'
                         })
                         .when('/products/:id', {
-                                templateUrl: function(attr){
+                                templateUrl: function(attr) {
                                         return '/api/products/' + attr.id;
                                 },
                                 controller: 'ProductsCtrl'

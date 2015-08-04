@@ -71,6 +71,8 @@
           <% end %>
           <li><a ng-href="/orders/all" ng-click="showMenu=false" class="icon-link-left"><i class="glyphicon glyphicon-list-alt"></i>订单</a></li>
           <li><a ng-href="/carts" ng-click="showMenu=false" class="icon-link-left"><i class="glyphicon glyphicon-shopping-cart"></i>购物车</a></li>
+          <li><a ng-href="/products?channel=custom" ng-click="showMenu=false" class="icon-link-left"><i class="glyphicon glyphicon-grain"></i>定制平台</a></li>
+          <li><a ng-href="/products?channel=organic" ng-click="showMenu=false" class="icon-link-left"><i class="glyphicon glyphicon-grain"></i>生态食品</a></li>
           <li><a ng-href="/about" ng-click="showMenu=false" class="icon-link-left">关于</a></li>
         </ul>
       </section>
@@ -81,7 +83,7 @@
       <%= yield %>
     </div>
 
-    <%= image_tag "spinner.gif", style: "position:fixed;left:-1000px;"%>
+    <%= image_tag "spinner.gif", style: "position:fixed;left:-100000px;"%>
     <div  class="ng-cloak" ng-show="layout.loading" ng-cloak><!-- Loading animation  -->
       <div class="block-layer block-layer-light"></div>
       <div class="spinner-container img-circle">

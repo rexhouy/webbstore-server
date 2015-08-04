@@ -57,20 +57,7 @@
 
     <section>
       <% if @order.placed? %>
-        <% if @order.wechat? %>
-        <div id="wechat_payment">
-          <input type="hidden" id="appId" value="<%=@appid%>">
-          <input type="hidden" id="orderId" value="<%=@order.id%>">
-          <input type="submit" value="立即支付" class="btn btn-primary btn-block" ng-click="wechatPay()">
-        </div>
-        <% else %>
-        <form action="<%=@alipay_url%>" method="get">
-          <% @payment_params.each do |k, v| %>
-            <%= hidden_field_tag k, v %>
-          <% end %>
-          <input type="submit" value="立即支付" class="btn btn-primary btn-block">
-        </form>
-        <% end %>
+        <a class="btn btn-primary btn-block" target="_self" href="<%=@url%>">立即支付</a>
       <% end %>
 
       <% if is_cancelable? @order %>

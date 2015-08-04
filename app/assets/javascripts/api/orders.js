@@ -8,11 +8,12 @@
  * Controller of the webStoreApp
  */
 angular.module('webStore')
-        .controller('OrderCtrl', ["$scope", "$location", "$templateCache", "$route", function ($scope, $location, $templateCache, $route) {
+        .controller('OrderCtrl', ["$scope", "$rootScope", "$location", "$templateCache", "$route", "$window",
+                                  function ($scope, $rootScope, $location, $templateCache, $route, $window) {
+	        $rootScope.layout.loading = false;
                 $scope.toDetail = function(id) {
 	                $templateCache.remove('/api/orders/'+id);
                         $location.path("/orders/"+id);
-	                $scope.$apply();
                 };
 	        $scope.cancel = function(id) {
 		        $.ajax('/api/orders/'+id, {
@@ -25,6 +26,9 @@ angular.module('webStore')
 			        $templateCache.remove('/api/orders/'+id);
 			        $route.reload();
 		        });
+	        };
+	        $scope.back = function() {
+		        $window.history.back();
 	        };
 	        $scope.wechatPay = function() {
 		        var appId = $("#appId").val();

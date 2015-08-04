@@ -100,5 +100,14 @@ $.fn.serializeObject = function()
 window.utility = {
         getCSRFtoken : function() {
                 return $( 'meta[name="csrf-token"]' ).attr( 'content' );
+        },
+        getUrlParam: function(name) {
+                var urlParams= window.location.search.substring(1).split("&");
+                var params = {};
+                urlParams.forEach(function(param){
+                        var kvPair = param.split("=");
+                        params[kvPair[0]] = kvPair[1];
+                });
+                return params[name];
         }
 };

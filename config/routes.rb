@@ -27,7 +27,8 @@ Rails.application.routes.draw do
                 # Products
                 get 'products' => 'products#index', as: :products
                 get 'products/search' => 'products#search'
-                get 'products/all' => 'products#all'
+                get 'products/organic' => 'products#organic'
+                get 'products/custom' => 'products#custom'
                 get 'products/:id' => 'products#show', as: :products_detail
                 # Cart
                 get 'carts' => 'carts#show', as: :carts

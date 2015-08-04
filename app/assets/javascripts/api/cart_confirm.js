@@ -6,9 +6,9 @@
  * Controller of the webStore
  */
 angular.module('webStore')
-        .controller('CartConfirmCtrl', ["$scope", "$rootScope", "$http", "$location", "$templateCache", "$route", "$compile", "addressService",
-                                        function ($scope, $rootScope, $http, $location, $templateCache, $route, $compile, addressService) {
-
+        .controller('CartConfirmCtrl', ["$scope", "$rootScope", "$http", "$location", "$templateCache", "$route", "$compile", "$window",  "addressService",
+                                        function ($scope, $rootScope, $http, $location, $templateCache, $route, $compile, $window, addressService) {
+                                                $rootScope.layout.loading = false;
                                                 (function init() {
                                                         // Payment
                                                         $scope.onlinePay = true;
@@ -76,7 +76,8 @@ angular.module('webStore')
                                                                 }
                                                         }).done(function(data) {
                                                                 if (data.success) {
-                                                                        $location.path("/orders/"+data.id); // to payment page
+                                                                        console.log(data.url);
+                                                                        $window.location.href = data.url; // Start payment progress
                                                                 } else {
                                                                         $rootScope.layout.loading = false;
                                                                         $scope.showError = true;

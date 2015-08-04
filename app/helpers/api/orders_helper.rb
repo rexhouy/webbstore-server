@@ -22,7 +22,7 @@ module Api::OrdersHelper
         end
 
         def is_cancelable?(order)
-                order.placed? or order.paid?
+                order.placed?
         end
 
         def payment_name(order)

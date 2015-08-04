@@ -9,6 +9,7 @@ class Product < ActiveRecord::Base
         include Elasticsearch::Model::Callbacks
 
         enum status: [:available, :disabled]
+        enum channel: [:custom, :organic]
 
         before_create do
                 self.sales = 0

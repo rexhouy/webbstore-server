@@ -13,12 +13,13 @@ class Api::OrdersController < ApiController
 
         def show
                 @order = Order.find(params[:id])
-                if @order.alipay?
-                        @alipay_url = Config::PAYMENT["alipay"]["mobile_pay"]["url"]
-                        @payment_params = alipay(@order) if @order.placed?
-                else
-                        @appid = Config::PAYMENT["weixin"]["appid"]
-                end
+                @url = payment_redirect_url(@order)
+                # if @order.alipay?
+                #         @alipay_url = Config::PAYMENT["alipay"]["mobile_pay"]["url"]
+                #         @payment_params = alipay(@order) if @order.placed?
+                # else
+                #         @appid = Config::PAYMENT["weixin"]["appid"]
+                # end
                 render layout: false
         end
 
@@ -47,7 +48,7 @@ class Api::OrdersController < ApiController
                                 update_product_sales(order.orders_products, :+)
                         end
                         clear_cart
-                        render json: {success: true, id: order.id}
+                        render json: {success: true, id: order.id, url: payment_redirect_url(order)}
                 rescue => error
                         logger.error error
                         render json: {success: false, info: "购买失败", errors: @errors}
@@ -58,15 +59,19 @@ class Api::OrdersController < ApiController
         def cancel
                 order = Order.find(params[:id])
                 if order and order.customer.id.eql? current_user.id
-                        order.status = Order.statuses[:canceled]
-                        begin
-                                Order.transaction do
-                                        order.save!
-                                        update_product_sales(order.orders_products, :-)
+                        if order.placed?
+                                order.status = Order.statuses[:canceled]
+                                begin
+                                        Order.transaction do
+                                                order.save!
+                                                update_product_sales(order.orders_products, :-)
+                                        end
+                                rescue => error
+                                        logger.error error
+                                        flash[error] = [@errors]
                                 end
-                        rescue => error
-                                logger.error error
-                                flash[error] = [@errors]
+                        else
+                                flash[error] = ["已支付订单无法取消，如有疑问请联系客服。"]
                         end
                 else
                         flash[error] = ["订单不存在"]
@@ -152,6 +157,24 @@ class Api::OrdersController < ApiController
                 order_product.product.storage - order_product.product.sales :
                         order_product.specification.storage - order_product.specification.sales
                 storage >= order_product.count
+        end
+
+        def payment_redirect_url(order)
+                url = ""
+                if order.alipay?
+                        url = Config::PAYMENT["alipay"]["mobile_pay"]["url"].clone
+                        url << "?" << alipay(order).to_query
+                else
+                        params = {
+                                appid: Config::PAYMENT["weixin"]["appid"],
+                                redirect_uri: "http://www.tenhs.com/api/orders/payment/wechat_redirect",
+                                response_type: "code",
+                                scope: "snsapi_base",
+                                state: order.id
+                        }
+                        url = "https://open.weixin.qq.com/connect/oauth2/authorize?" << params.to_query << "#wechat_redirect"
+                end
+                url
         end
 
 end

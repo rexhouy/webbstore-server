@@ -43,4 +43,8 @@ module ApplicationHelper
               </nav>
                     ).html_safe
         end
+
+        def channel
+                session[:channel] || "organic"
+        end
 end
