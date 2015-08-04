@@ -38,10 +38,13 @@ class Admin::OrdersController < AdminController
         ## 用户注册订单监听回调，
         def wechat_register_notification
                 code = params[:code]
+                logger.debug "register notification callback, received code #{code}, user #{params[:uid]}"
                 openid = WechatService.new.get_open_id(code)
                 # Save open id to user set order notification to true
-                user = User.get(params[:uid])
+                user = User.find(params[:uid])
                 user.update(wechat_openid: openid, order_notification: true)
+                logger.info "Register notification success for user #{user.id}, openid: #{openid}"
+                render layout: false
         end
 
         private

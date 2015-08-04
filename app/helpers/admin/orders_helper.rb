@@ -10,8 +10,8 @@ module Admin::OrdersHelper
         end
 
         def order_payment(order)
-                return "线上支付" if order.online_pay?
-                "货到付款"
+                return "支付宝" if order.alipay?
+                "微信支付"
         end
 
 end
