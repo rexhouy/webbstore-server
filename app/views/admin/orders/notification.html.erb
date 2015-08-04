@@ -1,0 +1,25 @@
+<style>
+  table {
+  margin: 20px;
+  border-width: 0;
+  border-style: none;
+  border-color: #0000ff;
+  border-collapse: collapse;
+  }
+
+  td {
+  border-left: solid 3px #000;
+  padding: 0;
+  margin: 0;
+  width: 0px;
+  height: 3px;
+  }
+
+  td.black { border-color: #000; }
+  td.white { border-color: #fff; }
+</style>
+<h1 class="page-header">注册订单提醒</h1>
+<div>
+  <h4 class="text-info">请使用微信扫描以下二维码绑定微信提醒。</h4>
+  <%= raw @qr_code.as_html %>
+</div>

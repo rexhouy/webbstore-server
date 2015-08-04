@@ -40,8 +40,12 @@ class Api::PaymentsController < ApiController
         def update_order_status(order_id, payment)
                 order = Order.find_by_order_id(order_id)
                 logger.error "Order not found #{order_id}" if order.nil?
-                return order.update(status: Order.statuses[:paid], payment: payment) if order.placed?
-                logger.error "Update order status to paid has failed. Order status incorrect. order id [#{order.order_id}], status [#{order.status}]"
+                if order.placed?
+                        order.update(status: Order.statuses[:paid], payment: payment)
+                        send_notify_to_seller(order)
+                else
+                        logger.error "Update order status to paid has failed. Order status incorrect. order id [#{order.order_id}], status [#{order.status}]"
+                end
         end
 
         def valid?(valid_fields)
@@ -57,6 +61,17 @@ class Api::PaymentsController < ApiController
                 end
                 logger.debug "received notify params: #{valid_params.inspect}"
                 valid_params
+        end
+
+        def send_notify_to_seller(order)
+                sellers = find_notify_sellers(order.seller.id)
+                sellers.each do |seller|
+                        NotificationService.send_order_notify(order, seller)
+                end
+        end
+
+        def find_notify_sellers(group_id)
+                User.where(order_notification: true, group_id: group_id).all
         end
 
 end

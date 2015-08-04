@@ -14,12 +14,6 @@ class Api::OrdersController < ApiController
         def show
                 @order = Order.find(params[:id])
                 @url = payment_redirect_url(@order)
-                # if @order.alipay?
-                #         @alipay_url = Config::PAYMENT["alipay"]["mobile_pay"]["url"]
-                #         @payment_params = alipay(@order) if @order.placed?
-                # else
-                #         @appid = Config::PAYMENT["weixin"]["appid"]
-                # end
                 render layout: false
         end
 
@@ -165,14 +159,7 @@ class Api::OrdersController < ApiController
                         url = Config::PAYMENT["alipay"]["mobile_pay"]["url"].clone
                         url << "?" << alipay(order).to_query
                 else
-                        params = {
-                                appid: Config::PAYMENT["weixin"]["appid"],
-                                redirect_uri: "http://www.tenhs.com/api/orders/payment/wechat_redirect",
-                                response_type: "code",
-                                scope: "snsapi_base",
-                                state: order.id
-                        }
-                        url = "https://open.weixin.qq.com/connect/oauth2/authorize?" << params.to_query << "#wechat_redirect"
+                        url = WechatService.new.auth_url("http://www.tenhs.com/api/orders/payment/wechat_redirect", order.id)
                 end
                 url
         end

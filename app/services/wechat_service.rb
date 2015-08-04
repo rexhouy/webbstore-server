@@ -6,6 +6,7 @@ require 'active_support/core_ext'
 class WechatService
 
         WECHAT = Config::PAYMENT["weixin"]
+        WECHAT_NOTIFY = WECHAT["notify"]
 
         def pay(order, client_ip, code)
                 Rails.logger.debug "Start handle wechat payment, client_ip: #{client_ip}, code: #{code}"
@@ -14,17 +15,40 @@ class WechatService
                 gen_result(prepay_id)
         end
 
-        private
+        def auth_url(redirect_url, state)
+                params = {
+                        appid: Config::PAYMENT["weixin"]["appid"],
+                        redirect_uri: redirect_url,
+                        response_type: "code",
+                        scope: "snsapi_base",
+                        state: state
+                }
+                "https://open.weixin.qq.com/connect/oauth2/authorize?" << params.to_query << "#wechat_redirect"
+        end
+
         def get_open_id(code)
-                http = Net::HTTP.new(WECHAT["access_token"]["host"], WECHAT["access_token"]["port"])
+                http = Net::HTTP.new(WECHAT["auth_access_token"]["host"], WECHAT["auth_access_token"]["port"])
                 http.use_ssl = true
                 http.set_debug_output(Rails.logger)
-                req = Net::HTTP::Get.new(WECHAT["access_token"]["path"] + "?" + get_open_id_params(code))
+                req = Net::HTTP::Get.new(WECHAT["auth_access_token"]["path"] + "?" + get_open_id_params(code))
                 resp = http.request(req)
                 Rails.logger.debug "Get prepay id response: #{resp.body}"
                 JSON.parse(resp.body)["openid"]
         end
 
+        def send_notification(order, user, data)
+                Rails.logger.info "Send notification to #{user.id}, order #{order.order_id}"
+                path = "#{WECHAT_NOTIFY['path']}?access_token=#{get_access_token}"
+                http = Net::HTTP.new(HOST, PORT)
+                http.use_ssl = true
+                http.set_debug_output(Rails.logger)
+                req = Net::HTTP::Post.new(path)
+                req.body = data
+                resp = http.request(req)
+                Rails.logger.info "Send notification response #{resp.inspect}"
+        end
+
+        private
         def get_open_id_params(code)
                 {
                         appid: WECHAT["appid"],
@@ -106,5 +130,8 @@ class WechatService
                 Digest::MD5.new.update(value.encode("utf-8")).hexdigest
         end
 
+        def get_access_token
+
+        end
 
 end

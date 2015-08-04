@@ -71,6 +71,11 @@ Rails.application.routes.draw do
                 put 'orders/shipping/:id' => 'orders#shipping', as: :orders_shipping
                 put 'orders/deliver/:id' => 'orders#deliver', as: :orders_deliver
 
+                # Register wechat notification page
+                get 'orders/notification/wechat' => 'orders#notification'
+                # Register wechat notification callback
+                get 'orders/wechat_register_notification/:uid' => 'orders#wechat_register_notification'
+
                 post 'product/preview' => 'products#preview', as: :product_preview
 
                 get 'unauthorized_access' => 'unauthorized_access#index', as: :unauthorized_access

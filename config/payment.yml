@@ -17,15 +17,23 @@ weixin:
   appsecret: <%= ENV['WECHAT_APP_SECRET'] %>
   mch_id: <%= ENV['WECHAT_MCHID'] %>
   notify_url: http://www.tenhs.com/api/payment/wechat/notify
+  access_token_url: http://wechat.tenhs.com/access_token
   prepay:
     host: api.mch.weixin.qq.com
     port: 443
     path: /pay/unifiedorder
     api_secret: <%= ENV['WECHAT_API_SECRET'] %>
-  access_token:
+  auth_access_token: #网页授权access_token
     host: api.weixin.qq.com
     port: 443
     path: /sns/oauth2/access_token
+  notify:
+    host: api.weixin.qq.com
+    port: 443
+    path: /cgi-bin/message/template/send
+    order_template_id: LO2Uc3W6ieMNcyKrsnO-IYrGsHwduEzoy2fqc7enPQc
+    topcolor: #989e4b
+    fontcolor: #555
 
 alipay:
   pid: <%= ENV['ALIPAY_PARTNER_ID']%>

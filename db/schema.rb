@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150803012029) do
+ActiveRecord::Schema.define(version: 20150804081434) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 20150803012029) do
     t.integer  "storage",     limit: 4
     t.integer  "sales",       limit: 4
     t.integer  "status",      limit: 4
-    t.integer  "type",        limit: 4
+    t.integer  "channel",     limit: 4
   end
 
   add_index "products", ["name", "description", "article"], name: "fulltext_index", type: :fulltext
@@ -136,6 +136,8 @@ ActiveRecord::Schema.define(version: 20150803012029) do
     t.integer  "group_id",               limit: 4
     t.integer  "status",                 limit: 4
     t.string   "tel",                    limit: 11,               null: false
+    t.string   "wechat_openid",          limit: 255
+    t.boolean  "order_notification",     limit: 1
   end
 
   add_index "users", ["group_id"], name: "index_users_on_group_id", using: :btree
