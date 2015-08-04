@@ -32,8 +32,12 @@ weixin:
     port: 443
     path: /cgi-bin/message/template/send
     order_template_id: LO2Uc3W6ieMNcyKrsnO-IYrGsHwduEzoy2fqc7enPQc
-    topcolor: #989e4b
-    fontcolor: #555
+    topcolor: '#989e4b'
+    fontcolor: '#555'
+  access_token:
+    host: wechat.tenhs.com
+    port: 80
+    path: /access_token
 
 alipay:
   pid: <%= ENV['ALIPAY_PARTNER_ID']%>

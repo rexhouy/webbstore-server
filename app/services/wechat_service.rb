@@ -39,7 +39,7 @@ class WechatService
         def send_notification(order, user, data)
                 Rails.logger.info "Send notification to #{user.id}, order #{order.order_id}"
                 path = "#{WECHAT_NOTIFY['path']}?access_token=#{get_access_token}"
-                http = Net::HTTP.new(HOST, PORT)
+                http = Net::HTTP.new(WECHAT_NOTIFY["host"], WECHAT_NOTIFY["port"])
                 http.use_ssl = true
                 http.set_debug_output(Rails.logger)
                 req = Net::HTTP::Post.new(path)
@@ -131,7 +131,11 @@ class WechatService
         end
 
         def get_access_token
-
+                http = Net::HTTP.new(WECHAT["access_token"]["host"], WECHAT["access_token"]["port"])
+                req = Net::HTTP::Post.new(WECHAT["access_token"]["path"])
+                resp = http.request(req)
+                Rails.logger.debug "Get access_token response: #{resp.body}"
+                JSON.parse(resp.body)["token"]
         end
 
 end

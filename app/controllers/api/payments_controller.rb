@@ -66,7 +66,7 @@ class Api::PaymentsController < ApiController
         def send_notify_to_seller(order)
                 sellers = find_notify_sellers(order.seller.id)
                 sellers.each do |seller|
-                        NotificationService.send_order_notify(order, seller)
+                        NotificationService.new.send_order_notify(order, seller)
                 end
         end
 
