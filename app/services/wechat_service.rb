@@ -132,7 +132,8 @@ class WechatService
 
         def get_access_token
                 http = Net::HTTP.new(WECHAT["access_token"]["host"], WECHAT["access_token"]["port"])
-                req = Net::HTTP::Post.new(WECHAT["access_token"]["path"])
+                http.set_debug_output(Rails.logger)
+                req = Net::HTTP::Get.new(WECHAT["access_token"]["path"])
                 resp = http.request(req)
                 Rails.logger.debug "Get access_token response: #{resp.body}"
                 JSON.parse(resp.body)["token"]

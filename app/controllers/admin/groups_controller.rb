@@ -1,5 +1,4 @@
 class Admin::GroupsController < AdminController
-        load_and_authorize_resource
 
         def index
                 @groups = Group.active.paginate(:page => params[:page])

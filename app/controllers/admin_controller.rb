@@ -11,19 +11,19 @@ class AdminController < ApplicationController
         before_action :menu
 
         def public_resources?
-                devise_controller? or  ["unauthorized_access", "welcome"].include?(controller_name) or skip_auth?
+                devise_controller? || skip_auth? ||  ["unauthorized_access", "welcome"].include?(controller_name)
         end
 
         def skip_auth?
                 [
-                 {controller: "admin/orders", action: "wechat_register_notification"},
+                 {controller: "orders", action: "wechat_register_notification"},
                 ].any? do |p|
-                        params[:controller].eql? p[:controller] and action_name.eql? p[:action]
+                        controller_name.eql? p[:controller] and action_name.eql? p[:action]
                 end
         end
 
         def auth_user
-                redirect_to :user_session  unless user_signed_in? or skip_auth?
+                return redirect_to :user_session  unless user_signed_in? || skip_auth?
                 unless public_resources?
                         redirect_to :admin_unauthorized_access if current_user.customer?
                 end
@@ -41,6 +41,7 @@ class AdminController < ApplicationController
         end
 
         rescue_from CanCan::AccessDenied do |exception|
+                logger.debug exception
                 redirect_to :admin_unauthorized_access
         end
 

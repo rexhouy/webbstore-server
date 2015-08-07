@@ -1,7 +1,5 @@
 class Admin::ProductsController < AdminController
 
-        load_and_authorize_resource
-
         def index
                 @products = Product.owner(owner).available.paginate(:page => params[:page])
         end
