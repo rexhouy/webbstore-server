@@ -49,7 +49,7 @@
         频道
     <% end %>
     <div class="col-sm-4">
-      <%= p.select :channel, [["定制平台", "custom"], ["有机食品", "organic"]], {}, class: "form-control" %>
+      <%= p.select :channel, options_for_select([["定制平台", "custom"], ["有机食品", "organic"]], p.object.channel), {}, class: "form-control" %>
     </div>
     </div>
 
