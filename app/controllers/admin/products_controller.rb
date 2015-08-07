@@ -1,4 +1,6 @@
 class Admin::ProductsController < AdminController
+        # Checks authorization for all actions using cancan
+        load_and_authorize_resource
 
         def index
                 @products = Product.owner(owner).available.paginate(:page => params[:page])
@@ -71,7 +73,7 @@ class Admin::ProductsController < AdminController
         end
 
         def product_params
-                params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale, :cover_image, :channel,
+                params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale, :cover_image, :channel, :priority,
                                                 specifications_attributes: [:id, :name, :value, :price, :storage])
         end
 

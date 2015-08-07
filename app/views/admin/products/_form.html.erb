@@ -52,6 +52,15 @@
       <%= p.select :channel, [["定制平台", "custom"], ["有机食品", "organic"]], {}, class: "form-control" %>
     </div>
     </div>
+
+    <div class="form-group">
+      <%= p.label :priority, :class => "col-sm-2 control-label" do  %>
+        <span class="glyphicon glyphicon-info-sign icon" title="数值越大，显示越靠前"></span> 显示顺
+      <% end %>
+      <div class="col-sm-4">
+        <%= p.number_field :priority, :class => "form-control" %>
+      </div>
+    </div>
     
   <div class="form-group" id="specifications">
     <label class="col-sm-2 control-label">规格</label>

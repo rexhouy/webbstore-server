@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 class Admin::OrdersController < AdminController
+        # Checks authorization for all actions using cancan
+        load_and_authorize_resource :except => [:wechat_register_notification]
 
         def index
                 @order_id = params[:order_id] || ""

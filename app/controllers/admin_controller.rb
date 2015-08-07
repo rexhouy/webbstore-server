@@ -4,9 +4,6 @@ class AdminController < ApplicationController
         # Authenticate users using devise
         before_action :auth_user
 
-        # Checks authorization for all actions using cancan
-        check_authorization :unless => :public_resources?
-
         # Load menu info
         before_action :menu
 
@@ -30,6 +27,7 @@ class AdminController < ApplicationController
         end
 
         def menu
+                return if current_user.nil?
                 @menus = [{url: admin_products_url, text: "产品", class: "", resource: Product },
                           {url: admin_orders_url, text: "订单", class: "", resource: Order },
                           {url: admin_users_url, text: "用户", class: "", resource: User },

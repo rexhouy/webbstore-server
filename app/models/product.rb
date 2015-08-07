@@ -13,6 +13,7 @@ class Product < ActiveRecord::Base
 
         before_create do
                 self.sales = 0
+                self.priority = 0
                 self.status = Product.statuses[:available]
         end
 

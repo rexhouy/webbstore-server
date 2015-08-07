@@ -1,4 +1,6 @@
 class Admin::GroupsController < AdminController
+        # Checks authorization for all actions using cancan
+        load_and_authorize_resource
 
         def index
                 @groups = Group.active.paginate(:page => params[:page])

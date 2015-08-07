@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150804081434) do
+ActiveRecord::Schema.define(version: 20150807145016) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 20150804081434) do
     t.integer  "sales",       limit: 4
     t.integer  "status",      limit: 4
     t.integer  "channel",     limit: 4
+    t.integer  "order",       limit: 4
   end
 
   add_index "products", ["name", "description", "article"], name: "fulltext_index", type: :fulltext

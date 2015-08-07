@@ -13,19 +13,19 @@ class Api::ProductsController < ApiController
 
         def search
                 @search_text = params[:text]
-                @products = Product.owner(owner).search(@search_text)
+                @products = Product.owner(owner).search(@search_text).order(priority: :desc)
                 render layout: false
         end
 
         def organic
                 session[:channel] = "organic"
-                @products = Product.owner(owner).organic.available.valid.paginate(:page => params[:page])
+                @products = Product.owner(owner).organic.available.valid.order(priority: :desc).paginate(:page => params[:page])
                 render json: @products
         end
 
         def custom
                 session[:channel] = "custom"
-                @products = Product.owner(owner).custom.available.valid.paginate(:page => params[:page])
+                @products = Product.owner(owner).custom.available.valid.order(priority: :desc).paginate(:page => params[:page])
                 render json: @products
         end
 
