@@ -1,6 +1,4 @@
 class Admin::ImagesController < ApplicationController
-        # Checks authorization for all actions using cancan
-        load_and_authorize_resource
 
         def create
                 uploader = ImageUploader.new

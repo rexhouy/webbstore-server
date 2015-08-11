@@ -6,7 +6,7 @@
     margin: 20px 0;
     background-color: #fff;
     img {
-        width: 100%;
+        width: initial !important;
         max-width: 96px;
         @media(max-width:768px) {
             max-width: 64px;
