@@ -19,6 +19,7 @@ Rails.application.routes.draw do
         root 'home#index'
 
         get 'home' => 'home#home'
+        get 'articles/:id' => 'articles#index'
 
 
         namespace :api do
@@ -67,6 +68,7 @@ Rails.application.routes.draw do
                 resources :orders
                 resources :users
                 resources :groups
+                resources :articles
                 put 'orders/cancel/:id' => 'orders#cancel', as: :orders_cancel
                 put 'orders/shipping/:id' => 'orders#shipping', as: :orders_shipping
                 put 'orders/deliver/:id' => 'orders#deliver', as: :orders_deliver

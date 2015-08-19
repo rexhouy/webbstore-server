@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>拾惠社</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,user-scalable=no">
+    <link href="<%=image_url('favicon.ico')%>" rel="icon">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+
+    <header>
+      <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header" style="height:50px">
+          <section class="navbar-brand pull-left inherit-height">
+            <a class="" href="/">拾惠社</a>
+          </section>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" style="background-color: #fff;min-height:200px;padding-top:20px;">
+      <div style="margin-bottom: 80px;">
+        <div class="row info">
+          <div class="col-sm-8 col-sm-offset-2 col-lg-8 col-lg-offset-2 col-xs-12">
+            <%=raw @article.content%>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <p>© 拾惠社 2015</p>
+        <p>京ICP备15036211号</p>
+      </div>
+    </footer>
+
+</body>
+</html>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150807145016) do
+ActiveRecord::Schema.define(version: 20150819120348) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -26,6 +26,13 @@ ActiveRecord::Schema.define(version: 20150807145016) do
   end
 
   add_index "addresses", ["user_id"], name: "fk_rails_12809c9026", using: :btree
+
+  create_table "articles", force: :cascade do |t|
+    t.string   "title",      limit: 255
+    t.string   "content",    limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "captchas", force: :cascade do |t|
     t.string   "tel",              limit: 11, null: false
@@ -91,7 +98,7 @@ ActiveRecord::Schema.define(version: 20150807145016) do
     t.integer  "sales",       limit: 4
     t.integer  "status",      limit: 4
     t.integer  "channel",     limit: 4
-    t.integer  "order",       limit: 4
+    t.integer  "priority",    limit: 4
   end
 
   add_index "products", ["name", "description", "article"], name: "fulltext_index", type: :fulltext

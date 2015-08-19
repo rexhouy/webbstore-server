@@ -10,6 +10,11 @@
                         "imageUpload":"/admin/image?" + params,
                         "lang":"zh_cn"
                 });
+                $('#article_content').redactor({
+                        "imageUpload":"/admin/image?" + params,
+                        "lang":"zh_cn"
+                });
+
         };
 
         $(function(){
