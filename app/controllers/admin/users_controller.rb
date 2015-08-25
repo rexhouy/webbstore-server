@@ -3,12 +3,12 @@ class Admin::UsersController < AdminController
         load_and_authorize_resource
 
         def index
-                @users = User.manager.active.paginate(:page => params[:page])
+                @users = User.owner(owner).manager.active.paginate(:page => params[:page])
         end
 
         def edit
                 @user = User.find(params[:id])
-                @groups = Group.all
+                @groups = Group.active.owner(owner).all
         end
 
         def update
@@ -20,7 +20,7 @@ class Admin::UsersController < AdminController
                 if @user.update(user_params)
                         redirect_to :action => "show", :id => @user.id
                 else
-                        @groups = Group.all
+                        @groups = Group.active.owner(owner).all
                         render "edit"
                 end
         end
@@ -34,7 +34,7 @@ class Admin::UsersController < AdminController
                 if @user.save
                         redirect_to :action => "show", :id => @user.id
                 else
-                        @groups = Group.all
+                        @groups = Group.active.owner(owner).all
                         render "new"
                 end
         end
@@ -42,7 +42,7 @@ class Admin::UsersController < AdminController
         def new
                 @user = User.new
                 @user.group = @user.build_group
-                @groups = Group.all
+                @groups = Group.active.owner(owner).all
         end
 
         def destroy

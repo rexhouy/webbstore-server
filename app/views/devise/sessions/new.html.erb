@@ -1,4 +1,4 @@
-<h2>登录</h2>
+<h2><% if  admin_login? %>管控台<%end%>登录</h2>
 
 <%= form_for resource, as: resource_name, url: session_path(resource_name), html: {class: "form-group"} do |f| %>
   <%= devise_error_messages! %>
@@ -7,7 +7,7 @@
     <%= f.telephone_field :tel, autofocus: true, class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :password, "密码" %><br />
     <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
   </div>
@@ -24,4 +24,6 @@
   </div>
 <% end %>
 
+<% unless  admin_login? %>
 <%= render "devise/shared/links" %>
+<% end %>

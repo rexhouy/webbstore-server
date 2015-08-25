@@ -8,6 +8,7 @@ class Admin::ProductsController < AdminController
 
         def edit
                 @product = Product.find(params[:id])
+                @suppliers = Supplier.owner(owner).all
                 return head(:forbidden) unless @product.owner_id.eql? owner
         end
 
@@ -28,6 +29,7 @@ class Admin::ProductsController < AdminController
 
         def new
                 @product = Product.new
+                @suppliers = Supplier.owner(owner).all
         end
 
         def show
@@ -37,7 +39,7 @@ class Admin::ProductsController < AdminController
 
         def create
                 @product = Product.new(product_params)
-                @product.owner_id = current_user.group.id
+                @product.owner_id = owner
                 if @product.save
                         redirect_to :action => "show", :id => @product.id
                 else
@@ -48,7 +50,7 @@ class Admin::ProductsController < AdminController
         def preview
                 @product = Product.new(preview_params)
                 return head(:forbidden) unless @product.owner_id.eql? owner
-                render "/api/products/show", :layout => "application"
+                render "/products/show", :layout => "application"
         end
 
         def destroy
@@ -73,16 +75,12 @@ class Admin::ProductsController < AdminController
         end
 
         def product_params
-                params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale, :cover_image, :channel, :priority,
+                params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale, :cover_image, :channel, :priority, :suppliers_id,
                                                 specifications_attributes: [:id, :name, :value, :price, :storage])
         end
 
         def preview_params
                 params.require(:product).permit(:name, :price, :storage, :description, :article, :recommend, :cover_image, :channel)
-        end
-
-        def owner
-                current_user.group.id
         end
 
 end

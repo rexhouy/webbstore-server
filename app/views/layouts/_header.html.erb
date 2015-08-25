@@ -1,7 +1,11 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" style="box-shadow: 2px 2px 4px #ccc;border-top-left-radius: 0;border-top-right-radius: 0;">
   <div class="container-fluid">
     <div class="navbar-header">
+      <% if current_namespace.eql? "Admin" %>
+      <a class="navbar-brand" href="/admin">拾惠社管控台</a>
+      <% else %>
       <a class="navbar-brand" href="/">拾惠社</a>
+      <% end %>
     </div>
     <% if current_namespace.eql? "Admin" %>
       <div class="pull-right">

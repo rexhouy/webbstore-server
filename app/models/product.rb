@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 class Product < ActiveRecord::Base
         belongs_to :owner, class_name: "Group", foreign_key: :owner_id
+        belongs_to :supplier
         has_many :specifications, -> { where(status: Specification.statuses[:available]) }
         accepts_nested_attributes_for :specifications
 
@@ -38,6 +39,11 @@ class Product < ActiveRecord::Base
 
         def self.available
                 where(status: Product.statuses[:available])
+        end
+
+        def self.channel(channel)
+                return custom if channel.eql? "custom"
+                organic
         end
 
         private

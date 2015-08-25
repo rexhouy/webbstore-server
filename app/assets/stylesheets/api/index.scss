@@ -31,11 +31,13 @@
 
 // Settings
 .navbar-side {
+    -webkit-transition: left .3s, -webkit-transform .3s;
+    transition: left .3s, transform .3s;
     width: 90%;
     max-width: 300px;
     box-shadow: $shadow;
     position: fixed;
-    left: 0;
+    left: -100%;
     top: 0;
     z-index: 1000;
     background-color: #fff;
@@ -94,10 +96,13 @@
 
 
 .search-container {
+    -webkit-transition: width .3s, -webkit-transform .3s;
+    transition: width .3s, transform .3s;
     position: absolute;
     top: 0;
     right: 0;
-    width: 100%;
+    width: 0;
+    overflow: hidden;
     max-width: 800px;
     background-color: #F8F8F8;
     .btn {
@@ -126,6 +131,7 @@
 }
 
 .block-layer {
+    display:none;
     position: fixed;
     top: 0;
     left: 0;

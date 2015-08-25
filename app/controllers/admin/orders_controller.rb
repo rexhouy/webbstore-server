@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 class Admin::OrdersController < AdminController
         # Checks authorization for all actions using cancan
-        load_and_authorize_resource :except => [:wechat_register_notification]
+        load_and_authorize_resource
 
         def index
-                @order_id = params[:order_id] || ""
-                if @order_id.empty?
+                @order_id_or_tel = params[:order_id_or_tel] || ""
+                @order_date = params[:order_date] || ""
+                if @order_id_or_tel.blank? && @order_date.blank?
                         @type = params[:type] || "wait_shipping"
-                        @orders = Order.type(@type).paginate(:page => params[:page])
+                        @orders = Order.type(@type).owner(owner).paginate(:page => params[:page])
                 else
-                        @orders = Order.where(order_id: @order_id).paginate(:page => params[:page])
+                        @orders = Order.search(@order_id_or_tel, @order_date).owner(owner).paginate(:page => params[:page])
                 end
         end
 
@@ -31,8 +32,12 @@ class Admin::OrdersController < AdminController
 
         ## 到注册监听页面，提示用户使用微信扫描二维码，注册订单监听。（获取用户openid）
         def notification
-                url = WechatService.new.auth_url("http://www.tenhs.com/admin/orders/wechat_register_notification/#{current_user.id}", "")
+                url = "http://#{Rails.application.config.domain}/admin/notifiction_redirect"
                 @qr_code = RQRCode::QRCode.new(url, size: 12, level: :m )
+        end
+
+        def notification_redirect_page
+                redirect_to WechatService.new.auth_url("http://#{Rails.application.config.domain}/admin/orders/wechat_register_notification/#{current_user.id}", "")
         end
 
         ## 用户注册订单监听回调，
@@ -44,7 +49,6 @@ class Admin::OrdersController < AdminController
                 user = User.find(params[:uid])
                 user.update(wechat_openid: openid, order_notification: true)
                 logger.info "Register notification success for user #{user.id}, openid: #{openid}"
-                render layout: false
         end
 
         private

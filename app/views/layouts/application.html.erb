@@ -9,14 +9,14 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
   </head>
-  <body ng-app="webStore" ng-class="{'disable-scroll': showMenu || showSpecification}">
+  <body>
 
     <header>
       <div class="navbar navbar-default" role="navigation">
         <div class="navbar-header" style="height:50px">
 
           <section class="inherit-height pull-left">
-            <button class="btn pull-left icon table-center inherit-height" ng-click="showMenu=true">
+            <button class="btn pull-left icon table-center inherit-height" onclick="menu.open();">
               <i class="glyphicon glyphicon-menu-hamburger"></i>
             </button>
           </section>
@@ -25,31 +25,31 @@
             <a class="" href="/">拾惠社</a>
           </section>
 
-          <section class="inherit-height search-container ng-cloak" ng-show="showSearch" ng-cloak>
-            <form ng-submit="search()" class="inherit-height table-center-wrap">
+          <section class="inherit-height search-container" id="search">
+            <form class="inherit-height table-center-wrap" action="/products/search">
               <button class="btn icon inherit-height highlight-icon" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-              <button class="btn icon inherit-height" style="right:0" ng-click="showSearch=false"><i class="glyphicon glyphicon-remove"></i></button>
-              <input  type="search" class="search table-center inherit-height pull-left" placeholder="搜索商铺" focus-me="focusSearch" ng-model="searchText">
+              <button class="btn icon inherit-height" style="right:0" onclick="return search.close();"><i class="glyphicon glyphicon-remove"></i></button>
+              <input  type="search" name="search_text" class="search table-center inherit-height pull-left" placeholder="搜索商铺" id="search_input">
             </form>
           </section>
 
-          <section class="pull-right inherit-height table-center-wrap" ng-hide="showSearch">
-            <a type="button" class="icon btn btn-lg table-center" ng-click="showSearch=true;focusSearch=true">
+          <section class="pull-right inherit-height table-center-wrap" id="menu_control_pannel">
+            <button type="button" class="icon btn btn-lg table-center" onclick="search.open();">
               <i class="glyphicon glyphicon-search"></i>
-            </a>
-            <a type="button" class="icon btn btn-lg table-center" ng-href="/carts">
+            </button>
+            <button type="button" class="icon btn btn-lg table-center" onclick="window.location.href='/carts'">
               <i class="glyphicon glyphicon-shopping-cart"></i>
-            </a>
+            </button>
           </section>
 
         </div>
       </div>
     </header>
 
-    <nav class="navbar-side ng-cloak animate-hide animate-hide-left" ng-show="showMenu" ng-cloak>
+    <nav id="menu" class="navbar-side">
       <header>
         <% if user_signed_in? %>
-        <a  class="inherit-height pull-left" ng-href="/me"  ng-click="showMenu=false">
+        <a  class="inherit-height pull-left" href="/me">
           <%= image_tag "user.png" %>
           <p class="inherit-height nav-header-link-text"><span class="table-center inherit-height"><%= current_user.tel %></span></p>
         </a>
@@ -59,7 +59,7 @@
           <p class="inherit-height nav-header-link-text"><span class="table-center inherit-height">登录</span></p>
         </a>
         <% end %>
-        <button type="button" class="icon btn btn-lg pull-right inherit-height" ng-click="showMenu=false">
+        <button type="button" class="icon btn btn-lg pull-right inherit-height" onclick="menu.close();">
           <i class="glyphicon glyphicon-remove"></i>
         </button>
       </header>
@@ -67,41 +67,41 @@
       <section class="nav-section">
         <ul class="nav">
           <% if user_signed_in? %>
-          <li><a ng-href="/me" ng-click="showMenu=false" class="icon-link-left"><i class="glyphicon glyphicon-home"></i>我的拾惠社</a></li>
+          <li><a href="/me" class="icon-link-left"><i class="glyphicon glyphicon-home"></i>我的拾惠社</a></li>
           <% end %>
-          <li><a ng-href="/orders/all" ng-click="showMenu=false" class="icon-link-left"><i class="glyphicon glyphicon-list-alt"></i>订单</a></li>
-          <li><a ng-href="/carts" ng-click="showMenu=false" class="icon-link-left"><i class="glyphicon glyphicon-shopping-cart"></i>购物车</a></li>
-          <li><a ng-href="/products?channel=custom" ng-click="showMenu=false" class="icon-link-left"><i class="glyphicon glyphicon-grain"></i>定制平台</a></li>
-          <li><a ng-href="/products?channel=organic" ng-click="showMenu=false" class="icon-link-left"><i class="glyphicon glyphicon-grain"></i>生态食品</a></li>
-          <li><a ng-href="/about" ng-click="showMenu=false" class="icon-link-left">关于</a></li>
+          <li><a href="/orders/all" class="icon-link-left"><i class="glyphicon glyphicon-list-alt"></i>订单</a></li>
+          <li><a href="/carts" class="icon-link-left"><i class="glyphicon glyphicon-shopping-cart"></i>购物车</a></li>
+          <li><a href="/products?channel=custom" class="icon-link-left"><i class="glyphicon glyphicon-grain"></i>定制平台</a></li>
+          <li><a href="/products?channel=organic" class="icon-link-left"><i class="glyphicon glyphicon-grain"></i>生态食品</a></li>
+          <li><a href="/about" class="icon-link-left">关于</a></li>
         </ul>
       </section>
     </nav>
-    <div class="block-layer ng-cloak" ng-show="showMenu || showSpecs" ng-cloak ng-click="showMenu=false; showSpecs=false"></div>
 
-    <div class="container" style="background-color: #fff;min-height:200px;" ng-view save-my-content  autoscroll="true">
+    <div class="container" style="background-color: #fff;min-height:200px;">
       <%= yield %>
     </div>
 
     <%= image_tag "spinner.gif", style: "position:fixed;left:-100000px;"%>
-    <div  class="ng-cloak" ng-show="layout.loading" ng-cloak><!-- Loading animation  -->
-      <div class="block-layer block-layer-light"></div>
+    <div><!-- Loading animation  -->
+      <div class="block-layer block-layer-light" onclick="menu.close()"></div>
       <div class="spinner-container img-circle">
         <div class="spinner"></div>
       </div>
-      <!-- <svg class="spinner" viewBox="0 0 66 66" > -->
-      <!--   <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle> -->
-      <!-- </svg> -->
     </div>
 
     <footer>
       <div class="container">
-        <p>© 拾惠社 2015</p>
-        <p>京ICP备15036211号</p>
+        <p class="copyright">Copyright © 2015 北京拾惠社农业科技有限公司</p>
+        <ul>
+          <li><span class="glyphicon glyphicon-map-marker"></span> 北京市中关村科技园平谷分园</li>
+          <li>京ICP备15036211号</li>
+        </ul>
       </div>
     </footer>
 
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag params[:controller] %>
 
 </body>
 </html>

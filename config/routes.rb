@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 Rails.application.routes.draw do
+
         mount RedactorRails::Engine => '/redactor_rails'
 
         devise_for :users, controllers: {
@@ -18,77 +20,75 @@ Rails.application.routes.draw do
         # You can have the root of your site routed with "root"
         root 'home#index'
 
-        get 'home' => 'home#home'
+        # 宣传文章
         get 'articles/:id' => 'articles#index'
 
+        # User address
+        resources :addresses
+        # Products
+        get 'products' => 'products#index', as: :products
+        get 'products/search' => 'products#search'
+        get 'products/:id' => 'products#show', as: :products_detail
 
-        namespace :api do
-                # User address
-                resources :addresses
-                # Products
-                get 'products' => 'products#index', as: :products
-                get 'products/search' => 'products#search'
-                get 'products/organic' => 'products#organic'
-                get 'products/custom' => 'products#custom'
-                get 'products/:id' => 'products#show', as: :products_detail
-                # Cart
-                get 'carts' => 'carts#show', as: :carts
-                post 'carts' => 'carts#add', as: :carts_add_product
-                put 'carts' => 'carts#update', as: :carts_mod_product
-                delete 'carts' => 'carts#delete', as: :carts_del_product
-                get 'carts/confirm' => 'carts#confirm'
+        # Carts
+        get 'carts' => 'carts#show', as: :carts
+        post 'carts' => 'carts#add', as: :carts_add_product
+        put 'carts' => 'carts#update', as: :carts_mod_product
+        delete 'carts' => 'carts#delete', as: :carts_del_product
+        get 'carts/confirm' => 'carts#confirm', as: :carts_confirm
 
-                # Order
-                post 'orders' => 'orders#add'
-                get 'orders' => 'orders#index'
-                get 'orders/:id' => 'orders#show'
-                put 'orders/:id' => 'orders#cancel', as: :orders_cancel
+        # Orders
+        post 'orders' => 'orders#add'
+        get 'orders' => 'orders#index'
+        get 'orders/:id' => 'orders#show'
+        put 'orders/:id' => 'orders#cancel', as: :orders_cancel
 
-                # Wechat payment
-                get 'orders/payment/wechat_redirect' => 'orders#wechat_pay'
+        # Wechat payment
+        get 'orders/payment/wechat_redirect' => 'orders#wechat_pay'
 
-                # User home
-                get 'me' => 'me#index'
+        # User home
+        get 'me' => 'me#index'
 
-                # Payment callback
-                get 'payment/wechat/front_notify' => 'payments#wechat_front_notify'
-                post 'payment/wechat/notify' => 'payments#wechat_notify'
-                get 'payment/alipay/front_notify' => 'payments#alipay_front_notify'
-                post 'payment/alipay/notify' => 'payments#alipay_notify'
+        # Payment callback
+        get 'payment/wechat/front_notify' => 'payments#wechat_front_notify'
+        post 'payment/wechat/notify' => 'payments#wechat_notify'
+        get 'payment/alipay/front_notify' => 'payments#alipay_front_notify'
+        post 'payment/alipay/notify' => 'payments#alipay_notify'
 
-                # About
-                get 'about' => 'about#index'
-        end
+        # About
+        get 'about' => 'about#index'
 
+        # Administration
         namespace :admin do
-                root 'welcome#index'
-                resources :products do
-                        resources :specifications
-                end
-                resources :orders
+                root "home#index"
+                get "sign_in" => "home#sign_in"
+                get "unauthorized_access" => "home#unauthorized_access", as: :unauthorized_access
+
                 resources :users
                 resources :groups
                 resources :articles
+                resources :suppliers
+
+                # Orders
+                resources :orders
                 put 'orders/cancel/:id' => 'orders#cancel', as: :orders_cancel
                 put 'orders/shipping/:id' => 'orders#shipping', as: :orders_shipping
                 put 'orders/deliver/:id' => 'orders#deliver', as: :orders_deliver
-
                 # Register wechat notification page
                 get 'orders/notification/wechat' => 'orders#notification'
+                get 'orders/notifiction_redirect/wechat' => 'orders#notification_redirect_page'
                 # Register wechat notification callback
                 get 'orders/wechat_register_notification/:uid' => 'orders#wechat_register_notification'
 
+                #Products
+                resources :products do
+                        resources :specifications
+                end
                 post 'product/preview' => 'products#preview', as: :product_preview
-
-                get 'unauthorized_access' => 'unauthorized_access#index', as: :unauthorized_access
 
                 # Image
                 post 'image' => 'images#create'
-
-                get '*path' => 'welcome#index'
         end
-
-        get '*path' => 'home#index'
 
         # Example of regular route:
         #   get 'products/:id' => 'catalog#view'

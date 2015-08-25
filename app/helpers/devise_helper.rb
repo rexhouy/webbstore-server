@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 module DeviseHelper
 
+        def admin_login?
+                session[:previous_url].starts_with? "/admin"
+        end
+
         def devise_error_messages!
                 flash_alerts = []
                 error_key = 'errors.messages.not_saved'

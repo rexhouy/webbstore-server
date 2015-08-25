@@ -3,11 +3,11 @@ class Admin::ArticlesController < AdminController
         load_and_authorize_resource except: :create
 
         def index
-                @articles = Article.paginate(:page => params[:page])
+                @articles = Article.owner(owner).paginate(:page => params[:page])
         end
 
         def edit
-                @article = Article.find(params[:id])
+                @article = Article.owner(owner).find(params[:id])
         end
 
         def new
@@ -15,13 +15,14 @@ class Admin::ArticlesController < AdminController
         end
 
         def destroy
-                Article.find(params[:id]).destroy
+                Article.find(params[:id]).owner(owner).destroy
                 redirect_to admin_articles_path
         end
 
         def create
                 @article = Article.new(article_param)
                 authorize! :create, @article
+                article.groups_id = owner
                 if @article.save
                         redirect_to :action => "show", :id => @article.id
                 else

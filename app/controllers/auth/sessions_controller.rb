@@ -1,45 +1,22 @@
 class Auth::SessionsController < Devise::SessionsController
         # before_filter :configure_sign_in_params, only: [:create]
 
-        def initialize
-                super
-                @@redirect_path_mapper = {
-                        "/home" => "/",
-                        "/api/orders" => "/orders/all"
-                }
-        end
-
         # GET /resource/sign_in
         # def new
         #   super
         # end
 
         # POST /resource/sign_in
-        # def create
-        #   super
-        # end
+        def create
+                super
+                flash.discard # discard flash messages after this session
+        end
 
         # DELETE /resource/sign_out
-        # def destroy
-        #   super
-        # end
-
-        ## Need to redirect user to '/xxx' instead of '/api/xxx'
-        def after_sign_in_path_for(resource)
-                last_location =  session[:last_location]
-                unless last_location.nil? or last_location.empty?
-                        @@redirect_path_mapper.each do |key, value|
-                                return last_location = value if last_location.start_with?(key)
-                        end
-                        last_location.gsub!(/\/api\//, "/")
-                end
-                last_location || root_path
+        def destroy
+                super
+                flash.discard # discard flash messages after this session
         end
-
-        def after_sign_out_path_for(resource)
-                user_session_url
-        end
-
 
         # protected
 
@@ -47,6 +24,4 @@ class Auth::SessionsController < Devise::SessionsController
         # def configure_sign_in_params
         #   devise_parameter_sanitizer.for(:sign_in) << :attribute
         # end
-
-
 end

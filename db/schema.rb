@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150819120348) do
+ActiveRecord::Schema.define(version: 20150825081301) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20150819120348) do
     t.string   "content",    limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "groups_id",  limit: 4
   end
 
   create_table "captchas", force: :cascade do |t|
@@ -49,6 +50,7 @@ ActiveRecord::Schema.define(version: 20150819120348) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "status",     limit: 4
+    t.integer  "parent_id",  limit: 4
   end
 
   create_table "orders", force: :cascade do |t|
@@ -84,21 +86,22 @@ ActiveRecord::Schema.define(version: 20150819120348) do
   add_index "orders_products", ["specification_id"], name: "index_orders_products_on_specification_id", using: :btree
 
   create_table "products", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.string   "description", limit: 255
-    t.text     "article",     limit: 65535
-    t.string   "cover_image", limit: 255
-    t.integer  "owner_id",    limit: 4
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
-    t.boolean  "recommend",   limit: 1
-    t.boolean  "on_sale",     limit: 1
-    t.decimal  "price",                     precision: 8, scale: 2
-    t.integer  "storage",     limit: 4
-    t.integer  "sales",       limit: 4
-    t.integer  "status",      limit: 4
-    t.integer  "channel",     limit: 4
-    t.integer  "priority",    limit: 4
+    t.string   "name",         limit: 255
+    t.string   "description",  limit: 255
+    t.text     "article",      limit: 65535
+    t.string   "cover_image",  limit: 255
+    t.integer  "owner_id",     limit: 4
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
+    t.boolean  "recommend",    limit: 1
+    t.boolean  "on_sale",      limit: 1
+    t.decimal  "price",                      precision: 8, scale: 2
+    t.integer  "storage",      limit: 4
+    t.integer  "sales",        limit: 4
+    t.integer  "status",       limit: 4
+    t.integer  "channel",      limit: 4
+    t.integer  "priority",     limit: 4
+    t.integer  "suppliers_id", limit: 4
   end
 
   add_index "products", ["name", "description", "article"], name: "fulltext_index", type: :fulltext
@@ -127,6 +130,13 @@ ActiveRecord::Schema.define(version: 20150819120348) do
 
   add_index "specifications", ["product_id"], name: "fk_rails_9b321d46dc", using: :btree
 
+  create_table "suppliers", force: :cascade do |t|
+    t.string   "name",       limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "groups_id",  limit: 4
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: ""
     t.string   "encrypted_password",     limit: 255, default: "", null: false
@@ -146,6 +156,9 @@ ActiveRecord::Schema.define(version: 20150819120348) do
     t.string   "tel",                    limit: 11,               null: false
     t.string   "wechat_openid",          limit: 255
     t.boolean  "order_notification",     limit: 1
+    t.integer  "failed_attempts",        limit: 4,   default: 0
+    t.string   "unlock_token",           limit: 255
+    t.datetime "locked_at"
   end
 
   add_index "users", ["group_id"], name: "index_users_on_group_id", using: :btree

@@ -11,4 +11,8 @@ module Api::CartsHelper
                 end
         end
 
+        def choose_channel
+                session[:channel] || "custom"
+        end
+
 end

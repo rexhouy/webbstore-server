@@ -14,7 +14,6 @@
                         "imageUpload":"/admin/image?" + params,
                         "lang":"zh_cn"
                 });
-
         };
 
         $(function(){

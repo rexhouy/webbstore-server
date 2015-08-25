@@ -8,6 +8,7 @@ class Admin::GroupsController < AdminController
 
         def edit
                 @group = Group.find(params[:id])
+                @groups = Group.active.where("parent_id is null").all
         end
 
         def update
@@ -30,6 +31,7 @@ class Admin::GroupsController < AdminController
 
         def new
                 @group = Group.new
+                @groups = Group.active.where("parent_id is null").all
         end
 
         def destroy
@@ -41,7 +43,7 @@ class Admin::GroupsController < AdminController
 
         private
         def group_params
-                params.require(:group).permit(:id, :name)
+                params.require(:group).permit(:id, :name, :parent_id)
         end
 
 end

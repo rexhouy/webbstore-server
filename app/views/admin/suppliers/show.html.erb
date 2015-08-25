@@ -1,0 +1,21 @@
+<h1 class="page-header">预览</h1>
+
+<% if notice.present? %>
+<div class="alert alert-info" role="alert">
+  <%= notice %>
+</div>
+<% end %>
+
+<div class="form">
+  <div class="form-group">
+    <label class="col-sm-2 control-label">名字</label>
+    <div class="col-sm-10">
+      <p><%= @supplier.name %></p>
+    </div>
+  </div>
+</div>
+
+<div class="control-panel">
+  <%= link_to "编辑", edit_admin_supplier_path(@supplier), class: "btn btn-primary"%>
+  <%= link_to "返回", admin_suppliers_path, class: "btn btn-default" %>
+</div>

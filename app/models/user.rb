@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 class User < ActiveRecord::Base
         # Include default devise modules. Others available are:
-        # :confirmable, :lockable, :timeoutable and :omniauthable
-        devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:tel]
+        # :confirmable, , :timeoutable and :omniauthable
+        devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :lockable, :authentication_keys => [:tel]
 
         has_many :addresses, -> { where(status: Address.statuses[:active]) }
         belongs_to :role
@@ -10,11 +10,12 @@ class User < ActiveRecord::Base
 
         before_create :set_default_value
 
-        enum role: [:customer, :seller, :admin]
+        enum role: [:customer, :seller, :admin, :group_admin]
         enum status: [:active, :disabled]
 
         # Devise use tel instead of email
         validates :tel, presence: true, length: { is: 11 }
+        validates :group_id, presence: true
         validates_uniqueness_of :tel
         def email_required?
                 false
@@ -36,6 +37,10 @@ class User < ActiveRecord::Base
                         recoverable.errors.add(:tel, "不存在")
                 end
                 recoverable
+        end
+
+        def self.owner(owner)
+                where(group_id: owner)
         end
 
         private
