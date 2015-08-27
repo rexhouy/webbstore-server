@@ -49,6 +49,7 @@ module ApplicationHelper
         end
 
         def channel
-                session[:channel] || "organic"
+                return 1 if session[:channel].nil?
+                session[:channel]["id"]
         end
 end
