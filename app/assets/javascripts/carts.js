@@ -30,7 +30,6 @@
                 };
                 var getSelectedPaymentType = function() {
                         var selectedContent = $("div[name='payment']").filter(".selected").html();
-                        console.log(selectedContent);
                         switch ($.trim(selectedContent)) {
                         case "支付宝":
                                 return "alipay";
@@ -44,8 +43,6 @@
                 self.confirm = function() {
                         var address = getSelectedAddress();
                         var paymentType = getSelectedPaymentType();
-                        console.log(address);
-                        console.log(paymentType);
                         if (address != null && paymentType != null) {
                                 $("#selected_address_id").val(address);
                                 $("#payment_type").val(paymentType);

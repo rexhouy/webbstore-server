@@ -7,8 +7,9 @@
                 var processing = false;
 
                 var init = function() {
-                        $(window).scroll(scrollListener);
-                        scrollListener(); // load at startup
+                        $(window).off("scroll");
+                        $(window).on("scroll", scrollListener);
+                        load(); // load at startup
                 };
 
                 var scrollListener = function() {
@@ -29,8 +30,8 @@
                         $.getJSON(addPageParam(url), function(data) {
                                 if (data.length == 0) {
                                         $(spinnerId).hide();
-                                        processing = false;
-                                        return $(window).unbind("scroll", scrollListener);
+                                        $(window).off("scroll");
+                                        return false;
                                 }
                                 callback(data);
                                 $(spinnerId).hide();

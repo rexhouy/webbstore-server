@@ -1,16 +1,16 @@
 <% @recommendProducts.each do |product| %>
-<section class="recommand row">
-  <a href="/products/<%=product.id%>">
-    <div class="col-md-6 col-sm-12 col-xs-12">
-      <h2><%= product.name %></h2>
-      <p class="desc"><%= product.description%></p>
-      <button class="btn btn-lg">立即购买<i class="glyphicon glyphicon glyphicon-circle-arrow-right"></i></button>
-    </div>
-    <div class="col-md-6 col-sm-12 col-xs-12">
-      <%= image_tag product.cover_image %>
-    </div>
-  </a>
-</section>
+  <section class="recommand row">
+    <a href="/products/<%=product.id%>">
+      <div class="col-md-6 col-sm-12 col-xs-12">
+        <h2><%= product.name %></h2>
+        <p class="desc"><%= product.description%></p>
+        <button class="btn btn-lg">立即购买<i class="glyphicon glyphicon glyphicon-circle-arrow-right"></i></button>
+      </div>
+      <div class="col-md-6 col-sm-12 col-xs-12">
+        <%= image_tag product.cover_image %>
+      </div>
+    </a>
+  </section>
 <% end %>
 <div>
   <h2 style="padding-left:5px;"><%= title @channel %></h2>
@@ -27,12 +27,12 @@
   
   <script type="text/template" id="product_template">
     <section class="card col-md-3 col-sm-4 col-xs-6">
-      <a href="/products/{{id}}">
-        <div class="image">
-          <img src="{{cover_image}}">
-        </div>
-        <h3>{{name}}</h3>
-      </a>
-    </section>
+  <a href="/products/{{id}}">
+  <div class="image">
+  <img src="{{cover_image}}">
+  </div>
+  <h3>{{name}}</h3>
+  </a>
+  </section>
   </script>
 </div>
