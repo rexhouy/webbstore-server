@@ -8,7 +8,7 @@ class Admin::ArticlesController < AdminController
 
         def edit
                 @article = Article.find(params[:id])
-                render_404 if @article.group_id.eql? current_user.id
+                render_404 unless @article.group_id.eql? current_user.group_id
         end
 
         def new
@@ -17,7 +17,7 @@ class Admin::ArticlesController < AdminController
 
         def destroy
                 article = Article.find(params[:id])
-                return render_404 if article.group_id.eql? current_user.id
+                return render_404 unless article.group_id.eql? current_user.group_id
                 article.destroy
                 redirect_to admin_articles_path
         end

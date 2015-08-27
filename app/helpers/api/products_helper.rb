@@ -8,9 +8,8 @@ module Api::ProductsHelper
                 end
         end
 
-        def title(type)
-                return "定制产品" if type.eql? "custom"
-                return "生态产品" if type.eql? "organic"
-                "所有产品"
+        def title(channel)
+                return "所有产品" if channel.nil?
+                channel.name
         end
 end

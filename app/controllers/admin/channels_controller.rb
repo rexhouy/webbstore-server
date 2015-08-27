@@ -8,7 +8,7 @@ class Admin::ChannelsController < AdminController
 
         def edit
                 @channel = Channel.find(params[:id])
-                render_404 if @channel.group_id.eql? current_user.id
+                render_404 unless @channel.group_id.eql?(current_user.group_id)
         end
 
         def new
@@ -17,7 +17,7 @@ class Admin::ChannelsController < AdminController
 
         def destroy
                 channel = Channel.find(params[:id])
-                return render_404 if channel.group_id.eql? current_user.id
+                return render_404 unless channel.group_id.eql? current_user.group_id
                 channel.destroy
                 redirect_to admin_channels_path
         end
