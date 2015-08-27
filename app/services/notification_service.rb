@@ -18,7 +18,7 @@ class NotificationService
 		{
 			touser: user.wechat_openid,
 			template_id: WECHAT_NOTIFY["order_template_id"],
-			url:"http://#{Rails.application.config.domain}/orders/#{order.id}",
+			url:"http://#{Rails.application.config.domain}/admin/orders/#{order.id}",
 			topcolor: WECHAT_NOTIFY["topcolor"],
 			data: {
 				first: {

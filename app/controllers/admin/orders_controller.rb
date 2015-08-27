@@ -56,7 +56,7 @@ class Admin::OrdersController < AdminController
                 @order = Order.find(params[:id])
                 @order.status = status
                 @order.save
-                redirect_to [:admin, @order]
+                redirect_to [:admin, @order], notice: "修改成功"
         end
 
 end

@@ -12,6 +12,7 @@ class OrdersController < ApiController
 
         def show
                 @order = Order.find(params[:id])
+                return render_404 unless @order.customer_id.eql? current_user.id
                 @url = payment_redirect_url(@order)
         end
 
@@ -56,7 +57,7 @@ class OrdersController < ApiController
 
         def cancel
                 order = Order.find(params[:id])
-                if order and order.customer.id.eql? current_user.id
+                if order and order.customer_id.eql? current_user.id
                         if order.placed?
                                 order.status = Order.statuses[:canceled]
                                 begin
