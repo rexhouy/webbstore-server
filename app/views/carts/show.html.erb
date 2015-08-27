@@ -42,7 +42,7 @@
           <div class="col-md-3 col-sm-3 col-xs-4">
             <div class="list-item" style="overflow:hidden;">
               <div class="price "><%= number_to_currency product_price(product), precision: 2 %></div>
-              <%= number_field_tag "count", product["count"], onchange: "carts.updateCount(this, #{product['id']}, '#{product['spec_id']}')", style: "width: 50px;", class: "list-item"%>
+              <%= number_field_tag "count", product["count"], onchange: "carts.updateCount(this, #{product['id']}, '#{product['spec_id']}')", style: "width: 50px;", class: "list-item", min: 1%>
             </div>
             <div class="list-item">
               <%= form_tag :carts_del_product, method: "DELETE" do %>
@@ -64,7 +64,7 @@
 
         <div class="vertical-btn-group">
           <a class="btn btn-lg btn-default" href="/products?channel=<%=channel%>">继续购物</a>
-          <a class="btn btn-lg btn-primary" href="/carts/confirm">确认订单</a>
+          <a id="confirm_carts_btn" class="btn btn-lg btn-primary" href="/carts/confirm">确认订单</a>
         </div>
 
       </div>

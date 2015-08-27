@@ -2,6 +2,11 @@
         var carts = function() {
                 var self = {};
                 self.updateCount = function(select, id, spec_id) {
+                        $("#confirm_carts_btn").attr("disabled", "disabled");
+                        if (select.value <= 0 || select.value > 1000) {
+                                alert("购买数量不正确");
+                                return;
+                        }
                         spinner.show();
                         $.ajax("/carts.json", {
                                 method : "post",
@@ -15,6 +20,7 @@
                                         count : select.value
                                 }
                         }).done(function(data){
+                                $("#confirm_carts_btn").removeAttr("disabled");
                                 spinner.hide();
                         });
                 };

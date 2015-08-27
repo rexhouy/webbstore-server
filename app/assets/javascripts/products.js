@@ -25,8 +25,11 @@
                                 $("#spec_selector_"+selectedSpec).removeClass("selected");
                         }
                         $("#spec_selector_"+specId).addClass("selected");
+                        $("#spec_price_"+selectedSpec).hide();
+                        $("#spec_price_"+specId).show();
                         selectedSpec = specId;
                         $("#spec_add_to_cart_btn").removeAttr("disabled");
+
                 };
 
                 self.addToCart = function() {

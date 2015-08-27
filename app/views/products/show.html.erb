@@ -53,7 +53,7 @@
     <div style="padding-left:40px;margin:10px 0;">
       <% specification_group(@product.specifications).each do |group_name, specs| %>
       <% specs.each do |spec| %>
-      <div><strong>单价： <%=number_to_currency spec.price, precision: 2%></strong></div>
+      <div id="spec_price_<%=spec.id%>" style="display:none;"><strong>单价： <%=number_to_currency spec.price, precision: 2%></strong></div>
       <% end %>
       <% end %>
     </div>
