@@ -1,5 +1,5 @@
 class AddGroupstoArticles < ActiveRecord::Migration
         def change
-                add_reference :articles, :groups
+                add_foreign_key :articles, :groups
         end
 end

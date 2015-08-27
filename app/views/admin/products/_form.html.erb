@@ -54,11 +54,11 @@
   </div>
 
   <div class="form-group">
-    <%= p.label :channel, :class => "col-sm-2 control-label" do  %>
+    <%= p.label :channel_id, :class => "col-sm-2 control-label" do  %>
       频道
   <% end %>
   <div class="col-sm-4">
-    <%= p.select :channel, options_for_select([["定制平台", "custom"], ["有机食品", "organic"]], p.object.channel), {}, class: "form-control" %>
+    <%= p.select :channel_id, options_from_collection_for_select(@channels, :id, :name, p.object.channel_id), {include_blank: true}, class: "form-control" %>
     </div>
   </div>
 

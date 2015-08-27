@@ -9,6 +9,7 @@ class Admin::ProductsController < AdminController
         def edit
                 @product = Product.find(params[:id])
                 @suppliers = Supplier.owner(owner).all
+                @channels = Channel.owner(owner).all
                 return head(:forbidden) unless @product.owner_id.eql? owner
         end
 
@@ -30,6 +31,7 @@ class Admin::ProductsController < AdminController
         def new
                 @product = Product.new
                 @suppliers = Supplier.owner(owner).all
+                @channels = Channel.owner(owner).all
         end
 
         def show
@@ -75,12 +77,12 @@ class Admin::ProductsController < AdminController
         end
 
         def product_params
-                params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale, :cover_image, :channel, :priority, :suppliers_id,
+                params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale, :cover_image, :channel_id, :priority, :suppliers_id,
                                                 specifications_attributes: [:id, :name, :value, :price, :storage])
         end
 
         def preview_params
-                params.require(:product).permit(:name, :price, :storage, :description, :article, :recommend, :cover_image, :channel)
+                params.require(:product).permit(:name, :price, :storage, :description, :article, :recommend, :cover_image, :channel_id)
         end
 
 end

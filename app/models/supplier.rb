@@ -6,7 +6,7 @@ class Supplier < ActiveRecord::Base
         validates :name, presence: true
 
 	def self.owner(owner)
-		where(groups_id: owner)
+		where(group_id: owner)
 	end
 
 end

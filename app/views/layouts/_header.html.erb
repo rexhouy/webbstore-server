@@ -2,9 +2,9 @@
   <div class="container-fluid">
     <div class="navbar-header">
       <% if current_namespace.eql? "Admin" %>
-      <a class="navbar-brand" href="/admin">拾惠社管控台</a>
+      <a class="navbar-brand" href="/admin"><%=Rails.application.config.name%>管控台</a>
       <% else %>
-      <a class="navbar-brand" href="/">拾惠社</a>
+      <a class="navbar-brand" href="/"><%=Rails.application.config.name%></a>
       <% end %>
     </div>
     <% if current_namespace.eql? "Admin" %>

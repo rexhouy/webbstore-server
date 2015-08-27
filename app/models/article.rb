@@ -3,6 +3,6 @@ class Article < ActiveRecord::Base
         validates :content, presence: true
 
         def self.owner(owner)
-                where(groups_id: owner)
+                where(group_id: owner)
         end
 end

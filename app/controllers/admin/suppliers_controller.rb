@@ -26,7 +26,7 @@ class Admin::SuppliersController < AdminController
         # POST /admin/suppliers.json
         def create
                 @supplier = Supplier.new(supplier_params)
-                @supplier.groups_id = owner
+                @supplier.group_id = owner
 
                 respond_to do |format|
                         if @supplier.save

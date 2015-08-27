@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
@@ -28,6 +29,7 @@ module Webstore
                 # Define which owner this app belongs to.
                 config.owner = 1
 	        config.domain = "www.tenhs.com"
-	        
+	        config.name = "拾惠社"
+
         end
 end

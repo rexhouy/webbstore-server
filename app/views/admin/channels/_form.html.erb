@@ -1,0 +1,42 @@
+<%= form_for [:admin, @channel], :html => {:class => "form-horizontal"} do |p| %>
+  <% if @channel.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <strong>保存失败</strong>
+      <ul>
+        <% @channel.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= p.label :name, "名称", :class => "col-sm-2 control-label"  %>
+    <div class="col-sm-10">
+      <%= p.text_field :name, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= p.label :image, "主页图片", :class => "col-sm-2 control-label" %>
+    <div class="col-sm-5">
+      <% if p.object.image.nil? %>
+      <%= image_tag "empty-img.png", class: "img-thumbnail", onclick: "uploader.open()", id: "cover_image", style: "width:180px" %>
+      <% else %>
+      <%= image_tag p.object.image, class: "img-thumbnail", onclick: "uploader.open()", id: "cover_image", style: "width:180px" %>
+      <% end %>
+      <%= p.hidden_field :image, id: "product_cover_image" %>
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= submit_tag "确认",  data: { disable_with: "请稍后..."},  :class => "btn btn-primary" %>
+        <%= link_to "取消", admin_channels_path, :class => "btn btn-default" %>
+    </div>
+  </div>
+
+<% end %>
+
+<%= render partial: "/admin/products/upload_form" %>

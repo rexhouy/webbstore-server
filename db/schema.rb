@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150825081301) do
+ActiveRecord::Schema.define(version: 20150827095656) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20150825081301) do
     t.string   "content",    limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.integer  "groups_id",  limit: 4
+    t.integer  "group_id",   limit: 4
   end
 
   create_table "captchas", force: :cascade do |t|
@@ -44,6 +44,16 @@ ActiveRecord::Schema.define(version: 20150825081301) do
   end
 
   add_index "captchas", ["tel"], name: "index_captchas_on_tel", unique: true, using: :btree
+
+  create_table "channels", force: :cascade do |t|
+    t.string   "name",       limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "group_id",   limit: 4
+    t.string   "image",      limit: 255
+  end
+
+  add_index "channels", ["group_id"], name: "fk_rails_8011c05949", using: :btree
 
   create_table "groups", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -99,11 +109,12 @@ ActiveRecord::Schema.define(version: 20150825081301) do
     t.integer  "storage",      limit: 4
     t.integer  "sales",        limit: 4
     t.integer  "status",       limit: 4
-    t.integer  "channel",      limit: 4
+    t.integer  "channel_id",   limit: 4
     t.integer  "priority",     limit: 4
     t.integer  "suppliers_id", limit: 4
   end
 
+  add_index "products", ["channel_id"], name: "fk_rails_6a9a6377a6", using: :btree
   add_index "products", ["name", "description", "article"], name: "fulltext_index", type: :fulltext
   add_index "products", ["owner_id"], name: "fk_rails_718105988b", using: :btree
 
@@ -134,7 +145,7 @@ ActiveRecord::Schema.define(version: 20150825081301) do
     t.string   "name",       limit: 255, null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.integer  "groups_id",  limit: 4
+    t.integer  "group_id",   limit: 4
   end
 
   create_table "users", force: :cascade do |t|
@@ -166,12 +177,14 @@ ActiveRecord::Schema.define(version: 20150825081301) do
   add_index "users", ["role"], name: "index_users_on_role", using: :btree
   add_index "users", ["tel"], name: "index_users_on_tel", unique: true, using: :btree
 
+  add_foreign_key "channels", "groups"
   add_foreign_key "orders", "addresses"
   add_foreign_key "orders", "groups", column: "seller_id"
   add_foreign_key "orders", "users", column: "customer_id"
   add_foreign_key "orders_products", "orders"
   add_foreign_key "orders_products", "products"
   add_foreign_key "orders_products", "specifications", on_delete: :cascade
+  add_foreign_key "products", "channels"
   add_foreign_key "products", "groups", column: "owner_id"
   add_foreign_key "specifications", "products", on_delete: :cascade
   add_foreign_key "users", "groups"

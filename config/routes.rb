@@ -68,6 +68,7 @@ Rails.application.routes.draw do
                 resources :groups
                 resources :articles
                 resources :suppliers
+                resources :channels
 
                 # Orders
                 resources :orders

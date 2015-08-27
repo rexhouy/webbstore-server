@@ -7,7 +7,8 @@ class Admin::ArticlesController < AdminController
         end
 
         def edit
-                @article = Article.owner(owner).find(params[:id])
+                @article = Article.find(params[:id])
+                render_404 if @article.group_id.eql? current_user.id
         end
 
         def new
@@ -15,14 +16,16 @@ class Admin::ArticlesController < AdminController
         end
 
         def destroy
-                Article.find(params[:id]).owner(owner).destroy
+                article = Article.find(params[:id])
+                return render_404 if article.group_id.eql? current_user.id
+                article.destroy
                 redirect_to admin_articles_path
         end
 
         def create
                 @article = Article.new(article_param)
                 authorize! :create, @article
-                article.groups_id = owner
+                @article.group_id = owner
                 if @article.save
                         redirect_to :action => "show", :id => @article.id
                 else

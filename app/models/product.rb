@@ -2,6 +2,7 @@
 class Product < ActiveRecord::Base
         belongs_to :owner, class_name: "Group", foreign_key: :owner_id
         belongs_to :supplier
+        belongs_to :channel
         has_many :specifications, -> { where(status: Specification.statuses[:available]) }
         accepts_nested_attributes_for :specifications
 
@@ -10,7 +11,6 @@ class Product < ActiveRecord::Base
         include Elasticsearch::Model::Callbacks
 
         enum status: [:available, :disabled]
-        enum channel: [:custom, :organic]
 
         before_create do
                 self.sales = 0
@@ -42,8 +42,8 @@ class Product < ActiveRecord::Base
         end
 
         def self.channel(channel)
-                return custom if channel.eql? "custom"
-                organic
+                return where(channel_id: channel) unless channel.blank?
+                all
         end
 
         private

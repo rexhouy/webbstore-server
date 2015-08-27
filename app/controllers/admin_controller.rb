@@ -24,6 +24,7 @@ class AdminController < ApplicationController
                           {url: admin_orders_url, text: "订单", class: "", resource: Order },
                           {url: admin_articles_url, text: "文章", class: "", resource: Article },
                           {url: admin_suppliers_url, text: "供应商", class: "", resource: Supplier },
+                          {url: admin_channels_url, text: "频道", class: "", resource: Channel },
                           {url: admin_users_url, text: "用户", class: "", resource: User },
                           {url: admin_groups_url, text: "机构", class: "", resource: Group },]
                 @menus.select! do |menu|

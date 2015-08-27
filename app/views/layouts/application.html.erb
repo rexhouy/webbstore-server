@@ -2,7 +2,7 @@
 <html class="no-js">
   <head>
     <meta charset="utf-8">
-    <title>拾惠社</title>
+    <title><%=Rails.application.config.name%></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width,user-scalable=no">
     <link href="<%=image_url('favicon.ico')%>" rel="icon">
@@ -22,7 +22,7 @@
           </section>
 
           <section class="navbar-brand pull-left inherit-height">
-            <a class="" href="/">拾惠社</a>
+            <a class="" href="/"><%=Rails.application.config.name%></a>
           </section>
 
           <section class="inherit-height search-container" id="search">
@@ -71,12 +71,13 @@
       <section class="nav-section">
         <ul class="nav">
           <% if user_signed_in? %>
-          <li><a href="/me" class="icon-link-left"><i class="glyphicon glyphicon-home"></i>我的拾惠社</a></li>
+          <li><a href="/me" class="icon-link-left"><i class="glyphicon glyphicon-home"></i>我的<%=Rails.application.config.name%></a></li>
           <% end %>
           <li><a href="/orders/all" class="icon-link-left"><i class="glyphicon glyphicon-list-alt"></i>订单</a></li>
           <li><a href="/carts" class="icon-link-left"><i class="glyphicon glyphicon-shopping-cart"></i>购物车</a></li>
-          <li><a href="/products?channel=custom" class="icon-link-left"><i class="glyphicon glyphicon-grain"></i>定制平台</a></li>
-          <li><a href="/products?channel=organic" class="icon-link-left"><i class="glyphicon glyphicon-grain"></i>生态食品</a></li>
+          <% @channels.each do |c| %>
+          <li><a href="/products?channel=<%=c.id%>" class="icon-link-left"><i class="glyphicon glyphicon-grain"></i><%=c.name%></a></li>
+          <% end %>
           <li><a href="/about" class="icon-link-left">关于</a></li>
         </ul>
       </section>

@@ -2,7 +2,7 @@
 <html class="no-js">
   <head>
     <meta charset="utf-8">
-    <title>拾惠社</title>
+    <title><%=Rails.application.config.name%></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width,user-scalable=no">
     <link href="<%=image_url('favicon.ico')%>" rel="icon">
@@ -15,7 +15,7 @@
       <div class="navbar navbar-default" role="navigation">
         <div class="navbar-header" style="height:50px">
           <section class="navbar-brand pull-left inherit-height">
-            <a class="" href="/">拾惠社</a>
+            <a class="" href="/"><%=Rails.application.config.name%></a>
           </section>
         </div>
       </div>
@@ -33,7 +33,7 @@
 
     <footer>
       <div class="container">
-        <p>© 拾惠社 2015</p>
+        <p>© <%=Rails.application.config.name%> 2015</p>
         <p>京ICP备15036211号</p>
       </div>
     </footer>

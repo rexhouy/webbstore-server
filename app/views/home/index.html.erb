@@ -3,19 +3,14 @@
     <%= image_tag "cover.jpg" %>
   </div>
   <div class="row home-nav" style="background:#fff;">
+    <% @channels.each do |c| %>
     <section class="col-sm-6 col-md-6 col-xs-12 col-lg-3" style="padding: 0; margin: 2px 0;">
-      <a href="/products?channel=custom" style="" class="products">
-        <%= image_tag "platform.jpg", alt: "定制平台"%>
-        <h3>定制平台</h3>
+      <a href="/products?channel=<%=c.id%>" style="" class="products">
+        <%= image_tag c.image, alt: c.name%>
+        <h3><%=c.name%></h3>
       </a>
     </section>
-
-    <section class="col-sm-6 col-md-6 col-xs-12 col-lg-3" style="padding: 0; margin: 2px 0;">
-      <a  href="/products?channel=organic">
-          <%= image_tag "farm.jpg", alt: "生态食品"%>
-          <h3>生态食品</h3>
-      </a>
-    </section>
+    <% end %>
 
     <section class="col-sm-6 col-md-6 col-xs-12 col-lg-3" style="padding: 0; margin: 2px 0;">
       <a href="/">
@@ -27,7 +22,7 @@
 
       <section class="col-sm-6 col-md-6 col-xs-12 col-lg-3" style="padding: 0; margin: 2px 0;">
         <a  href="/about">
-          <%= image_tag "about.jpg", alt: "拾惠社"%>
+          <%= image_tag "about.jpg", alt: Rails.application.config.name%>
           <h3 style="color:#777;">公司简介</h3>
         </a>
       </section>
