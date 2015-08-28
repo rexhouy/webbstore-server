@@ -64,7 +64,7 @@
                               ".products-spinner", // spinner selector
                               "/products.json?channel="+channel, // url
                               function(products) {
-                                      products.forEach(function(product){
+                                      products.forEach(function(product) {
                                               $(Mustache.render(template, product)).appendTo(container);
                                       });
                               });
