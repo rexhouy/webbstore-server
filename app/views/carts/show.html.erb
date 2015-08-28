@@ -41,7 +41,7 @@
           </div>
           <div class="col-md-3 col-sm-3 col-xs-4">
             <div class="list-item" style="overflow:hidden;">
-              <div class="price "><%= number_to_currency product_price(product), precision: 2 %></div>
+              <div class="price "><%= number_to_currency unit_price(product), precision: 2 %></div>
               <%= number_field_tag "count", product["count"], onchange: "carts.updateCount(this, #{product['id']}, '#{product['spec_id']}')", style: "width: 50px;", class: "list-item", min: 1%>
             </div>
             <div class="list-item">
@@ -59,7 +59,7 @@
 
         <div class="subtotal">
           <label class="pull-left label">合计</label>
-          <div class="pull-right price"><%= number_to_currency cart_price(@cart), locale: :'zh-CN', precision: 2 %></div>
+          <div class="pull-right price" id="subtotal"><%= number_to_currency cart_price(@cart), locale: :'zh-CN', precision: 2 %></div>
         </div>
 
         <div class="vertical-btn-group">

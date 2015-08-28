@@ -20,7 +20,12 @@
                                         count : select.value
                                 }
                         }).done(function(data){
-                                $("#confirm_carts_btn").removeAttr("disabled");
+                                if (data.succeed) {
+                                        $("#confirm_carts_btn").removeAttr("disabled");
+                                        $("#subtotal").html(data.subtotal);
+                                } else {
+                                        alert(data.message);
+                                }
                                 spinner.hide();
                         });
                 };

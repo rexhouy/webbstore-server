@@ -21,15 +21,14 @@ class CartsController < ApiController
 
         def update
                 product = Product.valid.find(params[:id])
-                ret = {}
                 if product.nil?
-                        ret[:message] = "商品不存在"
-                        ret[:succeed] = false
+                        @message = "商品不存在"
+                        @succeed = false
                 else
                         change_product_count(product.id, params[:spec_id], params[:count])
-                        ret[:succeed] = true
+                        @succeed = true
+                        @cart = get_cart_products_detail(get_cart)
                 end
-                render json: ret
         end
 
         def delete
@@ -41,7 +40,7 @@ class CartsController < ApiController
         end
 
         def confirm
-                return render(:to_login) unless user_signed_in?
+                return redirect_to :new_user_session unless user_signed_in?
                 @cart = get_cart_products_detail(get_cart)
                 @user = current_user
                 @address = Address.new
