@@ -37,7 +37,7 @@ class OrdersController < ApiController
                                 order.orders_products = get_orders_products
                                 order.status = Order.statuses[:placed]
                                 order.subtotal = subtotal(order.orders_products)
-                                order.order_id = "#{SecureRandom.random_number(10**7)}-#{SecureRandom.random_number(10**7)}"
+                                order.order_id = "#{SecureRandom.random_number(10**7).to_s.rjust(7,"0")}-#{SecureRandom.random_number(10**7).to_s.rjust(7,"0")}"
                                 order.address = get_address
                                 order.payment_type = params[:paymentType]
                                 order.name = order_name order.orders_products
