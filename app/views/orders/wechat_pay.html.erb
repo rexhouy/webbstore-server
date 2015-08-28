@@ -29,8 +29,8 @@
       正在跳转到微信支付，请稍后...
     </p>
     <p id="redirect_result">
-      <button onclick="javascript:window.location.href='/api/payment/<%=@order_id%>?success=true'">支付成功</button>
-      <button onclick="javascript:window.location.href='/api/payment/<%=@order_id%>?success=false'">支付遇到问题</button>
+      <button onclick="javascript:window.location.href='/payment/<%=@order_id%>?success=true'">支付成功</button>
+      <button onclick="javascript:window.location.href='/payment/<%=@order_id%>?success=false'">支付遇到问题</button>
     </p>
      <script stype="text/javascript">
        function onBridgeReady(){
@@ -48,10 +48,10 @@
                         document.getElementById("redirect_result").style.display = "block";
                         if(res.err_msg == "get_brand_wcpay_request:ok" ) {
                                // 操作成功，跳转到成功页面
-                               window.location.href = "/api/payment/wechat/front_notify?success=true&id=<%=@order_id%>"
+                               window.location.href = "/payment/wechat/front_notify?success=true&id=<%=@order_id%>"
                         } else {
                                // 用户放弃操作或操作是失败，跳转到失败页面
-                               window.location.href = "/api/payment/wechat/front_notify?success=false&id=<%=@order_id%>"
+                               window.location.href = "/payment/wechat/front_notify?success=false&id=<%=@order_id%>"
                         }
                 }
         );
