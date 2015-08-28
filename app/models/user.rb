@@ -15,7 +15,6 @@ class User < ActiveRecord::Base
 
         # Devise use tel instead of email
         validates :tel, presence: true, length: { is: 11 }
-        validates :group_id, presence: true
         validates_uniqueness_of :tel
         def email_required?
                 false
@@ -47,6 +46,7 @@ class User < ActiveRecord::Base
         def set_default_value
                 self.role ||= User.roles[:customer]
                 self.status = User.statuses[:active]
+                self.introducer_token = SecureRandom.hex(8)
         end
 
 end

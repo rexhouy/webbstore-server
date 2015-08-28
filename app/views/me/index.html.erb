@@ -6,25 +6,28 @@
     <div class="col-md-3 col-sm-3 col-xs-12">
       <h3>账户</h3>
     </div>
-    <div class="col-md-8 col-sm-8 col-xs-12 btn-group-vertical" style="background:#fff;padding:20px;">
+    <div class="col-md-8 col-sm-8 col-xs-12 btn-group-vertical me-btn-group">
       <a href="/addresses" class="btn btn-default btn-block">
-        <i class="glyphicon glyphicon-map-marker"></i> 收货地址
+        <i class="glyphicon glyphicon-menu-right"></i> 收货地址
       </a>
       <%= link_to edit_user_registration_path, class: "btn btn-default btn-block", target: "_self" do %>
-        <i class="glyphicon glyphicon-list-alt"></i> 修改密码
+        <i class="glyphicon glyphicon-menu-right"></i> 修改密码
       <% end %>
+      <a href="/me/introduce" class="btn btn-default btn-block">
+        <i class="glyphicon glyphicon-menu-right"></i> 推荐给好友
+      </a>
     </div>
   </section>
   <section>
     <div class="col-md-3 col-sm-3 col-xs-12">
       <h3>订单</h3>
     </div>
-    <div class="col-md-8 col-sm-8 col-xs-12 btn-group-vertical" style="background:#fff;padding:20px;">
+    <div class="col-md-8 col-sm-8 col-xs-12 btn-group-vertical me-btn-group">
       <a href="/orders" class="btn btn-default btn-block">
-        <i class="glyphicon glyphicon-list-alt"></i> 我的订单
+        <i class="glyphicon glyphicon-menu-right"></i> 我的订单
       </a>
       <a href="/carts" class="btn btn-default btn-block">
-        <i class="glyphicon glyphicon-shopping-cart"></i> 我的购物车
+        <i class="glyphicon glyphicon-menu-right"></i> 我的购物车
       </a>
     </div>
   </section>

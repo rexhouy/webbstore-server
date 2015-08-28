@@ -20,6 +20,7 @@ class OrdersController < ApiController
                 code = params[:code]
                 @order_id = params[:state]
                 @wechat_params = WechatService.new.pay(Order.find(@order_id), request.remote_ip, code)
+                render layout: false
         end
 
         def add
@@ -132,7 +133,7 @@ class OrdersController < ApiController
                         p = Product.find(product["id"])
                         op.price = p.price
                         op.product = p
-                        unless product["spec_id"].nil? || product["spec_id"].empty?
+                        if product["spec_id"].present?
                                 op.specification = Specification.find(product["spec_id"])
                                 op.price = op.specification.price
                         end
@@ -140,10 +141,10 @@ class OrdersController < ApiController
                                 orders_products << op
                         else
                                 @errors ||= []
-                                if product["spec_id"].nil?
-                                        @errors << "产品[#{p.name}]仅剩#{p.storage-p.sales}件"
-                                else
+                                if product["spec_id"].present?
                                         @errors << "产品[#{p.name}]仅剩#{op.specification.storage-op.specification.sales}件"
+                                else
+                                        @errors << "产品[#{p.name}]仅剩#{p.storage-p.sales}件"
                                 end
                         end
                 end

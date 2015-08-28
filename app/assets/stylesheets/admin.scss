@@ -13,5 +13,6 @@
  *= require_self
  *= require admin/bootstrap_custom
  *= require_tree ./admin
+ *= require ./common
  *= require redactor-rails
  */

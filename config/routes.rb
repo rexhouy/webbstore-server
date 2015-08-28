@@ -48,6 +48,7 @@ Rails.application.routes.draw do
 
         # User home
         get 'me' => 'me#index'
+        get "me/introduce" => "me#introduce"
 
         # Payment callback
         get 'payment/wechat/front_notify' => 'payments#wechat_front_notify'
@@ -64,11 +65,13 @@ Rails.application.routes.draw do
                 get "sign_in" => "home#sign_in"
                 get "unauthorized_access" => "home#unauthorized_access", as: :unauthorized_access
 
-                resources :users
                 resources :groups
                 resources :articles
                 resources :suppliers
                 resources :channels
+
+                # Users
+                resources :users
 
                 # Orders
                 resources :orders

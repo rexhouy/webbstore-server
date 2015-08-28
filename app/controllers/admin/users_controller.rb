@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+require 'securerandom'
 class Admin::UsersController < AdminController
         # Checks authorization for all actions using cancan
         load_and_authorize_resource

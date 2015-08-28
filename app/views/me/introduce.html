@@ -1,0 +1,51 @@
+<div class="banner row">
+  <h2 class="pull-left inherit-height table-center-wrap"><span class="table-center">推荐给好友</span></h2>
+  <a class="btn btn-lg pull-right highlight-link icon-link-right inherit-height table-center-wrap" href="/me">
+    <span class="table-center"><i class="glyphicon glyphicon-arrow-left"></i> 返回</span>
+  </a>
+</div>
+
+<div class="row main">
+  <section>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <h3>我的推荐码</h3>
+    </div>
+    <div class="col-md-8 col-sm-8 col-xs-12" style="background:#fff;padding:20px;">
+      <p class="text-info" style="text-align:center">推荐好友扫描以下二维码加入<%=Rails.application.config.name%></p>
+      <div class="qr-code qr-code-center">
+      <%= raw @qr_code.as_html %>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <h3>我推荐的社员</h3>
+    </div>
+    <div class="col-md-8 col-sm-8 col-xs-12" style="background:#fff;padding:20px;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>用户名</th>
+            <th>入社时间</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @introduced_users.each do |u| %>
+          <tr>
+            <td><%= normalize_tel u.tel%></td>
+            <td><%= display_date u.created_at%></td>
+          </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2">
+              <%= paginate "/me/introduce", @introduced_users %>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </section>
+</div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150827095656) do
+ActiveRecord::Schema.define(version: 20150828032217) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -170,6 +170,7 @@ ActiveRecord::Schema.define(version: 20150827095656) do
     t.integer  "failed_attempts",        limit: 4,   default: 0
     t.string   "unlock_token",           limit: 255
     t.datetime "locked_at"
+    t.integer  "introducer",             limit: 4
   end
 
   add_index "users", ["group_id"], name: "index_users_on_group_id", using: :btree

@@ -28,6 +28,10 @@ module ApplicationHelper
                 date.strftime("%Y-%m-%d %H:%M:%S")
         end
 
+        def normalize_tel(tel)
+                "#{tel[0..2]}****#{tel[8..11]}"
+        end
+
         def paginate(url, obj)
                 total_pages = ((obj.total_entries - 1) / obj.per_page + 1).to_i
                 has_previous = obj.current_page > 1

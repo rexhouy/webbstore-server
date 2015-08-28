@@ -41,6 +41,7 @@ class CartsController < ApiController
 
         def confirm
                 return redirect_to :new_user_session unless user_signed_in?
+                return redirect_to :carts if get_cart.empty?
                 @cart = get_cart_products_detail(get_cart)
                 @user = current_user
                 @address = Address.new

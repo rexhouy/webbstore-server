@@ -2,17 +2,23 @@
 class Auth::RegistrationsController < Devise::RegistrationsController
         # before_filter :configure_sign_up_params, only: [:create]
         # before_filter :configure_account_update_params, only: [:update]
-        before_filter :check_captcha, only: [:create]
+        # before_filter :check_captcha, only: [:create]
 
         # GET /resource/sign_up
-        # def new
-        #   super
-        # end
+        def new
+                @introducer_token = params[:introducer_token]
+                super
+        end
 
         # POST /resource
-        # def create
-        #         super
-        # end
+        def create
+                @introducer_token = params[:introducer_token]
+                super
+                if !resource.new_record? && @introducer_token.present?
+                        user = User.find_by_introducer_token(@introducer_token)
+                        resource.update(introducer: user.id)
+                end
+        end
 
         # GET /resource/edit
         # def edit
