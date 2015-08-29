@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module Api::ProductsHelper
 
         def specification_group(specifications)
@@ -5,5 +6,10 @@ module Api::ProductsHelper
                         (group[spec.name] ||= []) << spec
                         group
                 end
+        end
+
+        def title(channel)
+                return "所有产品" if channel.nil?
+                channel.name
         end
 end

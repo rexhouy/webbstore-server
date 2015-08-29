@@ -1,0 +1,43 @@
+<div class="banner row">
+  <h2 class="pull-left inherit-height table-center-wrap"><span class="table-center">订单</span></h2>
+  <a class="btn btn-lg pull-right highlight-link icon-link-left inherit-height table-center-wrap" href="/products?channel=<%=channel%>">
+    <span class="table-center"><i class="glyphicon glyphicon-arrow-left"></i>返回</span>
+  </a>
+</div>
+<div class="row main">
+  <div>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <ul class="order-filter no-list-style">
+        <li><a <%= @type.eql?("all") ? 'class=highlight-icon' : '' %> href="/orders">所有订单</a></li>
+        <li><a <%= @type.eql?("unfinished") ? 'class=highlight-icon' : '' %> href="/orders?type=unfinished">未完成订单</a></li>
+        <li><a <%= @type.eql?("canceled") ? 'class=highlight-icon' : '' %> href="/orders?type=canceled">已取消订单</a></li>
+      </ul>
+    </div>
+    <div class="col-md-8 col-sm-8 col-xs-12" style="background:#fff;">
+      <table class="table table-hover table-clickable">
+        <thead>
+          <tr>
+            <th>时间</th><th>项目</th><th class="number-align">金额</th><th>状态</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @orders.each do |order| %>
+          <tr onclick="orders.toDetail(<%=order.id%>)">
+            <td><%= display_date order.created_at %></td>
+            <td><%= order.name %></td>
+            <td class="number-align"><%= number_to_currency order.subtotal, locale: :'zh-CN', precision: 2 %></td>
+            <td><%= order_status order %></td>
+          </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <%= paginate "/orders?type=#{@type}", @orders %>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>

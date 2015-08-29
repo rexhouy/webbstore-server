@@ -11,24 +11,21 @@
 <% end %>
 
 <div class="form-group">
-  <%= u.label :email, "名字", :class => "col-sm-2 control-label"  %>
+  <%= u.label :tel, "手机号", :class => "col-sm-2 control-label"  %>
   <div class="col-sm-6">
-    <%= u.email_field :email, :class => "form-control" %>
+    <%= u.telephone_field :tel, :class => "form-control" %>
   </div>
 </div>
 <div class="form-group">
   <%= u.label :role, "角色", class: "col-sm-2 control-label"  %>
   <div class="col-sm-3">
-    <%= u.select :role, [], {}, {class: "form-control"} do %>
-    <option value="seller">卖家</option>
-    <option value="admin">管理员</option>
-    <% end %>
+    <%= u.select :role, options_for_select({"卖家" => "seller", "管理员" => "admin"}, u.object.role), {}, {class: "form-control"} %>
   </div>
 </div>
 <div class="form-group">
-  <%= u.label :group_id, "所属卖家", :class => "col-sm-2 control-label"  %>
+  <%= u.label :group_id, "所属店铺", :class => "col-sm-2 control-label"  %>
   <div class="col-sm-3">
-    <%= u.select :group_id, options_from_collection_for_select(@groups, :id, :name), {}, {class: "form-control"} %>
+    <%= u.select :group_id, options_from_collection_for_select(@groups, :id, :name, u.object.group_id), {include_blank: true}, {class: "form-control"} %>
   </div>
 </div>
 <div class="form-group">
@@ -44,6 +41,11 @@
   <%= u.label :password_confirmation, "确认密码", class: "col-sm-2 control-label" %>
   <div class="col-sm-3">
     <%= u.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
+  </div>
+</div>
+<div class="form-group">
+  <div class="col-sm-8 col-sm-offset-2">
+    <p class="form-control-static text-info">* 不输入密码则保留原有密码</p>
   </div>
 </div>
 <div class="form-group">

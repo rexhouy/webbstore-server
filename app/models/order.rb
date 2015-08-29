@@ -6,8 +6,11 @@ class Order < ActiveRecord::Base
         belongs_to :address
 
         enum status: [:placed, :paid, :shipping, :delivered, :canceled]
-        enum payment_type: [:online_pay, :offline_pay]
+        enum payment_type: [:wechat, :alipay, :offline_pay]
 
+        def self.owner(owner)
+                where(seller_id: owner)
+        end
 
         def self.type(type)
                 case type
@@ -18,14 +21,31 @@ class Order < ActiveRecord::Base
                 when "canceled"
                         return where(status: statuses[:canceled])
                 when "unpaid"
-                        return where(status: statuses[:placed]).where(payment_type: payment_types[:online_pay])
+                        return where("status = ? and payment_type <> ?", statuses[:placed], payment_types[:offline_pay])
                 when "wait_shipping"
-                        return where("status = ? or (status = ? and payment_type = ?)", statuses[:paid], statuses[:placed], payment_types[:offline_pay])
+                        return where("status = ? or (payment_type = ? and status = ?)", statuses[:paid], payment_types[:offline_pay], statuses[:placed])
                 when "wait_delivery"
                         return where(status: statuses[:shipping])
                 when "finished"
                         return where(status: statuses[:delivered])
                 end
+        end
+
+        def self.search(order_id_or_tel, order_date)
+                scopes = nil
+                unless order_id_or_tel.blank?
+                        # test if it is order_id or tel
+                        if (/\d{11}/ =~ order_id_or_tel).nil?
+                                scopes = where(order_id: order_id_or_tel)
+                        else
+                                scopes = joins(:customer).where(users: {tel: order_id_or_tel})
+                        end
+                end
+                unless order_date.blank?
+                        d = Date.parse(order_date)
+                        scopes = where(created_at: d.beginning_of_day..d.end_of_day)
+                end
+                scopes || all
         end
 
         def detail

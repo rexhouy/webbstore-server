@@ -1,3 +1,4 @@
+@import "variables";
 /*
  * Global add-ons
  */
@@ -10,6 +11,12 @@
  * Top navigation
  * Hide default border to remove 1px line.
  */
-.navbar-fixed-top {
+.navbar {
   border: 0;
+  background: $theme-color;
+  box-shadow: 2px 2px 4px #ccc;
+}
+
+a.navbar-brand {
+    color: #fff !important;
 }

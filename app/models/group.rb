@@ -1,5 +1,7 @@
 class Group < ActiveRecord::Base
 
+        belongs_to :parent, class_name: "Group"
+        has_many :children, class_name: "Group", foreign_key: "parent_id"
         has_many :users
 
         before_create :set_default_value
@@ -10,10 +12,13 @@ class Group < ActiveRecord::Base
                 where(status: statuses[:active])
         end
 
+        def self.owner(owner)
+                where("parent_id = :owner or id = :owner", {owner: owner})
+        end
+
         private
         def set_default_value
                 self.status = Group.statuses[:active]
         end
-
 
 end

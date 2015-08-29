@@ -1,0 +1,100 @@
+<div class="banner row">
+  <h2 class="pull-left inherit-height table-center-wrap"><span class="table-center">购买</span></h2>
+  <a class="btn btn-lg pull-right highlight-link icon-link-left inherit-height table-center-wrap" href="/carts">
+    <span class="table-center"><i class="glyphicon glyphicon-arrow-left"></i>取消</span>
+  </a>
+</div>
+
+<% unless flash["info"].nil? %>
+<div class="alert alert-danger" role="alert">
+  <strong><%= flash["info"] %></strong>
+  <% unless flash["errors"].nil? %>
+  <ul>
+    <% flash["errors"].each do |error| %>
+    <li><%= error %></li>
+    <% end %>
+  </ul>
+  <% end %>
+</div>
+<% end %>
+
+<div class="main row">
+  <%= form_tag :orders, class: "form-horizontal", id: "carts_confirm_form" do %>
+    <section class="form-group">
+      <h3 class="col-md-2 col-sm-2 col-xs-12 icon-link-left form-group-title"><span class="circle highlight">1</span>确认订单</h3>
+      <div class="col-md-8 col-sm-8 col-xs-12 ">
+        <div class="confirm-content">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>商品</th><th class="number-align" style="min-width: 45px;">数量</th><th class="number-align">单价</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @cart.each do |product| %>
+                <tr>
+                  <td><%= product["detail"].name %>
+                    <% unless product["spec"].nil? %>
+                      <em>(<%= product["spec"].value %>)</em>
+                    <% end %>
+                  </td>
+                  <td class="number-align"><%= product["count"] %></td>
+                  <td class="number-align"><%= number_to_currency product_price(product), locale: :'zh-CN', precision: 2 %></td>
+                </tr>
+              <% end %>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3" class="number-align">
+                  总价：<%= number_to_currency cart_price(@cart), locale: :'zh-CN', precision: 2 %>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 配送 -->
+    <section class="form-group">
+      <h3 class="col-md-2 col-sm-2 col-xs-12 icon-link-left form-group-title"><span class="circle highlight">2</span>配送地址</h3>
+      <div class="col-md-8 col-sm-8 col-xs-12">
+        <div class="confirm-content">
+          <div id="addresses">
+            <% @user.addresses.each do |address| %>
+              <%= render partial: "/addresses/item", object: address %>
+            <% end %>
+          </div>
+          <input type="hidden" name="addressId" id="selected_address_id">
+          <div class="create-address">
+            <a class="btn btn-default block" click="" data-toggle="modal" data-target="#address_modal">新建地址</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 支付 -->
+    <section class="form-group">
+      <h3 class="col-md-2 col-sm-2 col-xs-12 icon-link-left form-group-title"><span class="circle highlight">3</span>支付方式</h3>
+      <div class="col-md-8 col-sm-8 col-xs-12">
+        <div class="confirm-content">
+          <div class="col-md-2 col-sm-4 col-xs-5 entry payment-type" name="payment">
+            微信支付
+          </div>
+          <div class="col-md-2 col-sm-4 col-xs-5 entry payment-type" name="payment">
+            支付宝
+          </div>
+          <input type="hidden" name="paymentType" id="payment_type">
+        </div>
+    </section>
+
+    <div class="form-group">
+      <div class="col-md-offset-2 col-md-8 col-sm-8 col-xs-12 vertical-btn-group">
+        <a class="btn btn-lg btn-default" href="/carts">取消</a>
+        <a class="btn btn-lg btn-primary" onclick="carts.confirm()">确认</a>
+      </div>
+    </div>
+  <% end %>
+
+  <%= render partial: "/addresses/modal" %>
+</div>

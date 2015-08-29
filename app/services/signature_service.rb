@@ -3,23 +3,18 @@ require "digest"
 
 class SignatureService
 
-        def initialize
-                payment_config = ERB.new File.new("#{Rails.root}/config/payment.yml").read
-                @@config = YAML.load(payment_config.result)
-                @@encrypted_key = md5(@@config["ipaynow"]["key"])
-                @@none_sign_field = ["funcode", "deviceType", "mhtSignType", "mhtSignature"]
-        end
+        NONE_SIGN_FIELD = ["funcode", "deviceType", "mhtSignType", "mhtSignature"]
 
         ## Empty fileds are not sign fields.
         def sign(params)
                 sign_param = params.keys.sort.reduce("") do |param_string, key|
                         value = params[key]
                         is_empty_field = (value.nil? or (value.is_a?(String) and value.strip.empty?))
-                        is_none_sign_field = @@none_sign_field.include? key
+                        is_none_sign_field = NONE_SIGN_FIELD.include? key
                         param_string << "#{key}=#{value}&" unless (is_empty_field or is_none_sign_field)
                         param_string
                 end
-                sign_param << @@encrypted_key
+                sign_param << Config::PAYMENT_ENCRYPTED_KEY
                 Rails.logger.debug "Sign param: #{sign_param}"
                 value = md5 sign_param
                 Rails.logger.debug "Signature: #{value}"

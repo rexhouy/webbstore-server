@@ -1,7 +1,7 @@
 /*
  * Sidebar
  */
-
+@import "variables";
 /* Hide for mobile, show later */
 .sidebar {
   display: none;
@@ -35,8 +35,8 @@
 .nav-sidebar > .active > a,
 .nav-sidebar > .active > a:hover,
 .nav-sidebar > .active > a:focus {
-  color: #fff;
-  background-color: #428bca;
+  color: #333;
+  background-color: #BDBDBD;
 }
 
 

@@ -1,0 +1,9 @@
+# -*- coding: utf-8 -*-
+zh-CN:
+  simple_captcha:
+    placeholder: "输入图片中的数字和字母"
+    label: "输入图片中:"
+    refresh_button_text: "刷新"
+    message:
+      default: "图形验证码不正确"
+      user: "图形验证码不正确"

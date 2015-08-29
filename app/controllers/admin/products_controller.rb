@@ -1,17 +1,21 @@
 class Admin::ProductsController < AdminController
-
+        # Checks authorization for all actions using cancan
         load_and_authorize_resource
 
         def index
-                @products = Product.available.paginate(:page => params[:page])
+                @products = Product.owner(owner).available.paginate(:page => params[:page])
         end
 
         def edit
                 @product = Product.find(params[:id])
+                @suppliers = Supplier.owner(owner).all
+                @channels = Channel.owner(owner).all
+                return head(:forbidden) unless @product.owner_id.eql? owner
         end
 
         def update
                 @product = Product.find(params[:id])
+                return head(:forbidden) unless @product.owner_id.eql? owner
                 Product.transaction do
                         destroyed_specs(@product.specifications).each do |spec|
                                 spec.update(status: Specification.statuses[:disabled])
@@ -26,15 +30,18 @@ class Admin::ProductsController < AdminController
 
         def new
                 @product = Product.new
+                @suppliers = Supplier.owner(owner).all
+                @channels = Channel.owner(owner).all
         end
 
         def show
                 @product = Product.find(params[:id])
+                return head(:forbidden) unless @product.owner_id.eql? owner
         end
 
         def create
                 @product = Product.new(product_params)
-                @product.owner_id = current_user.group.id
+                @product.owner_id = owner
                 if @product.save
                         redirect_to :action => "show", :id => @product.id
                 else
@@ -44,11 +51,13 @@ class Admin::ProductsController < AdminController
 
         def preview
                 @product = Product.new(preview_params)
-                render "/api/products/show", :layout => "application"
+                return head(:forbidden) unless @product.owner_id.eql? owner
+                render "/products/show", :layout => "application"
         end
 
         def destroy
                 @product = Product.find(params[:id])
+                return head(:forbidden) unless @product.owner_id.eql? owner
                 @product.update(status: Product.statuses[:disabled], on_sale: false)
                 redirect_to admin_products_path
         end
@@ -68,12 +77,12 @@ class Admin::ProductsController < AdminController
         end
 
         def product_params
-                params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale, :cover_image,
+                params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale, :cover_image, :channel_id, :priority, :suppliers_id,
                                                 specifications_attributes: [:id, :name, :value, :price, :storage])
         end
 
         def preview_params
-                params.require(:product).permit(:name, :price, :storage, :description, :article, :recommend, :cover_image)
+                params.require(:product).permit(:name, :price, :storage, :description, :article, :recommend, :cover_image, :channel_id)
         end
 
 end

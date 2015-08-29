@@ -1,0 +1,16 @@
+<article class="modal fade" id="address_modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" onclick="address.closeModal()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">新增地址</h4>
+      </div>
+      <div class="modal-body">
+        <%= render partial: "/addresses/form" %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-block" onclick="address.closeModal()">取消</button>
+        <button type="button" class="btn btn-primary btn-block" onclick="address.saveAddress()">保存</button>
+      </div>
+    </div>
+</article>

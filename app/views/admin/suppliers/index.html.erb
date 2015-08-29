@@ -1,0 +1,47 @@
+<h1 class="page-header">供应商管理</h1>
+
+<% if notice.present? %>
+<div class="alert alert-info" role="alert">
+  <%= notice %>
+</div>
+<% end %>
+
+<%= link_to new_admin_supplier_path,  :class => "btn btn-primary" do %>
+<span class="glyphicon glyphicon-plus"></span> 新建
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <td>#</td>
+      <td>名称</td>
+      <td>操作</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @suppliers.each_with_index do |supplier, index| %>
+    <tr>
+      <td><%= index+1 %></td>
+      <td><%= supplier.name  %></td>
+      <td>
+        <%= link_to admin_supplier_path(supplier) do %>
+        <span class="glyphicon glyphicon-eye-open icon"></span>
+        <% end %>
+        <%= link_to edit_admin_supplier_path(supplier) do %>
+        <span class="glyphicon glyphicon-pencil icon"></span>
+        <% end %>
+        <%= link_to admin_supplier_path(supplier), method: :delete do %>
+        <span class="glyphicon glyphicon-trash icon"></span>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="6">
+        <%= will_paginate @suppliers, page_links: false %>
+      </td>
+    </tr>
+  </tfoot>
+</table>

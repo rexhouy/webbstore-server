@@ -7,6 +7,7 @@
   <thead>
     <tr>
       <td>名字</td>
+      <td>所属机构</td>
       <td>操作</td>
     </tr>
   </thead>
@@ -14,7 +15,12 @@
     <% @groups.each do |group| %>
     <tr>
       <td><%= group.name  %></td>
+      <td><%= group.parent.name unless group.parent.nil? %></td>
       <td>
+        <%= link_to admin_group_path(group) do %>
+        <span class="glyphicon glyphicon-eye-open icon"></span>
+        <% end %>
+
         <%= link_to edit_admin_group_path(group) do %>
           <span class="glyphicon glyphicon-pencil icon"></span>
         <% end %>
@@ -28,7 +34,7 @@
   <tfoot>
     <tr>
       <td colspan="6">
-        <%= will_paginate @groups %>
+        <%= will_paginate @groups, page_links: false %>
       </td>
     </tr>
     </tfoot>

@@ -2,7 +2,15 @@
 @import "variable.scss";
 
 .navbar {
+    border: 0;
+    background: $theme-color;
     margin: 0;
+    a, i {
+        color: #fff;
+        &:hover {
+            color: $accent-color;
+        }
+    }
 }
 
 .navbar-header {
@@ -13,18 +21,23 @@
 .navbar-brand {
     font-weight: bold;
     a {
-        color: $link-color;
+        color: #fff;
+        &:hover {
+            color: $accent-color;
+        }
     }
     margin-left: 0 !important;
 }
 
 // Settings
 .navbar-side {
+    -webkit-transition: left .3s, -webkit-transform .3s;
+    transition: left .3s, transform .3s;
     width: 90%;
     max-width: 300px;
     box-shadow: $shadow;
     position: fixed;
-    left: 0;
+    left: -100%;
     top: 0;
     z-index: 1000;
     background-color: #fff;
@@ -34,9 +47,12 @@
         background-color: $theme-color;
         box-shadow: none;
         height: 70px;
-        a {
+        a, i {
             color: #fff;
             padding: 0 10px;
+            &:hover {
+                color: $accent-color;
+            }
         }
         i {
             color: #fff;
@@ -59,8 +75,7 @@
             color: $font-color;
         }
         a:hover {
-            background-color: $theme-color;
-            color: #fff;
+            background-color: $theme-color-light;
         }
     }
     .nav-section {
@@ -81,14 +96,23 @@
 
 
 .search-container {
+    -webkit-transition: width .3s, -webkit-transform .3s;
+    transition: width .3s, transform .3s;
     position: absolute;
     top: 0;
     right: 0;
-    width: 100%;
+    width: 0;
+    overflow: hidden;
     max-width: 800px;
     background-color: #F8F8F8;
     .btn {
         position: absolute;
+    }
+    a, i {
+        color: $theme-color;
+        &:hover {
+            color: $theme-color-dark;
+        }
     }
     .search {
         border: 0;
@@ -107,6 +131,7 @@
 }
 
 .block-layer {
+    display:none;
     position: fixed;
     top: 0;
     left: 0;

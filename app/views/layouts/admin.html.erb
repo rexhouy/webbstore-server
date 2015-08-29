@@ -5,9 +5,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="administration of webstore">
-  <meta name="author" content="rexhouy">
+  <meta name="author" content="<%=Rails.application.config.name%>">
   <link rel="icon" href="/favicon.ico">
-  <title>Webstore</title>
+  <title><%=Rails.application.config.name%>管控台</title>
   <%= stylesheet_link_tag    'admin', media: 'all', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
@@ -25,6 +25,6 @@
   </div>
 
 </body>
-<%= javascript_include_tag 'admin', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'admin' %>
 <%= javascript_include_tag params[:controller] %>
 </html>

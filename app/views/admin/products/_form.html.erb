@@ -20,10 +20,10 @@
   <div class="form-group">
     <%= p.label :description, :class => "col-sm-2 control-label" do  %>
       <span class="glyphicon glyphicon-info-sign icon" title="使用「|」分割的描述内容将会显示在不同行"></span> 描述
-  <% end %>
-  <div class="col-sm-8">
-    <%= p.text_field :description, :class => "form-control" %>
-  </div>
+    <% end %>
+    <div class="col-sm-8">
+      <%= p.text_field :description, :class => "form-control" %>
+    </div>
   </div>
 
   <div class="form-group">
@@ -35,15 +35,42 @@
   </div>
   </div>
 
-    <div class="form-group">
-      <%= p.label :storage, :class => "col-sm-2 control-label" do  %>
-          <span class="glyphicon glyphicon-info-sign icon" title="有规格的情况下不需要填写"></span> 上架数量
-      <% end %>
-      <div class="col-sm-4">
-              <%= p.number_field :storage, :class => "form-control" %>
-      </div>
-   </div>
+  <div class="form-group">
+    <%= p.label :suppliers_id, :class => "col-sm-2 control-label" do  %>
+      供应商
+  <% end %>
+  <div class="col-sm-4">
+    <%= p.select :suppliers_id, options_from_collection_for_select(@suppliers, :id, :name, p.object.suppliers_id), {include_blank: true}, class: "form-control" %>
+  </div>
+  </div>
 
+  <div class="form-group">
+    <%= p.label :storage, :class => "col-sm-2 control-label" do  %>
+      <span class="glyphicon glyphicon-info-sign icon" title="有规格的情况下不需要填写"></span> 上架数量
+    <% end %>
+    <div class="col-sm-4">
+      <%= p.number_field :storage, :class => "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= p.label :channel_id, :class => "col-sm-2 control-label" do  %>
+      频道
+  <% end %>
+  <div class="col-sm-4">
+    <%= p.select :channel_id, options_from_collection_for_select(@channels, :id, :name, p.object.channel_id), {include_blank: true}, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= p.label :priority, :class => "col-sm-2 control-label" do  %>
+      <span class="glyphicon glyphicon-info-sign icon" title="数值越大，显示越靠前"></span> 显示顺
+    <% end %>
+    <div class="col-sm-4">
+      <%= p.number_field :priority, :class => "form-control" %>
+    </div>
+  </div>
+  
   <div class="form-group" id="specifications">
     <label class="col-sm-2 control-label">规格</label>
     <div class="col-sm-10">
@@ -83,11 +110,16 @@
   </div>
   <div class="form-group">
     <%= p.label :cover_image, :class => "col-sm-2 control-label" do %>
-      <span class="glyphicon glyphicon-info-sign icon" title="该图片将作为产品封面，为了保证显示效果，请使用1024*1024的图片并使用透明背景"></span> 图片
-  <% end %>
-  <div class="col-sm-5">
-    <%= p.text_field :cover_image, class: "form-control" %>
-  </div>
+      <span class="glyphicon glyphicon-info-sign icon" title="该图片将作为产品封面，为了保证显示效果，请使用1024*1024的图片并使用透明背景"></span> 封面图片
+    <% end %>
+    <div class="col-sm-5">
+      <% if p.object.cover_image.nil? %>
+        <%= image_tag "empty-img.png", class: "img-thumbnail", onclick: "uploader.open()", id: "cover_image", style: "width:180px" %>
+      <% else %>
+        <%= image_tag p.object.cover_image, class: "img-thumbnail", onclick: "uploader.open()", id: "cover_image", style: "width:180px" %>
+      <% end %>
+      <%= p.hidden_field :cover_image %>
+    </div>
   </div>
   <div class="form-group">
     <div class="col-sm-5 col-sm-offset-2">
@@ -108,7 +140,7 @@
   <div class="form-group">
     <%= p.label :article, "详情", :class => "col-sm-2 control-label"  %>
     <div class="col-sm-10">
-      <%= p.text_area :article, :class => "editor" %>
+      <%= p.text_area :article %>
     </div>
   </div>
 
@@ -131,9 +163,12 @@
         <h4 class="modal-title" id="myModalLabel">预览</h4>
       </div>
       <div class="modal-body">
-        <svg id="spinner" class="spinner" viewBox="0 0 66 66" >
-          <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
-        </svg>
+        <div class="spinner-container img-circle">
+	  <div class="spinner"></div>
+        </div>
+        <!-- <svg id="spinner" class="spinner" viewBox="0 0 66 66" > -->
+        <!--   <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle> -->
+        <!-- </svg> -->
 
         <iframe id="preview" name="preview" class="preview-frame" src=""></iframe>
       </div>
@@ -147,15 +182,16 @@
 <!-- Template -->
 <script type="text/template" id="specification_template">
   <tr>
-    <td style="display:none"><input type="hidden"></td>
-    <td><input class="form-control" type="text"></td>
-    <td><input class="form-control" type="text"></td>
-    <td><input class="form-control" type="number"></td>
-    <td><input class="form-control" type="number"></td>
-    <td>
-      <button type="button" class="btn btn-danger" onclick="product.removeSpec(this)" title="删除">
-        <span class="glyphicon glyphicon-trash" style="color:#fff;"></span>
-      </button>
-    </td>
+  <td style="display:none"><input type="hidden"></td>
+  <td><input class="form-control" type="text"></td>
+  <td><input class="form-control" type="text"></td>
+  <td><input class="form-control" type="number"></td>
+  <td><input class="form-control" type="number"></td>
+  <td>
+  <button type="button" class="btn btn-danger" onclick="product.removeSpec(this)" title="删除">
+  <span class="glyphicon glyphicon-trash" style="color:#fff;"></span>
+  </button>
+  </td>
   </tr>
 </script>
+<%= render partial: "upload_form" %>

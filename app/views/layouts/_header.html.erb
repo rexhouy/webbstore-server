@@ -1,7 +1,11 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top" style="box-shadow: 2px 2px 4px #ccc;border-top-left-radius: 0;border-top-right-radius: 0;">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">WebStore</a>
+      <% if current_namespace.eql? "Admin" %>
+      <a class="navbar-brand" href="/admin"><%=Rails.application.config.name%>管控台</a>
+      <% else %>
+      <a class="navbar-brand" href="/"><%=Rails.application.config.name%></a>
+      <% end %>
     </div>
     <% if current_namespace.eql? "Admin" %>
       <div class="pull-right">

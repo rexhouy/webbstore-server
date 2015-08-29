@@ -62,3 +62,20 @@
         text-decoration: none;
     }
 }
+
+.btn-primary {
+    background-color: $theme-color;
+    border: 1px solid #ddd;
+    &:hover {
+        background-color: $theme-color-dark;
+    }
+    &:focus {
+        background-color: $theme-color-dark;
+    }
+}
+.btn-default {
+    &:hover {
+        color: $link-color-hover;
+        background-color: #fff;
+    }
+}

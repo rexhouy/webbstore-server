@@ -21,7 +21,24 @@ table {
 .sign-out-btn {
     border: none;
     background: transparent;
-    color: #62b4f9;
+    color: #80D8FF;
     position: relative;
     top: 20px;
+}
+
+
+.auth-container {
+    @media (min-width: 768px) {
+        margin-top: 70px;
+    }
+}
+
+// will paginate
+.previous_page, .next_page {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    display: inline-block;
+    padding: 5px 14px;
+    margin-right: 20px;
 }

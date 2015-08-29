@@ -1,0 +1,76 @@
+<div class="banner row">
+  <h2 class="pull-left inherit-height table-center-wrap"><span class="table-center">购物车</span></h2>
+  <a class="btn btn-lg pull-right highlight-link icon-link-right inherit-height table-center-wrap" href="/orders">
+    <span class="table-center">订单<i class="glyphicon glyphicon-arrow-right"></i></span>
+  </a>
+</div>
+<div class="row">
+  <% if @cart.empty? %>
+  <div class="main empty-cart table-center-wrap">
+    <i class="glyphicon glyphicon-shopping-cart table-center bg-img"></i>
+    <div class="table-center-wrap empty-cart-desc inherit-height">
+      <div class="table-center">
+        <p>购物车里没有商品</p>
+        <a class="btn btn-lg icon-link-right highlight-link" href="/products?channel=<%=choose_channel%>">
+          <span>立即前往采购<i class="glyphicon glyphicon-arrow-right"></i></span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <% else %>
+  <div class="main">
+    <div>
+      <div class="col-sm-2 col-md-3 not-small-screen">
+        <h3 style="margin-top:30px;">您选购的商品</h3>
+      </div>
+      <div class="col-sm-10 col-md-9 col-xs-12">
+        <% @cart.each do |product| %>
+        <div class="cart row">
+          <div class="col-md-3 col-sm-3 talbe-center-wrap inherit-height not-small-screen">
+            <a href="/products/<%= product['id']%>" class="table-center inherit-height cart-image">
+              <%= image_tag product['detail'].cover_image %>
+            </a>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-8 order-item-name">
+            <a href="/products/<%= product['id']%>" class="table-center inherit-height cart-image">
+              <div><%= product['detail'].name%></div>
+              <% unless product["spec"].nil? %>
+              <div style="color: #999;font-size: 12px;"><%= product["spec"].value %></div>
+              <% end %>
+            </a>
+          </div>
+          <div class="col-md-3 col-sm-3 col-xs-4">
+            <div class="list-item" style="overflow:hidden;">
+              <div class="price "><%= number_to_currency unit_price(product), precision: 2 %></div>
+              <%= number_field_tag "count", product["count"], onchange: "carts.updateCount(this, #{product['id']}, '#{product['spec_id']}')", style: "width: 50px;", class: "list-item", min: 1%>
+            </div>
+            <div class="list-item">
+              <%= form_tag :carts_del_product, method: "DELETE" do %>
+              <input type="hidden" name="id" value="<%=product['id']%>">
+              <input type="hidden" name="spec_id" value="<%=product['spec_id']%>">
+              <button type="submit" class="btn icon icon-danger">
+                <i class="glyphicon glyphicon-trash"></i>
+              </button>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <% end %>
+
+        <div class="subtotal">
+          <label class="pull-left label">合计</label>
+          <div class="pull-right price" id="subtotal"><%= number_to_currency cart_price(@cart), locale: :'zh-CN', precision: 2 %></div>
+        </div>
+
+        <div class="vertical-btn-group">
+          <a class="btn btn-lg btn-default" href="/products?channel=<%=channel%>">继续购物</a>
+          <a id="confirm_carts_btn" class="btn btn-lg btn-primary" href="/carts/confirm">确认订单</a>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <% end %>
+
+</div>

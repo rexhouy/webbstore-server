@@ -1,0 +1,15 @@
+<address id="address_<%=item.id%>" class="address entry">
+  <%= hidden_field_tag "address_id", item.id %>
+  <div class="header"><span class="pull-left name"><%= item.name %></span><span class="pull-right"><%= phone_number item.tel %></span></div>
+  <div><%= item.state %><%= item.city %><%= item.street %></div>
+  <% if controller_name.eql? "addresses" %>
+  <div class="row">
+    <!-- <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"> -->
+    <!--   <button onclick="addresses.edit(<%=item.id%>)" class="btn btn-default btn-block">编辑</button> -->
+    <!-- </div> -->
+    <div class="col-xs-offset-6 col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <%= link_to "删除", address_url(item), method: "DELETE", class: "btn btn-danger btn-block", style: "height: auto;"%>
+    </div>
+  </div>
+  <% end %>
+</address>

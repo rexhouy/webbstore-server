@@ -1,5 +1,5 @@
 (function($){
-        $('#product_article').wysihtml5().css("height", "600px");
+        // $('#product_article').wysihtml5().css("height", "600px");
 
         var previewFrame = $("#preview");
         var spinner = $("#spinner");
@@ -70,5 +70,6 @@
 
                 return self;
         }();
+
 
 })(jQuery);

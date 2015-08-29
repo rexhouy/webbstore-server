@@ -1,18 +1,25 @@
 <h1 class="page-header">订单详情</h1>
+
+<% if notice.present? %>
+<div class="alert alert-info" role="alert">
+  <%= notice %>
+</div>
+<% end %>
+
 <div>
   <% if !@order.delivered? and !@order.canceled? %>
     <%= form_tag admin_orders_cancel_url, method: :put, style: "display:inline-block" do %>
     <% submit_tag "取消订单", class: "btn btn-danger" %>
     <% end %>
   <% end %>
-  <% if @order.paid? or (@order.placed? and @order.offline_pay?) %>
+  <% if @order.paid? || (@order.offline_pay? && @order.placed?) %>
     <%= form_tag admin_orders_shipping_url, method: :put, style: "display:inline-block" do %>
-      <% submit_tag "确认发货", class: "btn btn-default"%>
+      <% submit_tag "确认发货", class: "btn btn-primary"%>
     <% end %>
   <% end %>
   <% if @order.shipping? %>
     <%= form_tag admin_orders_deliver_url, method: :put, style: "display:inline-block" do %>
-      <% submit_tag "确认完成", class: "btn btn-default"%>
+      <% submit_tag "确认完成", class: "btn btn-primary"%>
     <% end %>
   <% end %>
   <%= link_to admin_orders_url, class: "btn btn-primary" do %>
@@ -23,19 +30,25 @@
   <div class="form-group">
     <label class="col-sm-2 control-label">订单编号</label>
     <div class="col-sm-9">
-      <label class="control-label"><%= @order.order_id %></label>
+      <p class="form-control-static"><%= @order.order_id %></p>
     </div>
   </div>
   <div class="form-group">
     <label class="col-sm-2 control-label">状态</label>
     <div class="col-sm-9">
-      <label class="control-label"><%= order_status @order %></label>
+      <p class="form-control-static"><%= order_status @order %></p>
     </div>
   </div>
   <div class="form-group">
     <label class="col-sm-2 control-label">支付方式</label>
     <div class="col-sm-9">
-      <label class="control-label"><%= order_payment @order %></label>
+      <p class="form-control-static"><%= order_payment @order %></p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">下订单时间</label>
+    <div class="col-sm-9">
+      <p class="form-control-static"><%= display_datetime @order.created_at %></p>
     </div>
   </div>
 

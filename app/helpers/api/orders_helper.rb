@@ -2,11 +2,12 @@
 module Api::OrdersHelper
 
         def order_status(order)
-                if order.placed?
-                        return "等待付款" if order.online_pay?
-                        return "已下单"
+                if order.placed? && !order.offline_pay?
+                        return "等待付款"
                 elsif order.paid?
                         return "已付款"
+                elsif (order.placed? && order.offline_pay?) || order.paid?
+                        return "待发货"
                 elsif order.shipping?
                         return "已发货"
                 elsif order.delivered?
@@ -19,16 +20,17 @@ module Api::OrdersHelper
         end
 
         def need_online_pay?(order)
-                order.placed? && order.online_pay?
+                order.placed? && !order.offline_pay?
         end
 
         def is_cancelable?(order)
-                order.placed? or order.paid?
+                order.placed?
         end
 
         def payment_name(order)
-                return "线上支付" if order.online_pay?
-                "货到付款"
+                return "微信支付" if order.wechat?
+                return "支付宝" if order.alipay?
+                return "货到付款" if order.offline_pay?
         end
 
 end

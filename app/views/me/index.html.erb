@@ -1,0 +1,43 @@
+<div class="banner row">
+  <h2 class="pull-left inherit-height table-center-wrap"><span class="table-center">我的账户</span></h2>
+</div>
+<div class="row main">
+  <section>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <h3>账户</h3>
+    </div>
+    <div class="col-md-8 col-sm-8 col-xs-12 btn-group-vertical me-btn-group">
+      <a href="/addresses" class="btn btn-default btn-block">
+        <i class="glyphicon glyphicon-menu-right"></i> 收货地址
+      </a>
+      <%= link_to edit_user_registration_path, class: "btn btn-default btn-block", target: "_self" do %>
+        <i class="glyphicon glyphicon-menu-right"></i> 修改密码
+      <% end %>
+      <a href="/me/introduce" class="btn btn-default btn-block">
+        <i class="glyphicon glyphicon-menu-right"></i> 推荐给好友
+      </a>
+    </div>
+  </section>
+  <section>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <h3>订单</h3>
+    </div>
+    <div class="col-md-8 col-sm-8 col-xs-12 btn-group-vertical me-btn-group">
+      <a href="/orders" class="btn btn-default btn-block">
+        <i class="glyphicon glyphicon-menu-right"></i> 我的订单
+      </a>
+      <a href="/carts" class="btn btn-default btn-block">
+        <i class="glyphicon glyphicon-menu-right"></i> 我的购物车
+      </a>
+    </div>
+  </section>
+  <section>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+    </div>
+    <div class="col-md-8 col-sm-8 col-xs-12" style="background:#fff;padding:20px;">
+      <%= form_tag destroy_user_session_url, method: :delete do %>
+        <%= submit_tag "退出登录", class: "btn btn-danger btn-block"%>
+      <% end %>
+    </div>
+  </section>
+</div>
