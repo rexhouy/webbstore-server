@@ -19,7 +19,7 @@
 <% end %>
 
 <div class="main row">
-  <%= form_tag :orders, class: "form-horizontal", id: "carts_confirm_form" do %>
+  <%= form_tag :orders, class: "form-horizontal", id: "orders_confirm_form" do %>
     <section class="form-group">
       <h3 class="col-md-2 col-sm-2 col-xs-12 icon-link-left form-group-title"><span class="circle highlight">1</span>确认订单</h3>
       <div class="col-md-8 col-sm-8 col-xs-12 ">
@@ -91,7 +91,7 @@
     <div class="form-group">
       <div class="col-md-offset-2 col-md-8 col-sm-8 col-xs-12 vertical-btn-group">
         <a class="btn btn-lg btn-default" href="/carts">取消</a>
-        <a class="btn btn-lg btn-primary" onclick="carts.confirm()">确认</a>
+        <a class="btn btn-lg btn-primary" onclick="orders.confirm()">确认</a>
       </div>
     </div>
   <% end %>

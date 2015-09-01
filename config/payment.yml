@@ -32,6 +32,7 @@ weixin:
     port: 443
     path: /cgi-bin/message/template/send
     order_template_id: LO2Uc3W6ieMNcyKrsnO-IYrGsHwduEzoy2fqc7enPQc
+    order_created_template_id: 6m3HKdt6fF59n1qSfBLpRxuk-7QJF7hDp_4QWs2iVmo
     topcolor: '#989e4b'
     fontcolor: '#555'
   access_token:

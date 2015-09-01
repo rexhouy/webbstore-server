@@ -39,32 +39,16 @@ class CartsController < ApiController
                 redirect_to :carts
         end
 
-        def confirm
-                return redirect_to :new_user_session unless user_signed_in?
-                return redirect_to :carts if get_cart.empty?
-                @cart = get_cart_products_detail(get_cart)
-                @user = current_user
-                @address = Address.new
-        end
-
         private
         def same_product?(product, id, spec_id)
                 product["id"].to_s.eql?(id.to_s) && product["spec_id"].to_s.eql?(spec_id.to_s)
         end
-        def get_cart_products_detail(cart)
-                cart.map do |product|
-                        p = product.clone
-                        p["detail"] = Product.find(product["id"])
-                        p["spec"] = Specification.find(product["spec_id"]) unless product["spec_id"].blank?
-                        p
-                end
-        end
         def change_product_count(id, spec_id, count)
                 cart = get_cart
-                matchedProduct = cart.bsearch do |product|
+                matched_product_index = cart.find_index do |product|
                         same_product? product, id, spec_id
                 end
-                matchedProduct["count"] = count unless matchedProduct.nil?
+                cart[matched_product_index]["count"] = count unless matched_product_index.nil?
         end
         def add_product_to_cart(id, spec_id)
                 cart = get_cart

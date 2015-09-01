@@ -85,10 +85,10 @@
     <div class="col-sm-9">
       <address>
         <div class="header">
-          <span class="pull-left name"><%= @order.address.name %></span>
-          <span class="pull-right"><%= phone_number @order.address.tel %></span>
+          <span class="pull-left name"><%= @order.contact_name %></span>
+          <span class="pull-right"><%= phone_number @order.contact_tel %></span>
         </div>
-        <div><%= @order.address.state %><%= @order.address.city %><%= @order.address.street %></div>
+        <div><%= @order.contact_address %></div>
       </address>
     </div>
   </div>

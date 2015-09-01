@@ -18,16 +18,25 @@ class OrdersController < ApiController
 
         def wechat_pay
                 code = params[:code]
+                open_id = params[:open_id]
                 @order_id = params[:state]
-                @wechat_params = WechatService.new.pay(Order.find(@order_id), request.remote_ip, code)
+                @wechat_params = WechatService.new.pay(Order.find(@order_id), request.remote_ip, open_id, code, current_user)
                 render layout: false
+        end
+
+        def confirm
+                return redirect_to :carts if get_cart.empty?
+                @cart = get_cart_products_detail(get_cart)
+                @user = current_user
+                @address = Address.new
+                render :confirm
         end
 
         def add
                 unless validate
-                        flash["info"] = "购物失败"
-                        flash["errors"] = @errors
-                        redirect_to :carts_confirm
+                        flash.now["info"] = "购物失败"
+                        flash.now["errors"] = @errors
+                        confirm
                         return
                 end
                 begin
@@ -39,7 +48,10 @@ class OrdersController < ApiController
                                 order.status = Order.statuses[:placed]
                                 order.subtotal = subtotal(order.orders_products)
                                 order.order_id = "#{SecureRandom.random_number(10**7).to_s.rjust(7,"0")}-#{SecureRandom.random_number(10**7).to_s.rjust(7,"0")}"
-                                order.address = get_address
+                                address = get_address
+                                order.contact_name = address.name
+                                order.contact_tel = address.tel
+                                order.contact_address = address.state + address.city + address.street
                                 order.payment_type = params[:paymentType]
                                 order.name = order_name order.orders_products
                                 order.save!
@@ -49,11 +61,10 @@ class OrdersController < ApiController
                         redirect_to payment_redirect_url(order)
                 rescue => error
                         logger.error error
-                        flash["info"] = "购物失败"
-                        flash["errors"] = @errors
-                        redirect_to :carts_confirm
+                        flash.now["info"] = "购物失败"
+                        flash.now["errors"] = @errors
+                        confirm
                 end
-
         end
 
         def cancel
@@ -165,7 +176,11 @@ class OrdersController < ApiController
                         url = Config::PAYMENT["alipay"]["mobile_pay"]["url"].clone
                         url << "?" << alipay(order).to_query
                 elsif order.wechat?
-                        url = WechatService.new.auth_url("http://#{Rails.application.config.domain}/orders/payment/wechat_redirect", order.id)
+                        if current_user.wechat_openid.present?
+                                url = "http://#{Rails.application.config.domain}/orders/payment/wechat_redirect?open_id=#{current_user.wechat_openid}&state=#{order.id}"
+                        else
+                                url = WechatService.new.auth_url("http://#{Rails.application.config.domain}/orders/payment/wechat_redirect", order.id)
+                        end
                 elsif order.offline_pay?
                         url = "/orders/#{order.id}"
                 end

@@ -51,7 +51,6 @@
         };
         window.product = product();
 
-
         $(function(){
                 // Products infinit scroll
                 var template = $("#product_template").html();

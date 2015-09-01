@@ -2,8 +2,6 @@ class ProductsController < ApiController
 
         def index
                 channel_id = params[:channel]
-                channel_id = 1 if channel_id.eql? "custom"
-                channel_id = 2 if channel_id.eql? "organic"
                 @channel = Channel.find_by_id(channel_id)
                 session[:channel] = @channel
                 respond_to do |format|

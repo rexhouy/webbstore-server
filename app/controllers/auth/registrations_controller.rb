@@ -18,6 +18,7 @@ class Auth::RegistrationsController < Devise::RegistrationsController
                         user = User.find_by_introducer_token(@introducer_token)
                         resource.update(introducer: user.id)
                 end
+                flash.discard # discard flash messages after this session
         end
 
         # GET /resource/edit

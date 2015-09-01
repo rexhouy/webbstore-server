@@ -43,6 +43,7 @@ class PaymentsController < ApiController
                 if order.placed?
                         order.update(status: Order.statuses[:paid], payment: payment)
                         send_notify_to_seller(order)
+                        send_notify_to_customer(order)
                 else
                         logger.error "Update order status to paid has failed. Order status incorrect. order id [#{order.order_id}], status [#{order.status}]"
                 end
@@ -67,6 +68,12 @@ class PaymentsController < ApiController
                 sellers = find_notify_sellers(order.seller.id)
                 sellers.each do |seller|
                         NotificationService.new.send_order_notify(order, seller)
+                end
+        end
+
+        def send_notify_to_customer(order)
+                if order.customer.wechat_openid.present?
+                        NotificationService.new.send_order_notify_to_customer(order, order.customer)
                 end
         end
 

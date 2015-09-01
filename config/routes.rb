@@ -35,11 +35,11 @@ Rails.application.routes.draw do
         post 'carts' => 'carts#add', as: :carts_add_product
         put 'carts' => 'carts#update', as: :carts_mod_product
         delete 'carts' => 'carts#delete', as: :carts_del_product
-        get 'carts/confirm' => 'carts#confirm', as: :carts_confirm
 
         # Orders
         post 'orders' => 'orders#add'
         get 'orders' => 'orders#index'
+        get 'orders/confirm' => 'orders#confirm', as: :orders_confirm
         get 'orders/:id' => 'orders#show'
         put 'orders/:id' => 'orders#cancel', as: :orders_cancel
 
@@ -80,7 +80,7 @@ Rails.application.routes.draw do
                 put 'orders/deliver/:id' => 'orders#deliver', as: :orders_deliver
                 # Register wechat notification page
                 get 'orders/notification/wechat' => 'orders#notification'
-                get 'orders/notifiction_redirect/wechat' => 'orders#notification_redirect_page'
+                get 'orders/notification_redirect/wechat' => 'orders#notification_redirect_page'
                 # Register wechat notification callback
                 get 'orders/wechat_register_notification/:uid' => 'orders#wechat_register_notification'
 

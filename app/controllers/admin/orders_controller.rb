@@ -32,7 +32,7 @@ class Admin::OrdersController < AdminController
 
         ## 到注册监听页面，提示用户使用微信扫描二维码，注册订单监听。（获取用户openid）
         def notification
-                url = "http://#{Rails.application.config.domain}/admin/notifiction_redirect"
+                url = "http://#{Rails.application.config.domain}/admin/orders/notification_redirect/wechat"
                 @qr_code = RQRCode::QRCode.new(url, size: 12, level: :m )
         end
 

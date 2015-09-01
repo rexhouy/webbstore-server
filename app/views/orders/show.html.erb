@@ -48,10 +48,10 @@
       <h3>配送信息</h3>
       <address class="address">
         <div class="header">
-          <span class="pull-left name"><%= @order.address.name %></span>
-          <span class="pull-right"><%= phone_number @order.address.tel %></span>
+          <span class="pull-left name"><%= @order.contact_name %></span>
+          <span class="pull-right"><%= phone_number @order.contact_tel %></span>
         </div>
-        <div><%= @order.address.state %><%= @order.address.city %><%= @order.address.street %></div>
+        <div><%= @order.contact_address %></div>
       </address>
     </section>
 
@@ -62,7 +62,7 @@
 
       <% if is_cancelable? @order %>
         <br>
-        <a click="cancel(<%=@order.id%>)" class="btn btn-danger btn-block">取消订单</a>
+        <%= link_to "取消订单", :orders_cancel, method: "PUT", class: "btn btn-danger btn-block"%>
       <% end %>
     </section>
   </div>
