@@ -19,20 +19,17 @@ class NotificationService
 	end
 
 	private
-	def data(order, user, data, template_id)
+	def data(order, user, data, template_id, url)
 		{
 			touser: user.wechat_openid,
 			template_id: template_id,
-			url:"http://#{Rails.application.config.domain}/admin/orders/#{order.id}",
+			url:"http://#{Rails.application.config.domain}#{url}",
 			topcolor: WECHAT_NOTIFY["topcolor"],
 			data: data
 		}.to_json
 	end
 
 	def order_created_notify_data(order, user, template_id)
-		refundno = order.orders_products.inject do |sum, op|
-			sum + op.count
-		end
 		d = {
 			first: {
 				value: "您的订单已创建成功",
@@ -43,7 +40,7 @@ class NotificationService
 				color: WECHAT_NOTIFY["fontcolor"]
 			},
 			refundno: {
-				value: refundno,
+				value: order.orders_products.reduce(0) { |sum, op| sum + op.count },
 				color: WECHAT_NOTIFY["fontcolor"]
 			},
 			refundproduct: {
@@ -55,7 +52,7 @@ class NotificationService
 				color: WECHAT_NOTIFY["fontcolor"]
 			}
 		}
-		data(order, user, d, template_id)
+		data(order, user, d, template_id, "/orders/#{order.id}")
 	end
 	
 	def new_order_notify_data(order, user, template_id)
@@ -89,7 +86,7 @@ class NotificationService
 				color: WECHAT_NOTIFY["fontcolor"]
 			}
 		}
-		data(order, user, d, template_id)
+		data(order, user, d, template_id, "/admin/orders/#{order.id}")
 	end
 
 end
