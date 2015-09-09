@@ -1,0 +1,141 @@
+<div class="banner row">
+  <h2 class="pull-left inherit-height table-center-wrap"><span class="table-center">我的年（季）卡</span></h2>
+  <a class="btn btn-lg pull-right highlight-link icon-link-right inherit-height table-center-wrap" href="/me">
+    <span class="table-center"><i class="glyphicon glyphicon-arrow-left"></i> 返回</span>
+  </a>
+</div>
+  <% if notice.present? %>
+    <p class="alert alert-info">
+      <%=notice%>
+    <p>
+  <% end %>
+<div class="row main">
+  <% if @cards.empty? %>
+  <p style="text-align:center;padding:20px;">无年（季）卡</p>
+  <% end %>
+  <% @cards.each do |card| %>
+  <section class="white-card">
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <h3><%=card.name%></h3>
+      <hr class="small-screen">
+    </div>
+    <div class="col-md-8 col-sm-8 col-xs-12">
+      <%= form_tag "", class: "form-horizontal" do %>
+      <% if card.open? && card.remain > 0 %>
+      <div class="form-group">
+        <label for="next" class="col-sm-2 control-label">下次送货日期</label>
+        <div class="col-sm-10">
+          <p class="form-control-static"><%=display_date card.next%></p>
+        </div>
+      </div>
+      <% end %>
+      <div class="form-group">
+        <label for="next" class="col-sm-2 control-label">剩余次数</label>
+        <div class="col-sm-10">
+          <p class="form-control-static"><%=card.remain%>/<%=card.count%></p>
+        </div>
+      </div>
+      <% if card.open? && card.remain > 0 %>
+      <div class="form-group">
+        <label for="next" class="col-sm-2 control-label">配送地址</label>
+        <div class="col-sm-10">
+          <p class="form-control-static"><%=card.contact_address%> | <%=card.contact_tel%> | <%=card.contact_name%></p>
+        </div>
+      </div>
+      <% end %>
+      <div class="form-group">
+        <div class="col-sm-12">
+          <a href="/cards/history/<%=card.id%>" class="highlight-link">配送历史</a>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-12">
+          <% if card.open? && card.remain > 0 %>
+          <%= link_to "暂停下次配送", "/cards/delay/#{card.id}",  data: {confirm: "将下次配送时间延后一周?"}, method: "PUT", class: "btn btn-default" %>
+          <a href="#" onclick="cards.gift(<%=card.id%>)" class="btn btn-default">转赠</a>
+          <% end %>
+          <% if card.closed? %>
+          <a href="#" onclick="cards.open(<%=card.id%>)" class="btn btn-default">开卡</a>
+          <% end %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </section>
+  <% end %>
+</div>
+
+<!-- 开卡 -->
+<article class="modal fade" id="cards_open_modal">
+  <div class="modal-dialog">
+    <%= form_for "", method: "put", :html => {:class => "form-horizontal", id: "open_form"} do %>
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" onclick="address.closeModal('#cards_open_modal')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">开卡</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <%= label_tag :name, "名字",  :class => "col-sm-2 control-label" %>
+          <div class="col-sm-4">
+            <%= telephone_field_tag :name, "", :class => "form-control", id: "address_name", required: true %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= label_tag :tel, "电话",  :class => "col-sm-2 control-label"  %>
+          <div class="col-sm-4">
+            <%= telephone_field_tag :tel, "", :class => "form-control", id: "address_tel", required: true %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= label_tag :state, "省",  :class => "col-sm-2 control-label"  %>
+          <div class="col-sm-4">
+            <%= select_tag :state, [], {class: "form-control", "onchange": "address.stateChange()", id: "address_state"} %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= label_tag :city, "市", :class => "col-sm-2 control-label"  %>
+          <div class="col-sm-4">
+            <%= select_tag :city, {}, {class: "form-control", id: "address_city"} %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= label_tag :street, "街道地址", :class => "col-sm-2 control-label"  %>
+          <div class="col-sm-10">
+            <%= text_field_tag :street, "", :class => "form-control", required: true, id: "address_street" %>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" onclick="cards.closeModal('#cards_open_modal')">取消</button>
+        <button type="submit" class="btn btn-primary">确认</button>
+      </div>
+      <% end %>
+    </div>
+</article>
+
+
+<!-- 转赠 -->
+<article class="modal fade" id="cards_modal">
+  <div class="modal-dialog">
+    <%= form_for "", method: "post", :html => {:class => "form-horizontal", id: "gift_form"} do %>
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" onclick="cards.closeModal('#cards_modal')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">转赠</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <%= label_tag :tel, "接收人手机号",  :class => "col-sm-2 control-label" %>
+          <div class="col-sm-4">
+            <%= telephone_field_tag :tel, "", class: "form-control", required: true %>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" onclick="cards.closeModal('#cards_modal')">取消</button>
+        <button type="submit" class="btn btn-primary">确认</button>
+      </div>
+      <% end %>
+    </div>
+</article>

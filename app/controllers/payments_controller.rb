@@ -42,11 +42,15 @@ class PaymentsController < ApiController
                 logger.error "Order not found #{order_id}" if order.nil?
                 if order.placed?
                         order.update(status: Order.statuses[:paid], payment: payment)
+                        update_card_status(order_id)
                         send_notify_to_seller(order)
                         send_notify_to_customer(order)
                 else
                         logger.error "Update order status to paid has failed. Order status incorrect. order id [#{order.order_id}], status [#{order.status}]"
                 end
+        end
+        def update_card_status(order_id)
+                Card.where(order_id: order_id).update_all(status: Card.statuses[:open], next: Date.today.next_week(:wednesday))
         end
 
         def valid?(valid_fields)

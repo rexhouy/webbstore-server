@@ -1,5 +1,4 @@
 (function($){
-        // $('#product_article').wysihtml5().css("height", "600px");
 
         var previewFrame = $("#preview");
         var spinner = $("#spinner");
@@ -58,7 +57,7 @@
 
                 self.setFormParams = function() {
                         var container = $("#specifications");
-                        var names = ["id", "name", "value", "price", "storage"];
+                        var names = ["id", "name", "value", "price", "storage", "count"];
                         $("#specification_tbody").find("tr").each(function(spec_index) {
                                 $(this).find("input").each(function(index, element) {
                                         var html_name = name.replace(/:index/, spec_index).replace(/:name/, names[index]);

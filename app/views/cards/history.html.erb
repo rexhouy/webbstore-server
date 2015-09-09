@@ -1,0 +1,35 @@
+<div class="banner row">
+  <h2 class="pull-left inherit-height table-center-wrap"><span class="table-center">配送历史</span></h2>
+  <a class="btn btn-lg pull-right highlight-link icon-link-right inherit-height table-center-wrap" href="/cards">
+    <span class="table-center"><i class="glyphicon glyphicon-arrow-left"></i> 返回</span>
+  </a>
+</div>
+
+<div class="row main">
+  <section class="white-card">
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <h3><%= @card.name %></h3>
+      <hr class="small-screen">
+    </div>
+
+    <div class=" col-md-8 col-sm-8 col-xs-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>时间</th>
+            <th>剩余次数</th>
+            <th>说明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @card.card_history.each do |hist| %>
+          <tr>
+            <td><%= display_date hist.created_at %></td>
+            <td><%= hist.remain %></td>
+            <td><%= hist.memo %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+</div>

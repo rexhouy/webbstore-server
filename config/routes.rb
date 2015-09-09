@@ -30,6 +30,13 @@ Rails.application.routes.draw do
         get 'products/search' => 'products#search'
         get 'products/:id' => 'products#show', as: :products_detail
 
+        # Cards
+        get 'cards' => 'cards#index', as: :cards
+        get 'cards/history/:id' => 'cards#history'
+        put 'cards/delay/:id' => 'cards#delay'
+        post 'cards/gift/:id' => 'cards#gift'
+        put 'cards/open/:id' => 'cards#open'
+
         # Carts
         get 'carts' => 'carts#show', as: :carts
         post 'carts' => 'carts#add', as: :carts_add_product
@@ -74,6 +81,8 @@ Rails.application.routes.draw do
                 resources :users
 
                 # Orders
+                get "orders/cards" => "orders#cards", as: :orders_cards # cards
+                put "orders/cards/deliver/:id" => "orders#card_deliver"
                 resources :orders
                 put 'orders/cancel/:id' => 'orders#cancel', as: :orders_cancel
                 put 'orders/shipping/:id' => 'orders#shipping', as: :orders_shipping

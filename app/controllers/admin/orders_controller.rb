@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class Admin::OrdersController < AdminController
         # Checks authorization for all actions using cancan
-        load_and_authorize_resource
+        authorize_resource
 
         def index
                 @order_id_or_tel = params[:order_id_or_tel] || ""
@@ -51,7 +51,31 @@ class Admin::OrdersController < AdminController
                 logger.info "Register notification success for user #{user.id}, openid: #{openid}"
         end
 
+        def cards
+                @cards = Card.where(next: date_of_next("Wednesday")).where("remain > 0").paginate(:page => params[:page])
+        end
+
+        def card_deliver
+                @card = Card.find(params[:id])
+                card_history = CardHistory.new
+                card_history.delivery_date = @card.next
+                card_history.card = @card
+                card_history.remain = @card.remain - 1
+                card_history.memo = "配送"
+                Card.transaction do
+                        @card.update(remain: @card.remain - 1, next: Date.today.next_week(:wednesday))
+                        card_history.save!
+                end
+                redirect_to :admin_orders_cards, notice: "确认发货成功！"
+        end
+
         private
+        def date_of_next(day)
+                date  = Date.parse(day)
+                delta = date > Date.today ? 0 : 7
+                date + delta
+        end
+
         def change_status(status)
                 @order = Order.find(params[:id])
                 @order.status = status

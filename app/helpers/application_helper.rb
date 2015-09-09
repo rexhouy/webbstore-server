@@ -21,11 +21,11 @@ module ApplicationHelper
         end
 
         def display_date(date)
-                date.strftime("%Y-%m-%d")
+                date.strftime("%Y-%m-%d") if date.present?
         end
 
         def display_datetime(date)
-                date.strftime("%Y-%m-%d %H:%M:%S")
+                date.strftime("%Y-%m-%d %H:%M:%S") if date.present?
         end
 
         def normalize_tel(tel)

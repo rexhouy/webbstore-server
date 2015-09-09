@@ -55,6 +55,7 @@ class OrdersController < ApiController
                                 order.payment_type = params[:paymentType]
                                 order.name = order_name order.orders_products
                                 order.save!
+                                create_cards(order)
                                 update_product_sales(order.orders_products, :+)
                         end
                         clear_cart
@@ -185,6 +186,33 @@ class OrdersController < ApiController
                         url = "/orders/#{order.id}"
                 end
                 url
+        end
+
+        def create_cards(order)
+                order.orders_products.each do |op|
+                        spec = op.specification
+                        if spec.present? && spec.count.present? && spec.count > 1
+                                op.count.times do |i|
+                                        card = Card.new
+                                        card.name = op.product.name
+                                        card.user_id = current_user.id
+                                        card.specification_id = spec.id
+                                        card.order_id = order.id
+                                        card.count = spec.count
+                                        card.remain = spec.count
+                                        card.status = Card.statuses[:unpaid]
+                                        card.contact_name = order.contact_name
+                                        card.contact_tel = order.contact_tel
+                                        card.contact_address = order.contact_address
+                                        card.save!
+                                        card_history = CardHistory.new
+                                        card_history.card = card
+                                        card_history.remain = card.remain
+                                        card_history.memo = "新建"
+                                        card_history.save!
+                                end
+                        end
+                end
         end
 
 end

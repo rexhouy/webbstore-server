@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150901031330) do
+ActiveRecord::Schema.define(version: 20150908071643) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -45,6 +45,32 @@ ActiveRecord::Schema.define(version: 20150901031330) do
 
   add_index "captchas", ["tel"], name: "index_captchas_on_tel", unique: true, using: :btree
 
+  create_table "card_histories", force: :cascade do |t|
+    t.date     "delivery_date"
+    t.integer  "card_id",       limit: 4
+    t.integer  "remain",        limit: 4
+    t.string   "memo",          limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  create_table "cards", force: :cascade do |t|
+    t.integer  "user_id",          limit: 4
+    t.integer  "specification_id", limit: 4
+    t.integer  "order_id",         limit: 4
+    t.integer  "count",            limit: 4
+    t.integer  "remain",           limit: 4
+    t.date     "next"
+    t.integer  "status",           limit: 4
+    t.string   "contact_name",     limit: 255
+    t.string   "contact_tel",      limit: 255
+    t.string   "contact_address",  limit: 255
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "from",             limit: 4
+    t.string   "name",             limit: 255
+  end
+
   create_table "channels", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false
     t.datetime "created_at",             null: false
@@ -71,7 +97,6 @@ ActiveRecord::Schema.define(version: 20150901031330) do
     t.datetime "created_at",                                             null: false
     t.datetime "updated_at",                                             null: false
     t.string   "order_id",        limit: 255
-    t.integer  "address_id",      limit: 4
     t.integer  "payment_type",    limit: 4
     t.string   "name",            limit: 255
     t.text     "payment",         limit: 65535
@@ -80,7 +105,6 @@ ActiveRecord::Schema.define(version: 20150901031330) do
     t.string   "contact_address", limit: 255
   end
 
-  add_index "orders", ["address_id"], name: "fk_rails_a6ba8c8794", using: :btree
   add_index "orders", ["customer_id"], name: "fk_rails_c2426400ce", using: :btree
   add_index "orders", ["seller_id"], name: "fk_rails_4498acc18a", using: :btree
 
@@ -140,6 +164,7 @@ ActiveRecord::Schema.define(version: 20150901031330) do
     t.integer  "storage",    limit: 4
     t.integer  "sales",      limit: 4
     t.integer  "status",     limit: 4
+    t.integer  "count",      limit: 4
   end
 
   add_index "specifications", ["product_id"], name: "fk_rails_9b321d46dc", using: :btree

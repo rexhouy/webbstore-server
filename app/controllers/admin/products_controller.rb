@@ -51,7 +51,6 @@ class Admin::ProductsController < AdminController
 
         def preview
                 @product = Product.new(preview_params)
-                return head(:forbidden) unless @product.owner_id.eql? owner
                 render "/products/show", :layout => "application"
         end
 
@@ -78,7 +77,7 @@ class Admin::ProductsController < AdminController
 
         def product_params
                 params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale, :cover_image, :channel_id, :priority, :suppliers_id,
-                                                specifications_attributes: [:id, :name, :value, :price, :storage])
+                                                specifications_attributes: [:id, :name, :value, :price, :storage, :count])
         end
 
         def preview_params
