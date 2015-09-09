@@ -4,6 +4,11 @@
   <li><a href="/admin/orders">订单</a></li>
   <li class="active">年/季卡</li>
 </ol>
+<% if notice.present? %>
+<div class="alert alert-info" role="alert">
+  <%= notice %>
+</div>
+<% end %>
 <table class="table">
   <thead>
     <tr>

@@ -24,6 +24,7 @@ class Admin::OrdersController < AdminController
 
         def shipping
                 change_status Order.statuses[:shipping]
+                NotificationService.new.send_order_delivery_notify(@order, @order.customer)
         end
 
         def deliver
@@ -63,9 +64,10 @@ class Admin::OrdersController < AdminController
                 card_history.remain = @card.remain - 1
                 card_history.memo = "配送"
                 Card.transaction do
-                        @card.update(remain: @card.remain - 1, next: Date.today.next_week(:wednesday))
+                        @card.update(remain: @card.remain - 1, next: @card.next.next_week(:wednesday))
                         card_history.save!
                 end
+                NotificationService.new.send_order_delivery_notify(@card, @card.user)
                 redirect_to :admin_orders_cards, notice: "确认发货成功！"
         end
 

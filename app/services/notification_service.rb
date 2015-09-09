@@ -18,6 +18,13 @@ class NotificationService
 		WechatService.new.send_notification(order, user, new_order_notify_data(order, user, WECHAT_NOTIFY["order_template_id"]))
 	end
 
+	# order or card, need contact & name attributes
+	def send_order_delivery_notify(order, user)
+		return unless user.wechat_openid.present?
+		Rails.logger.debug "Send order delivered notification to customer #{user.id}, order/cards: #{order.id}"
+		WechatService.new.send_notification(order, user, order_delivery_notify_data(order, user, WECHAT_NOTIFY["order_delivery_template_id"]))
+	end
+
 	private
 	def data(order, user, data, template_id, url)
 		{
@@ -88,5 +95,36 @@ class NotificationService
 		}
 		data(order, user, d, template_id, "/admin/orders/#{order.id}")
 	end
+
+	def order_delivery_notify_data(order, user, template_id)
+		d = {
+			first: {
+				value: "您的商品已发货，请注意查收！",
+				color: WECHAT_NOTIFY["fontcolor"]
+			},
+			keyword1: {
+				value: order.contact_name,
+				color: WECHAT_NOTIFY["fontcolor"]
+			},
+			keyword2: {
+				value: order.contact_tel,
+				color: WECHAT_NOTIFY["fontcolor"]
+			},
+			keyword3: {
+				value: order.name,
+				color: WECHAT_NOTIFY["fontcolor"]
+			},
+			keyword4: {
+				value: order.contact_address,
+				color: WECHAT_NOTIFY["fontcolor"]
+			},
+			remark: {
+				value: "祝您生活愉快！",
+				color: WECHAT_NOTIFY["fontcolor"]
+			}
+		}
+		data(order, user, d, template_id, order.class.name.eql?("Order") ? "/orders/#{order.id}" : "/cards")
+	end
+
 
 end

@@ -38,7 +38,7 @@ class WechatService
         end
 
         def send_notification(order, user, data)
-                Rails.logger.info "Send notification to #{user.id}, order #{order.order_id}"
+                Rails.logger.info "Send notification to #{user.id}, order #{order.id}"
                 path = "#{WECHAT_NOTIFY['path']}?access_token=#{get_access_token}"
                 http = Net::HTTP.new(WECHAT_NOTIFY["host"], WECHAT_NOTIFY["port"])
                 http.use_ssl = true
