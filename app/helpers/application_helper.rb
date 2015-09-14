@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 module ApplicationHelper
 
+        def brand_title
+                return Rails.application.config.name unless session[:type].present?
+                return "订桌订餐" if session[:type].eql? "order"
+                return "外卖订餐" if session[:type].eql? "takeout"
+        end
+
         def current_namespace
                 controller.class.name.split("::").first
         end

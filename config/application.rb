@@ -29,7 +29,7 @@ module Webstore
                 # Define which owner this app belongs to.
                 config.owner = 1
 	        config.domain = "www.tenhs.com"
-	        config.name = "拾惠社"
+	        config.name = "伊天园"
 
         end
 end

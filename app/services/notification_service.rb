@@ -9,8 +9,8 @@ class NotificationService
 	WECHAT_NOTIFY = WECHAT["notify"]
 
 	def send_order_notify(order, user)
-		Rails.logger.debug "Send order notification to user #{user.id}, order: #{order.id}"
-		WechatService.new.send_notification(order, user, data(order, user))
+		# Rails.logger.debug "Send order notification to user #{user.id}, order: #{order.id}"
+		# WechatService.new.send_notification(order, user, data(order, user))
 	end
 
 	private

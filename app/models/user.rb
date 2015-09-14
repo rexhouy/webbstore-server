@@ -46,7 +46,6 @@ class User < ActiveRecord::Base
         def set_default_value
                 self.role ||= User.roles[:customer]
                 self.status = User.statuses[:active]
-                self.introducer_token = SecureRandom.hex(8)
         end
 
 end

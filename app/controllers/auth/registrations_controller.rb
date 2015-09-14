@@ -5,20 +5,14 @@ class Auth::RegistrationsController < Devise::RegistrationsController
         before_filter :check_captcha, only: [:create]
 
         # GET /resource/sign_up
-        def new
-                @introducer_token = params[:introducer_token]
-                super
-        end
+        # def new
+        #         super
+        # end
 
         # POST /resource
-        def create
-                @introducer_token = params[:introducer_token]
-                super
-                if !resource.new_record? && @introducer_token.present?
-                        user = User.find_by_introducer_token(@introducer_token)
-                        resource.update(introducer: user.id)
-                end
-        end
+        # def create
+        #         super
+        # end
 
         # GET /resource/edit
         # def edit
@@ -67,11 +61,9 @@ class Auth::RegistrationsController < Devise::RegistrationsController
         # end
 
         private
+
         def check_captcha
-                tel = params[:user][:tel]
-                captcha = params[:tel_captcha]
-                c = Captcha.find_by_tel(tel)
-                if !c.nil? && c.register_token.eql?(captcha)
+                if simple_captcha_valid?
                         # CAPTCHA correct
                 else
                         build_resource(sign_up_params)

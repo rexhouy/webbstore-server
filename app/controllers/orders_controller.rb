@@ -13,7 +13,7 @@ class OrdersController < ApiController
         def show
                 @order = Order.find(params[:id])
                 return render_404 unless @order.customer_id.eql? current_user.id
-                @url = payment_redirect_url(@order)
+                render (@order.takeout? ? :takeout : :order)
         end
 
         def wechat_pay
@@ -23,35 +23,50 @@ class OrdersController < ApiController
                 render layout: false
         end
 
+        def confirm
+                return redirect_to :new_user_session unless user_signed_in?
+                return redirect_to :carts if get_cart.empty?
+                @cart = get_cart_products_detail(get_cart)
+                @user = current_user
+                @address = Address.new
+                @contact_tel = current_user.tel
+        end
+
         def add
                 unless validate
-                        flash["info"] = "购物失败"
-                        flash["errors"] = @errors
-                        redirect_to :carts_confirm
+                        flash.now["info"] = "购物失败"
+                        flash.now["errors"] = @errors
+                        redirect_to :orders_confirm
                         return
                 end
                 begin
                         order = Order.new
                         order.customer = current_user
                         order.seller = get_seller
+                        if ordering?
+                                order.person_count = params[:person_count]
+                                time = params[:catering_time].split(/:/)
+                                order.catering_time = DateTime.now.change({ hour: time[0].to_i, min: time[1].to_i, sec: 0 })
+                        end
+                        set_contact(order)
+                        order.inspect
                         Order.transaction do
                                 order.orders_products = get_orders_products
                                 order.status = Order.statuses[:placed]
                                 order.subtotal = subtotal(order.orders_products)
                                 order.order_id = "#{SecureRandom.random_number(10**7).to_s.rjust(7,"0")}-#{SecureRandom.random_number(10**7).to_s.rjust(7,"0")}"
-                                order.address = get_address
-                                order.payment_type = params[:paymentType]
+                                order.payment_type = Order.payment_types[:offline_pay]
                                 order.name = order_name order.orders_products
                                 order.save!
                                 update_product_sales(order.orders_products, :+)
                         end
                         clear_cart
-                        redirect_to payment_redirect_url(order)
+                        redirect_to "/orders/#{order.id}"
                 rescue => error
                         logger.error error
                         flash["info"] = "购物失败"
                         flash["errors"] = @errors
-                        redirect_to :carts_confirm
+                        redirect_to :orders_confirm
                 end
 
         end
@@ -81,15 +96,15 @@ class OrdersController < ApiController
 
         private
         def update_product_sales(orders_products, func)
-                orders_products.each do |order_product|
-                        if order_product.specification.nil?
-                                order_product.product.sales = order_product.product.sales.send(func, order_product.count)
-                                order_product.product.save!
-                        else
-                                order_product.specification.sales = order_product.specification.sales.send(func, order_product.count)
-                                order_product.specification.save!
-                        end
-                end
+                # orders_products.each do |order_product|
+                #         if order_product.specification.nil?
+                #                 order_product.product.sales = order_product.product.sales.send(func, order_product.count)
+                #                 order_product.product.save!
+                #         else
+                #                 order_product.specification.sales = order_product.specification.sales.send(func, order_product.count)
+                #                 order_product.specification.save!
+                #         end
+                # end
         end
         def order_name(orders_products)
                 name = orders_products[0].product.name
@@ -107,8 +122,18 @@ class OrdersController < ApiController
                 end
         end
 
-        def get_address
-                Address.find(params[:addressId])
+        def set_contact(order)
+                if ordering?
+                        order.contact_name = params[:contact_name]
+                        order.contact_sex = params[:contact_sex]
+                        order.contact_tel = params[:contact_tel]
+                end
+                if takeout?
+                        address = Address.find(params[:addressId])
+                        order.contact_name = address.name
+                        order.contact_tel = address.tel
+                        order.contact_address = address.state + address.city + address.street
+                end
         end
 
         def validate
@@ -153,10 +178,11 @@ class OrdersController < ApiController
         end
 
         def has_enough_storage?(order_product)
-                storage = (order_product.specification.nil?) ?
-                order_product.product.storage - order_product.product.sales :
-                        order_product.specification.storage - order_product.specification.sales
-                storage >= order_product.count
+                true
+                # storage = (order_product.specification.nil?) ?
+                # order_product.product.storage - order_product.product.sales :
+                #         order_product.specification.storage - order_product.specification.sales
+                # storage >= order_product.count
         end
 
         def payment_redirect_url(order)

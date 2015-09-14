@@ -10,13 +10,30 @@ class CartsController < ApiController
         def add
                 # Add product to cart or count++.
                 product = Product.valid.find(params[:id])
+                ret = {}
                 if product.nil?
-                        @message = "商品不存在"
-                        render "/error"
+                        ret[:message] = "商品不存在"
+                        ret[:succeed] = false
                 else
-                        add_product_to_cart(params[:id].to_s, params[:spec_id] || "")
-                        redirect_to :carts
+                        count = add_product_to_cart(params[:id], nil)
+                        ret[:succeed] = true
+                        ret[:count] = count
                 end
+                render json: ret
+        end
+
+        def minus
+                product = Product.valid.find(params[:id])
+                ret = {}
+                if product.nil?
+                        ret[:message] = "商品不存在"
+                        ret[:succeed] = false
+                else
+                        count = remove_product_from_cart(params[:id], nil)
+                        ret[:succeed] = true
+                        ret[:count] = count
+                end
+                render json: ret
         end
 
         def update
@@ -39,44 +56,50 @@ class CartsController < ApiController
                 redirect_to :carts
         end
 
-        def confirm
-                return redirect_to :new_user_session unless user_signed_in?
-                return redirect_to :carts if get_cart.empty?
-                @cart = get_cart_products_detail(get_cart)
-                @user = current_user
-                @address = Address.new
-        end
-
         private
         def same_product?(product, id, spec_id)
                 product["id"].to_s.eql?(id.to_s) && product["spec_id"].to_s.eql?(spec_id.to_s)
         end
-        def get_cart_products_detail(cart)
-                cart.map do |product|
-                        p = product.clone
-                        p["detail"] = Product.find(product["id"])
-                        p["spec"] = Specification.find(product["spec_id"]) unless product["spec_id"].blank?
-                        p
-                end
-        end
         def change_product_count(id, spec_id, count)
                 cart = get_cart
-                matchedProduct = cart.bsearch do |product|
+                matched_product_index = cart.find_index do |product|
                         same_product? product, id, spec_id
                 end
-                matchedProduct["count"] = count unless matchedProduct.nil?
+                cart[matched_product_index]["count"] = count unless matched_product_index.nil?
         end
         def add_product_to_cart(id, spec_id)
                 cart = get_cart
                 existProduct = cart.find_index do |product|
                         same_product? product, id, spec_id
                 end
+                count = nil
                 if existProduct.nil?
+                        count = 1
                         cart << { "id" => id, "count" => 1, "spec_id" => spec_id }
                 else
-                        cart[existProduct]["count"] =  cart[existProduct]["count"].to_i + 1
+                        count = cart[existProduct]["count"].to_i + 1
+                        cart[existProduct]["count"] =  count
                 end
                 session[:cart] = cart
+                count
         end
+        def remove_product_from_cart(id, spec_id)
+                cart = get_cart
+                existProduct = cart.bsearch do |product|
+                        same_product? product, id, spec_id
+                end
+                count = 0
+                unless existProduct.nil?
+                        if existProduct["count"].to_i.eql? 1
+                                cart.delete(existProduct)
+                        else
+                                existProduct["count"] =  existProduct["count"].to_i - 1
+                                count = existProduct["count"]
+                        end
+                end
+                session[:cart] = cart
+                count
+        end
+
 
 end

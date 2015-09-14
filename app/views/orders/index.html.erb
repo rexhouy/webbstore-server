@@ -17,7 +17,7 @@
       <table class="table table-hover table-clickable">
         <thead>
           <tr>
-            <th>时间</th><th>项目</th><th class="number-align">金额</th><th>状态</th>
+            <th>时间</th><th>项目</th><th class="number-align">金额</th><th>状态</th><th>类型</th>
           </tr>
         </thead>
         <tbody>
@@ -27,12 +27,13 @@
             <td><%= order.name %></td>
             <td class="number-align"><%= number_to_currency order.subtotal, locale: :'zh-CN', precision: 2 %></td>
             <td><%= order_status order %></td>
+            <td><%= type_name order%></td>
           </tr>
           <% end %>
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="4">
+            <td colspan="5">
               <%= paginate "/orders?type=#{@type}", @orders %>
             </td>
           </tr>

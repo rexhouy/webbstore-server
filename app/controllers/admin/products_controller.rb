@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Admin::ProductsController < AdminController
         # Checks authorization for all actions using cancan
         load_and_authorize_resource
@@ -21,7 +22,7 @@ class Admin::ProductsController < AdminController
                                 spec.update(status: Specification.statuses[:disabled])
                         end
                         if @product.update(product_params)
-                                redirect_to :action => "show", :id => @product.id
+                                redirect_to :action => "index", info: "修改成功"
                         else
                                 render "edit"
                         end
@@ -43,7 +44,7 @@ class Admin::ProductsController < AdminController
                 @product = Product.new(product_params)
                 @product.owner_id = owner
                 if @product.save
-                        redirect_to :action => "show", :id => @product.id
+                        redirect_to :action => "index", info: "新增成功"
                 else
                         render "new"
                 end

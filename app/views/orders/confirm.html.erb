@@ -94,31 +94,33 @@
             <div class="form-group">
               <label for="person_count" class="col-sm-3 col-xs-3 control-label">人数</label>
               <div class="col-sm-9 col-xs-9">
-                <%= select_tag :person_count, options_for_select(20.times.collect{ |i| [i+1, i+1]}, @person_count), class: "form-control"%>
+                <%= select_tag :person_count, options_for_select(20.times.collect{ |i| [i+1, i+1]}), class: "form-control"%>
               </div>
             </div>
             <!-- 时间 -->
             <div class="form-group">
               <label for="catering_time" class="col-sm-3 col-xs-3 control-label">时间</label>
               <div class="col-sm-9 col-xs-9">
-                <%= select_tag :catering_time, options_for_select([["午餐", "lunch"], ["晚餐", "dinner"]], @catering_time), class: "form-control"%>
+                <%= select_tag :catering_time,
+                    options_for_select([["11:00", "11:00"],["11:30", "11:30"],["12:00", "12:00"],["12:30", "12:30"],["13:00", "13:00"],["17:00", "17:00"],["17:30", "17:30"],["18:00", "18:00"],["18:30", "18:30"],["19:00", "19:00"]]),
+                    {include_blank: true, class: "form-control"} %>
               </div>
             </div>
             <!-- 姓名 -->
             <div class="form-group">
               <label for="contact_name" class="col-sm-3 col-xs-3 control-label">姓名</label>
               <div class="col-sm-6 col-xs-5">
-                <%= text_field_tag :contact_name, @contact_name, class: "form-control"%>
+                <%= text_field_tag :contact_name, "", class: "form-control"%>
               </div>
               <div class="col-sm-3 col-xs-4">
-                <%= select_tag :contact_sex, options_for_select([["女士", "lady"],["gentleman", "先生"]], @contact_sex), class: "form-control"%>
+                <%= select_tag :contact_sex, options_for_select([["女士", "lady"],["gentleman", "先生"]]), class: "form-control"%>
               </div>
             </div>
             <!-- 联系电话 -->
             <div class="form-group">
               <label for="contact_tel" class="col-sm-3 col-xs-3 control-label">联系电话</label>
               <div class="col-sm-9 col-xs-9">
-                <%= telephone_field_tag :contact_tel, @contact_tel, class: "form-control"%>
+                <%= telephone_field_tag :contact_tel, "", class: "form-control"%>
               </div>
             </div>
           </div>
@@ -130,7 +132,7 @@
     <div class="form-group">
       <div class="col-md-offset-2 col-md-8 col-sm-8 col-xs-12 vertical-btn-group">
         <a class="btn btn-lg btn-default" href="/carts">取消</a>
-        <a class="btn btn-lg btn-primary" onclick="carts.confirm()">确认</a>
+        <a class="btn btn-lg btn-primary" onclick="orders.confirm()">确认</a>
       </div>
     </div>
   <% end %>

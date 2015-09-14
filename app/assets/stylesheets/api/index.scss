@@ -82,7 +82,9 @@
         border-top: 1px solid #f1f1f1;
         font-size: 14px;
         .title {
-            padding:12px 40px 0 40px;
+            padding:12px 40px 0 18px;
+            font-weight: bold;
+            color: #aaa;
         }
     }
 }
@@ -145,4 +147,40 @@
 .block-layer.block-layer-light {
     background: #fff;
     opacity: .3;
+}
+
+.home-nav {
+    margin-top: 3px;
+    section {
+        border: 1px solid #fff;
+        height:200px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-color: $accent-color;
+        @media(max-width:768px) {
+            border-left: 0;
+            border-right: 0;
+        }
+    }
+    #order {
+        background-image:image_url("catering.png");
+    }
+    #takeout {
+        background-image:image_url("takeout.png");
+    }
+    img {
+        height: 200px;
+    }
+    a {
+        display:block;
+        height: inherit;
+    }
+    h3 {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        font-size: 25px;
+        color: #fff;
+        letter-spacing: 8px;
+    }
 }

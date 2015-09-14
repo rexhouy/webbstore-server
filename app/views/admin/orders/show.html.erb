@@ -1,4 +1,4 @@
-<h1 class="page-header">订单详情</h1>
+<h1 class="page-header"><%=type_name @order%>订单</h1>
 
 <% if notice.present? %>
 <div class="alert alert-info" role="alert">
@@ -13,13 +13,8 @@
     <% end %>
   <% end %>
   <% if @order.paid? || (@order.offline_pay? && @order.placed?) %>
-    <%= form_tag admin_orders_shipping_url, method: :put, style: "display:inline-block" do %>
-      <% submit_tag "确认发货", class: "btn btn-primary"%>
-    <% end %>
-  <% end %>
-  <% if @order.shipping? %>
     <%= form_tag admin_orders_deliver_url, method: :put, style: "display:inline-block" do %>
-      <% submit_tag "确认完成", class: "btn btn-primary"%>
+      <% submit_tag "确认已处理", class: "btn btn-primary"%>
     <% end %>
   <% end %>
   <%= link_to admin_orders_url, class: "btn btn-primary" do %>
@@ -37,12 +32,6 @@
     <label class="col-sm-2 control-label">状态</label>
     <div class="col-sm-9">
       <p class="form-control-static"><%= order_status @order %></p>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-2 control-label">支付方式</label>
-    <div class="col-sm-9">
-      <p class="form-control-static"><%= order_payment @order %></p>
     </div>
   </div>
   <div class="form-group">
@@ -80,16 +69,39 @@
       </table>
     </div>
   </div>
-    <div class="form-group">
+
+  <% if @order.takeout? %>
+  <div class="form-group">
     <label class="col-sm-2 control-label">配送地址</label>
     <div class="col-sm-9">
       <address>
         <div class="header">
-          <span class="pull-left name"><%= @order.address.name %></span>
-          <span class="pull-right"><%= phone_number @order.address.tel %></span>
+          <span class="pull-left name"><%= @order.contact_name %></span>
+          <span class="pull-right"><%= phone_number @order.contact_tel %></span>
         </div>
-        <div><%= @order.address.state %><%= @order.address.city %><%= @order.address.street %></div>
+        <div><%= @order.contact_address %></div>
       </address>
     </div>
   </div>
+  <% else %>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">用餐人数</label>
+    <div class="col-sm-9">
+      <p class="form-control-static"><%=@order.person_count%>人</p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">用餐时间</label>
+    <div class="col-sm-9">
+      <p class="form-control-static"><%=display_datetime @order.catering_time%></p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">联系方式</label>
+    <div class="col-sm-9">
+      <p class="form-control-static"><%=@order.contact_tel%> &nbsp; <%=@order.contact_name%><%=@order.lady? ? "女士" : "先生"%></p>
+    </div>
+  </div>
+  <% end %>
+
 </div>

@@ -80,3 +80,18 @@ section.recommand {
         position: inherit;
     }
 }
+
+.count {
+    width: 28px;
+    display: inline-block;
+    text-align: center;
+    font-size: 16px;
+}
+
+.image {
+    width: 75px;
+    height: 75px;
+    padding: 12px 0;
+    margin-right: 12px;
+    overflow: hidden;
+}

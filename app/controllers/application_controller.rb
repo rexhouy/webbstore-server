@@ -58,4 +58,21 @@ class ApplicationController < ActionController::Base
                 end
         end
 
+        def ordering?
+                session[:type].eql? "order"
+        end
+
+        def takeout?
+                session[:type].eql? "takeout"
+        end
+
+        def get_cart_products_detail(cart)
+                cart.map do |product|
+                        p = product.clone
+                        p["detail"] = Product.find(product["id"])
+                        p["spec"] = Specification.find(product["spec_id"]) unless product["spec_id"].blank?
+                        p
+                end
+        end
+
 end

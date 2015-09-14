@@ -7,11 +7,11 @@ module Api::OrdersHelper
                 elsif order.paid?
                         return "已付款"
                 elsif (order.placed? && order.offline_pay?) || order.paid?
-                        return "待发货"
+                        return "待处理"
                 elsif order.shipping?
                         return "已发货"
                 elsif order.delivered?
-                        return "完成"
+                        return "已处理"
                 elsif order.canceled?
                         return "已取消"
                 else
@@ -31,6 +31,11 @@ module Api::OrdersHelper
                 return "微信支付" if order.wechat?
                 return "支付宝" if order.alipay?
                 return "货到付款" if order.offline_pay?
+        end
+
+        def type_name(order)
+                return "外卖" if order.takeout?
+                "订餐"
         end
 
 end

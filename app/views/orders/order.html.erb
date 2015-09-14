@@ -1,7 +1,7 @@
 <article class="row main">
   <div class="order-detail">
     <section>
-      <h2 class="pull-left inherit-height table-center-wrap"><span class="table-center">订单</span></h2>
+      <h2 class="pull-left inherit-height table-center-wrap"><span class="table-center">预订订单</span></h2>
       <a class="btn btn-lg pull-right highlight-link icon-link-left inherit-height" href="/orders" style="position:relative;top:15px;padding-right:0">
         <span><i class="glyphicon glyphicon-arrow-left"></i>所有订单</span>
       </a>
@@ -11,7 +11,7 @@
       <div><%= order_status @order %></div>
     </section>
     <section>
-      <h3>商品</h3>
+      <h3>菜品</h3>
       <table class="table" style="max-width: 600px">
         <thead>
           <tr>
@@ -41,20 +41,16 @@
       <div><%= @order.order_id %></div>
     </section>
     <section>
-      <h3>配送信息</h3>
-      <address class="address">
-        <div class="header">
-          <span class="pull-left name"><%= @order.contact_name %></span>
-          <span class="pull-right"><%= phone_number @order.contact_tel %></span>
-        </div>
-        <div><%= @order.contact_address %></div>
-      </address>
+      <h3>预订信息</h3>
+      <p>联系人：<%=@order.contact_name%><%=@order.lady? ? "女士" : "先生"%></p>
+      <p>联系电话：<%=@order.contact_tel%></p>
+      <p>用餐人数：<%=@order.person_count%>人</p>
+      <p>用餐时间：<%=display_datetime @order.catering_time%></p>
     </section>
-
     <section>
       <% if is_cancelable? @order %>
         <br>
-        <a click="cancel(<%=@order.id%>)" class="btn btn-danger btn-block">取消订单</a>
+        <%=link_to "取消订单", orders_cancel_url(@order), method: "PUT", class: "btn btn-danger btn-block"%>
       <% end %>
     </section>
   </div>

@@ -66,8 +66,8 @@ window.address = (function() {
         };
 
         var addresses = [{
-                name : "北京",
-                cities : ["东城区", "丰台区", "大兴区", "平谷区", "怀柔区", "房山区", "昌平区", "朝阳区", "海淀区", "石景山区", "西城区", "通州区", "门头沟区", "顺义区"]
+                name : "昆明市",
+                cities : ["东川区", "五华区", "呈贡区", "官渡区", "西山区", "盘龙区"]
         }];
         var getStates = function() {
                 return addresses.map(function(address) {

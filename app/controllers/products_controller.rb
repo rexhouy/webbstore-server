@@ -1,14 +1,16 @@
 class ProductsController < ApiController
 
         def index
+                type = params[:type]
+                session[:type] = type if type.present?
                 channel_id = params[:channel]
-                channel_id = 1 if channel_id.eql? "custom"
-                channel_id = 2 if channel_id.eql? "organic"
                 @channel = Channel.find_by_id(channel_id)
                 session[:channel] = @channel
                 respond_to do |format|
                         format.html {
                                 @recommendProducts = []
+                                @products = Product.owner(owner).channel(@channel).available.valid.order(priority: :desc)
+                                @cart = get_cart
                                 render :index
                         }
                         format.json {

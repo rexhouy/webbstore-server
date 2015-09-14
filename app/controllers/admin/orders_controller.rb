@@ -10,7 +10,7 @@ class Admin::OrdersController < AdminController
                         @type = params[:type] || "wait_shipping"
                         @orders = Order.type(@type).owner(owner).paginate(:page => params[:page])
                 else
-                        @orders = Order.search(@order_id_or_tel, @order_date).owner(owner).paginate(:page => params[:page])
+                        @orders = Order.search(@order_id_or_tel, @order_date).owner(owner).order(created_at: :desc).paginate(:page => params[:page])
                 end
         end
 

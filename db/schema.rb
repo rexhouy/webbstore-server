@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150828032217) do
+ActiveRecord::Schema.define(version: 20150911022520) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -64,20 +64,24 @@ ActiveRecord::Schema.define(version: 20150828032217) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.integer  "status",       limit: 4
-    t.decimal  "subtotal",                   precision: 10, scale: 2
-    t.integer  "seller_id",    limit: 4
-    t.integer  "customer_id",  limit: 4
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
-    t.string   "order_id",     limit: 255
-    t.integer  "address_id",   limit: 4
-    t.integer  "payment_type", limit: 4
-    t.string   "name",         limit: 255
-    t.text     "payment",      limit: 65535
+    t.integer  "status",          limit: 4
+    t.decimal  "subtotal",                      precision: 10, scale: 2
+    t.integer  "seller_id",       limit: 4
+    t.integer  "customer_id",     limit: 4
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
+    t.string   "order_id",        limit: 255
+    t.integer  "payment_type",    limit: 4
+    t.string   "name",            limit: 255
+    t.text     "payment",         limit: 65535
+    t.integer  "person_count",    limit: 4
+    t.string   "contact_name",    limit: 255
+    t.string   "contact_tel",     limit: 11
+    t.string   "contact_address", limit: 255
+    t.integer  "contact_sex",     limit: 4
+    t.datetime "catering_time"
   end
 
-  add_index "orders", ["address_id"], name: "fk_rails_a6ba8c8794", using: :btree
   add_index "orders", ["customer_id"], name: "fk_rails_c2426400ce", using: :btree
   add_index "orders", ["seller_id"], name: "fk_rails_4498acc18a", using: :btree
 
@@ -179,7 +183,6 @@ ActiveRecord::Schema.define(version: 20150828032217) do
   add_index "users", ["tel"], name: "index_users_on_tel", unique: true, using: :btree
 
   add_foreign_key "channels", "groups"
-  add_foreign_key "orders", "addresses"
   add_foreign_key "orders", "groups", column: "seller_id"
   add_foreign_key "orders", "users", column: "customer_id"
   add_foreign_key "orders_products", "orders"
