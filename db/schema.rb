@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150908071643) do
+ActiveRecord::Schema.define(version: 20150914044719) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20150908071643) do
     t.string   "contact_name",    limit: 255
     t.string   "contact_tel",     limit: 11
     t.string   "contact_address", limit: 255
+    t.text     "memo",            limit: 65535
   end
 
   add_index "orders", ["customer_id"], name: "fk_rails_c2426400ce", using: :btree

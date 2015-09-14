@@ -54,6 +54,10 @@
         <div><%= @order.contact_address %></div>
       </address>
     </section>
+    <section>
+      <h3>留言</h3>
+      <p><%= @order.memo %></p>
+    </section>
 
     <section>
       <% if need_online_pay? @order %>

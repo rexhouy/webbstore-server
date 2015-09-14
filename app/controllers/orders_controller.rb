@@ -43,6 +43,7 @@ class OrdersController < ApiController
                         order = Order.new
                         order.customer = current_user
                         order.seller = get_seller
+                        order.memo = params[:memo]
                         Order.transaction do
                                 order.orders_products = get_orders_products
                                 order.status = Order.statuses[:placed]

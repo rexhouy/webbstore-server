@@ -80,7 +80,7 @@
       </table>
     </div>
   </div>
-    <div class="form-group">
+  <div class="form-group">
     <label class="col-sm-2 control-label">配送地址</label>
     <div class="col-sm-9">
       <address>
@@ -90,6 +90,12 @@
         </div>
         <div><%= @order.contact_address %></div>
       </address>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">留言</label>
+    <div class="col-sm-9">
+      <p class="form-control-static"><%=@order.memo%></p>
     </div>
   </div>
 </div>
