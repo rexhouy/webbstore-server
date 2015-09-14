@@ -4,12 +4,12 @@
   <%= devise_error_messages! %>
   <div class="form-group">
     <%= f.label :tel, "手机号" %><br />
-    <%= f.telephone_field :tel, autofocus: true, class: "form-control" %>
+    <%= f.telephone_field :tel, autofocus: true, class: "form-control", required:true %>
   </div>
 
   <div class="form-group">
     <%= f.label :password, "密码" %><br />
-    <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+    <%= f.password_field :password, autocomplete: "off", class: "form-control", required:true %>
   </div>
 
   <% if devise_mapping.rememberable? -%>

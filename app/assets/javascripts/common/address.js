@@ -2,6 +2,7 @@ window.address = (function() {
         var self = {};
         var editable = false;
         var selectable = false;
+        var edit = false;
 
         self.closeModal = function() {
                 $("#new_address")[0].reset(); // Clear form
@@ -30,35 +31,44 @@ window.address = (function() {
                 return true;
         };
 
-        self.saveAddress = function() {
+        self.saveOrCreate = function() {
                 if (!check()) {
                         return false;
                 }
                 var url = "/addresses";
                 var address = $("#new_address").serializeObject();
-                if (address["address[id]"]) {
+                var id = address["address[id]"];
+                var isEdit = id;
+                if (isEdit) {
                         address["_method"] = "put";
                         url += "/"+address["address[id]"];
                 }
                 $.ajax(url, {
-                        method : 'post',
+                        method : "post",
                         headers : {
                                 'X-CSRF-Token' : utility.getCSRFtoken()
                         },
                         data : address
                 }).done(function(data) {
                         if (data.success) {
-                                var address = $(data.data);
-                                if (!editable) {
-                                        address.find(".row").remove();
+                                if (isEdit) { // edit
+                                        var address = data.data;
+                                        $("#address_"+id).find("[name=address_name]").html(address.name);
+                                        $("#address_"+id).find("[name=address_tel]").html(address.tel);
+                                        $("#address_"+id).find("[name=address_addr]").html(address.state.concat(address.city,address.street));
+                                } else { // create
+                                        var address = $(data.data);
+                                        if (!editable) {
+                                                address.find(".row").remove();
+                                        }
+                                        $("#addresses").append(address);
+                                        if (selectable) {
+                                                registerSelectable(address); // Register event
+                                                address.click();// Set as selected.
+                                        }
                                 }
-                                $("#addresses").append(address);
                                 $("#address_modal").modal("hide"); // Close dialog
                                 $("#new_address")[0].reset(); // Clear form
-                                if (selectable) {
-                                        registerSelectable(address); // Register event
-                                        address.click();// Set as selected.
-                                }
                         } else {
                                 alert("保存地址失败");
                         }
@@ -83,6 +93,7 @@ window.address = (function() {
                 return [];
         };
         self.setValue = function(data) {
+                $("#address_id").val(data.id);
                 $("#address_name").val(data.name);
                 $("#address_tel").val(data.tel);
                 $("#address_street").val(data.street);
@@ -121,6 +132,41 @@ window.address = (function() {
                         });
                 }
         };
+
+        var setModalTitle = function(content) {
+                $("#address_modal").find(".modal-title").html(content);
+        };
+
+        self.create = function() {
+                setModalTitle("新建地址");
+                $("#address_modal").modal();
+        };
+
+        self.edit = function(id) {
+                $.getJSON("/addresses/"+id+".json", function(data){
+                        setModalTitle("修改地址");
+                        self.setValue(data);
+                        $("#address_modal").modal();
+                });
+        };
+
+        self.destroy = function(id) {
+                $.ajax("/addresses/"+id, {
+                        method : "post",
+                        headers : {
+                                'X-CSRF-Token' : utility.getCSRFtoken()
+                        },
+                        data : {
+                                _method : "delete"
+                        }
+                }).done(function(data){
+                        $("#address_"+id).slideUp(500, function() {
+                                $("#address_"+id).remove();
+                        });
+                });
+                return false;
+        };
+
 
         return self;
 })();

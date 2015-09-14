@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class AddressesController < ApiController
 
         before_action :authenticate_user!
@@ -17,7 +18,7 @@ class AddressesController < ApiController
                 if address and address.update(address_params)
                         render json: {
                                 success: true,
-                                data: render_to_string(partial: "/addresses/item", object: address),
+                                data: address,
                                 id: address.id}
                 else
                         render json: {success: false}
@@ -29,7 +30,10 @@ class AddressesController < ApiController
                 if address && address.user.id.eql?(current_user.id)
                         address.update(status: Address.statuses[:disabled])
                 end
-                redirect_to :addresses
+                respond_to do |format|
+                        format.html { redirect_to :addresses, notice: "删除成功" }
+                        format.json { render json: {success: true} }
+                end
         end
 
         def create
