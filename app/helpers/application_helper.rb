@@ -2,6 +2,7 @@
 module ApplicationHelper
 
         def brand_title
+                return Rails.application.config.name if ["orders", "me"].include? params[:controller]
                 return Rails.application.config.name unless session[:type].present?
                 return "订桌订餐" if session[:type].eql? "order"
                 return "外卖订餐" if session[:type].eql? "takeout"
