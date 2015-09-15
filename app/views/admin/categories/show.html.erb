@@ -1,0 +1,21 @@
+<h1 class="page-header">查看类目</h1>
+
+<% if notice.present? %>
+<div class="alert alert-info" role="alert">
+  <%= notice %>
+</div>
+<% end %>
+
+<div class="control-panel">
+  <%= link_to "编辑", edit_admin_category_path(@category), class: "btn btn-primary"%>
+  <%= link_to "返回", admin_categories_path, class: "btn btn-default" %>
+</div>
+
+<div class="form">
+  <div class="form-group">
+    <label class="col-sm-2 control-label">名字</label>
+    <div class="col-sm-10">
+      <p><%= @category.name %></p>
+    </div>
+  </div>
+</div>

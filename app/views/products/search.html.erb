@@ -2,14 +2,7 @@
 <div class="search-result">
   <div class="products-list">
     <% @products.each do |product| %>
-      <section class="card col-md-3 col-sm-4 col-xs-6">
-        <a href="/products/<%=product.id%>">
-          <div class="image">
-            <%= image_tag product.cover_image %>
-          </div>
-          <h3><%=product.name%></h3>
-        </a>
-      </section>
+    <%= render product %>
     <% end %>
   </div>
   <% if @products.empty? %>
@@ -17,4 +10,9 @@
       没有找到与"<%=@search_text%>"相关的商品
     </div>
   <% end %>
+
+  <a href="/carts" class="floating-action-btn">
+    <i class="glyphicon glyphicon-shopping-cart"></i>
+  </a>
+
 </div>

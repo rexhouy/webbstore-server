@@ -73,9 +73,11 @@
           <li><a href="/products?type=takeout" class="icon-link-left"><i class="glyphicon glyphicon-glass"></i>外卖订餐</a></li>
           <li><a href="/orders" class="icon-link-left"><i class="glyphicon glyphicon-list-alt"></i>订单</a></li>
           <li><a href="/carts" class="icon-link-left"><i class="glyphicon glyphicon-shopping-cart"></i>购物车</a></li>
-          <% @channels.each do |c| %>
-          <li><a href="/products?channel=<%=c.id%>" class="icon-link-left"><i class="glyphicon glyphicon-grain"></i><%=c.name%></a></li>
+          <li><span class="title">菜品分类</span></li>
+          <% @categories.each do |c| %>
+          <li><a href="/products?category=<%=c.id%>" class="icon-link-left"><i class="glyphicon glyphicon-grain"></i><%=c.name%></a></li>
           <% end %>
+          <li><a href="/products" class="icon-link-left"><i class="glyphicon glyphicon-grain"></i>所有菜品</a></li>
         </ul>
       </section>
     </nav>

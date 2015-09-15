@@ -3,18 +3,18 @@ class ProductsController < ApiController
         def index
                 type = params[:type]
                 session[:type] = type if type.present?
-                channel_id = params[:channel]
-                @channel = Channel.find_by_id(channel_id)
-                session[:channel] = @channel
+                category_id = params[:category]
+                @category = Category.find_by_id(category_id)
+                session[:category] = @category
                 respond_to do |format|
                         format.html {
                                 @recommendProducts = []
-                                @products = Product.owner(owner).channel(@channel).available.valid.order(priority: :desc)
+                                @products = Product.owner(owner).category(@category).available.valid.order(priority: :desc)
                                 @cart = get_cart
                                 render :index
                         }
                         format.json {
-                                @products = Product.owner(owner).channel(@channel).available.valid.order(priority: :desc).paginate(:page => params[:page])
+                                @products = Product.owner(owner).category(@category).available.valid.order(priority: :desc).paginate(:page => params[:page])
                                 render json: @products
                         }
                 end
@@ -29,6 +29,7 @@ class ProductsController < ApiController
                 @products = Product.search(@search_text).records.select do |p|
                         p.owner_id.eql? owner
                 end
+                @cart = get_cart
         end
 
         private

@@ -1,4 +1,12 @@
 <h1 class="page-header">产品管理</h1>
+
+<ul class="link-group">
+  <li>
+    <%=link_to "类目管理", admin_categories_path%>
+  </li>
+</ul>
+
+
 <%= link_to new_admin_product_path,  :class => "btn btn-primary" do %>
 <span class="glyphicon glyphicon-plus"></span> 新建
 <% end %>

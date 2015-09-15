@@ -78,12 +78,11 @@ class Admin::ProductsController < AdminController
         end
 
         def product_params
-                params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale, :cover_image, :channel_id, :priority, :suppliers_id,
-                                                specifications_attributes: [:id, :name, :value, :price, :storage])
+                params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale, :cover_image, :channel_id, :priority, :suppliers_id, :category_id, specifications_attributes: [:id, :name, :value, :price, :storage])
         end
 
         def preview_params
-                params.require(:product).permit(:name, :price, :storage, :description, :article, :recommend, :cover_image, :channel_id)
+                params.require(:product).permit(:name, :price, :storage, :description, :article, :recommend, :cover_image, :channel_id, :category_id)
         end
 
 end

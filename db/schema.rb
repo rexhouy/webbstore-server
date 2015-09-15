@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150911022520) do
+ActiveRecord::Schema.define(version: 20150915021717) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -44,6 +44,16 @@ ActiveRecord::Schema.define(version: 20150911022520) do
   end
 
   add_index "captchas", ["tel"], name: "index_captchas_on_tel", unique: true, using: :btree
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name",        limit: 255, null: false
+    t.integer  "category_id", limit: 4
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "group_id",    limit: 4
+  end
+
+  add_index "categories", ["group_id"], name: "index_categories_on_group_id", using: :btree
 
   create_table "channels", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false
@@ -116,8 +126,10 @@ ActiveRecord::Schema.define(version: 20150911022520) do
     t.integer  "channel_id",   limit: 4
     t.integer  "priority",     limit: 4
     t.integer  "suppliers_id", limit: 4
+    t.integer  "category_id",  limit: 4
   end
 
+  add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree
   add_index "products", ["channel_id"], name: "fk_rails_6a9a6377a6", using: :btree
   add_index "products", ["name", "description", "article"], name: "fulltext_index", type: :fulltext
   add_index "products", ["owner_id"], name: "fk_rails_718105988b", using: :btree
