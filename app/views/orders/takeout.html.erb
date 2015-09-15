@@ -54,7 +54,7 @@
     <section>
       <% if is_cancelable? @order %>
         <br>
-        <a click="cancel(<%=@order.id%>)" class="btn btn-danger btn-block">取消订单</a>
+        <%=link_to "取消订单", orders_cancel_url(@order), method: "PUT", class: "btn btn-danger btn-block"%>
       <% end %>
     </section>
   </div>
