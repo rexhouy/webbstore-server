@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150915065302) do
+ActiveRecord::Schema.define(version: 20150915090501) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -81,14 +81,13 @@ ActiveRecord::Schema.define(version: 20150915065302) do
   end
 
   create_table "channels", force: :cascade do |t|
-    t.string   "name",          limit: 255, null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.integer  "group_id",      limit: 4
-    t.string   "image",         limit: 255
-    t.string   "url",           limit: 255
-    t.boolean  "display_title", limit: 1
-    t.integer  "priority",      limit: 4
+    t.string   "name",       limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "group_id",   limit: 4
+    t.string   "image",      limit: 255
+    t.string   "url",        limit: 255
+    t.integer  "priority",   limit: 4
   end
 
   add_index "channels", ["group_id"], name: "fk_rails_8011c05949", using: :btree
@@ -149,13 +148,11 @@ ActiveRecord::Schema.define(version: 20150915065302) do
     t.integer  "storage",      limit: 4
     t.integer  "sales",        limit: 4
     t.integer  "status",       limit: 4
-    t.integer  "channel_id",   limit: 4
     t.integer  "priority",     limit: 4
     t.integer  "suppliers_id", limit: 4
     t.integer  "category_id",  limit: 4
   end
 
-  add_index "products", ["channel_id"], name: "fk_rails_6a9a6377a6", using: :btree
   add_index "products", ["name", "description", "article"], name: "fulltext_index", type: :fulltext
   add_index "products", ["owner_id"], name: "fk_rails_718105988b", using: :btree
 
@@ -227,7 +224,6 @@ ActiveRecord::Schema.define(version: 20150915065302) do
   add_foreign_key "orders_products", "orders"
   add_foreign_key "orders_products", "products"
   add_foreign_key "orders_products", "specifications", on_delete: :cascade
-  add_foreign_key "products", "channels"
   add_foreign_key "products", "groups", column: "owner_id"
   add_foreign_key "specifications", "products", on_delete: :cascade
   add_foreign_key "users", "groups"
