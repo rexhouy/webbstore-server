@@ -64,7 +64,7 @@
         <tbody>
           <% @order.orders_products.each do |orders_products| %>
           <tr>
-            <td><%= orders_products.product.name %></td>
+            <td><%= orders_products.product.name %>  <%= orders_products.specification.value%></td>
             <td class="number-align"><%= orders_products.count %></td>
             <td class="number-align"><%= number_to_currency orders_products.count*orders_products.price, locale: :'zh-CN', precision: 2 %></td>
           </tr>
