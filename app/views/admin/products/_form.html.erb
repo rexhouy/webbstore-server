@@ -61,7 +61,7 @@
       类目
   <% end %>
   <div class="col-sm-4">
-    <%= p.select :category_id, category_options, {include_blank: true}, class: "form-control" %>
+    <%= p.select :category_id, category_options(p.object.category_id), {include_blank: true}, class: "form-control" %>
     </div>
   <div class="col-sm-2">
     <%=link_to "修改类目", admin_categories_url, class: "btn btn-primary"%>
