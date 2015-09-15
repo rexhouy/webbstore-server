@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
         # Channels used in menu
         before_action do
-                @channels = Channel.owner(Rails.application.config.owner).all
+                @channels = Channel.owner(Rails.application.config.owner).order(priority: :desc)
         end
 
         before_filter :store_location

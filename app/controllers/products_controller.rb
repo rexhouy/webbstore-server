@@ -1,16 +1,16 @@
 class ProductsController < ApiController
 
         def index
-                channel_id = params[:channel]
-                @channel = Channel.find_by_id(channel_id)
-                session[:channel] = @channel
+                category_id = params[:category]
+                @category = Category.find_by_id(category_id)
+                session[:category] = @category
                 respond_to do |format|
                         format.html {
                                 @recommendProducts = []
                                 render :index
                         }
                         format.json {
-                                @products = Product.owner(owner).channel(@channel).available.valid.order(priority: :desc).paginate(:page => params[:page])
+                                @products = Product.owner(owner).category(@category).available.valid.order(priority: :desc).paginate(:page => params[:page])
                                 render json: @products
                         }
                 end

@@ -3,7 +3,7 @@ class Admin::ChannelsController < AdminController
         load_and_authorize_resource except: :create
 
         def index
-                @channels = Channel.owner(owner).paginate(:page => params[:page])
+                @channels = Channel.owner(owner).order(priority: :desc).paginate(:page => params[:page])
         end
 
         def edit
@@ -48,8 +48,7 @@ class Admin::ChannelsController < AdminController
 
         private
         def channel_param
-                params.require(:channel).permit(:name, :image)
+                params.require(:channel).permit(:name, :image, :display_title, :url, :priority)
         end
-
 
 end

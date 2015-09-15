@@ -2,7 +2,7 @@
 class Product < ActiveRecord::Base
         belongs_to :owner, class_name: "Group", foreign_key: :owner_id
         belongs_to :supplier
-        belongs_to :channel
+        belongs_to :category
         has_many :specifications, -> { where(status: Specification.statuses[:available]) }
         accepts_nested_attributes_for :specifications
 
@@ -41,8 +41,8 @@ class Product < ActiveRecord::Base
                 where(status: Product.statuses[:available])
         end
 
-        def self.channel(channel)
-                return where(channel_id: channel) unless channel.blank?
+        def self.category(category)
+                return where(category_id: category) unless category.blank?
                 all
         end
 

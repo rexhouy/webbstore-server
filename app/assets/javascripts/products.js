@@ -57,11 +57,11 @@
                 if (!template) {
                         return;
                 }
-                var channel = utility.getUrlParam("channel") || "";
+                var category = utility.getUrlParam("category") || "";
                 var container = $(".products-list");
                 infinitScroll("#infinit_scroll_indicator", // indicator selector
                               ".products-spinner", // spinner selector
-                              "/products.json?channel="+channel, // url
+                              "/products.json?category="+category, // url
                               function(products) {
                                       products.forEach(function(product) {
                                               $(Mustache.render(template, product)).appendTo(container);

@@ -1,4 +1,11 @@
-<h1 class="page-header">频道管理</h1>
+<h1 class="page-header">频道管理<small> 主页显示项目</small></h1>
+
+<ul class="link-group">
+  <li>
+    <%= link_to "文章管理", admin_articles_path %>
+  </li>
+</ul>
+
 <%= link_to new_admin_channel_path,  :class => "btn btn-primary" do %>
 <span class="glyphicon glyphicon-plus"></span> 新建
 <% end %>
@@ -8,6 +15,7 @@
     <tr>
       <td>#</td>
       <td>名称</td>
+      <td>链接</td>
       <td>操作</td>
     </tr>
   </thead>
@@ -16,6 +24,7 @@
     <tr>
       <td><%= index+1 %></td>
       <td><%= channel.name %></td>
+      <td><%= channel.url%></td>
       <td>
         <%= link_to admin_channel_path(channel) do %>
         <span class="glyphicon glyphicon-eye-open icon"></span>

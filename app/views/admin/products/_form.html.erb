@@ -40,8 +40,11 @@
       供应商
   <% end %>
   <div class="col-sm-4">
-    <%= p.select :suppliers_id, options_from_collection_for_select(@suppliers, :id, :name, p.object.suppliers_id), {include_blank: true}, class: "form-control" %>
+    <%= p.select :suppliers_id, Supplier.all.collect{|s| [s.name, s.id]}, {include_blank: true}, class: "form-control" %>
     </div>
+  <div class="col-sm-2">
+    <%=link_to "修改供应商", admin_suppliers_url, class: "btn btn-primary"%>
+  </div>
   </div>
 
   <div class="form-group">
@@ -54,11 +57,14 @@
   </div>
 
   <div class="form-group">
-    <%= p.label :channel_id, :class => "col-sm-2 control-label" do  %>
-      频道
+    <%= p.label :category_id, :class => "col-sm-2 control-label" do  %>
+      类目
   <% end %>
   <div class="col-sm-4">
-    <%= p.select :channel_id, options_from_collection_for_select(@channels, :id, :name, p.object.channel_id), {include_blank: true}, class: "form-control" %>
+    <%= p.select :category_id, category_options, {include_blank: true}, class: "form-control" %>
+    </div>
+  <div class="col-sm-2">
+    <%=link_to "修改类目", admin_categories_url, class: "btn btn-primary"%>
     </div>
   </div>
 

@@ -76,6 +76,7 @@ Rails.application.routes.draw do
                 resources :articles
                 resources :suppliers
                 resources :channels
+                resources :categories
 
                 # Users
                 resources :users

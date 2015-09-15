@@ -1,4 +1,13 @@
 <h1 class="page-header">产品管理</h1>
+<ul class="link-group">
+  <li>
+    <%= link_to "类目管理", admin_categories_path %>
+  </li>
+  <li>
+    <%= link_to "供应商管理", admin_suppliers_path %>
+  </li>
+</ul>
+
 <%= link_to new_admin_product_path,  :class => "btn btn-primary" do %>
 <span class="glyphicon glyphicon-plus"></span> 新建
 <% end %>
@@ -8,6 +17,8 @@
     <tr>
       <td>#</td>
       <td>名称</td>
+      <td class="number-align">销量</td>
+      <td class="number-align">库存</td>
       <td>操作</td>
     </tr>
   </thead>
@@ -16,6 +27,8 @@
     <tr>
       <td><%= index+1 %></td>
       <td><%= product.name  %></td>
+      <td class="number-align"><%= product.sales  %></td>
+      <td class="number-align"><%= product.storage - product.sales  %></td>
       <td>
         <%= link_to admin_product_path(product) do %>
         <span class="glyphicon glyphicon-eye-open icon"></span>

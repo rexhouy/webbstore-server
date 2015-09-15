@@ -8,8 +8,8 @@ module Api::ProductsHelper
                 end
         end
 
-        def title(channel)
-                return "所有产品" if channel.nil?
-                channel.name
+        def title(category)
+                return "所有产品" if category.nil?
+                category.name
         end
 end

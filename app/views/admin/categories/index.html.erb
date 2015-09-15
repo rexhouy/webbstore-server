@@ -1,10 +1,10 @@
-<h1 class="page-header">文章管理</h1>
+<h1 class="page-header">类目管理</h1>
 <ol class="breadcrumb">
   <li><a href="/admin">管控台</a></li>
-  <li><a href="/admin/channels">CMS</a></li>
-  <li class="active">文章</li>
+  <li><a href="/admin/products">产品</a></li>
+  <li class="active">类目</li>
 </ol>
-<%= link_to new_admin_article_path,  :class => "btn btn-primary" do %>
+<%= link_to new_admin_category_path,  :class => "btn btn-primary" do %>
 <span class="glyphicon glyphicon-plus"></span> 新建
 <% end %>
 
@@ -12,25 +12,25 @@
   <thead>
     <tr>
       <td>#</td>
-      <td>标题</td>
-      <td>URL</td>
+      <td>名称</td>
+      <td>所属类目</td>
       <td>操作</td>
     </tr>
   </thead>
   <tbody>
-    <% @articles.each_with_index do |article, index| %>
+    <% @categories.each_with_index do |category, index| %>
     <tr>
       <td><%= index+1 %></td>
-      <td><%= article.title %></td>
-      <td>http://www.tenhs.com/articles/<%= article.id %></td>
+      <td><%= category.name %></td>
+      <td><%= category.parent.name if category.parent.present? %></td>
       <td>
-        <%= link_to admin_article_path(article) do %>
+        <%= link_to admin_category_path(category) do %>
         <span class="glyphicon glyphicon-eye-open icon"></span>
         <% end %>
-        <%= link_to edit_admin_article_path(article) do %>
+        <%= link_to edit_admin_category_path(category) do %>
         <span class="glyphicon glyphicon-pencil icon"></span>
         <% end %>
-        <%= link_to admin_article_path(article), method: :delete do %>
+        <%= link_to admin_category_path(category), method: :delete do %>
         <span class="glyphicon glyphicon-trash icon"></span>
         <% end %>
       </td>
@@ -40,7 +40,7 @@
   <tfoot>
     <tr>
       <td colspan="6">
-        <%= will_paginate @articles, page_links: false %>
+        <%= will_paginate @categories, page_links: false %>
       </td>
     </tr>
     </tfoot>
