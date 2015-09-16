@@ -58,6 +58,7 @@ class OrdersController < ApiController
                                 order.save!
                                 create_cards(order)
                                 update_product_sales(order.orders_products, :+)
+                                create_order_history(order)
                         end
                         clear_cart
                         redirect_to payment_redirect_url(order)
@@ -78,6 +79,7 @@ class OrdersController < ApiController
                                         Order.transaction do
                                                 order.save!
                                                 update_product_sales(order.orders_products, :-)
+                                                create_order_history(order)
                                         end
                                 rescue => error
                                         logger.error error
@@ -214,6 +216,15 @@ class OrdersController < ApiController
                                 end
                         end
                 end
+        end
+
+        def create_order_history(order)
+                history = OrderHistory.new
+                history.order_id = order.id
+                history.status = order.status
+                history.time = Time.now
+                history.operator_id = current_user.id
+                history.save!
         end
 
 end

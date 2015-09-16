@@ -81,8 +81,20 @@ class Admin::OrdersController < AdminController
         def change_status(status)
                 @order = Order.find(params[:id])
                 @order.status = status
-                @order.save
+                Order.transaction do
+                        @order.save!
+                        create_order_history(@order)
+                end
                 redirect_to [:admin, @order], notice: "修改成功"
+        end
+
+        def create_order_history(order)
+                history = OrderHistory.new
+                history.order_id = order.id
+                history.status = order.status
+                history.time = Time.now
+                history.operator_id = current_user.id
+                history.save!
         end
 
 end

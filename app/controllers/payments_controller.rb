@@ -41,8 +41,12 @@ class PaymentsController < ApiController
                 order = Order.find_by_order_id(order_id)
                 logger.error "Order not found #{order_id}" if order.nil?
                 if order.placed?
-                        order.update(status: Order.statuses[:paid], payment: payment)
-                        update_card_status(order.id)
+                        Order.transaction do
+                                order.update(status: Order.statuses[:paid])
+                                create_order_history(order)
+                                create_payment(order, payment)
+                                update_card_status(order.id)
+                        end
                         send_notify_to_seller(order)
                         send_notify_to_customer(order)
                 else
@@ -83,6 +87,22 @@ class PaymentsController < ApiController
 
         def find_notify_sellers(group_id)
                 User.where(order_notification: true, group_id: group_id).all
+        end
+
+        def create_payment(order, info)
+                payment = Payment.new
+                payment.type = order.payment_type
+                payment.order_id = order.id
+                payment.trade_info = info
+                payment.save!
+        end
+
+        def create_order_history(order)
+                history = OrderHistory.new
+                history.order_id = order.id
+                history.status = order.status
+                history.time = Time.now
+                history.save!
         end
 
 end

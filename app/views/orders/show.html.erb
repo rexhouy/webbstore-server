@@ -58,6 +58,25 @@
       <h3>留言</h3>
       <p><%= @order.memo %></p>
     </section>
+    <section>
+      <h3>历史</h3>
+      <table class="table" style="max-width: 600px">
+        <thead>
+          <tr>
+            <th>时间</th><th>状态</th><th>操作人</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @order.order_histories.each do |hist| %>
+          <tr>
+            <td><%= display_datetime hist.time %></td>
+            <td><%= order_history_status hist %></td>
+            <td><%= order_status_change_operator hist %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </section>
 
     <section>
       <% if need_online_pay? @order %>

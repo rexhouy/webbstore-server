@@ -83,7 +83,7 @@
   <div class="form-group">
     <label class="col-sm-2 control-label">配送地址</label>
     <div class="col-sm-9">
-      <address>
+      <address class="form-control-static">
         <div class="header">
           <span class="pull-left name"><%= @order.contact_name %></span>
           <span class="pull-right"><%= phone_number @order.contact_tel %></span>
@@ -98,4 +98,24 @@
       <p class="form-control-static"><%=@order.memo%></p>
     </div>
   </div>
-</div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">历史</label>
+    <div class="col-sm-9">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>时间</th><th>状态</th><th>操作人</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @order.order_histories.each do |hist| %>
+          <tr>
+            <td><%= display_datetime hist.time %></td>
+            <td><%= order_history_status hist %></td>
+            <td><%= hist.operator.tel %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>

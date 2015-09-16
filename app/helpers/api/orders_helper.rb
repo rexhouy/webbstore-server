@@ -19,6 +19,21 @@ module Api::OrdersHelper
                 end
         end
 
+        def order_history_status(history)
+                return "创建" if history.placed?
+                return "支付完成" if history.paid?
+                return "发货" if history.shipping?
+                return "订单完成" if history.delivered?
+                return "订单取消" if history.canceled?
+                "未知"
+        end
+
+        def order_status_change_operator(history)
+                return "系统" if history.operator_id.nil?
+                return "用户" if history.operator_id.eql? current_user.id
+                "管理员"
+        end
+
         def need_online_pay?(order)
                 order.placed? && !order.offline_pay?
         end
