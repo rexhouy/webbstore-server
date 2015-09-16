@@ -52,8 +52,8 @@ module ApplicationHelper
                     ).html_safe
         end
 
-        def channel
-                return 1 if session[:channel].nil?
-                session[:channel]["id"]
+        def category
+                return 1 if session[:category].nil?
+                session[:category]["id"]
         end
 end
