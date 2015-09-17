@@ -65,9 +65,9 @@ class TradeService
                 nil
         end
         def trade_no(payment)
-                info = Json.parse(payment.trade_info) if payment.present? && payment.trade_info.present?
+                info = JSON.parse(payment.trade_info) if payment.present? && payment.trade_info.present?
                 return nil if info.nil?
-                info.out_trade_no
+                info["transaction_id"].present? ? info["transaction_id"] : info["trade_no"]
         end
         def get_latest_balance
                 trade = Trade.order(time: :desc).first
