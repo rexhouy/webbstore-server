@@ -1,56 +1,109 @@
-<h1 class="page-header">年/季卡待发货信息</h1>
-<ol class="breadcrumb">
-  <li><a href="/admin">管控台</a></li>
-  <li><a href="/admin/orders">订单</a></li>
-  <li class="active">年/季卡</li>
-</ol>
-<% if notice.present? %>
-<div class="alert alert-info" role="alert">
-  <%= notice %>
-</div>
-<% end %>
-<table class="table">
-  <thead>
-    <tr>
-      <td>卡片</td>
-      <td>用户</td>
-      <td>下次发货日期</td>
-      <td>剩余次数</td>
-      <td>总次数</td>
-      <td>配送地址</td>
-      <td>确认发货</td>
-    </tr>
-  </thead>
-  <tbody>
-    <% @cards.each_with_index do |card, index| %>
+<div class="hidden-print">
+  <h1 class="page-header">年/季卡</h1>
+  <ol class="breadcrumb">
+    <li><a href="/admin">管控台</a></li>
+    <li><a href="/admin/orders">订单</a></li>
+    <li class="active">年/季卡</li>
+  </ol>
+  <div>
+    <%= link_to "全部", "/admin/orders/cards?type=all", class: "#{'highlight' if @type.eql?('all')} filter-link" %>
+    <%= link_to "待发货", "/admin/orders/cards?type=wait_shipping", class: "#{'highlight' if @type.eql?('wait_shipping')} filter-link" %>
+  </div>
+  <% if notice.present? %>
+    <div class="alert alert-info" role="alert">
+      <%= notice %>
+    </div>
+  <% end %>
+  <table class="table">
+    <thead>
       <tr>
-        <td><%=card.name%></td>
-        <td><%=card.user.tel%></td>
-        <td><%=display_date card.next%></td>
-        <td><%=card.remain%></td>
-        <td><%=card.count%></td>
-        <td>
-          <a role="button" data-toggle="popover"
-             data-placement="top"
-             data-html="true"
-             title="配送地址"
-             data-content="<%=card.contact_name%> <br/> <%=card.contact_tel%> <br/> <%=card.contact_address%>">
-            <span class="glyphicon glyphicon-map-marker"></span>
-          </a>
+        <td>卡片</td>
+        <td>用户</td>
+        <td>下次发货日期</td>
+        <td>剩余次数</td>
+        <td>总次数</td>
+        <td>配送地址</td>
+        <td>确认发货</td>
+        <td>打印</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @cards.each_with_index do |card, index| %>
+        <tr>
+          <td><%=card.name%></td>
+          <td><%=card.user.tel%></td>
+          <td><%=display_date card.next%></td>
+          <td><%=card.remain%></td>
+          <td><%=card.count%></td>
+          <td>
+            <a role="button" data-toggle="popover"
+               data-placement="top"
+               data-html="true"
+               title="配送地址"
+               data-content="<%=card.contact_name%> <br/> <%=card.contact_tel%> <br/> <%=card.contact_address%>">
+              <span class="glyphicon glyphicon-map-marker"></span>
+            </a>
+          </td>
+          <td>
+            <%= link_to "/admin/orders/cards/deliver/#{card.id}", method: "put", confirm: "确认发货" do %>
+              <span class="glyphicon glyphicon-ok-circle"></span>
+            <% end %>
+          </td>
+          <td>
+            <a href="#" onclick="return cards.print(<%=card.id%>);">
+              <span class="glyphicon glyphicon-print"></span>
+            </a>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfooter>
+      <tr>
+        <td colspan="7">
+          <%= will_paginate @cards, page_links: false %>
         </td>
-        <td>
-          <%= link_to "/admin/orders/cards/deliver/#{card.id}", method: "put", confirm: "确认发货" do %>
-            <span class="glyphicon glyphicon-ok-circle"></span>
-          <% end %>
-      </td>
-    </tr>
-    <% end %>
-  </tbody>
-  <tfooter>
-    <tr>
-      <td colspan="7">
-        <%= will_paginate @cards, page_links: false %>
-      </td>
-    </tr>
-  </tfooter>
-</table>
+      </tr>
+    </tfooter>
+  </table>
+</div>
+
+<article class="visible-print-block" style="margin:0">
+  <header style="border-bottom:2px solid #000;margin-bottom:24px;">
+    <h1 style="margin-top:0"><%=Rails.application.config.name%>年/季卡</h1>
+  </header>
+  <div class="form-horizontal">
+    <div class="form-group">
+      <label class="col-sm-2 control-label">商品名称</label>
+      <div class="col-sm-9">
+        <p class="form-control-static" id="print_name"></p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">下次发货日期</label>
+      <div class="col-sm-9">
+        <p class="form-control-static" id="print_next"></p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">剩余次数/总次数</label>
+      <div class="col-sm-9">
+        <p class="form-control-static" id="print_remain"></p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">配送地址</label>
+      <div class="col-sm-9">
+        <address class="form-control-static">
+          <div class="header">
+            <span class="pull-left" id="print_contact_name"></span>
+            <span class="pull-right" id="print_contact_tel"></span>
+          </div>
+          <div id="print_contact_address"></div>
+        </address>
+      </div>
+    </div>
+  </div>
+  <footer style="border-top:1px solid #000;margin-top:24px;">
+    <small>* 如需要取消下次配送，请到我的账户>我的年(季)卡中设置</small>
+  </footer>
+</article>

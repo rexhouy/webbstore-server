@@ -91,7 +91,7 @@ class PaymentsController < ApiController
 
         def create_payment(order, info)
                 payment = Payment.new
-                payment.type = order.payment_type
+                payment.payment_type = order.payment_type
                 payment.order_id = order.id
                 payment.trade_info = info
                 payment.save!

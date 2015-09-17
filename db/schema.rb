@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150916022232) do
+ActiveRecord::Schema.define(version: 20150917053827) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -105,7 +105,6 @@ ActiveRecord::Schema.define(version: 20150916022232) do
     t.integer  "status",      limit: 4
     t.datetime "time"
     t.integer  "operator_id", limit: 4
-    t.text     "memo",        limit: 65535
   end
 
   create_table "orders", force: :cascade do |t|
@@ -118,7 +117,6 @@ ActiveRecord::Schema.define(version: 20150916022232) do
     t.string   "order_id",        limit: 255
     t.integer  "payment_type",    limit: 4
     t.string   "name",            limit: 255
-    t.text     "payment",         limit: 65535
     t.string   "contact_name",    limit: 255
     t.string   "contact_tel",     limit: 11
     t.string   "contact_address", limit: 255
@@ -143,28 +141,28 @@ ActiveRecord::Schema.define(version: 20150916022232) do
   add_index "orders_products", ["specification_id"], name: "index_orders_products_on_specification_id", using: :btree
 
   create_table "payments", force: :cascade do |t|
-    t.integer "type",       limit: 4
-    t.text    "trade_info", limit: 65535
-    t.integer "order_id",   limit: 4
+    t.integer "payment_type", limit: 4
+    t.text    "trade_info",   limit: 65535
+    t.integer "order_id",     limit: 4
   end
 
   create_table "products", force: :cascade do |t|
-    t.string   "name",         limit: 255
-    t.string   "description",  limit: 255
-    t.text     "article",      limit: 65535
-    t.string   "cover_image",  limit: 255
-    t.integer  "owner_id",     limit: 4
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
-    t.boolean  "recommend",    limit: 1
-    t.boolean  "on_sale",      limit: 1
-    t.decimal  "price",                      precision: 8, scale: 2
-    t.integer  "storage",      limit: 4
-    t.integer  "sales",        limit: 4
-    t.integer  "status",       limit: 4
-    t.integer  "priority",     limit: 4
-    t.integer  "suppliers_id", limit: 4
-    t.integer  "category_id",  limit: 4
+    t.string   "name",        limit: 255
+    t.string   "description", limit: 255
+    t.text     "article",     limit: 65535
+    t.string   "cover_image", limit: 255
+    t.integer  "owner_id",    limit: 4
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+    t.boolean  "recommend",   limit: 1
+    t.boolean  "on_sale",     limit: 1
+    t.decimal  "price",                     precision: 8, scale: 2
+    t.integer  "storage",     limit: 4
+    t.integer  "sales",       limit: 4
+    t.integer  "status",      limit: 4
+    t.integer  "priority",    limit: 4
+    t.integer  "supplier_id", limit: 4
+    t.integer  "category_id", limit: 4
   end
 
   add_index "products", ["name", "description", "article"], name: "fulltext_index", type: :fulltext
@@ -203,15 +201,16 @@ ActiveRecord::Schema.define(version: 20150916022232) do
 
   create_table "trades", force: :cascade do |t|
     t.datetime "time"
-    t.string   "type",         limit: 255
-    t.string   "payer",        limit: 255
-    t.integer  "receipt",      limit: 4
-    t.integer  "disbursement", limit: 4
-    t.integer  "blance",       limit: 4
-    t.string   "supplier",     limit: 255
-    t.string   "order_no",     limit: 255
-    t.string   "trade_no",     limit: 255
-    t.integer  "group_id",     limit: 4
+    t.string   "type",             limit: 255
+    t.string   "payer",            limit: 255
+    t.decimal  "receipt",                      precision: 8, scale: 2
+    t.decimal  "disbursement",                 precision: 8, scale: 2
+    t.decimal  "balance",                      precision: 8, scale: 2
+    t.string   "supplier",         limit: 255
+    t.string   "order_no",         limit: 255
+    t.string   "trade_no",         limit: 255
+    t.integer  "group_id",         limit: 4
+    t.decimal  "supplier_balance",             precision: 8, scale: 2
   end
 
   create_table "users", force: :cascade do |t|

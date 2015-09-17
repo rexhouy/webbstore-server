@@ -1,0 +1,73 @@
+<article class="visible-print-block" style="margin:0">
+  <header style="border-bottom:2px solid #000;margin-bottom:24px;">
+    <h1 style="margin-top:0"><%=Rails.application.config.name%>订单</h1>
+  </header>
+  <div class="form-horizontal">
+    <div class="form-group">
+      <label class="col-sm-2 control-label">订单编号</label>
+      <div class="col-sm-9">
+        <p class="form-control-static"><%= @order.order_id %></p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">支付方式</label>
+      <div class="col-sm-9">
+        <p class="form-control-static"><%= order_payment @order %></p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">下单时间</label>
+      <div class="col-sm-9">
+        <p class="form-control-static"><%= display_datetime @order.created_at %></p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">商品</label>
+      <div class="col-sm-9">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>序号</th><th>商品名称</th><th>规格</th><th class="number-align">数量</th><th class="number-align">单价</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @order.orders_products.each_with_index do |orders_products, index| %>
+            <tr>
+              <td><%=index+1%></td>
+              <td><%= orders_products.product.name %></td>
+              <td><%= orders_products.specification.value if orders_products.specification.present? %></td>
+              <td class="number-align"><%= orders_products.count %></td>
+              <td class="number-align"><%= number_to_currency orders_products.price, locale: :'zh-CN', precision: 2 %></td>
+            </tr>
+            <% end %>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="5" class="number-align">
+                合计：<%= number_to_currency @order.subtotal, locale: :'zh-CN', precision: 2 %>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">配送地址</label>
+      <div class="col-sm-9">
+        <address class="form-control-static">
+          <div class="header">
+            <span class="pull-left"><%= @order.contact_name %></span>
+            <span class="pull-right"><%= phone_number @order.contact_tel %></span>
+          </div>
+          <div><%= @order.contact_address %></div>
+        </address>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">留言</label>
+      <div class="col-sm-9">
+        <p class="form-control-static"><%=@order.memo%></p>
+      </div>
+    </div>
+  </div>
+</article>

@@ -1,6 +1,6 @@
 module Admin::ProductsHelper
         def category_options(category_id)
-                root = Category.root
+                root = Category.root.owner(current_user.group.id)
                 options = ""
                 root.each do |c|
                         if c.children.empty?

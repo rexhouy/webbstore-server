@@ -53,7 +53,20 @@ class Admin::OrdersController < AdminController
         end
 
         def cards
-                @cards = Card.where(next: date_of_next("Wednesday")).where("remain > 0").paginate(:page => params[:page])
+                @type = params[:type] || "all"
+                if @type.eql? "all"
+                        @cards = Card.where(status: Card.statuses[:open]).where("remain > 0").paginate(:page => params[:page])
+                else
+                        @cards = Card.where(next: date_of_next("Wednesday")).where("remain > 0").paginate(:page => params[:page])
+                end
+        end
+
+        def card
+                @card = Card.find(params[:id])
+                respond_to do |format|
+                        format.html {  }
+                        format.json { render json: @card }
+                end
         end
 
         def card_deliver

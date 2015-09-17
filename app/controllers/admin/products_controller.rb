@@ -9,7 +9,6 @@ class Admin::ProductsController < AdminController
         def edit
                 @product = Product.find(params[:id])
                 @suppliers = Supplier.owner(owner).all
-                @channels = Channel.owner(owner).all
                 return head(:forbidden) unless @product.owner_id.eql? owner
         end
 
@@ -76,7 +75,7 @@ class Admin::ProductsController < AdminController
         end
 
         def product_params
-                params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale, :cover_image, :category_id, :priority, :suppliers_id,
+                params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale, :cover_image, :category_id, :priority, :supplier_id,
                                                 specifications_attributes: [:id, :name, :value, :price, :storage, :count])
         end
 

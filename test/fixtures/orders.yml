@@ -4,8 +4,16 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-#  column: value
+one:
+  id: 1
+  status: 1
+  subtotal: 30.00
+  seller_id: 1
+  customer_id: 2
+  order_id: 1364180-2271804
+  payment_type: 1
+  name: "测试"
+  contact_name: "老侯"
+  contact_tel: "12345678901"
+  contact_address: "测试地址"
+  memo: "memo"

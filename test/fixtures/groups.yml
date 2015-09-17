@@ -1,7 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  id: 1
+  name: "group A"
+  created_at: <%=Date.today%>
+  updated_at: <%=Date.today%>
 
 two:
-  name: MyString
+  id: 2
+  name: "group B"
+  created_at: <%=Date.today%>
+  updated_at: <%=Date.today%>

@@ -22,6 +22,7 @@ class AdminController < ApplicationController
                 return if current_user.nil?
                 @menus = [{url: admin_products_url, text: "产品", class: "", resource: Product },
                           {url: admin_orders_url, text: "订单", class: "", resource: Order },
+                          {url: admin_trades_url, text: "交易", class: "", resource: Trade },
                           {url: admin_channels_url, text: "CMS", class: "", resource: Channel },
                           {url: admin_users_url, text: "用户", class: "", resource: User },
                           {url: admin_groups_url, text: "机构", class: "", resource: Group },]

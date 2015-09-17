@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="application/vnd.ms-excel; charset=UTF-8">
+    <title>交易流水</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td><h1>交易流水</h1></td>
+      </tr>
+      <% if @supplier.present? %>
+      <tr>
+        <td>供应商： <%=@supplier%></td>
+      </tr>
+      <% end %>
+      <% if @start_date.present? || @date_end.present? %>
+      <tr>
+        <td>日期： <%= "#{@start_date} ~  #{@date_end}" %></td>
+      </tr>
+      <% end %>
+    </table>
+    <table>
+      <thead>
+        <tr>
+          <th>交易时间</th>
+          <th>交易类型</th>
+          <th>交易对方</th>
+          <th>供应商</th>
+          <th>订单号</th>
+          <th>交易流水号</th>
+          <th class="number-align">入账（元）</th>
+          <th class="number-align">出账（元）</th>
+          <th class="number-align">余额（元）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @trades.each do |trade| %>
+        <tr>
+          <td><%= display_datetime trade.time %></td>
+          <td><%= trade_type trade %></td>
+          <td><%= trade.payer %></td>
+          <td><%= trade.supplier || "-" %></td>
+          <td><%= trade.order_no %></td>
+          <td><%= trade.trade_no || "-" %></td>
+          <td class="number-align"><%= trade.receipt %></td>
+          <td class="number-align"><%= trade.disbursement %></td>
+          <td class="number-align"><%= @supplier.present? ? trade.supplier_balance : trade.balance %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </body>
+</html>

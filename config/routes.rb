@@ -83,6 +83,7 @@ Rails.application.routes.draw do
 
                 # Orders
                 get "orders/cards" => "orders#cards", as: :orders_cards # cards
+                get "orders/cards/:id" => "orders#card"
                 put "orders/cards/deliver/:id" => "orders#card_deliver"
                 resources :orders
                 put 'orders/cancel/:id' => 'orders#cancel', as: :orders_cancel
@@ -99,6 +100,9 @@ Rails.application.routes.draw do
                         resources :specifications
                 end
                 post 'product/preview' => 'products#preview', as: :product_preview
+
+                # Trade
+                get "trades" => "trades#index", as: :trades
 
                 # Image
                 post 'image' => 'images#create'
