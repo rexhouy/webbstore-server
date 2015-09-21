@@ -14,5 +14,11 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require mustache.min.js
+//= require fastclick.min.js
 //= require_self
 //= require_tree ./common
+(function(){
+        $(function(){
+                FastClick.attach(document.body);
+        });
+})();
