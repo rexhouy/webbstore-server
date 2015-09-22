@@ -37,9 +37,6 @@
     verticle-align: middle;
     color: #999;
 }
-.no-touch .icon:hover {
-    color: #555;
-}
 .icon-danger {
     color: #c9302c;
 }
@@ -157,19 +154,6 @@
     background-color: $theme-color;
     border: 1px solid #ddd;
 }
-.no-touch {
-    .btn-primary:hover {
-        background-color: $theme-color-dark;
-    }
-    .btn-primary:focus {
-        background-color: $theme-color-dark;
-    }
-    .btn-default:hover {
-        color: $link-color-hover;
-        background-color: #fff;
-    }
-}
-
 .desc {
     color: #999;
     font-size: 16px;
@@ -178,9 +162,6 @@
 
 .highlight-link {
     color: $link-color;
-}
-.no-touch .highlight-link:hover {
-    color: $link-color-hover;
 }
 
 .main {

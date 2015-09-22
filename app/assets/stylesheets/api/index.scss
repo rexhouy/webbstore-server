@@ -9,13 +9,6 @@
         color: #fff;
     }
 }
-.no-touch .navbar {
-    a, i {
-        &:hover {
-            color: $accent-color;
-        }
-    }
-}
 
 .navbar-header {
     width: 100%;
@@ -28,9 +21,6 @@
         color: #fff;
     }
     margin-left: 0 !important;
-}
-.no-touch .navbar-brand a:hover {
-    color: $accent-color;
 }
 
 // Settings
@@ -84,20 +74,6 @@
         }
     }
 }
-.no-touch .navbar-side {
-    header {
-        a, i {
-            &:hover {
-                color: $accent-color;
-            }
-        }
-    }
-    li {
-        a:hover {
-            background-color: $theme-color-light;
-        }
-    }
-}
 
 // navbar for header
 .header-navbar {
@@ -135,13 +111,6 @@
         &:focus {
             outline: none;
             border: 0;
-        }
-    }
-}
-.no-touch .search-container {
-    a, i {
-        &:hover {
-            color: $theme-color-dark;
         }
     }
 }
