@@ -7,6 +7,10 @@
     margin: 0;
     a, i {
         color: #fff;
+    }
+}
+.no-touch .navbar {
+    a, i {
         &:hover {
             color: $accent-color;
         }
@@ -22,11 +26,11 @@
     font-weight: bold;
     a {
         color: #fff;
-        &:hover {
-            color: $accent-color;
-        }
     }
     margin-left: 0 !important;
+}
+.no-touch .navbar-brand a:hover {
+    color: $accent-color;
 }
 
 // Settings
@@ -50,9 +54,6 @@
         a, i {
             color: #fff;
             padding: 0 10px;
-            &:hover {
-                color: $accent-color;
-            }
         }
         i {
             color: #fff;
@@ -74,15 +75,26 @@
             padding: 12px 40px;
             color: $font-color;
         }
-        a:hover {
-            background-color: $theme-color-light;
-        }
     }
     .nav-section {
         border-top: 1px solid #f1f1f1;
         font-size: 14px;
         .title {
             padding:12px 40px 0 40px;
+        }
+    }
+}
+.no-touch .navbar-side {
+    header {
+        a, i {
+            &:hover {
+                color: $accent-color;
+            }
+        }
+    }
+    li {
+        a:hover {
+            background-color: $theme-color-light;
         }
     }
 }
@@ -110,9 +122,6 @@
     }
     a, i {
         color: $theme-color;
-        &:hover {
-            color: $theme-color-dark;
-        }
     }
     .search {
         border: 0;
@@ -126,6 +135,13 @@
         &:focus {
             outline: none;
             border: 0;
+        }
+    }
+}
+.no-touch .search-container {
+    a, i {
+        &:hover {
+            color: $theme-color-dark;
         }
     }
 }

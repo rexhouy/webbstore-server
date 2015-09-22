@@ -36,9 +36,9 @@
     background-color: transparent;
     verticle-align: middle;
     color: #999;
-    :hover {
-        color: #555;
-    }
+}
+.no-touch .icon:hover {
+    color: #555;
 }
 .icon-danger {
     color: #c9302c;
@@ -156,15 +156,15 @@
 .btn-primary {
     background-color: $theme-color;
     border: 1px solid #ddd;
-    &:hover {
-        background-color: $theme-color-dark;
-    }
-    &:focus {
-        background-color: $theme-color-dark;
-    }
 }
-.btn-default {
-    &:hover {
+.no-touch {
+    .btn-primary:hover {
+        background-color: $theme-color-dark;
+    }
+    .btn-primary:focus {
+        background-color: $theme-color-dark;
+    }
+    .btn-default:hover {
         color: $link-color-hover;
         background-color: #fff;
     }
@@ -178,9 +178,9 @@
 
 .highlight-link {
     color: $link-color;
-    &:hover {
-        color: $link-color-hover;
-    }
+}
+.no-touch .highlight-link:hover {
+    color: $link-color-hover;
 }
 
 .main {

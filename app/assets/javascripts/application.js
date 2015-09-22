@@ -16,3 +16,10 @@
 //= require mustache.min.js
 //= require_self
 //= require_tree ./common
+(function(){
+        $(function(){
+                if ("ontouchstart" in document.documentElement) {
+                        $(document.body).removeClass("no-touch");
+                }
+        });
+})();
