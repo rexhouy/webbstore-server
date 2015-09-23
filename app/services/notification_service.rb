@@ -9,20 +9,20 @@ class NotificationService
 	WECHAT_NOTIFY = WECHAT["notify"]
 
 	def send_order_notify_to_customer(order, user)
-		Rails.logger.debug "Send order notification to customer #{user.id}, order: #{order.id}"
-		WechatService.new.send_notification(order, user, order_created_notify_data(order, user, WECHAT_NOTIFY["order_created_template_id"]))
+		# Rails.logger.debug "Send order notification to customer #{user.id}, order: #{order.id}"
+		# WechatService.new.send_notification(order, user, order_created_notify_data(order, user, WECHAT_NOTIFY["order_created_template_id"]))
 	end
 
 	def send_order_notify(order, user)
-		Rails.logger.debug "Send order notification to admin #{user.id}, order: #{order.id}"
-		WechatService.new.send_notification(order, user, new_order_notify_data(order, user, WECHAT_NOTIFY["order_template_id"]))
+		# Rails.logger.debug "Send order notification to admin #{user.id}, order: #{order.id}"
+		# WechatService.new.send_notification(order, user, new_order_notify_data(order, user, WECHAT_NOTIFY["order_template_id"]))
 	end
 
 	# order or card, need contact & name attributes
 	def send_order_delivery_notify(order, user)
-		return unless user.wechat_openid.present?
-		Rails.logger.debug "Send order delivered notification to customer #{user.id}, order/cards: #{order.id}"
-		WechatService.new.send_notification(order, user, order_delivery_notify_data(order, user, WECHAT_NOTIFY["order_delivery_template_id"]))
+		# return unless user.wechat_openid.present?
+		# Rails.logger.debug "Send order delivered notification to customer #{user.id}, order/cards: #{order.id}"
+		# WechatService.new.send_notification(order, user, order_delivery_notify_data(order, user, WECHAT_NOTIFY["order_delivery_template_id"]))
 	end
 
 	private
