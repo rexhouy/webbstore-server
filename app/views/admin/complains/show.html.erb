@@ -1,0 +1,100 @@
+<h1 class="page-header">报修与投诉详情</h1>
+<div class="control-panel">
+  <%= link_to "返回", admin_complains_path, class: "btn btn-default" %>
+  <% if @complain.created? %>
+    <button class="btn btn-primary"  data-toggle="modal" data-target="#complainModal">开始处理</button>
+  <% elsif @complain.processing? %>
+    <%= link_to "确认完成", "/admin/complains/finished/#{@complain.id}", method: "put", class: "btn btn-primary"%>
+    <% end %>
+</div>
+<div class="form-horizontal">
+  <div class="form-group">
+    <label class="col-sm-2 control-label">报修与投诉内容</label>
+    <div class="col-sm-8">
+      <p class="form-control-static"><%= @complain.content %></p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">报修/投诉人</label>
+    <div class="col-sm-8">
+      <address class="form-control-static">
+        <div class="header">
+          <span class="pull-left name"><%= @complain.contact_name %></span>
+          <span class="pull-right"><%= phone_number @complain.contact_tel %></span>
+        </div>
+        <div><%= @complain.contact_address %></div>
+      </address>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">类型</label>
+    <div class="col-sm-10">
+      <p class="form-control-static"><%= complain_type @complain %></p>
+    </div>
+  </div>
+  <% if @complain.order.present? %>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">订单号</label>
+    <div class="col-sm-10">
+      <p class="form-control-static">
+        <%= link_to @complain.order.order_id, admin_order_url(@complain.order.id), target: "_blank" %>
+      </p>
+    </div>
+  </div>
+  <% end %>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">状态</label>
+    <div class="col-sm-10">
+      <p class="form-control-static"><%= complain_status @complain %></p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">处理人</label>
+    <div class="col-sm-10">
+      <p class="form-control-static"><%= @complain.staff.name if @complain.staff.present? %></p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">处理历史</label>
+    <div class="col-sm-8">
+      <table class="form-control-static table">
+        <thead>
+          <tr><th>时间</th><th>状态</th><th>操作人</th><th>备注</th></tr>
+        </thead>
+        <tbody>
+          <% @complain.histories.each do |history| %>
+            <tr>
+              <td><%= display_datetime history.time%></td>
+              <td><%= complain_status history%></td>
+              <td><%= history.user.tel %></td>
+              <td><%= history.memo %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="complainModal" tabindex="-1" role="dialog" aria-labelledby="complainModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <%= form_tag "/admin/complains/processing/#{@complain.id}", method: "put" do%>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">处理报修与投诉</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="staff_id">处理人</label>
+          <%= select_tag "staff_id", options_from_collection_for_select(@staffs, :id, :name), class: "form-control"%>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" class="btn btn-primary">确认</button>
+      </div>
+      <% end %>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

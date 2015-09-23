@@ -66,6 +66,14 @@ Rails.application.routes.draw do
         # About
         get 'about' => 'about#index'
 
+        # 报修/投诉
+        get "complains/history" => "complains#history"
+        get "complains/new_order_complain" => "complains#new_order_complain"
+        resources :complains
+
+        # Category
+        get "categories" => "categories#index"
+
         # Administration
         namespace :admin do
                 root "home#index"
@@ -77,6 +85,12 @@ Rails.application.routes.draw do
                 resources :suppliers
                 resources :channels
                 resources :categories
+                resources :staffs
+
+                # Complains
+                resources :complains
+                put "complains/processing/:id" => "complains#processing"
+                put "complains/finished/:id" => "complains#finished"
 
                 # Users
                 resources :users

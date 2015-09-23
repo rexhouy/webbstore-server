@@ -42,7 +42,7 @@ class Product < ActiveRecord::Base
         end
 
         def self.category(category)
-                return where(category_id: category) unless category.blank?
+                return where(category_id: category) if category.present?
                 all
         end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150917053827) do
+ActiveRecord::Schema.define(version: 20150922030519) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -88,9 +88,32 @@ ActiveRecord::Schema.define(version: 20150917053827) do
     t.string   "image",      limit: 255
     t.string   "url",        limit: 255
     t.integer  "priority",   limit: 4
+    t.string   "color",      limit: 255
   end
 
   add_index "channels", ["group_id"], name: "fk_rails_8011c05949", using: :btree
+
+  create_table "complain_histories", force: :cascade do |t|
+    t.datetime "time"
+    t.integer  "complain_id", limit: 4
+    t.string   "status",      limit: 255
+    t.string   "memo",        limit: 255
+  end
+
+  create_table "complains", force: :cascade do |t|
+    t.integer  "order_id",        limit: 4
+    t.text     "content",         limit: 65535
+    t.string   "contact_name",    limit: 255
+    t.string   "contact_tel",     limit: 11
+    t.string   "contact_address", limit: 255
+    t.string   "type",            limit: 255
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.integer  "group_id",        limit: 4
+    t.integer  "status",          limit: 4
+    t.integer  "user_id",         limit: 4
+    t.integer  "staff_id",        limit: 4
+  end
 
   create_table "groups", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -191,6 +214,17 @@ ActiveRecord::Schema.define(version: 20150917053827) do
   end
 
   add_index "specifications", ["product_id"], name: "fk_rails_9b321d46dc", using: :btree
+
+  create_table "staffs", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.integer  "workday",    limit: 4
+    t.string   "tel",        limit: 11
+    t.string   "scope",      limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "photo",      limit: 255
+    t.integer  "group_id",   limit: 4
+  end
 
   create_table "suppliers", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false

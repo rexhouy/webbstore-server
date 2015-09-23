@@ -9,10 +9,12 @@ class Admin::CategoriesController < AdminController
         def edit
                 @category = Category.find(params[:id])
                 render_404 unless @category.group_id.eql?(current_user.group_id)
+                @root = Category.root.owner(owner)
         end
 
         def new
                 @category = Category.new
+                @root = Category.root.owner(owner)
         end
 
         def destroy

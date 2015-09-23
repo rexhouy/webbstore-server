@@ -1,0 +1,13 @@
+// Place all the styles related to the complains controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "variable.scss";
+.complain-btn {
+    text-align: center;
+    display:block;
+    padding: 20px;
+    font-size: 20px;
+    color: $theme-color;
+    background: #fff;
+    border: 1px solid $bg-color;
+}

@@ -25,20 +25,16 @@ header {
 }
 
 footer {
-    background-color: #555;
-    color: #fff;
+    color: #aaa;
     text-align: center;
     font-size: 12px;
-    .copyright {
-        opacity: .5;
-    }
+    margin-bottom: 60px;
     .container {
         padding-top: 20px;
         padding-bottom: 20px;
     }
     ul {
         margin: 0 auto;
-        opacity: .8;
         padding: 0;
         list-style: none;
         li {
@@ -63,9 +59,6 @@ a {
     text-decoration: none !important;
     cursor: pointer;
     color: $font-color;
-    &:hover {
-        color: $link-color-hover;
-    }
 }
 
 img {
@@ -171,4 +164,107 @@ div.simple_captcha {
 
 .btn, button {
     outline: none !important;
+}
+
+.home-nav.list section {
+    height: 74px;
+    background-color: #fff;
+    padding: 8px 0;
+    border: 1px solid #eeeef0;
+    a {
+        display: block;
+        overflow: hidden;
+    }
+    img {
+        width: 58px;
+        height: 58px;
+    }
+    h3 {
+        position: relative;
+        top: 0;
+        right: 0;
+        letter-spacing: normal;
+        margin-top: 15px;
+    }
+    .strip {
+        width: 6px;
+        height: 58px;
+    }
+    .glyphicon {
+        font-size: 25px;
+        margin-top: 14px;
+    }
+}
+
+.footer-nav {
+    background: #fff;
+    opacity: .8;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 60px;
+    width: 100%;
+    padding: 16px 0;
+    font-size: 20px;
+    text-align: center;
+}
+
+.navbar-brand {
+    text-align: center;
+}
+.navbar-header {
+    a {
+        font-size: 22px;
+    }
+    span {
+        font-size: 20px;
+    }
+}
+
+ul.list {
+    float: left;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: block;
+    width: 100%;
+    li {
+        overflow: hidden;
+        display: block;
+        height: 82px;
+        border: 1px solid $bg-color;
+        background-color: #fff;
+        padding: 12px 0;
+        a {
+            display: block;
+            overflow: hidden;
+        }
+        img {
+            width: 58px;
+            height: 58px;
+        }
+        .control {
+            font-size:24px;
+            height:58px;
+            padding-top:12px;
+            color: $theme-color;
+        }
+    }
+}
+
+.list.complain-list {
+    li {
+        padding: 12px;
+        height: auto;
+    }
+    .content {
+        color: #333;
+    }
+    small {
+        font-size: .8em;
+        color: #555;
+    }
+    p {
+        margin: 0;
+    }
 }

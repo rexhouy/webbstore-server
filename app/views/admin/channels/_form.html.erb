@@ -25,6 +25,14 @@
   </div>
 
   <div class="form-group">
+    <%= p.label :color, "颜色", :class => "col-sm-2 control-label"  %>
+    <div class="col-sm-1">
+      <%= p.color_field :color, class: "form-control" %>
+    </div>
+  </div>
+
+
+  <div class="form-group">
     <%= p.label :priority, :class => "col-sm-2 control-label" do  %>
     <span class="glyphicon glyphicon-info-sign icon" title="数值越大，显示越靠前"></span> 显示顺
     <% end %>

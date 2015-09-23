@@ -3,7 +3,11 @@ class ProductsController < ApiController
         def index
                 category_id = params[:category]
                 @category = Category.find_by_id(category_id)
-                session[:category] = @category
+                if @category.present? && @category.group_id.eql?(owner)
+                        session[:category] = @category
+                else
+                        @category = nil
+                end
                 respond_to do |format|
                         format.html {
                                 @recommendProducts = []

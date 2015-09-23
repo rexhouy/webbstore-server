@@ -56,4 +56,45 @@ module ApplicationHelper
                 return 1 if session[:category].nil?
                 session[:category]["id"]
         end
+
+        def brand_title
+                case controller_name
+                when "orders"
+                        "订单"
+                when "cards"
+                        "购物车"
+                when "me"
+                        "我的账户"
+                when "complains"
+                        "物业报修及投诉"
+                else
+                        Rails.application.config.name
+                end
+        end
+
+        def back_url
+                case controller_name
+                when "orders"
+                        URI(request.referer).path.eql?("/me") ? "/me" : "/carts"
+                when "cards"
+                        URI(request.referer).path.eql?("/me") ? "/me" : "/products"
+                when "addresses"
+                        "/me"
+                when "complains"
+                        case action_name
+                        when "new"
+                                "/complains"
+                        when "new_order_complain"
+                                "javascript:window.history.back();"
+                        when "history"
+                                URI(request.referer).path.eql?("/me") ? "/me" : "/complains"
+                        else
+                                "/"
+                        end
+                else
+                        "/"
+                end
+        end
+
+
 end

@@ -15,14 +15,16 @@
       <div class="navbar navbar-default" role="navigation">
         <div class="navbar-header" style="height:50px">
 
-          <section class="inherit-height pull-left">
-            <button class="btn pull-left icon table-center inherit-height" onclick="menu.open();">
-              <i class="glyphicon glyphicon-menu-hamburger"></i>
-            </button>
+          <section class="inherit-height col-xs-2" style="padding-left:0;">
+            <% unless controller_name.eql? "home" %>
+            <a type="button" class="icon btn btn-lg table-center inherit-height" href="<%=back_url%>">
+              <i class="glyphicon glyphicon-chevron-left"></i>
+            </a>
+            <% end %>
           </section>
 
-          <section class="navbar-brand pull-left inherit-height">
-            <a class="" href="/"><%=Rails.application.config.name%></a>
+          <section class="navbar-brand inherit-height col-xs-8">
+            <a class="" href="/"><%=brand_title%></a>
           </section>
 
           <section class="inherit-height search-container" id="search">
@@ -33,17 +35,12 @@
             </form>
           </section>
 
-          <section class="pull-right inherit-height table-center-wrap" id="menu_control_pannel">
-            <button type="button" class="icon btn btn-lg table-center inherit-height" onclick="search.open();">
+          <section class="inherit-height table-center-wrap col-xs-2" id="menu_control_pannel" style="text-align:right;">
+            <% if controller_name.eql? "products" %>
+            <button type="button" class="icon btn btn-lg table-center inherit-height" onclick="search.open();" style="padding:0;">
               <i class="glyphicon glyphicon-search"></i>
             </button>
-            <button type="button" class="icon btn btn-lg table-center inherit-height" onclick="window.location.href='/carts'" style="outline:none;">
-              <i class="glyphicon glyphicon-shopping-cart"></i>
-            </button>
-            <button type="button" class="icon btn btn-lg table-center inherit-height" onclick="window.location.href='/'" style="outline:none;">
-              <i class="glyphicon glyphicon-home"></i>
-            </button>
-
+            <% end %>
           </section>
 
         </div>
@@ -75,7 +72,7 @@
           <% end %>
           <li><a href="/orders" class="icon-link-left"><i class="glyphicon glyphicon-list-alt"></i>订单</a></li>
           <li><a href="/carts" class="icon-link-left"><i class="glyphicon glyphicon-shopping-cart"></i>购物车</a></li>
-          <% @channels[1..@channels.size].each do |c| %>
+          <% @channels.each do |c| %>
           <li><a href="<%=c.url%>" class="icon-link-left"><i class="glyphicon glyphicon-grain"></i><%=c.name%></a></li>
           <% end %>
           <li><a href="/about" class="icon-link-left">关于</a></li>
@@ -83,7 +80,7 @@
       </section>
     </nav>
 
-    <div class="container" style="background-color: #fff;min-height:200px;padding-top:5px;">
+    <div class="container" style="min-height:200px;padding-top:5px;">
       <%= yield %>
     </div>
 
@@ -95,11 +92,27 @@
       </div>
     </div>
 
+    <div class="footer-nav">
+      <div class="container">
+        <div class="row">
+          <a href="/" class="col-xs-4">
+            <span class="glyphicon glyphicon-home"></span>
+          </a>
+          <a href="/carts" class="col-xs-4">
+            <span class="glyphicon glyphicon-shopping-cart"></span>
+          </a>
+          <a href="/me" class="col-xs-4">
+            <span class="glyphicon glyphicon-user"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+
     <footer>
       <div class="container">
-        <p class="copyright">Copyright © 2015 北京拾惠社农业科技有限公司</p>
+        <p class="copyright">Copyright © 2015 昆明怡宁房地产开发有限公司</p>
+        <p class="copyright">技术支持 北京拾惠社农业科技有限公司</p>
         <ul>
-          <li><span class="glyphicon glyphicon-map-marker"></span> 北京市中关村科技园平谷分园</li>
           <li>京ICP备15036211号</li>
         </ul>
       </div>

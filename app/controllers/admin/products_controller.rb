@@ -22,6 +22,7 @@ class Admin::ProductsController < AdminController
                         if @product.update(product_params)
                                 redirect_to :action => "show", :id => @product.id
                         else
+                                @suppliers = Supplier.owner(owner).all
                                 render "edit"
                         end
                 end
@@ -44,6 +45,7 @@ class Admin::ProductsController < AdminController
                 if @product.save
                         redirect_to :action => "show", :id => @product.id
                 else
+                        @suppliers = Supplier.owner(owner).all
                         render "new"
                 end
         end

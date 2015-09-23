@@ -31,6 +31,13 @@
                                 params[kvPair[0]] = kvPair[1];
                         });
                         return params[name];
+                },
+                back: function() {
+                        if (!document.referrer || document.referrer.indexOf("http://localhost:3000") < 0) {
+                                window.location.href = "http://localhost:3000";
+                        } else {
+                                window.history.back();
+                        }
                 }
         };
 })();

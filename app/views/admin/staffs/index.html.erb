@@ -1,0 +1,55 @@
+<h1 class="page-header">物业员工管理</h1>
+<ol class="breadcrumb">
+  <li><a href="/admin">管控台</a></li>
+  <li><a href="/admin/complains">物业</a></li>
+  <li class="active">员工</li>
+</ol>
+<% if notice.present? %>
+<div class="alert alert-info" role="alert">
+  <%= notice %>
+</div>
+<% end %>
+
+<%= link_to new_admin_staff_path,  :class => "btn btn-primary" do %>
+<span class="glyphicon glyphicon-plus"></span> 新建
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <td>#</td>
+      <td>名字</td>
+      <td>电话</td>
+      <td>维修范围</td>
+      <td>操作</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @staffs.each_with_index do |staff, index| %>
+    <tr>
+      <td><%= index+1 %></td>
+      <td><%= staff.name  %></td>
+      <td><%= staff.tel  %></td>
+      <td><%= staff.scope  %></td>
+      <td>
+        <%= link_to admin_staff_path(staff) do %>
+        <span class="glyphicon glyphicon-eye-open icon"></span>
+        <% end %>
+        <%= link_to edit_admin_staff_path(staff) do %>
+        <span class="glyphicon glyphicon-pencil icon"></span>
+        <% end %>
+        <%= link_to admin_staff_path(staff), method: :delete do %>
+        <span class="glyphicon glyphicon-trash icon"></span>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="6">
+        <%= will_paginate @staffs, page_links: false %>
+      </td>
+    </tr>
+  </tfoot>
+</table>

@@ -1,0 +1,37 @@
+<div>
+  <h3>物业报修及投诉详情</h3>
+</div>
+
+<div class="row main">
+  <div style="background:#fff;padding:20px;">
+    <div class="form-group">
+      <label>内容</label>
+      <p class="form-control-static"><%=@complain.content%></p>
+    </div>
+
+    <div class="form-group">
+      <label>姓名</label>
+      <p class="form-control-static"><%=@complain.contact_name%></p>
+    </div>
+
+    <div class="form-group">
+      <label>联系电话</label>
+      <p class="form-control-static"><%=@complain.contact_tel%></p>
+    </div>
+
+    <div class="form-group">
+      <label>地址</label>
+      <p class="form-control-static"><%=@complain.contact_address%></p>
+    </div>
+
+    <div class="form-group">
+      <label>状态</label>
+      <p class="form-control-static"><%=complain_status @complain%></p>
+    </div>
+
+    <div class="form-group">
+      <label>创建日期</label>
+      <p class="form-control-static"><%=display_date @complain.created_at%></p>
+    </div>
+  </div>
+</div>

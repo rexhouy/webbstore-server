@@ -1,0 +1,52 @@
+<div>
+  <h3>创建物业报修及投诉</h3>
+</div>
+
+<div class="row main">
+  <%= form_for @complain, :html => {:class => "form", style: "background:#fff;padding:20px;"} do |c| %>
+  <% if @complain.errors.any? %>
+  <div class="alert alert-danger" role="alert">
+    <strong>保存失败</strong>
+    <ul>
+      <% @complain.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= c.label :content, "内容" %>
+    <div>
+      <%= c.text_area :content, class: "form-control", rows: "3", require: true %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= c.label :contact_name, "姓名" %>
+    <%= c.text_field :contact_name, class: "form-control", require: true %>
+  </div>
+
+  <div class="form-group">
+    <%= c.label :contact_tel, "联系电话" %>
+    <%= c.telephone_field :contact_tel, class: "form-control", require: true %>
+  </div>
+
+  <div class="form-group">
+    <%= c.label :contact_address, "地址" %>
+    <%= c.text_field :contact_address, class: "form-control", require: true %>
+  </div>
+
+  <div class="form-group">
+    <%= submit_tag "提交", class: "btn btn-primary btn-block" %>
+  </div>
+
+  <div class="form-group">
+    <%=link_to "取消", complains_url, class: "btn btn-default btn-block"%>
+  </div>
+
+  <% end %>
+</div>
+
+
+<%= link_to "查看历史记录", "/complains/history", class: "btn btn-lg highlight-link icon-link-left inherit-height table-center-wrap" %>

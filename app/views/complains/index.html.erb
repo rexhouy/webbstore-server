@@ -1,0 +1,19 @@
+<div class="row">
+  <ul class="list">
+    <% @staffs.each do |staff| %>
+    <li>
+      <%= render "staff", staff: staff %>
+    </li>
+    <% end %>
+  </ul>
+</div>
+<div class="row">
+  <%=link_to new_complain_url, class: "complain-btn" do %>
+  <span class="glyphicon glyphicon-wrench" style="padding-right:12px;"></span>   在线报修及投诉
+  <% end %>
+</div>
+<div class="row">
+  <%=link_to "/complains/history", class: "complain-btn" do %>
+  我的报修及投诉
+  <% end %>
+</div>

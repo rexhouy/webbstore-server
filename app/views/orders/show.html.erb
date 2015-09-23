@@ -80,8 +80,11 @@
 
     <section>
       <% if need_online_pay? @order %>
-        <a class="btn btn-primary btn-block" target="_self" href="<%=@url%>">立即支付</a>
+        <a class="btn btn-default btn-block" target="_self" href="<%=@url%>">立即支付</a>
       <% end %>
+
+      <br>
+      <a class="btn btn-default btn-block" target="_self" href="/complains/new_order_complain?order_id=<%=@order.id%>">投诉</a>
 
       <% if is_cancelable? @order %>
         <br>

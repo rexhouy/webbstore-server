@@ -48,7 +48,7 @@ class Admin::ChannelsController < AdminController
 
         private
         def channel_param
-                params.require(:channel).permit(:name, :image, :display_title, :url, :priority)
+                params.require(:channel).permit(:name, :image, :display_title, :url, :priority, :color)
         end
 
 end
