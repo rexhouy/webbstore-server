@@ -46,6 +46,8 @@
     </section>
     <section>
       <h3>配送信息</h3>
+      <div><%= "自提" if @order.self? %></div>
+      <% if @order.express? %>
       <address class="address">
         <div class="header">
           <span class="pull-left name"><%= @order.contact_name %></span>
@@ -53,6 +55,7 @@
         </div>
         <div><%= @order.contact_address %></div>
       </address>
+      <% end %>
     </section>
     <section>
       <h3>留言</h3>

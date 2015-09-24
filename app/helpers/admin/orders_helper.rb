@@ -20,4 +20,9 @@ module Admin::OrdersHelper
                 return "货到付款" if order.offline_pay?
         end
 
+        def order_delivery(order)
+                return "自提" if order.self?
+                "宅配"
+        end
+
 end

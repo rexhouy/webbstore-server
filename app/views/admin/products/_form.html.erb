@@ -18,6 +18,13 @@
   </div>
 
   <div class="form-group">
+    <%= p.label :barcode, "编码", :class => "col-sm-2 control-label"  %>
+    <div class="col-sm-6">
+      <%= p.text_field :barcode, :class => "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
     <%= p.label :description, :class => "col-sm-2 control-label" do  %>
       <span class="glyphicon glyphicon-info-sign icon" title="使用「|」分割的描述内容将会显示在不同行"></span> 描述
     <% end %>

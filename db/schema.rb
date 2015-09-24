@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150922030519) do
+ActiveRecord::Schema.define(version: 20150924081602) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -96,8 +96,9 @@ ActiveRecord::Schema.define(version: 20150922030519) do
   create_table "complain_histories", force: :cascade do |t|
     t.datetime "time"
     t.integer  "complain_id", limit: 4
-    t.string   "status",      limit: 255
+    t.integer  "status",      limit: 4
     t.string   "memo",        limit: 255
+    t.integer  "user_id",     limit: 4
   end
 
   create_table "complains", force: :cascade do |t|
@@ -144,6 +145,7 @@ ActiveRecord::Schema.define(version: 20150922030519) do
     t.string   "contact_tel",     limit: 11
     t.string   "contact_address", limit: 255
     t.text     "memo",            limit: 65535
+    t.integer  "delivery_type",   limit: 4
   end
 
   add_index "orders", ["customer_id"], name: "fk_rails_c2426400ce", using: :btree
@@ -186,6 +188,7 @@ ActiveRecord::Schema.define(version: 20150922030519) do
     t.integer  "priority",    limit: 4
     t.integer  "supplier_id", limit: 4
     t.integer  "category_id", limit: 4
+    t.string   "barcode",     limit: 255
   end
 
   add_index "products", ["name", "description", "article"], name: "fulltext_index", type: :fulltext

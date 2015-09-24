@@ -34,6 +34,7 @@
       <td class="number">总价</td>
       <td>状态</td>
       <td>支付方式</td>
+      <td>配送方式</td>
       <td>创建时间</td>
       <td>操作</td>
     </tr>
@@ -46,6 +47,7 @@
         <td class="number"><%= number_to_currency order.subtotal, locale: :'zh-CN', precision: 2  %></td>
         <td><%= order_status order %></td>
         <td><%= order_payment order %></td>
+        <td><%= order_delivery order %></td>
         <td><%= display_datetime order.created_at %></td>
         <td>
           <%= link_to admin_order_path(order) do %>

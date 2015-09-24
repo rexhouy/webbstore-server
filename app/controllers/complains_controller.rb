@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 class ComplainsController < ApplicationController
 
+        before_action :authenticate_user!, except: [:index]
+
         def index
                 @staffs = Staff.all
         end

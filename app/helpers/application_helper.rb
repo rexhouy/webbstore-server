@@ -75,9 +75,11 @@ module ApplicationHelper
         def back_url
                 case controller_name
                 when "orders"
-                        URI(request.referer).path.eql?("/me") ? "/me" : "/carts"
+                        return "/me" if request.referer.present? && URI(request.referer).path.eql?("/me")
+                        "/carts"
                 when "cards"
-                        URI(request.referer).path.eql?("/me") ? "/me" : "/products"
+                        return "/me" if request.referer && URI(request.referer).path.eql?("/me")
+                        "/products"
                 when "addresses"
                         "/me"
                 when "complains"

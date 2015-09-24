@@ -55,14 +55,28 @@
       </div>
     </section>
 
-    <!-- 配送 -->
+    <!-- 配送方式 -->
     <section class="form-group">
-      <h3 class="col-md-2 col-sm-2 col-xs-12 icon-link-left form-group-title"><span class="circle highlight">2</span>配送地址</h3>
+      <h3 class="col-md-2 col-sm-2 col-xs-12 icon-link-left form-group-title"><span class="circle highlight">2</span>配送方式</h3>
       <div class="col-md-8 col-sm-8 col-xs-12">
+        <div class="confirm-content">
+          <div class="col-md-2 col-sm-4 col-xs-5 entry delivery-type" name="delivery">
+            宅配
+          </div>
+          <div class="col-md-2 col-sm-4 col-xs-5 entry delivery-type" name="delivery">
+            自提
+          </div>
+          <input type="hidden" name="deliveryType" id="delivery_type">
+        </div>
+    </section>
+
+    <!-- 配送 -->
+    <section class="form-group" id="select_address" style="display:none;">
+      <div class="col-md-offset-2 col-sm-offset-2 col-md-8 col-sm-8 col-xs-12">
         <div class="confirm-content">
           <div id="addresses">
             <% @user.addresses.each do |address| %>
-              <%= render partial: "/addresses/item", object: address %>
+            <%= render partial: "/addresses/item", object: address %>
             <% end %>
           </div>
           <input type="hidden" name="addressId" id="selected_address_id">

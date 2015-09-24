@@ -50,10 +50,13 @@ class OrdersController < ApiController
                                 order.subtotal = subtotal(order.orders_products)
                                 order.order_id = "#{SecureRandom.random_number(10**7).to_s.rjust(7,"0")}-#{SecureRandom.random_number(10**7).to_s.rjust(7,"0")}"
                                 address = get_address
-                                order.contact_name = address.name
-                                order.contact_tel = address.tel
-                                order.contact_address = address.state + address.city + address.street
+                                unless address.nil?
+                                        order.contact_name = address.name
+                                        order.contact_tel = address.tel
+                                        order.contact_address = address.state + address.city + address.street
+                                end
                                 order.payment_type = params[:paymentType]
+                                order.delivery_type = params[:deliveryType]
                                 order.name = order_name order.orders_products
                                 order.save!
                                 create_cards(order)
@@ -123,7 +126,8 @@ class OrdersController < ApiController
         end
 
         def get_address
-                Address.find(params[:addressId])
+                return Address.find(params[:addressId]) if params[:addressId].present?
+                nil
         end
 
         def validate

@@ -8,6 +8,7 @@ class Order < ActiveRecord::Base
 
         enum status: [:placed, :paid, :shipping, :delivered, :canceled]
         enum payment_type: [:wechat, :alipay, :offline_pay]
+        enum delivery_type: [:express, :self]
 
         def self.owner(owner)
                 where(seller_id: owner)
