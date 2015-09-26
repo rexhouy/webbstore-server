@@ -109,19 +109,18 @@
 }
 
 .card {
-    padding: 0;
-    height: 200px;
+    padding: 12px;
+    height: 300px;
     overflow: hidden;
-    width: 100%;
     a {
+        background: #fff;
         text-align: center;
         display: block;
         height: 100%;
-        padding: 70px 40px;
+        padding: 15px;
     }
     img {
-        max-width: 128px;
-        max-height: 128px;
+        max-height: 150px;
     }
     .image {
         width: 100%;
@@ -129,12 +128,31 @@
     }
     h3 {
         overflow: hidden;
+        color: #333;
+    }
+    .price, .origin {
+        &:before {
+            content: "¥";
+            padding: 0 5px 0 0;
+        }
+        font-weight: bold;
+    }
+    .desc {
+        font-size: 14px;
+    }
+    .origin {
+        text-decoration: line-through;
+        padding-right: 8px;
+    }
+    .price {
+        color: $theme-color;
     }
     @media (max-width:800px) {
         padding: 10px;
         height: 120px;
         border-bottom: 1px solid #ccc;
         a {
+            background: none;
             padding: 0;
             overflow:hidden;
         }
@@ -150,28 +168,13 @@
             float: right;
             font-size: 14px;
             p {
-                margin: 0;
+                margin: 4px 0;
             }
         }
         h3 {
             font-size: 18px;
             color: #333;
             margin: 5px 0 0 0;
-        }
-        .price, .origin {
-            &:before {
-                content: "¥";
-                padding: 0 5px 0 0;
-            }
-            font-size: 16px;
-            font-weight: bold;
-        }
-        .origin {
-            text-decoration: line-through;
-            padding-right: 8px;
-        }
-        .price {
-            color: $theme-color;
         }
     }
 }
