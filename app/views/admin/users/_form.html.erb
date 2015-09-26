@@ -19,7 +19,7 @@
 <div class="form-group">
   <%= u.label :role, "角色", class: "col-sm-2 control-label"  %>
   <div class="col-sm-3">
-    <%= u.select :role, options_for_select({"卖家" => "seller", "管理员" => "admin"}, u.object.role), {}, {class: "form-control"} %>
+    <%= u.select :role, options_for_select({"卖家" => "seller"}, u.object.role), {}, {class: "form-control"} %>
   </div>
 </div>
 <div class="form-group">

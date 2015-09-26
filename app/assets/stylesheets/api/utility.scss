@@ -109,12 +109,12 @@
 }
 
 .card {
-    padding: 15px;
-    height: 400px;
+    padding: 0;
+    height: 200px;
     overflow: hidden;
+    width: 100%;
     a {
         text-align: center;
-        background-color: #f6f6f6;
         display: block;
         height: 100%;
         padding: 70px 40px;
@@ -131,16 +131,47 @@
         overflow: hidden;
     }
     @media (max-width:800px) {
-        padding: 5px;
-        height: 240px;
+        padding: 10px;
+        height: 120px;
+        border-bottom: 1px solid #ccc;
         a {
-            padding: 30px 25px;
+            padding: 0;
+            overflow:hidden;
         }
         .image {
-            height: 115px;
+            max-height: 100px;
+            width: 25%;
+            float: left;
+        }
+        .desc {
+            text-align: left;
+            width: 75%;
+            padding-left: 10px;
+            float: right;
+            font-size: 14px;
+            p {
+                margin: 0;
+            }
         }
         h3 {
-            font-size: 12px;
+            font-size: 18px;
+            color: #333;
+            margin: 5px 0 0 0;
+        }
+        .price, .origin {
+            &:before {
+                content: "¥";
+                padding: 0 5px 0 0;
+            }
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .origin {
+            text-decoration: line-through;
+            padding-right: 8px;
+        }
+        .price {
+            color: $theme-color;
         }
     }
 }
