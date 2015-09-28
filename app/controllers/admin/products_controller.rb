@@ -9,6 +9,7 @@ class Admin::ProductsController < AdminController
         def edit
                 @product = Product.find(params[:id])
                 @suppliers = Supplier.owner(owner).all || []
+                @channels = Channel.owner(owner).all
                 return head(:forbidden) unless @product.owner_id.eql? owner
         end
 
@@ -44,6 +45,8 @@ class Admin::ProductsController < AdminController
                 if @product.save
                         redirect_to :action => "show", :id => @product.id
                 else
+                        @suppliers = Supplier.owner(owner).all || []
+                        @channels = Channel.owner(owner).all
                         render "new"
                 end
         end
