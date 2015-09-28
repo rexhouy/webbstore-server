@@ -57,13 +57,18 @@
 
                 self.setFormParams = function() {
                         var container = $("#specifications");
-                        var names = ["id", "name", "value", "price", "storage", "count"];
+                        var names = ["id", "name", "value", "price", "storage"];
+                        var storage = 0;
                         $("#specification_tbody").find("tr").each(function(spec_index) {
                                 $(this).find("input").each(function(index, element) {
                                         var html_name = name.replace(/:index/, spec_index).replace(/:name/, names[index]);
                                         container.append($("<input type=hidden name="+html_name+" value='"+element.value+"'>"));
+                                        if (names[index] == "storage" && element.value) {
+                                                storage += Number(element.value);
+                                        }
                                 });
                         });
+                        $("#product_storage").val(storage);
                         return false;
                 };
 

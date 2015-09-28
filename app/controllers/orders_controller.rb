@@ -100,13 +100,12 @@ class OrdersController < ApiController
         private
         def update_product_sales(orders_products, func)
                 orders_products.each do |order_product|
-                        if order_product.specification.nil?
-                                order_product.product.sales = order_product.product.sales.send(func, order_product.count)
-                                order_product.product.save!
-                        else
+                        unless order_product.specification.nil?
                                 order_product.specification.sales = order_product.specification.sales.send(func, order_product.count)
                                 order_product.specification.save!
                         end
+                        order_product.product.sales = order_product.product.sales.send(func, order_product.count)
+                        order_product.product.save!
                 end
         end
         def order_name(orders_products)

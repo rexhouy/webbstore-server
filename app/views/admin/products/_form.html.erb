@@ -100,7 +100,7 @@
       <table class="table table-bordered" id="doors_info">
         <thead>
           <tr>
-            <th style="display:none"></th><th>名称</th><th>值</th><th>价格</th><th>上架数量</th><th>原价</th><th>操作</th>
+            <th style="display:none"></th><th>名称</th><th>值</th><th>价格</th><th>上架数量</th><th>操作</th>
           </tr>
         </thead>
         <tbody id="specification_tbody">
@@ -111,7 +111,6 @@
               <td><input type="text" class="form-control" value="<%= spec.value %>"></td>
               <td><input type="number" class="form-control" value="<%= spec.price %>"></td>
               <td><input type="number" class="form-control" value="<%= spec.storage %>"></td>
-              <td><input type="number" class="form-control" value="<%= spec.origin_price %>"></td>
               <td>
                 <button type="button" class="btn btn-danger" onclick="product.removeSpec(this)" title="删除">
                   <span class='glyphicon glyphicon-trash' style='color:#fff;'></span>
@@ -143,14 +142,6 @@
         <%= image_tag p.object.cover_image, class: "img-thumbnail", onclick: "uploader.open()", id: "cover_image", style: "width:180px" %>
       <% end %>
       <%= p.hidden_field :cover_image %>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-5 col-sm-offset-2">
-      <%= p.check_box :recommend %>
-      <%= p.label :recommend, :class => "control-label" do %>
-        主推商品  <span class="glyphicon glyphicon-info-sign icon" title="是否显示在主页的显著位置"></span>
-    <% end %>
     </div>
   </div>
   <div class="form-group">
@@ -206,8 +197,7 @@
   <td style="display:none"><input type="hidden"></td>
   <td><input class="form-control" type="text"></td>
   <td><input class="form-control" type="text"></td>
-  <td><input class="form-control" type="number"></td>
-  <td><input class="form-control" type="number"></td>
+  <td><input class="form-control" type="number" step="any"></td>
   <td><input class="form-control" type="number"></td>
   <td>
   <button type="button" class="btn btn-danger" onclick="product.removeSpec(this)" title="删除">

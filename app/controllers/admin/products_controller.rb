@@ -42,6 +42,7 @@ class Admin::ProductsController < AdminController
         def create
                 @product = Product.new(product_params)
                 @product.owner_id = owner
+                @product.storage =
                 if @product.save
                         redirect_to :action => "show", :id => @product.id
                 else
