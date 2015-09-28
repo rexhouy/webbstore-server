@@ -9,10 +9,12 @@ class Admin::CategoriesController < AdminController
         def edit
                 @category = Category.find(params[:id])
                 render_404 unless @category.group_id.eql?(current_user.group_id)
+                @root = Category.root.owner(owner)
         end
 
         def new
                 @category = Category.new
+                @root = Category.root.owner(owner)
         end
 
         def destroy
@@ -29,6 +31,7 @@ class Admin::CategoriesController < AdminController
                 if @category.save
                         redirect_to :action => "show", :id => @category.id
                 else
+                        @root = Category.root.owner(owner)
                         render :new
                 end
         end
@@ -38,6 +41,7 @@ class Admin::CategoriesController < AdminController
                 if @category.update(category_param)
                         redirect_to :action => "show", :id => @category.id
                 else
+                        @root = Category.root.owner(owner)
                         render :edit
                 end
         end

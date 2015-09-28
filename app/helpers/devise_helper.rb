@@ -2,7 +2,7 @@
 module DeviseHelper
 
         def admin_login?
-                session[:previous_url].starts_with? "/admin"
+                session[:previous_url].present? && session[:previous_url].starts_with?("/admin")
         end
 
         def devise_error_messages!

@@ -8,7 +8,7 @@ class Admin::ProductsController < AdminController
 
         def edit
                 @product = Product.find(params[:id])
-                @suppliers = Supplier.owner(owner).all
+                @suppliers = Supplier.owner(owner).all || []
                 return head(:forbidden) unless @product.owner_id.eql? owner
         end
 
@@ -29,7 +29,7 @@ class Admin::ProductsController < AdminController
 
         def new
                 @product = Product.new
-                @suppliers = Supplier.owner(owner).all
+                @suppliers = Supplier.owner(owner).all || []
                 @channels = Channel.owner(owner).all
         end
 

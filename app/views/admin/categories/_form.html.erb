@@ -20,7 +20,7 @@
   <div class="form-group">
     <%= p.label :category_id, "所属类目", :class => "col-sm-2 control-label"  %>
     <div class="col-sm-4">
-      <%= p.select :category_id, Category.root.collect{|c| [c.name, c.id]}, {include_blank: true}, class: "form-control"%>
+      <%= p.select :category_id, options_from_collection_for_select(@root, :id, :name, p.object.category_id), {include_blank: true}, class: "form-control"%>
     </div>
   </div>
 
