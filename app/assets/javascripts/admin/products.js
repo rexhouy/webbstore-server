@@ -68,7 +68,9 @@
                                         }
                                 });
                         });
-                        $("#product_storage").val(storage);
+                        if (storage > 0) {
+                                $("#product_storage").val(storage);
+                        }
                         return false;
                 };
 
