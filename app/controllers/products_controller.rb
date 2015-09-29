@@ -26,9 +26,7 @@ class ProductsController < ApiController
 
         def search
                 @search_text = params[:search_text]
-                @products = Product.search(@search_text).records.select do |p|
-                        p.owner_id.eql? owner
-                end
+                @products = Product.search_by_owner(@search_text, owner)
         end
 
         private
