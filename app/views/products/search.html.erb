@@ -2,14 +2,13 @@
 <div class="search-result">
   <div class="products-list">
     <% @products.each do |product| %>
-      <section class="card col-md-3 col-sm-4 col-xs-6">
+      <section class="card col-md-2 col-sm-3 col-lg-2 col-xs-4">
         <a href="/products/<%=product.id%>">
           <div class="image">
             <%= image_tag product.cover_image %>
           </div>
           <div class="desc">
             <h3><%=product.name%></h3>
-            <p><%=product.description%></p>
             <p>
               <% if product.origin_price.present? %>
               <span class="origin"><%=product.origin_price%></span>

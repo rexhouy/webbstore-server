@@ -46,6 +46,23 @@ class Product < ActiveRecord::Base
                 all
         end
 
+        def self.search_by_owner(search_text, owner)
+                search_params = {
+                        query: {
+                                match: { name: search_text }
+                        },
+                        filter: {
+                                bool: {
+                                        must: [
+                                               { term: {owner_id: owner} },
+                                               { term: { status: "available"} }
+                                              ]
+                                }
+                        }
+                }
+                __elasticsearch__.search(search_params).records
+        end
+
         private
         def check_specifications
                 unless specifications.present? or storage.present?

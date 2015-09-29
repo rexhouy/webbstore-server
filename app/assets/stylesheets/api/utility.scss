@@ -104,17 +104,18 @@
 }
 
 .card {
-    padding: 8px;
-    height: 200px;
+    padding: 4px;
+    height: 180px;
     overflow: hidden;
     a {
         background: #fff;
         text-align: center;
         display: block;
         height: 100%;
-        padding: 8px;
+        padding: 6px;
     }
     img {
+        max-width: 100%;
         width: auto;
         height: 96px;
     }
@@ -127,7 +128,7 @@
         color: #333;
         margin: 10px 0 0 0;
         font-size: 14px;
-        height: 28px;
+        max-height: 30px;
         overflow: hidden;
     }
     p {
@@ -137,7 +138,7 @@
     .price, .origin {
         &:before {
             content: "¥";
-            padding: 0 5px 0 0;
+            padding: 0 2px 0 0;
         }
         font-weight: bold;
     }
