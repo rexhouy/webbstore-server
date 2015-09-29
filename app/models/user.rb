@@ -6,17 +6,22 @@ class User < ActiveRecord::Base
 
         has_many :addresses, -> { where(status: Address.statuses[:active]) }
         has_many :cards, -> { where.not(status: Card.statuses[:unpaid]).order(created_at: :desc) }
-        belongs_to :role
         belongs_to :group
 
         before_create :set_default_value
 
-        enum role: [:customer, :seller, :admin, :group_admin]
+        enum role: [:customer, :seller, :admin, :group_admin, :supplier]
         enum status: [:active, :disabled]
 
         # Devise use tel instead of email
         validates :tel, presence: true, length: { is: 11 }
         validates_uniqueness_of :tel
+        validate :manager_should_belongs_to_group
+        def manager_should_belongs_to_group
+                unless role.eql?("customer") || group_id.present?
+                        errors.add(:group_id, "必须为管理员用户指定所属店铺")
+                end
+        end
         def email_required?
                 false
         end
@@ -37,6 +42,11 @@ class User < ActiveRecord::Base
                         recoverable.errors.add(:tel, "不存在")
                 end
                 recoverable
+        end
+
+        ## validate user when sign in
+        def active_for_authentication?
+                super && active?
         end
 
         def self.owner(owner)

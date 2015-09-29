@@ -29,13 +29,15 @@
     transition: left .3s, transform .3s;
     width: 90%;
     max-width: 300px;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
     box-shadow: $shadow;
     position: fixed;
     left: -100%;
     top: 0;
     z-index: 1000;
     background-color: #fff;
-    min-height: 100%;
     font-size: 16px;
     header {
         background-color: $theme-color;
@@ -69,6 +71,7 @@
     .nav-section {
         border-top: 1px solid #f1f1f1;
         font-size: 14px;
+        margin-bottom: 50px;
         .title {
             padding:12px 40px 0 40px;
         }

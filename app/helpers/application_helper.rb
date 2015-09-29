@@ -8,7 +8,7 @@ module ApplicationHelper
         def role_name(user)
                 return "管理员" if user.admin?
                 return "卖家" if user.seller?
-                return "买家" if user.customer?
+                return "顾客" if user.customer?
                 return "机构管理员" if user.group_admin?
                 ""
         end
@@ -56,4 +56,12 @@ module ApplicationHelper
                 return 1 if session[:category].nil?
                 session[:category]["id"]
         end
+
+        def cart_number
+                cart = session[:cart] || []
+                cart.reduce(0) do |sum, product|
+                        sum += product["count"].to_i
+                end
+        end
+
 end

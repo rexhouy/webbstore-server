@@ -169,3 +169,15 @@ div.simple_captcha {
 .btn, button {
     outline: none !important;
 }
+
+.cart-number {
+    background-color: $accent-color;
+    font-size: 12px;
+    margin-left: -6px;
+    padding: 1px;
+    height: 18px;
+    width: 18px;
+    display: inline-block;
+    vertical-align: top;
+    font-weight: bold;
+}

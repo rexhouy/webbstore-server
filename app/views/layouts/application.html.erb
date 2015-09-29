@@ -39,6 +39,9 @@
             </button>
             <button type="button" class="icon btn btn-lg table-center inherit-height" onclick="window.location.href='/carts'" style="outline:none;">
               <i class="glyphicon glyphicon-shopping-cart"></i>
+              <% if cart_number > 0 %>
+              <i class="cart-number img-circle"><%=cart_number%></i>
+              <% end %>
             </button>
             <button type="button" class="icon btn btn-lg table-center inherit-height" onclick="window.location.href='/'" style="outline:none;">
               <i class="glyphicon glyphicon-home"></i>

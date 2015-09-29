@@ -26,7 +26,7 @@ class Product < ActiveRecord::Base
         validate :check_specifications
 
         def self.recommend
-                where(recommend: true, on_sale: true)
+                where(recommend: true, on_sale: true, status: Product.statuses[:available])
         end
 
         def self.owner(owner_id)

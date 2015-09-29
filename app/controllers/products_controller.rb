@@ -10,7 +10,7 @@ class ProductsController < ApiController
                 end
                 respond_to do |format|
                         format.html {
-                                @recommendProducts = []
+                                @recommendProducts = []#Product.owner(owner).category(@category).recommend.order(priority: :desc)
                                 render :index
                         }
                         format.json {
