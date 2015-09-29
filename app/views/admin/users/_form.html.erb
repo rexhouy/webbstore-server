@@ -13,13 +13,13 @@
 <div class="form-group">
   <%= u.label :tel, "手机号", :class => "col-sm-2 control-label"  %>
   <div class="col-sm-6">
-    <%= u.telephone_field :tel, :class => "form-control" %>
+    <label class="form-control-static"><%=u.object.tel%></label>
   </div>
 </div>
 <div class="form-group">
   <%= u.label :role, "角色", class: "col-sm-2 control-label"  %>
   <div class="col-sm-3">
-    <%= u.select :role, options_for_select({"卖家" => "seller"}, u.object.role), {}, {class: "form-control"} %>
+    <%= u.select :role, options_for_select({"顾客" => "customer", "卖家" => "seller", "管理员" => "admin"}, u.object.role), {}, {class: "form-control", required: true} %>
   </div>
 </div>
 <div class="form-group">
@@ -29,23 +29,9 @@
   </div>
 </div>
 <div class="form-group">
-  <%= u.label :password, "密码", class: "col-sm-2 control-label" %>
+  <%= u.label :status, "状态", :class => "col-sm-2 control-label"  %>
   <div class="col-sm-3">
-    <% if @validatable %>
-    <em>(最少<%= @minimum_password_length %>个字符)</em>
-    <% end %>
-    <%= u.password_field :password, autocomplete: "off", class: "form-control" %>
-  </div>
-</div>
-<div class="form-group">
-  <%= u.label :password_confirmation, "确认密码", class: "col-sm-2 control-label" %>
-  <div class="col-sm-3">
-    <%= u.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
-  </div>
-</div>
-<div class="form-group">
-  <div class="col-sm-8 col-sm-offset-2">
-    <p class="form-control-static text-info">* 不输入密码则保留原有密码</p>
+    <%= u.select :status, options_for_select([["启用", "active"], ["禁用", "disabled"]], u.object.status), {}, {class: "form-control", required: true} %>
   </div>
 </div>
 <div class="form-group">

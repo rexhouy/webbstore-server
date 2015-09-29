@@ -98,5 +98,11 @@ module ApplicationHelper
                 end
         end
 
+        def cart_number
+                cart = session[:cart] || []
+                cart.reduce(0) do |sum, product|
+                        sum += product["count"].to_i
+                end
+        end
 
 end

@@ -46,6 +46,7 @@ class Admin::OrdersController < AdminController
                 code = params[:code]
                 logger.debug "register notification callback, received code #{code}, user #{params[:uid]}"
                 openid = WechatService.new.get_open_id(code)
+                return render :wechat_register_error unless openid.present?
                 # Save open id to user set order notification to true
                 user = User.find(params[:uid])
                 user.update(wechat_openid: openid, order_notification: true)

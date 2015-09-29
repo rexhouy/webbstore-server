@@ -3,23 +3,29 @@
   <%= link_to "编辑", edit_admin_user_path(@user), class: "btn btn-primary"%>
   <%= link_to "返回", admin_users_path, class: "btn btn-default" %>
 </div>
-<div class="form">
+<div class="form-horizontal">
   <div class="form-group">
     <label class="col-sm-2 control-label">名字</label>
     <div class="col-sm-10">
-      <p><%= @user.tel %></p>
+      <p class="form-control-static"><%= @user.tel %></p>
     </div>
   </div>
   <div class="form-group">
     <label class="col-sm-2 control-label">角色</label>
     <div class="col-sm-10">
-      <p><%= role_name @user %></p>
+      <p class="form-control-static"><%= role_name @user %></p>
     </div>
   </div>
   <div class="form-group">
     <label class="col-sm-2 control-label">所属卖家</label>
     <div class="col-sm-10">
-      <p><%= @user.group.name unless @user.group.nil? %></p>
+      <p class="form-control-static"><%= @user.group.name unless @user.group.nil? %></p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">状态</label>
+    <div class="col-sm-10">
+      <p class="form-control-static"><%= user_status @user %></p>
     </div>
   </div>
 
