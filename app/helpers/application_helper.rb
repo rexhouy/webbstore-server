@@ -63,4 +63,11 @@ module ApplicationHelper
                 return 1 if session[:channel].nil?
                 session[:channel]["id"]
         end
+
+        def cart_number
+                cart = session[:cart] || []
+                cart.reduce(0) do |sum, product|
+                        sum += product["count"].to_i
+                end
+        end
 end

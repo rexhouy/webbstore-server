@@ -22,7 +22,13 @@
   </div>
 
   <a href="/carts" class="floating-action-btn">
+    <% if cart_number > 0 %>
+    <i class="cart-number"><%=cart_number%></i>
+    <% else %>
     <i class="glyphicon glyphicon-shopping-cart"></i>
+    <% end %>
   </a>
+
+  <input type="hidden" id="cart_number" value="<%=cart_number%>">
 
 </div>

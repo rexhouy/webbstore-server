@@ -13,14 +13,22 @@
                         specbar.css("right", 0);
                 };
 
-                var updateCount = function(id, count) {
+                var updateCount = function(id, count, change) {
                         var item = $("#control_"+id);
+                        var totalCount = Number($("#cart_number").val());
+                        totalCount += change;
+                        $("#cart_number").val(totalCount);
                         if (count == 0) {
                                 item.find(".glyphicon-minus").hide();
                                 item.find(".count").empty().hide();
                         } else {
                                 item.find(".glyphicon-minus").show();
                                 item.find(".count").html(count).show();
+                        }
+                        if (totalCount > 0) {
+                                $(".floating-action-btn").html("<i class=\"cart-number\">"+totalCount+"</i>");
+                        } else {
+                                $(".floating-action-btn").html("<i class=\"glyphicon glyphicon-shopping-cart\"></i>");
                         }
                 };
 
@@ -32,7 +40,7 @@
                                 }
                         }).done(function(data){
                                 if (data.succeed) {
-                                        updateCount(id, data.count);
+                                        updateCount(id, data.count, 1);
                                 }
                         });
                 };
@@ -45,7 +53,7 @@
                                 }
                         }).done(function(data){
                                 if (data.succeed) {
-                                        updateCount(id, data.count);
+                                        updateCount(id, data.count, -1);
                                 }
                         });
                 };
