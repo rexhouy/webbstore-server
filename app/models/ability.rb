@@ -8,6 +8,8 @@ class Ability
 			can :manage, [Product, Order]
 		elsif user.group_admin?
 			can :manage, [Group]
+		elsif user.supplier?
+			can :manage, [OrdersProducts]
 		end
 	end
 

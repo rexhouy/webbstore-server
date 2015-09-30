@@ -48,7 +48,7 @@ class Admin::StaffsController < AdminController
 
         private
         def staff_param
-                params.require(:staff).permit(:name, :workday, :tel, :scope, :photo)
+                params.require(:staff).permit(:name, :workday, :tel, :scope, :photo, :display)
         end
 
 end

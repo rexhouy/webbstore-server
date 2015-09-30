@@ -26,6 +26,7 @@ class AdminController < ApplicationController
                           {url: admin_channels_url, text: "CMS", class: "", resource: Channel },
                           {url: admin_users_url, text: "用户", class: "", resource: User },
                           {url: admin_groups_url, text: "机构", class: "", resource: Group },
+                          {url: admin_supplier_orders_url, text: "订单", class: "", resource: OrdersProducts },
                           {url: admin_complains_url, text: "物业", class: "", resource: Complain }]
                 @menus.select! do |menu|
                         menu[:class] = "active" if menu[:url].end_with? controller_name

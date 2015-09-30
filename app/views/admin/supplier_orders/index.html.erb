@@ -1,0 +1,30 @@
+<h1 class="page-header">订单信息</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <td>商品名称</td>
+      <td>规格</td>
+      <td>数量</td>
+      <td>状态</td>
+      <td>创建时间</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order_products.each_with_index do |order, index| %>
+      <tr>
+        <td><%= order.product.name  %></td>
+        <td><%= order.specification.name if order.specification_id.present? %></td>
+        <td><%= order.count %></td>
+        <td>等待发货</td>
+        <td><%= display_datetime order.created_at %></td>
+    </tr>
+    <% end %>
+  </tbody>
+  <tfooter>
+    <tr>
+      <td colspan="5">
+        <%= will_paginate @order_products, page_links: false %>
+      </td>
+    </tr>
+  </tfooter>
+</table>

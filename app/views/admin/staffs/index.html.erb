@@ -21,6 +21,7 @@
       <td>名字</td>
       <td>电话</td>
       <td>维修范围</td>
+      <td>状态</td>
       <td>操作</td>
     </tr>
   </thead>
@@ -31,15 +32,13 @@
       <td><%= staff.name  %></td>
       <td><%= staff.tel  %></td>
       <td><%= staff.scope  %></td>
+      <td><%= staff.display ? "启用" : "禁用"  %></td>
       <td>
         <%= link_to admin_staff_path(staff) do %>
         <span class="glyphicon glyphicon-eye-open icon"></span>
         <% end %>
         <%= link_to edit_admin_staff_path(staff) do %>
         <span class="glyphicon glyphicon-pencil icon"></span>
-        <% end %>
-        <%= link_to admin_staff_path(staff), method: :delete do %>
-        <span class="glyphicon glyphicon-trash icon"></span>
         <% end %>
       </td>
     </tr>

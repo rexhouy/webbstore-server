@@ -97,6 +97,7 @@ class Admin::OrdersController < AdminController
                 @order.status = status
                 Order.transaction do
                         @order.save!
+                        OrdersProducts.where(order_id: @order.id).update_all(status: status)
                         create_order_history(@order)
                 end
                 redirect_to [:admin, @order], notice: "修改成功"

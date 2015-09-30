@@ -13,13 +13,13 @@
     </div>
   </div>
   <div class="form-group">
-    <%= p.label :state, "省",  :class => "col-sm-2 control-label"  %>
+    <%= p.label :state, "市",  :class => "col-sm-2 control-label"  %>
     <div class="col-sm-4">
       <%= p.select :state, [], {}, {class: "form-control", "onchange": "address.stateChange()"} %>
     </div>
   </div>
   <div class="form-group">
-    <%= p.label :city, "市", :class => "col-sm-2 control-label"  %>
+    <%= p.label :city, "区", :class => "col-sm-2 control-label"  %>
     <div class="col-sm-4">
       <%= p.select :city, {}, {}, {class: "form-control"} %>
     </div>

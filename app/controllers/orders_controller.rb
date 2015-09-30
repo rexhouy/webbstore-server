@@ -151,6 +151,9 @@ class OrdersController < ApiController
                         p = Product.find(product["id"])
                         op.price = p.price
                         op.product = p
+                        op.supplier_id = p.supplier_id
+                        # status in orders_products used by supplier
+                        op.status = params[:paymentType].eql?("offline_pay") ? OrdersProducts.statuses[:paid] : OrdersProducts.statuses[:placed]
                         if product["spec_id"].present?
                                 op.specification = Specification.find(product["spec_id"])
                                 op.price = op.specification.price

@@ -4,7 +4,7 @@ class ComplainsController < ApplicationController
         before_action :authenticate_user!, except: [:index]
 
         def index
-                @staffs = Staff.all
+                @staffs = Staff.where(display: true).all
         end
 
         def new

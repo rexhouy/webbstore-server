@@ -109,6 +109,9 @@ Rails.application.routes.draw do
                 # Register wechat notification callback
                 get 'orders/wechat_register_notification/:uid' => 'orders#wechat_register_notification'
 
+                # Supplier orders
+                get "supplier_orders" => "supplier_orders#index", as: :supplier_orders
+
                 #Products
                 resources :products do
                         resources :specifications
