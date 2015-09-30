@@ -16,12 +16,22 @@
       <p class="form-control-static"><%= role_name @user %></p>
     </div>
   </div>
+  <% unless @user.customer? %>
   <div class="form-group">
     <label class="col-sm-2 control-label">所属卖家</label>
     <div class="col-sm-10">
       <p class="form-control-static"><%= @user.group.name unless @user.group.nil? %></p>
     </div>
   </div>
+  <% end %>
+  <% if @user.supplier? %>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">所属供应商</label>
+    <div class="col-sm-10">
+      <p class="form-control-static"><%= @user.supplier.name unless @user.supplier.nil? %></p>
+    </div>
+  </div>
+  <% end %>
   <div class="form-group">
     <label class="col-sm-2 control-label">状态</label>
     <div class="col-sm-10">

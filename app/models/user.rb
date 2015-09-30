@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
         has_many :addresses, -> { where(status: Address.statuses[:active]) }
         has_many :cards, -> { where.not(status: Card.statuses[:unpaid]).order(created_at: :desc) }
         belongs_to :group
+        belongs_to :supplier
 
         before_create :set_default_value
 
@@ -21,7 +22,7 @@ class User < ActiveRecord::Base
         end
 
         def self.manager
-                where("role in (?)", [roles[:seller], roles[:admin]])
+                where("role in (?)", [roles[:seller], roles[:admin], roles[:supplier]])
         end
 
         def self.active

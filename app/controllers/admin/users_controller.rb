@@ -21,6 +21,7 @@ class Admin::UsersController < AdminController
         def edit
                 @user = User.find(params[:id])
                 @groups = Group.active.owner(owner).all
+                @suppliers = Supplier.owner(owner).all
         end
 
         def update
@@ -29,6 +30,7 @@ class Admin::UsersController < AdminController
                         redirect_to :action => "show", :id => @user.id
                 else
                         @groups = Group.active.owner(owner).all
+                        @suppliers = Supplier.owner(owner).all
                         render "edit"
                 end
         end
@@ -40,7 +42,7 @@ class Admin::UsersController < AdminController
                 @users << user if user.present? || user.customer? || user.group_id.eql?(owner)
         end
         def user_params
-                params.require(:user).permit(:id, :role, :group_id, :status)
+                params.require(:user).permit(:id, :role, :group_id, :status, :supplier_id)
         end
 
 end
