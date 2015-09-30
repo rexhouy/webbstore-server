@@ -49,6 +49,7 @@ Rails.application.routes.draw do
         get 'orders/confirm' => 'orders#confirm', as: :orders_confirm
         get 'orders/:id' => 'orders#show'
         put 'orders/:id' => 'orders#cancel', as: :orders_cancel
+        put "orders/complete/:id" => "orders#complete"
 
         # Wechat payment
         get 'orders/payment/wechat_redirect' => 'orders#wechat_pay'

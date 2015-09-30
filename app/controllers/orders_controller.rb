@@ -24,6 +24,18 @@ class OrdersController < ApiController
                 render layout: false
         end
 
+        def complete
+                @order = Order.find(params[:id])
+                return render_404 unless @order.customer_id.eql? current_user.id
+                @order.status = Order.statuses[:delivered]
+                Order.transaction do
+                        @order.save!
+                        OrdersProducts.where(order_id: @order.id).update_all(status: status)
+                        create_order_history(@order)
+                end
+                redirect_to action: "show", id: @order.id
+        end
+
         def confirm
                 return redirect_to :carts if get_cart.empty?
                 @cart = get_cart_products_detail(get_cart)

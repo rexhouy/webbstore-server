@@ -89,10 +89,16 @@
       <br>
       <a class="btn btn-default btn-block" target="_self" href="/complains/new_order_complain?order_id=<%=@order.id%>">投诉</a>
 
+      <% if @order.shipping? %>
+      <br>
+      <%= link_to "确认收货", "/orders/complete/#{@order.id}", method: "PUT", class: "btn btn-primary btn-block"%>
+      <% end %>
+
       <% if is_cancelable? @order %>
         <br>
         <%= link_to "取消订单", :orders_cancel, method: "PUT", class: "btn btn-danger btn-block"%>
       <% end %>
+
     </section>
   </div>
 
