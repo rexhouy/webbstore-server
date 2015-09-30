@@ -9,7 +9,7 @@ module Admin::OrdersHelper
                 return "已取消" if order.canceled?
         end
 
-        def order_status_change_operator(history)
+        def order_status_change_operator_admin(history)
                 "系统" if history.operator.nil?
                 history.operator.tel
         end

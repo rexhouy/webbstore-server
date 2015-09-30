@@ -8,7 +8,7 @@
                 };
 
                 var getSelectedAddress = function() {
-                        var selected;
+                        var selected = null;
                         $("address").each(function() {
                                 if ($(this).hasClass("selected")) {
                                         selected = $(this).find("input[name='address_id']").val();
@@ -49,8 +49,8 @@
                                 if (paymentType == null) {
                                         alert("请选择支付方式");
                                         return false;
-                                } else if (paymentType == "express" && address == null) {
-                                        alert("请选择地址");
+                                } else if (deliveryType == "express" && address == null) {
+                                        alert("请选择配送地址");
                                         return false;
                                 }
                         }

@@ -10,6 +10,12 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="col-sm-2 control-label">客户电话</label>
+      <div class="col-sm-9">
+        <p class="form-control-static"><%= @order.customer.tel %></p>
+      </div>
+    </div>
+    <div class="form-group">
       <label class="col-sm-2 control-label">支付方式</label>
       <div class="col-sm-9">
         <p class="form-control-static"><%= order_payment @order %></p>

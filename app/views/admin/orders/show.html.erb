@@ -38,6 +38,12 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="col-sm-2 control-label">客户电话</label>
+      <div class="col-sm-9">
+        <p class="form-control-static"><%= @order.customer.tel %></p>
+      </div>
+    </div>
+    <div class="form-group">
       <label class="col-sm-2 control-label">状态</label>
       <div class="col-sm-9">
         <p class="form-control-static"><%= order_status @order %></p>
@@ -125,7 +131,7 @@
             <tr>
               <td><%= display_datetime hist.time %></td>
               <td><%= order_history_status hist %></td>
-              <td><%= order_status_change_operator hist %></td>
+              <td><%= order_status_change_operator_admin hist %></td>
             </tr>
             <% end %>
           </tbody>
