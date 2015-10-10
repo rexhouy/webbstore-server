@@ -4,7 +4,7 @@ class Auth::CaptchaController < ApplicationController
 
         def index
                 return render(text: "图形验证码不正确") unless photo_captcha_valid?
-                return render(text: "该手机号已经注册") if "26325".eql?(params[:template_id]) and tel_exists?  # For registration, check tel existance
+                return render(text: "该手机号已经注册") if "true".eql?(params[:check_tel]) and tel_exists?  # For registration, check tel existance
                 captcha = Captcha.find_by_tel(params[:tel])
                 captcha ||= Captcha.new
                 captcha.tel = params[:tel]
