@@ -40,6 +40,15 @@
     <%= u.select :status, options_for_select([["启用", "active"], ["禁用", "disabled"]], u.object.status), {}, {class: "form-control", required: true} %>
   </div>
 </div>
+<% if @user.access_locked? %>
+<div class="form-group">
+  <label class="col-sm-2">&nbsp;</label>
+  <p class="form-control-static">* 该用户被锁定，暂时无法登录。
+    <%= link_to "解锁", "/admin/users/#{u.object.id}/unlock", method: "PUT", class: "" %>
+  </p>
+
+</div>
+<% end %>
 <div class="form-group">
   <div class="col-sm-offset-2 col-sm-10">
     <%= submit_tag "确认",  :class => "btn btn-primary" %>

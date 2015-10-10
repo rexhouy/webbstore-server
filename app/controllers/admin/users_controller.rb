@@ -24,6 +24,12 @@ class Admin::UsersController < AdminController
                 @suppliers = Supplier.owner(owner).all
         end
 
+        def unlock
+                @user = User.find(params[:id])
+                @user.update(failed_attempts: 0, locked_at: nil)
+                redirect_to :action => "show", id: @user.id, notice: "解锁完成！该用户可以登录了。"
+        end
+
         def update
                 @user = User.find(params[:id])
                 if @user.update(user_params)

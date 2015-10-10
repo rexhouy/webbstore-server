@@ -102,6 +102,7 @@ Rails.application.routes.draw do
                 put "complains/finished/:id" => "complains#finished"
 
                 # Users
+                put "users/:id/unlock" => "users#unlock"
                 resources :users
 
                 # Orders

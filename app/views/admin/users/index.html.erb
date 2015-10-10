@@ -1,5 +1,11 @@
 <h1 class="page-header">用户管理</h1>
 
+<% if notice.present? %>
+<div class="alert alert-info" role="alert">
+  <%= notice %>
+</div>
+<% end %>
+
 <form action="<%= admin_users_path %>" method="get" class="form-inline">
   <div class="form-group">
     <%= text_field_tag :tel, @tel, class: "form-control", placeholder: "手机号" %>
