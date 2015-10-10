@@ -4,7 +4,7 @@ class CreateHouseholders < ActiveRecord::Migration
                         t.string :no
                         t.string :name
                         t.string :tel
-                        t.decimal :house_size
+                        t.decimal :house_size, scale: 2, precision: 4
                         t.datetime :to_date
                         t.references :user
                         t.timestamps null: false

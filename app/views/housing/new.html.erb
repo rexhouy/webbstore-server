@@ -1,46 +1,28 @@
 <div class="row main">
   <section>
     <div class="col-md-3 col-sm-3 col-xs-12">
-      <h3>确认户主信息</h3>
+      <h3>物业缴费</h3>
     </div>
 
-    <% if notice.present? %>
-    <div class="alert alert-info" role="alert">
-      <%= notice %>
+    <div class="products-list">
+      <% @products.each do |product| %>
+      <div class="card col-md-2 col-sm-3 col-lg-2 col-xs-4">
+        <a href="/products/{{id}}">
+          <div class="image">
+            <img src="{{cover_image}}">
+          </div>
+          <div class="desc">
+            <h3>{{name}}</h3>
+            <p>
+              {{#origin_price}}
+              <span class="origin">{{origin_price}}</span>
+              {{/origin_price}}
+              <span class="price">{{price}}</span>
+            </p>
+          </div>
+        </a>
+      </div>
     </div>
-    <% end %>
 
-    <div class="col-md-8 col-sm-8 col-xs-12" style="background-color:#fff;padding-top:20px;">
-      <%= form_for @housing_fee, url: {action: "create"}, html: {class: "form-horizontal"} do |h| %>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">房号</label>
-        <p class="form-control-static"><%=@householder.no%></p>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">房主姓名</label>
-        <p class="form-control-static"><%=@householder.name%></p>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">联系电话</label>
-        <p class="form-control-static"><%=@householder.tel%></p>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">物业费</label>
-        <p class="form-control-static"><%=@housing_unit_price%></p>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">缴费时长</label>
-        <div class="col-sm-6">
-          <%=h.select_tag :duration, [["一个月", 1],["三个月", 3],["半年", 6],["一年",12]], {}, {class:"form-control"} %>
-        </div>
-      </div>
-      <%=h.hidden_field :householder_id, @householder.id%>
-      <div class="form-group">
-        <div class="col-sm-12">
-          <%=submit_tag "确定", class: "btn btn-primary btn-block" %>
-        </div>
-      </div>
-      <% end %>
-    </div>
   </section>
 </div>

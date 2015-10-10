@@ -12,20 +12,21 @@ class HousingController < ApplicationController
                 @householder = Householder.new
         end
 
+        def products
+                @products = HousingProduct.all
+        end
+
         def new
                 @householder = Householder.find_by_user_id(current_user.id)
         end
 
-        def create
-        end
-
         def check
                 @householder = Householder.new(householder_params)
-                existHouseholder = Householder.find_by_no(params[:no])
+                existHouseholder = Householder.find_by_no(@householder.no)
                 exist = existHouseholder.present? && existHouseholder.name.eql?(@householder.name) && existHouseholder.tel.eql?(@householder.tel)
                 if exist
                         @householder.update(user_id: current_user.id)
-                        redirect_to action: "new"
+                        redirect_to action: "products"
                 else
                         flash.now[:error] = "户主信息错误，如有疑问请联系物业。"
                         render :validate

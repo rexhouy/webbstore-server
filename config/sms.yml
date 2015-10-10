@@ -6,7 +6,7 @@ development:
   auth_token: <%= ENV['WEBSTORE_SMS_AUTH_TOKEN'] %>
   app_id: <%= ENV['WEBSTORE_SMS_APP_ID'] %>
   account_id: <%= ENV['WEBSTORE_SMS_ACCOUNT_ID'] %>
-  template_id: <%= ENV['WEBSTORE_SMS_TEMPLATE_ID'] %>
+  template_id: <%= ENV['CCHG_SMS_TEMPLATE_ID'] %>
 
 test:
   host: "sandboxapp.cloopen.com"
@@ -15,7 +15,7 @@ test:
   auth_token: <%= ENV['WEBSTORE_SMS_AUTH_TOKEN'] %>
   app_id: <%= ENV['WEBSTORE_SMS_APP_ID'] %>
   account_id: <%= ENV['WEBSTORE_SMS_ACCOUNT_ID'] %>
-  template_id: <%= ENV['WEBSTORE_SMS_TEMPLATE_ID'] %>
+  template_id: <%= ENV['CCHG_SMS_TEMPLATE_ID'] %>
 
 production:
   host: "app.cloopen.com"
@@ -24,4 +24,4 @@ production:
   auth_token: <%= ENV['WEBSTORE_SMS_AUTH_TOKEN'] %>
   app_id: <%= ENV['WEBSTORE_SMS_APP_ID'] %>
   account_id: <%= ENV['WEBSTORE_SMS_ACCOUNT_ID'] %>
-  template_id: <%= ENV['WEBSTORE_SMS_TEMPLATE_ID'] %>
+  template_id: <%= ENV['CCHG_SMS_TEMPLATE_ID'] %>

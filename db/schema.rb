@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151010025528) do
+ActiveRecord::Schema.define(version: 20151010044553) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -128,11 +128,11 @@ ActiveRecord::Schema.define(version: 20151010025528) do
     t.string   "no",         limit: 255
     t.string   "name",       limit: 255
     t.string   "tel",        limit: 255
-    t.decimal  "house_size",             precision: 10
+    t.decimal  "house_size",             precision: 4, scale: 2
     t.datetime "to_date"
     t.integer  "user_id",    limit: 4
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
   end
 
   create_table "order_histories", force: :cascade do |t|
@@ -205,6 +205,7 @@ ActiveRecord::Schema.define(version: 20151010025528) do
     t.integer  "category_id",  limit: 4
     t.string   "barcode",      limit: 255
     t.decimal  "origin_price",               precision: 8, scale: 2
+    t.string   "type",         limit: 255
   end
 
   add_index "products", ["name", "description", "article"], name: "fulltext_index", type: :fulltext

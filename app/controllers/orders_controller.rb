@@ -114,14 +114,14 @@ class OrdersController < ApiController
                 orders_products.each do |order_product|
                         unless order_product.specification.nil?
                                 order_product.specification.sales = order_product.specification.sales.send(func, order_product.count)
-                                order_product.specification.save!
+                                order_product.specification.update(sales: order_product.specification.sales)
                         end
                         order_product.product.sales = order_product.product.sales.send(func, order_product.count)
-                        order_product.product.save!
+                        order_product.product.update(sales: order_product.product.sales)
                 end
         end
         def order_name(orders_products)
-                name = orders_products[0].product.name
+                name = orders_products[0].product.name.clone
                 name << "等" if orders_products.size > 1
                 name
         end

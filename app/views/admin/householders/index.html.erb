@@ -1,0 +1,55 @@
+<h1 class="page-header">业主管理</h1>
+<ol class="breadcrumb">
+  <li><a href="/admin">管控台</a></li>
+  <li><a href="/admin/complains">物业</a></li>
+  <li class="active">业主</li>
+</ol>
+<% if notice.present? %>
+<div class="alert alert-info" role="alert">
+  <%= notice %>
+</div>
+<% end %>
+
+<%= link_to new_admin_householder_path,  :class => "btn btn-primary" do %>
+<span class="glyphicon glyphicon-plus"></span> 新建
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <td>#</td>
+      <td>房号</td>
+      <td>姓名</td>
+      <td>电话</td>
+      <td>操作</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @householders.each_with_index do |householder, index| %>
+    <tr>
+      <td><%= index+1 %></td>
+      <td><%= householder.no  %></td>
+      <td><%= householder.name  %></td>
+      <td><%= householder.tel  %></td>
+      <td>
+        <%= link_to admin_householder_path(householder) do %>
+        <span class="glyphicon glyphicon-eye-open icon"></span>
+        <% end %>
+        <%= link_to edit_admin_householder_path(householder) do %>
+        <span class="glyphicon glyphicon-pencil icon"></span>
+        <% end %>
+        <%= link_to admin_householder_path(householder), method: :delete do %>
+        <span class="glyphicon glyphicon-trash icon"></span>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="6">
+        <%= will_paginate @householders, page_links: false %>
+      </td>
+    </tr>
+  </tfoot>
+</table>

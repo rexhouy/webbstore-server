@@ -94,6 +94,7 @@ Rails.application.routes.draw do
                 resources :channels
                 resources :categories
                 resources :staffs
+                resources :householders
 
                 # Complains
                 resources :complains

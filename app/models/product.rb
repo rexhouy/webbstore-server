@@ -74,3 +74,5 @@ class Product < ActiveRecord::Base
 
 end
 Product.import # for auto sync model with elastic search
+
+class HousingProduct < Product; end
