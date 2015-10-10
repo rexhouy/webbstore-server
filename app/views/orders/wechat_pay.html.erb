@@ -34,37 +34,28 @@
     </p>
      <script stype="text/javascript">
        function onBridgeReady(){
-       var params = {
-                        "appId" : "<%= @wechat_params[:appId] %>",
-                        "timeStamp": "<%= @wechat_params[:timeStamp] %>",
-                        "nonceStr" : "<%= @wechat_params[:nonceStr] %>",
-                        "package" : "<%= @wechat_params[:package] %>",
-                        "signType" : "<%= @wechat_params[:signType] %>",
-                        "paySign" : "<%= @wechat_params[:paySign] %>"
-                };
-       WeixinJSBridge.invoke("getBrandWCPayRequest", params,
-                function(res){
-                        document.getElementById("text_msg").style.display = "none";
-                        document.getElementById("redirect_result").style.display = "block";
-                        // if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-                        //        // 操作成功，跳转到成功页面
-                        //        window.location.href = "/payment/wechat/front_notify?success=true&id=<%=@order_id%>"
-                        // } else {
-                        //        // 用户放弃操作或操作是失败，跳转到失败页面
-                        //        window.location.href = "/payment/wechat/front_notify?success=false&id=<%=@order_id%>"
-                        // }
-                }
-        );
+         var params = {
+           "appId" : "<%= @wechat_params[:appId] %>",
+           "timeStamp": "<%= @wechat_params[:timeStamp] %>",
+           "nonceStr" : "<%= @wechat_params[:nonceStr] %>",
+           "package" : "<%= @wechat_params[:package] %>",
+           "signType" : "<%= @wechat_params[:signType] %>",
+           "paySign" : "<%= @wechat_params[:paySign] %>"
+         };
+         WeixinJSBridge.invoke("getBrandWCPayRequest", params, function(res) {
+           document.getElementById("text_msg").style.display = "none";
+           document.getElementById("redirect_result").style.display = "block";
+         });
        }
        if (typeof WeixinJSBridge == "undefined"){
-           if ( document.addEventListener ) {
-               document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-           } else if (document.attachEvent) {
-               document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
-               document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-           }
+         if ( document.addEventListener ) {
+           document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+         } else if (document.attachEvent) {
+           document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+           document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+         }
        } else {
-           onBridgeReady();
+         onBridgeReady();
        }
      </script>
 </body>
