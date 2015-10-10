@@ -4,7 +4,7 @@ development:
   port: "8883"
   url: "/2013-12-26/Accounts/<%= ENV['WEBSTORE_SMS_ACCOUNT_ID'] %>/SMS/TemplateSMS"
   auth_token: <%= ENV['WEBSTORE_SMS_AUTH_TOKEN'] %>
-  app_id: <%= ENV['WEBSTORE_SMS_APP_ID'] %>
+  app_id: <%= ENV['CCHG_SMS_APP_ID'] %>
   account_id: <%= ENV['WEBSTORE_SMS_ACCOUNT_ID'] %>
   template_id: <%= ENV['CCHG_SMS_TEMPLATE_ID'] %>
 
@@ -13,7 +13,7 @@ test:
   port: "8883"
   url: "/2013-12-26/Accounts/<%= ENV['WEBSTORE_SMS_ACCOUNT_ID'] %>/SMS/TemplateSMS"
   auth_token: <%= ENV['WEBSTORE_SMS_AUTH_TOKEN'] %>
-  app_id: <%= ENV['WEBSTORE_SMS_APP_ID'] %>
+  app_id: <%= ENV['CCHG_SMS_APP_ID'] %>
   account_id: <%= ENV['WEBSTORE_SMS_ACCOUNT_ID'] %>
   template_id: <%= ENV['CCHG_SMS_TEMPLATE_ID'] %>
 
@@ -22,6 +22,6 @@ production:
   port: "8883"
   url: "/2013-12-26/Accounts/<%= ENV['WEBSTORE_SMS_ACCOUNT_ID'] %>/SMS/TemplateSMS"
   auth_token: <%= ENV['WEBSTORE_SMS_AUTH_TOKEN'] %>
-  app_id: <%= ENV['WEBSTORE_SMS_APP_ID'] %>
+  app_id: <%= ENV['CCHG_SMS_APP_ID'] %>
   account_id: <%= ENV['WEBSTORE_SMS_ACCOUNT_ID'] %>
   template_id: <%= ENV['CCHG_SMS_TEMPLATE_ID'] %>
