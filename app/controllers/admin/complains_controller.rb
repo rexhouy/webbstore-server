@@ -13,7 +13,7 @@ class Admin::ComplainsController < AdminController
         end
 
         def finished
-                change_status(Complain.statuses[:finished])
+                change_status(Complain.statuses[:finished], nil)
         end
 
         def processing

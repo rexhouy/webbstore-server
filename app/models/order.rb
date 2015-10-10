@@ -57,3 +57,6 @@ class Order < ActiveRecord::Base
         end
 
 end
+
+class HousingOrder < Order
+end

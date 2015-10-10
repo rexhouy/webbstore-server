@@ -72,6 +72,13 @@ Rails.application.routes.draw do
         get "complains/new_order_complain" => "complains#new_order_complain"
         resources :complains
 
+        # 物业缴费
+        get "housing" => "housing#index", as: :householders
+        get "housing/new" => "housing#new"
+        get "housing/validate" => "housing#validate"
+        post "housing/create" => "housing#create"
+        post "housing/check" => "housing#check"
+
         # Category
         get "categories" => "categories#index"
 

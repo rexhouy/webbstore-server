@@ -14,7 +14,7 @@
 //= require bootstrap-sprockets
 
 (function(){
-	
+
 	var auth = {};
 
 	var checkTel = function(checkTelExistence) {
@@ -61,10 +61,11 @@
 		$.get("/users/captcha", {
 			tel : tel,
 			captcha : photoCaptcha,
-			template_id : $("#template_id").val()
+			check_tel : $("#check_tel").val()
 		}).done(function(data){
 			if (data != "ok") {
 				cancelCoolDown = true;
+				refreshCaptcha();
 				alert(data);
 			}
 			coolDown(60);
@@ -73,12 +74,16 @@
 
 	window.auth = auth;
 
+	function refreshCaptcha() {
+		var href = $(".simple_captcha_refresh_button a").attr("href");
+		$.get(href).done(function(data){
+			eval(data);
+		});
+	}
+
 	$(function(){
 		$(".simple_captcha_image").click(function() {
-			var href = $(".simple_captcha_refresh_button a").attr("href");
-			$.get(href).done(function(data){
-				eval(data);
-			});
+			refreshCaptcha();
 		});
 	});
 

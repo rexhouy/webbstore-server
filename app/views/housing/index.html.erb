@@ -1,0 +1,46 @@
+<div class="form-horizontal">
+  <div class="form-group">
+    <label class="col-sm-2 control-label">房号</label>
+    <p class="form-control-static"><%=@householder.no%></p>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">房主姓名</label>
+    <p class="form-control-static"><%=@householder.name%></p>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">联系电话</label>
+    <p class="form-control-static"><%=@householder.tel%></p>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">物业费</label>
+    <p class="form-control-static"><%= number_to_currency @housing_unit_price, locale: :'zh-CN', precision: 2 %>/月平方</p>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">目前物业费缴纳到</label>
+    <p class="form-control-static"><%=display_month @householder.to_date%></p>
+  </div>
+  <div class="form-group">
+    <a href="/new" class="btn btn-primary btn-block">缴纳物业费</a>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">缴费历史</label>
+    <table class="form-control-static table">
+      <thead>
+        <tr>
+          <th>时长</th><th>缴费至</th><th>缴费时间</th><th>价格</th><th>状态</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @housing_estate_fees.each do |hist| %>
+        <tr>
+          <td><%= hist.duration%></td>
+          <td><%= display_month hist.to_date %></td>
+          <td><%= display_date hist.time%></td>
+          <td><%= number_to_currency hist.price%></td>
+          <td><%= hist.status%></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

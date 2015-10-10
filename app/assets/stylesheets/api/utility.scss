@@ -227,6 +227,9 @@
     tr {
         cursor: pointer;
     }
+    td {
+        color: $link-color;
+    }
 }
 
 .animate-hide {

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150930040253) do
+ActiveRecord::Schema.define(version: 20151010025528) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -124,6 +124,17 @@ ActiveRecord::Schema.define(version: 20150930040253) do
     t.integer  "parent_id",  limit: 4
   end
 
+  create_table "householders", force: :cascade do |t|
+    t.string   "no",         limit: 255
+    t.string   "name",       limit: 255
+    t.string   "tel",        limit: 255
+    t.decimal  "house_size",             precision: 10
+    t.datetime "to_date"
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
   create_table "order_histories", force: :cascade do |t|
     t.integer  "order_id",    limit: 4
     t.integer  "status",      limit: 4
@@ -146,6 +157,7 @@ ActiveRecord::Schema.define(version: 20150930040253) do
     t.string   "contact_address", limit: 255
     t.text     "memo",            limit: 65535
     t.integer  "delivery_type",   limit: 4
+    t.string   "type",            limit: 255
   end
 
   add_index "orders", ["customer_id"], name: "fk_rails_c2426400ce", using: :btree
@@ -161,6 +173,7 @@ ActiveRecord::Schema.define(version: 20150930040253) do
     t.integer  "specification_id", limit: 4
     t.integer  "supplier_id",      limit: 4
     t.integer  "status",           limit: 4
+    t.integer  "seller_id",        limit: 4
   end
 
   add_index "orders_products", ["order_id"], name: "fk_rails_889bfce267", using: :btree

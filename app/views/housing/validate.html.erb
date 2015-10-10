@@ -1,0 +1,47 @@
+<div class="row main">
+  <section>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <h3>确认户主信息</h3>
+    </div>
+
+    <% if notice.present? %>
+      <div class="alert alert-info" role="alert">
+        <%= notice %>
+      </div>
+    <% end %>
+    <% if flash.now[:error].present? %>
+    <div class="alert alert-danger" role="alert">
+      <%= flash.now[:error] %>
+    </div>
+    <% end %>
+
+
+    <div class="col-md-8 col-sm-8 col-xs-12" style="background-color:#fff;padding-top:20px;">
+      <%= form_for @householder, url: {action: "check"}, html: {class: "form-horizontal"} do |h| %>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">房号</label>
+          <div class="col-sm-10">
+            <%= h.text_field :no, class: "form-control", required: true%>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">房主姓名</label>
+          <div class="col-sm-10">
+            <%= h.text_field :name, class: "form-control", required: true%>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">联系电话</label>
+          <div class="col-sm-10">
+            <%= h.text_field :tel, class: "form-control", required: true%>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <%=submit_tag "确定", class: "btn btn-primary btn-block" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </section>
+</div>

@@ -21,6 +21,10 @@ module ApplicationHelper
                 number
         end
 
+        def display_month(date)
+                date.strftime("%Y-%m") if date.present?
+        end
+
         def display_date(date)
                 date.strftime("%Y-%m-%d") if date.present?
         end
@@ -68,6 +72,8 @@ module ApplicationHelper
                         "我的账户"
                 when "complains"
                         "物业报修及投诉"
+                when "housing"
+                        "物业缴费"
                 else
                         Rails.application.config.name
                 end
