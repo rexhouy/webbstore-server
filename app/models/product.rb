@@ -51,6 +51,8 @@ class Product < ActiveRecord::Base
                         query: {
                                 match: { name: search_text }
                         },
+                        from: 0,
+                        size: 50,
                         filter: {
                                 bool: {
                                         must: [
