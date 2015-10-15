@@ -26,7 +26,7 @@
         <%= link_to edit_admin_channel_path(channel) do %>
         <span class="glyphicon glyphicon-pencil icon"></span>
         <% end %>
-        <%= link_to admin_channel_path(channel), method: :delete do %>
+        <%= link_to admin_channel_path(channel), method: :delete, data: {confirm: %(确定要删除"#{channel.name}"吗？)} do %>
         <span class="glyphicon glyphicon-trash icon"></span>
         <% end %>
       </td>
@@ -36,6 +36,7 @@
   <tfoot>
     <tr>
       <td colspan="6">
+        <%= page_info @channels %>
         <%= will_paginate @channels, page_links: false %>
       </td>
     </tr>

@@ -4,4 +4,7 @@ class ArticlesController < ApplicationController
                 @article = Article.find(params[:id])
                 render layout: false
         end
+        def default
+                render layout: false
+        end
 end

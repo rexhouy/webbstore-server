@@ -3,7 +3,12 @@ class Admin::HouseholdersController < AdminController
         load_and_authorize_resource except: :create
 
         def index
-                @householders = Householder.paginate(:page => params[:page])
+                @search_text = params[:search_text]
+                if @search_text.present?
+                        @householders = Householder.search(@search_text).paginate(:page => params[:page])
+                else
+                        @householders = Householder.paginate(:page => params[:page])
+                end
         end
 
         def edit

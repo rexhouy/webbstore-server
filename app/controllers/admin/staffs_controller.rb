@@ -3,7 +3,12 @@ class Admin::StaffsController < AdminController
         load_and_authorize_resource except: :create
 
         def index
-                @staffs = Staff.owner(owner).paginate(:page => params[:page])
+                @search_text = params[:search_text]
+                if @search_text.present?
+                        @staffs = Staff.search(@search_text).owner(owner).paginate(:page => params[:page])
+                else
+                        @staffs = Staff.owner(owner).paginate(:page => params[:page])
+                end
         end
 
         def edit

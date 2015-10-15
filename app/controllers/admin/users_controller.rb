@@ -45,7 +45,7 @@ class Admin::UsersController < AdminController
         def search(tel)
                 user = User.find_by_tel(tel)
                 @users = []
-                @users << user if user.present? || user.customer? || user.group_id.eql?(owner)
+                @users << user if user.present? && (user.customer? || user.group_id.eql?(owner))
         end
         def user_params
                 params.require(:user).permit(:id, :role, :group_id, :status, :supplier_id)

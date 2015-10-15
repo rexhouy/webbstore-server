@@ -10,9 +10,18 @@
 </div>
 <% end %>
 
-<%= link_to new_admin_householder_path,  :class => "btn btn-primary" do %>
-<span class="glyphicon glyphicon-plus"></span> 新建
-<% end %>
+<div>
+  <%= link_to new_admin_householder_path,  :class => "btn btn-primary pull-right" do %>
+  <span class="glyphicon glyphicon-plus"></span> 新建
+  <% end %>
+  <form action="<%= admin_householders_path %>" method="get" class="form-inline">
+    <div class="form-group">
+      <%= text_field_tag :search_text, @search_text, class: "form-control", placeholder: "房号/姓名/电话" %>
+    </div>
+    <%= submit_tag "搜索", class: "btn btn-primary"%>
+    <button type="reset" class="btn btn-default" >重置</button>
+  </form>
+</div>
 
 <table class="table">
   <thead>
@@ -38,7 +47,7 @@
         <%= link_to edit_admin_householder_path(householder) do %>
         <span class="glyphicon glyphicon-pencil icon"></span>
         <% end %>
-        <%= link_to admin_householder_path(householder), method: :delete do %>
+        <%= link_to admin_householder_path(householder), method: :delete, data: {confirm: %(确定要删除"#{householder.name}"吗？)} do %>
         <span class="glyphicon glyphicon-trash icon"></span>
         <% end %>
       </td>
@@ -48,6 +57,7 @@
   <tfoot>
     <tr>
       <td colspan="6">
+        <%= page_info @householders %>
         <%= will_paginate @householders, page_links: false %>
       </td>
     </tr>

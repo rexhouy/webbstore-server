@@ -30,7 +30,7 @@
         <%= link_to edit_admin_article_path(article) do %>
         <span class="glyphicon glyphicon-pencil icon"></span>
         <% end %>
-        <%= link_to admin_article_path(article), method: :delete do %>
+        <%= link_to admin_article_path(article), method: :delete, data: {confirm: %(确定要删除"#{article.name}"吗？)} do %>
         <span class="glyphicon glyphicon-trash icon"></span>
         <% end %>
       </td>
@@ -40,6 +40,7 @@
   <tfoot>
     <tr>
       <td colspan="6">
+        <%= page_info @articles %>
         <%= will_paginate @articles, page_links: false %>
       </td>
     </tr>

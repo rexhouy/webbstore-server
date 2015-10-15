@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
         # 宣传文章
         get 'articles/:id' => 'articles#index'
+        get 'articles' => 'articles#default'
 
         # User address
         resources :addresses

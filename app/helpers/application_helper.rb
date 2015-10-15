@@ -41,11 +41,12 @@ module ApplicationHelper
                 total_pages = ((obj.total_entries - 1) / obj.per_page + 1).to_i
                 has_previous = obj.current_page > 1
                 has_next = obj.current_page < total_pages
+                prefix = url.include?("?") ? "&" : "?"
                 previous_link = has_previous ?
-                        %(<li class="previous" ><a href="#{url}/#{obj.current_page-1}"><span aria-hidden="true">&larr;</span> 前一页</a></li>) :
+                        %(<li class="previous" ><a href="#{url}#{prefix}page=#{obj.current_page-1}"><span aria-hidden="true">&larr;</span> 前一页</a></li>) :
                         ""
                 next_link = has_next ?
-                       %(<li class="next"><a href="#{url}/#{obj.current_page+1}">后一页 <span aria-hidden="true">&rarr;</span></a></li>) :
+                       %(<li class="next"><a href="#{url}#{prefix}page=#{obj.current_page+1}">后一页 <span aria-hidden="true">&rarr;</span></a></li>) :
                         ""
                 %(
               <nav>
@@ -55,6 +56,13 @@ module ApplicationHelper
                 </ul>
               </nav>
                     ).html_safe
+        end
+
+        def page_info(obj)
+                total_pages = ((obj.total_entries - 1) / obj.per_page + 1).to_i
+                %(
+                    <div class="page-info">当前第#{obj.current_page}页，总计#{total_pages}页，总记录数#{obj.total_entries}</div>
+                ).html_safe
         end
 
         def category
