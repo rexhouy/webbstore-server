@@ -9,19 +9,13 @@
 
   <div>
     <% if !@order.delivered? and !@order.canceled? %>
-      <%= form_tag admin_orders_cancel_url, method: :put, style: "display:inline-block" do %>
-        <% submit_tag "取消订单", class: "btn btn-danger" %>
-      <% end %>
+      <%= link_to "取消订单", admin_orders_cancel_url,  method: :put, style: "display:inline-block", class: "btn btn-danger", data: {confirm: %(确定要取消该订单吗？)} %>
     <% end %>
     <% if @order.paid? || (@order.offline_pay? && @order.placed?) %>
-      <%= form_tag admin_orders_shipping_url, method: :put, style: "display:inline-block" do %>
-        <% submit_tag "确认发货", class: "btn btn-primary"%>
-      <% end %>
+      <%= link_to "确认发货", admin_orders_shipping_url, method: :put, style: "display:inline-block", class: "btn btn-primary" %>
     <% end %>
     <% if @order.shipping? %>
-      <%= form_tag admin_orders_deliver_url, method: :put, style: "display:inline-block" do %>
-        <% submit_tag "确认完成", class: "btn btn-primary"%>
-      <% end %>
+      <%= link_to "确认完成", admin_orders_deliver_url, method: :put, style: "display:inline-block", class: "btn btn-primary" %>
     <% end %>
     <%= link_to admin_orders_url, class: "btn btn-primary" do %>
       <i class="glyphicon glyphicon-arrow-left"></i> 返回

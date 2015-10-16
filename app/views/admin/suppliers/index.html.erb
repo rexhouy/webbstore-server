@@ -34,7 +34,7 @@
         <%= link_to edit_admin_supplier_path(supplier) do %>
         <span class="glyphicon glyphicon-pencil icon"></span>
         <% end %>
-        <%= link_to admin_supplier_path(supplier), method: :delete do %>
+        <%= link_to admin_supplier_path(supplier), method: :delete, data: {confirm: %(确定要删除"#{supplier.name}"吗？)} do %>
         <span class="glyphicon glyphicon-trash icon"></span>
         <% end %>
       </td>

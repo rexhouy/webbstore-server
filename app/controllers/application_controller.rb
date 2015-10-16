@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
         protect_from_forgery with: :exception
         skip_before_action :verify_authenticity_token, if: :skip_forgery_protection?
 
+        WillPaginate.per_page = 20
+
         # Channels used in menu
         before_action do
                 @channels = Channel.owner(Rails.application.config.owner).order(priority: :desc)
