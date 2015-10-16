@@ -106,7 +106,6 @@ window.address = (function() {
                 var citySelector = $("#address_city");
                 citySelector.empty();
                 if (selectedState) {
-                        citySelector.append("<option value=\"\"></option>");
                         findCitiesByState(selectedState).forEach(function(city) {
                                 citySelector.append("<option value="+city+">"+city+"</option>");
                         });
@@ -116,7 +115,6 @@ window.address = (function() {
         var initStateSelector = function() {
                 var stateSelector = $("#address_state");
                 stateSelector.empty();
-                stateSelector.append($("<option value=\"\"></option>"));
                 getStates().forEach(function(state) {
                         stateSelector.append($("<option value="+state+">"+state+"</option>"));
                 });
@@ -124,6 +122,7 @@ window.address = (function() {
 
         self.init = function(isEditable, isSelectable) {
                 initStateSelector();
+                self.stateChange();
                 editable = isEditable ? true : false;
                 selectable = isSelectable ? true : false;
                 if (selectable) {

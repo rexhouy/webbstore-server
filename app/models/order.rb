@@ -45,7 +45,11 @@ class Order < ActiveRecord::Base
                 end
                 unless order_date.blank?
                         d = Date.parse(order_date)
-                        scopes = where(created_at: d.beginning_of_day..d.end_of_day)
+                        if scopes.nil?
+                                scopes = where(created_at: d.beginning_of_day..d.end_of_day)
+                        else
+                                scopes = scopes.where(created_at: d.beginning_of_day..d.end_of_day)
+                        end
                 end
                 scopes || all
         end

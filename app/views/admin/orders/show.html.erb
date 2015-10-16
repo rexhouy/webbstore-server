@@ -9,7 +9,7 @@
 
   <div>
     <% if !@order.delivered? and !@order.canceled? %>
-      <%= link_to "取消订单", admin_orders_cancel_url,  method: :put, style: "display:inline-block", class: "btn btn-danger", data: {confirm: %(确定要删除该订单吗？)} %>
+      <%= link_to "取消订单", admin_orders_cancel_url,  method: :put, style: "display:inline-block", class: "btn btn-danger", data: {confirm: %(确定要取消该订单吗？)} %>
     <% end %>
     <% if @order.paid? || (@order.offline_pay? && @order.placed?) %>
       <%= link_to "确认发货", admin_orders_shipping_url, method: :put, style: "display:inline-block", class: "btn btn-primary" %>

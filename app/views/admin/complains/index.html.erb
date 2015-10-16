@@ -7,9 +7,21 @@
     <%= link_to "业主管理", admin_householders_path %>
   </li>
 </ul>
-<%= link_to new_admin_complain_path,  :class => "btn btn-primary" do %>
-<span class="glyphicon glyphicon-plus"></span> 新建
-<% end %>
+<div style="overflow:hidden;">
+  <form action="<%= admin_complains_path %>" method="get" class="form-inline pull-left">
+    <div class="form-group">
+      <%= text_field_tag :name_or_tel, @name_or_tel, class: "form-control", placeholder: "姓名/手机号" %>
+    </div>
+    <div class="form-group">
+      <%= date_field_tag :complain_date, @complain_date, class: "form-control" %>
+    </div>
+    <%= submit_tag "搜索", class: "btn btn-primary"%>
+    <button type="reset" class="btn btn-default" >重置</button>
+  </form>
+  <%= link_to new_admin_complain_path,  :class => "btn btn-primary pull-right" do %>
+    <span class="glyphicon glyphicon-plus"></span> 新建
+  <% end %>
+</div>
 
 <div>
   <%= link_to "尚未处理", "#{admin_complains_path}?status=created", class: "#{'highlight' if @status.eql?('created')} filter-link" %>

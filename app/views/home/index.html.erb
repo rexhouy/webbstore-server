@@ -1,42 +1,158 @@
-<div>
-  <div class="row" style="background-color: #fff;">
-    <div id="cm-carousel" class="carousel slide" data-ride="carousel">
-      <ol class="carousel-indicators">
-        <li data-target="#cm-carousel" data-slide-to="0" class="active"></li>
-        <li data-target="#cm-carousel" data-slide-to="1"></li>
-        <li data-target="#cm-carousel" data-slide-to="2"></li>
-      </ol>
-      <div class="carousel-inner" role="listbox">
-        <div class="item active">
-          <%=image_tag "cm1.jpg" %>
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title><%=Rails.application.config.name%></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,user-scalable=no">
+    <link href="<%=image_url('favicon.ico')%>" rel="icon">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <style type="text/css">
+      @media (min-width:768px) {
+      header {
+      border-bottom: 1px solid #ddd;
+      }
+      }
+    </style>
+  </head>
+  <body>
+
+    <header style="box-shadow:none;">
+      <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header" style="height:50px">
+
+          <section class="inherit-height col-xs-2" style="padding-left:0;">
+            <% unless controller_name.eql? "home" %>
+            <a type="button" class="icon btn btn-lg table-center inherit-height" href="<%=back_url%>">
+              <i class="glyphicon glyphicon-chevron-left"></i>
+            </a>
+            <% end %>
+          </section>
+
+          <section class="navbar-brand inherit-height col-xs-8">
+            <a class="" href="/"><%=brand_title%></a>
+          </section>
+
+          <section class="inherit-height search-container" id="search">
+            <form class="inherit-height table-center-wrap" action="/products/search">
+              <button class="btn icon inherit-height highlight-icon" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+              <button class="btn icon inherit-height" style="right:0" onclick="return search.close();"><i class="glyphicon glyphicon-remove"></i></button>
+              <input  type="search" name="search_text" class="search table-center inherit-height pull-left" placeholder="搜索商铺" id="search_input">
+            </form>
+          </section>
+
+          <section class="inherit-height table-center-wrap col-xs-2" id="menu_control_pannel" style="text-align:right;">
+            <% if controller_name.eql? "products" %>
+            <button type="button" class="icon btn btn-lg table-center inherit-height" onclick="search.open();" style="padding:0;">
+              <i class="glyphicon glyphicon-search"></i>
+            </button>
+            <% end %>
+          </section>
+
         </div>
-        <div class="item">
-          <%=image_tag "cm2.jpg" %>
+      </div>
+    </header>
+
+    <div class="container" style="min-height:200px;">
+
+      <div>
+        <div class="row" style="background-color: #fff;">
+          <div id="cm-carousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <li data-target="#cm-carousel" data-slide-to="0" class="active"></li>
+              <li data-target="#cm-carousel" data-slide-to="1"></li>
+              <li data-target="#cm-carousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+              <div class="item active">
+                <%=image_tag "cm3.jpg" %>
+              </div>
+              <div class="item">
+                <%=image_tag "cm2.jpg" %>
+              </div>
+              <div class="item">
+                <%=image_tag "cm1.jpg" %>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="item">
-          <%=image_tag "cm3.jpg" %>
+
+        <div class="row home-nav list" style="margin-top:15px;">
+          <% @channels.each do |c| %>
+            <section class="col-sm-6 col-md-6 col-xs-12 col-lg-4">
+              <a href="<%=c.url%>" style="">
+                <div class="col-sm-3 col-md-3 col-xs-3">
+                  <%= image_tag c.image, alt: c.name%>
+                </div>
+                <div class="col-sm-7 col-md-7 col-xs-7" style="padding-left:0;">
+                  <h3 style="color:<%=c.color%>"><%=c.name%></h3>
+                </div>
+                <div class="col-sm-2 col-md-2 col-xs-2">
+                  <span class="glyphicon glyphicon-menu-right" style="color:<%=c.color%>"></span>
+                  <!-- <div style="background-color:<%=c.color%>" class="strip"></div> -->
+                </div>
+              </a>
+            </section>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+
+    <%= image_tag "spinner.gif", style: "position:fixed;left:-100000px;"%>
+    <div><!-- Loading animation  -->
+      <div class="block-layer block-layer-light" onclick="menu.close()"></div>
+      <div class="spinner-container img-circle">
+        <div class="spinner"></div>
+      </div>
+    </div>
+
+    <div class="footer-nav">
+      <div class="container">
+        <div class="row">
+          <a href="/" class="col-xs-4">
+            <%=image_tag "iconfont-home.png"%>
+            <small>首页</small>
+          </a>
+          <a href="/carts" class="col-xs-4">
+            <%=image_tag "iconfont-cart.png"%>
+            <% if cart_number > 0 %>
+            <span class="cart-number img-circle"><%=cart_number%></span>
+            <% end %>
+            <small style="padding-left:5px;">购物车</small>
+          </a>
+          <a href="/me" class="col-xs-4">
+            <%=image_tag "iconfont-my.png"%>
+            <small>我的大大猫</small>
+          </a>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="row home-nav list" style="margin-top:15px;">
-    <% @channels.each do |c| %>
-    <section class="col-sm-6 col-md-6 col-xs-12 col-lg-4">
-      <a href="<%=c.url%>" style="">
-        <div class="col-sm-3 col-md-3 col-xs-3">
-          <%= image_tag c.image, alt: c.name%>
+    <footer>
+      <div class="container">
+        <div style="overflow:hidden;">
+          <a  style="font-size:16px;" href="http://uploads.tenhs.com/files/cchg-v1.0.0.apk">
+            <div class="pull-left">
+              <span style="font-size:20px; " class="glyphicon glyphicon-phone"></span>
+              <span style="position:relative;top:-1px;">下载安卓客户端</span>
+            </div>
+            <div class="pull-right">
+              <span class="glyphicon glyphicon-download" style="font-size:20px;padding-right:12px;"></span>
+            </div>
+          </a>
         </div>
-        <div class="col-sm-7 col-md-7 col-xs-7" style="padding-left:0;">
-          <h3 style="color:<%=c.color%>"><%=c.name%></h3>
-        </div>
-        <div class="col-sm-2 col-md-2 col-xs-2">
-          <span class="glyphicon glyphicon-menu-right" style="color:<%=c.color%>"></span>
-          <!-- <div style="background-color:<%=c.color%>" class="strip"></div> -->
-        </div>
-      </a>
-    </section>
-    <% end %>
-  </div>
+        <hr style="border-bottom:1px solid #fff;color:#fff;">
+        <p class="copyright">技术支持 云南俊邦科技有限公司</p>
+        <ul>
+          <li>京ICP备15036211号</li>
+        </ul>
+      </div>
+    </footer>
 
-</div>
+    <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag params[:controller] %>
+
+  </body>
+</html>

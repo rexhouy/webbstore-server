@@ -3,8 +3,15 @@ class Admin::ComplainsController < AdminController
         load_and_authorize_resource except: :create
 
         def index
+                @name_or_tel = params[:name_or_tel] || ""
+                @complain_date = params[:complain_date] || ""
                 @status = params[:status] || "created"
-                @complains = Complain.owner(owner).where(status: Complain.statuses[@status]).paginate(:page => params[:page])
+                if @name_or_tel.blank? && @complain_date.blank?
+                        @complains = Complain.owner(owner).where(status: Complain.statuses[@status]).paginate(:page => params[:page])
+                else
+                        @complains = Complain.owner(owner).search(@name_or_tel, @complain_date).paginate(:page => params[:page])
+                        @status = ""
+                end
         end
 
         def show

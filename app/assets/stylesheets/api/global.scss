@@ -204,9 +204,15 @@ div.simple_captcha {
     bottom: 0;
     height: 60px;
     width: 100%;
-    padding: 16px 0;
-    font-size: 20px;
+    padding: 10px 0;
     text-align: center;
+    img {
+        width: 24px;
+    }
+    small {
+        font-size: 10px;
+        display:block;
+    }
 }
 
 .navbar-brand {

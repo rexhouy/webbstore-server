@@ -90,6 +90,7 @@ module ApplicationHelper
         def back_url
                 case controller_name
                 when "orders"
+                        return "/orders" if action_name.eql? "show"
                         return "/me" if request.referer.present? && URI(request.referer).path.eql?("/me")
                         "/carts"
                 when "cards"
@@ -105,6 +106,8 @@ module ApplicationHelper
                                 "javascript:window.history.back();"
                         when "history"
                                 URI(request.referer).path.eql?("/me") ? "/me" : "/complains"
+                        when "show"
+                                "/complains"
                         else
                                 "/"
                         end
