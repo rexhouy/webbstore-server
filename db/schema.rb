@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151010044553) do
+ActiveRecord::Schema.define(version: 20151016093834) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -232,6 +232,7 @@ ActiveRecord::Schema.define(version: 20151010044553) do
     t.integer  "status",       limit: 4
     t.integer  "count",        limit: 4
     t.decimal  "origin_price",             precision: 8, scale: 2
+    t.string   "barcode",      limit: 255
   end
 
   add_index "specifications", ["product_id"], name: "fk_rails_9b321d46dc", using: :btree
