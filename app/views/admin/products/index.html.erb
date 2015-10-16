@@ -1,4 +1,4 @@
-<h1 class="page-header">产品管理</h1>
+<h1 class="page-header">商品管理</h1>
 <ul class="link-group">
   <li>
     <%= link_to "类目管理", admin_categories_path %>
@@ -8,9 +8,18 @@
   </li>
 </ul>
 
-<%= link_to new_admin_product_path,  :class => "btn btn-primary" do %>
-<span class="glyphicon glyphicon-plus"></span> 新建
-<% end %>
+<div>
+  <%= link_to new_admin_product_path,  class: "btn btn-primary pull-right" do %>
+  <span class="glyphicon glyphicon-plus"></span> 新建
+  <% end %>
+  <form action="<%= admin_products_path %>" method="get" class="form-inline">
+    <div class="form-group">
+      <%= text_field_tag :search_text, @search_text, class: "form-control", placeholder: "商品名称" %>
+    </div>
+    <%= submit_tag "搜索", class: "btn btn-primary"%>
+    <button type="reset" class="btn btn-default" >重置</button>
+  </form>
+</div>
 
 <table class="table">
   <thead>
@@ -46,6 +55,7 @@
   <tfoot>
     <tr>
       <td colspan="6">
+        <%= page_info @products %>
         <%= will_paginate @products, page_links: false %>
       </td>
     </tr>

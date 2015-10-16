@@ -1,7 +1,7 @@
 <h1 class="page-header">类目管理</h1>
 <ol class="breadcrumb">
   <li><a href="/admin">管控台</a></li>
-  <li><a href="/admin/products">产品</a></li>
+  <li><a href="/admin/products">商品</a></li>
   <li class="active">类目</li>
 </ol>
 <%= link_to new_admin_category_path,  :class => "btn btn-primary" do %>
@@ -40,6 +40,7 @@
   <tfoot>
     <tr>
       <td colspan="6">
+        <%= page_info @categories %>
         <%= will_paginate @categories, page_links: false %>
       </td>
     </tr>

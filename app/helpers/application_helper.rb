@@ -52,6 +52,13 @@ module ApplicationHelper
                     ).html_safe
         end
 
+        def page_info(obj)
+                total_pages = ((obj.total_entries - 1) / obj.per_page + 1).to_i
+                %(
+                    <div class="page-info">当前第#{obj.current_page}页，总计#{total_pages}页，总记录数#{obj.total_entries}</div>
+                ).html_safe
+        end
+
         def category
                 return 1 if session[:category].nil?
                 session[:category]["id"]

@@ -3,7 +3,12 @@ class Admin::ProductsController < AdminController
         load_and_authorize_resource
 
         def index
-                @products = Product.owner(owner).available.paginate(:page => params[:page])
+                @search_text = params[:search_text]
+                if @search_text.present?
+                        @products = Product.search_by_owner(@search_text, owner)
+                else
+                        @products = Product.owner(owner).available.paginate(:page => params[:page])
+                end
         end
 
         def edit
