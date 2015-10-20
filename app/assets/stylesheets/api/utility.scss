@@ -250,6 +250,7 @@
 }
 
 .floating-action-btn {
+    z-index: 999;
     position: fixed;
     right: 18px;
     bottom: 18px;

@@ -25,11 +25,10 @@
                         }
                         $("#cart_number").val(totalCount);
                         if (count == 0) {
-                                item.find(".glyphicon-minus").hide();
+                                item.find("#remove_btn_"+id).hide();
                                 item.find(".count").empty().hide();
                         } else {
-                                item.find(".glyphicon-minus").show();
-                                console.log(count);
+                                item.find("#remove_btn_"+id).show();
                                 item.find(".count").html(count).show();
                         }
                         if (totalCount > 0) {
@@ -68,19 +67,21 @@
                 self.addToCart = function(id) {
                         var count = Number($("#product_count_"+id).html());
                         if (!validCount(++count)) {
-                                return;
+                                return false;
                         };
                         updateDisplay(id, count, null, 1);
                         updateCount(id, count);
+                        return false;
                 };
 
                 self.removeFromCart = function(id) {
                         var count = Number($("#product_count_"+id).html());
                         if (!validCount(--count)) {
-                                return;
+                                return false;
                         };
                         updateDisplay(id, count, null, -1);
                         updateCount(id, count);
+                        return false;
                 };
 
                 return self;

@@ -7,11 +7,15 @@
       <h3><%= product.name %></h3>
       <div style="overflow:hidden;">
         <p class="pull-left"><%= number_to_currency product.price, locale: :'zh-CN', precision: 2 %></p>
-        <div class="pull-right" style="vertical-align:top;" id="control_<%=product.id%>">
+        <div class="pull-right" id="control_<%=product.id%>">
           <% count = cart_count(product, @cart) %>
-          <span class="glyphicon glyphicon-minus" style="font-size:18px;<% if count.eql? 0%>display:none;<% end %>" onclick="product.removeFromCart(<%=product.id%>)"></span>
-          <span class="count" <% if count.eql? 0%>style="display:none;"<% end %> id="product_count_<%=product.id%>"><%= count %></span>
-          <span class="glyphicon glyphicon-plus" style="font-size: 18px;" onclick="product.addToCart(<%=product.id%>)"></span>
+          <button id="remove_btn_<%=product.id%>" style="<% if count.eql? 0%>display:none;<% end %>border:none;background:transparent;" onclick="product.removeFromCart(<%=product.id%>)">
+            <i class="material-icons" style="font-size:32px;">remove_circle_outline</i>
+          </button>
+          <span class="count" style="<% if count.eql? 0%>display:none;<% end %>position:relative;top:-10px;" id="product_count_<%=product.id%>"><%= count %></span>
+          <button id="add_btn_<%=product.id%>" onclick="product.addToCart(<%=product.id%>)" style="border:none;background:transparent;">
+            <i class="material-icons" style="font-size:32px;">add_circle_outline</i>
+          </button>
         </div>
       </div>
     </div>
