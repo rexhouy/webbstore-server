@@ -48,6 +48,36 @@ class CartsController < ApiController
                 end
         end
 
+        def update_count
+                # Add product to cart or count++.
+                product = Product.valid.find(params[:id])
+                ret = {}
+                if product.nil?
+                        ret[:message] = "商品不存在"
+                        ret[:succeed] = false
+                else
+                        cart = get_cart
+                        existProduct = cart.find_index do |product|
+                                same_product? product, params[:id], nil
+                        end
+                        count = params[:count].to_i
+                        if existProduct.nil? && count > 0
+                                cart << { "id" => params[:id], "count" => count, "spec_id" => nil }
+                        elsif count.eql?(0)
+                                cart.delete_if do |p|
+                                        p["id"].eql? params[:id]
+                                end
+                        else
+                                cart[existProduct]["count"] =  count
+                        end
+                        session[:cart] = cart
+                        ret[:succeed] = true
+                        ret[:count] = count
+                        ret[:totalCount] = total_count(cart)
+                end
+                render json: ret
+        end
+
         def delete
                 cart = get_cart
                 cart.delete_if do |product|
@@ -100,6 +130,10 @@ class CartsController < ApiController
                 session[:cart] = cart
                 count
         end
-
+        def total_count(cart)
+                cart.reduce(0) do |count, p|
+                        count += p["count"].to_i
+                end
+        end
 
 end

@@ -10,7 +10,7 @@
         <div class="pull-right" style="vertical-align:top;" id="control_<%=product.id%>">
           <% count = cart_count(product, @cart) %>
           <span class="glyphicon glyphicon-minus" style="font-size:18px;<% if count.eql? 0%>display:none;<% end %>" onclick="product.removeFromCart(<%=product.id%>)"></span>
-          <span class="count" <% if count.eql? 0%>style="display:none;"<% end %>><%= count %></span>
+          <span class="count" <% if count.eql? 0%>style="display:none;"<% end %> id="product_count_<%=product.id%>"><%= count %></span>
           <span class="glyphicon glyphicon-plus" style="font-size: 18px;" onclick="product.addToCart(<%=product.id%>)"></span>
         </div>
       </div>

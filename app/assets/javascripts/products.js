@@ -4,6 +4,7 @@
                 var self = {};
                 var specbar = $("#specbar");
                 var selectedSpec = null;
+                var updateDelay = 1000;
 
                 var specExist = function() {
                         return specbar[0];
@@ -13,16 +14,22 @@
                         specbar.css("right", 0);
                 };
 
-                var updateCount = function(id, count, change) {
+                var updateDisplay = function(id, count, totalCount, change) {
                         var item = $("#control_"+id);
-                        var totalCount = Number($("#cart_number").val());
-                        totalCount += change;
+                        if (totalCount == null) {
+                                var number = $(".cart-number").html();
+                                totalCount = Number(number || 0);
+                                if (change != null) {
+                                        totalCount += change;
+                                }
+                        }
                         $("#cart_number").val(totalCount);
                         if (count == 0) {
                                 item.find(".glyphicon-minus").hide();
                                 item.find(".count").empty().hide();
                         } else {
                                 item.find(".glyphicon-minus").show();
+                                console.log(count);
                                 item.find(".count").html(count).show();
                         }
                         if (totalCount > 0) {
@@ -32,30 +39,48 @@
                         }
                 };
 
+                var updateTimer = null;
+                var updateCount = function(id, count) {
+                        if (updateTimer != null) {
+                                clearTimeout(updateTimer);
+                        }
+                        updateTimer = setTimeout(function() {
+                                $.ajax("/carts/update_count/"+id, {
+                                        method : 'post',
+                                        headers : {
+                                                'X-CSRF-Token' : utility.getCSRFtoken()
+                                        },
+                                        data : {
+                                                count: count
+                                        }
+                                }).done(function(data){
+                                        if (data.succeed) {
+                                                updateDisplay(id, data.count, data.totalCount);
+                                        }
+                                });
+                        }, updateDelay);
+                };
+
+                var validCount = function(count) {
+                        return count >= 0 && count < 100;
+                };
+
                 self.addToCart = function(id) {
-                        $.ajax("/carts/plus/"+id, {
-                                method : 'post',
-                                headers : {
-                                        'X-CSRF-Token' : utility.getCSRFtoken()
-                                }
-                        }).done(function(data){
-                                if (data.succeed) {
-                                        updateCount(id, data.count, 1);
-                                }
-                        });
+                        var count = Number($("#product_count_"+id).html());
+                        if (!validCount(++count)) {
+                                return;
+                        };
+                        updateDisplay(id, count, null, 1);
+                        updateCount(id, count);
                 };
 
                 self.removeFromCart = function(id) {
-                        $.ajax("/carts/minus/"+id, {
-                                method : 'post',
-                                headers : {
-                                        'X-CSRF-Token' : utility.getCSRFtoken()
-                                }
-                        }).done(function(data){
-                                if (data.succeed) {
-                                        updateCount(id, data.count, -1);
-                                }
-                        });
+                        var count = Number($("#product_count_"+id).html());
+                        if (!validCount(--count)) {
+                                return;
+                        };
+                        updateDisplay(id, count, null, -1);
+                        updateCount(id, count);
                 };
 
                 return self;

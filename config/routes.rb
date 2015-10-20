@@ -34,6 +34,7 @@ Rails.application.routes.draw do
         get 'carts' => 'carts#show', as: :carts
         post 'carts/plus/:id' => 'carts#add', as: :carts_add_product
         post 'carts/minus/:id' => 'carts#minus'
+        post 'carts/update_count/:id' => 'carts#update_count'
         put 'carts' => 'carts#update', as: :carts_mod_product
         delete 'carts' => 'carts#delete', as: :carts_del_product
         get 'orders/confirm' => 'orders#confirm', as: :orders_confirm
