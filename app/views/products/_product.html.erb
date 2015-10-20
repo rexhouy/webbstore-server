@@ -1,20 +1,20 @@
-<section class="col-xs-12 col-sm-4 col-lg-3">
+<section class="col-xs-12 col-sm-6 col-lg-3">
   <div class="inherit-height table-center-wrap">
     <div class="image pull-left table-center inherit-height">
       <%= image_tag product.cover_image %>
     </div>
     <div style="width:100%;" class="table-center content inherit-height">
       <h3><%= product.name %></h3>
-      <div style="overflow:hidden;">
+      <div>
         <p class="pull-left"><%= number_to_currency product.price, locale: :'zh-CN', precision: 2 %></p>
-        <div class="pull-right" id="control_<%=product.id%>">
+        <div class="pull-right" id="control_<%=product.id%>" style="position:relative;top:-4px;">
           <% count = cart_count(product, @cart) %>
           <button id="remove_btn_<%=product.id%>" style="<% if count.eql? 0%>display:none;<% end %>border:none;background:transparent;" onclick="product.removeFromCart(<%=product.id%>)">
-            <i class="material-icons" style="font-size:32px;">remove_circle_outline</i>
+            <i class="material-icons" style="font-size:24px;">remove_circle_outline</i>
           </button>
-          <span class="count" style="<% if count.eql? 0%>display:none;<% end %>position:relative;top:-10px;" id="product_count_<%=product.id%>"><%= count %></span>
+          <span class="count" style="<% if count.eql? 0%>display:none;<% end %>position:relative;top:-6px;" id="product_count_<%=product.id%>"><%= count %></span>
           <button id="add_btn_<%=product.id%>" onclick="product.addToCart(<%=product.id%>)" style="border:none;background:transparent;">
-            <i class="material-icons" style="font-size:32px;">add_circle_outline</i>
+            <i class="material-icons" style="font-size:24px;">add_circle_outline</i>
           </button>
         </div>
       </div>
