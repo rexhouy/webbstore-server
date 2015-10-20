@@ -158,3 +158,13 @@ div.simple_captcha {
 .btn, button {
     outline: none !important;
 }
+
+/*
+  * Hide webkit buttons for number input field
+  */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 2px; /* <-- Apparently some margin are still there even though it's hidden */
+}

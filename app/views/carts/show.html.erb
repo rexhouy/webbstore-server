@@ -40,7 +40,7 @@
             </a>
           </div>
           <div class="col-md-3 col-sm-3 col-xs-3">
-            <div class="list-item" style="overflow:hidden;">
+            <div class="list-item">
               <div class="price "><%= number_to_currency unit_price(product), precision: 2 %></div>
               <%= number_field_tag "count", product["count"], onchange: "carts.updateCount(this, #{product['id']}, '#{product['spec_id']}')", style: "width: 50px;", class: "list-item", min: 1%>
             </div>
