@@ -27,17 +27,17 @@
         <% @cart.each do |product| %>
         <div class="cart row">
           <div class="col-md-3 col-sm-3 col-xs-3 talbe-center-wrap inherit-height" style="margin-right:-20px;">
-            <a href="/products/<%= product['id']%>" class="table-center inherit-height cart-image">
+            <span class="table-center inherit-height cart-image">
               <%= image_tag product['detail'].cover_image %>
-            </a>
+            </span>
           </div>
           <div class="col-md-6 col-sm-6 col-xs-6 order-item-name">
-            <a href="/products/<%= product['id']%>" class="table-center inherit-height cart-image">
+            <span class="table-center inherit-height cart-image">
               <div><%= product['detail'].name%></div>
               <% unless product["spec"].nil? %>
               <div style="color: #999;font-size: 12px;"><%= product["spec"].value %></div>
               <% end %>
-            </a>
+            </span>
           </div>
           <div class="col-md-3 col-sm-3 col-xs-3">
             <div class="list-item">
