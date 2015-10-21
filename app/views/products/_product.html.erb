@@ -10,11 +10,11 @@
         <div class="pull-right" id="control_<%=product.id%>" style="position:relative;top:-4px;">
           <% count = cart_count(product, @cart) %>
           <button id="remove_btn_<%=product.id%>" style="<% if count.eql? 0%>display:none;<% end %>border:none;background:transparent;" onclick="product.removeFromCart(<%=product.id%>)">
-            <i class="material-icons" style="font-size:24px;">remove_circle_outline</i>
+            <i class="material-icons" style="font-size:24px;">&#xE15D;</i>
           </button>
           <span class="count" style="<% if count.eql? 0%>display:none;<% end %>position:relative;top:-6px;" id="product_count_<%=product.id%>"><%= count %></span>
           <button id="add_btn_<%=product.id%>" onclick="product.addToCart(<%=product.id%>)" style="border:none;background:transparent;">
-            <i class="material-icons" style="font-size:24px;">add_circle_outline</i>
+            <i class="material-icons" style="font-size:24px;">&#xE148;</i>
           </button>
         </div>
       </div>
