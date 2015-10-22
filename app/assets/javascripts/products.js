@@ -4,7 +4,7 @@
                 var self = {};
                 var specbar = $("#specbar");
                 var selectedSpec = null;
-                var updateDelay = 1000;
+                var updateDelay = 500;
 
                 var specExist = function() {
                         return specbar[0];
@@ -39,10 +39,12 @@
                 };
 
                 var updateTimer = null;
+                var updateId = null;
                 var updateCount = function(id, count) {
-                        if (updateTimer != null) {
+                        if (updateTimer != null && updateId == id) {
                                 clearTimeout(updateTimer);
                         }
+                        updateId = id;
                         updateTimer = setTimeout(function() {
                                 $.ajax("/carts/update_count/"+id, {
                                         method : 'post',
@@ -54,7 +56,7 @@
                                         }
                                 }).done(function(data){
                                         if (data.succeed) {
-                                                updateDisplay(id, data.count, data.totalCount);
+                                                // updateDisplay(id, data.count, data.totalCount);
                                         }
                                 });
                         }, updateDelay);
