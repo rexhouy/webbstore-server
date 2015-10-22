@@ -28,6 +28,8 @@ class Admin::ProductsController < AdminController
                         if @product.update(product_params)
                                 redirect_to :action => "show", :id => @product.id
                         else
+                                @suppliers = Supplier.owner(owner).all || []
+                                @channels = Channel.owner(owner).all
                                 render "edit"
                         end
                 end
