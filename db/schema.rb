@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150917053827) do
+ActiveRecord::Schema.define(version: 20151023024553) do
+
+  create_table "account_balance_histories", force: :cascade do |t|
+    t.decimal  "receipt",                 precision: 8, scale: 2
+    t.decimal  "disbursment",             precision: 8, scale: 2
+    t.decimal  "balance",                 precision: 8, scale: 2
+    t.string   "operator",    limit: 255
+    t.integer  "user_id",     limit: 4
+    t.string   "order_no",   limit: 255
+    t.string   "comment",     limit: 255
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+  end
 
   create_table "addresses", force: :cascade do |t|
     t.string   "city",       limit: 255
@@ -88,9 +100,45 @@ ActiveRecord::Schema.define(version: 20150917053827) do
     t.string   "image",      limit: 255
     t.string   "url",        limit: 255
     t.integer  "priority",   limit: 4
+    t.string   "color",      limit: 255
   end
 
   add_index "channels", ["group_id"], name: "fk_rails_8011c05949", using: :btree
+
+  create_table "complain_histories", force: :cascade do |t|
+    t.datetime "time"
+    t.integer  "complain_id", limit: 4
+    t.integer  "status",      limit: 4
+    t.string   "memo",        limit: 255
+    t.integer  "user_id",     limit: 4
+  end
+
+  create_table "complains", force: :cascade do |t|
+    t.integer  "order_id",        limit: 4
+    t.text     "content",         limit: 65535
+    t.string   "contact_name",    limit: 255
+    t.string   "contact_tel",     limit: 11
+    t.string   "contact_address", limit: 255
+    t.string   "type",            limit: 255
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.integer  "group_id",        limit: 4
+    t.integer  "status",          limit: 4
+    t.integer  "user_id",         limit: 4
+    t.integer  "staff_id",        limit: 4
+  end
+
+  create_table "coupons", force: :cascade do |t|
+    t.date     "start_date"
+    t.date     "end_date"
+    t.string   "title",      limit: 255
+    t.decimal  "amount",                 precision: 8, scale: 2
+    t.integer  "limit",      limit: 4
+    t.integer  "seller_id",  limit: 4
+    t.boolean  "dispensed",   limit: 1
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+  end
 
   create_table "groups", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -98,6 +146,17 @@ ActiveRecord::Schema.define(version: 20150917053827) do
     t.datetime "updated_at",             null: false
     t.integer  "status",     limit: 4
     t.integer  "parent_id",  limit: 4
+  end
+
+  create_table "householders", force: :cascade do |t|
+    t.string   "no",         limit: 255
+    t.string   "name",       limit: 255
+    t.string   "tel",        limit: 255
+    t.decimal  "house_size",             precision: 4, scale: 2
+    t.datetime "to_date"
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
   end
 
   create_table "order_histories", force: :cascade do |t|
@@ -108,19 +167,24 @@ ActiveRecord::Schema.define(version: 20150917053827) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.integer  "status",          limit: 4
-    t.decimal  "subtotal",                      precision: 10, scale: 2
-    t.integer  "seller_id",       limit: 4
-    t.integer  "customer_id",     limit: 4
-    t.datetime "created_at",                                             null: false
-    t.datetime "updated_at",                                             null: false
-    t.string   "order_id",        limit: 255
-    t.integer  "payment_type",    limit: 4
-    t.string   "name",            limit: 255
-    t.string   "contact_name",    limit: 255
-    t.string   "contact_tel",     limit: 11
-    t.string   "contact_address", limit: 255
-    t.text     "memo",            limit: 65535
+    t.integer  "status",               limit: 4
+    t.decimal  "subtotal",                           precision: 10, scale: 2
+    t.integer  "seller_id",            limit: 4
+    t.integer  "customer_id",          limit: 4
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
+    t.string   "order_id",             limit: 255
+    t.integer  "payment_type",         limit: 4
+    t.string   "name",                 limit: 255
+    t.string   "contact_name",         limit: 255
+    t.string   "contact_tel",          limit: 11
+    t.string   "contact_address",      limit: 255
+    t.text     "memo",                 limit: 65535
+    t.integer  "delivery_type",        limit: 4
+    t.string   "type",                 limit: 255
+    t.integer  "coupon_id",            limit: 4
+    t.decimal  "coupon_amount",                      precision: 8,  scale: 2
+    t.decimal  "user_account_balance",               precision: 8,  scale: 2
   end
 
   add_index "orders", ["customer_id"], name: "fk_rails_c2426400ce", using: :btree
@@ -134,6 +198,9 @@ ActiveRecord::Schema.define(version: 20150917053827) do
     t.datetime "created_at",                                          null: false
     t.datetime "updated_at",                                          null: false
     t.integer  "specification_id", limit: 4
+    t.integer  "supplier_id",      limit: 4
+    t.integer  "status",           limit: 4
+    t.integer  "seller_id",        limit: 4
   end
 
   add_index "orders_products", ["order_id"], name: "fk_rails_889bfce267", using: :btree
@@ -147,22 +214,25 @@ ActiveRecord::Schema.define(version: 20150917053827) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.string   "description", limit: 255
-    t.text     "article",     limit: 65535
-    t.string   "cover_image", limit: 255
-    t.integer  "owner_id",    limit: 4
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
-    t.boolean  "recommend",   limit: 1
-    t.boolean  "on_sale",     limit: 1
-    t.decimal  "price",                     precision: 8, scale: 2
-    t.integer  "storage",     limit: 4
-    t.integer  "sales",       limit: 4
-    t.integer  "status",      limit: 4
-    t.integer  "priority",    limit: 4
-    t.integer  "supplier_id", limit: 4
-    t.integer  "category_id", limit: 4
+    t.string   "name",         limit: 255
+    t.string   "description",  limit: 255
+    t.text     "article",      limit: 65535
+    t.string   "cover_image",  limit: 255
+    t.integer  "owner_id",     limit: 4
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
+    t.boolean  "recommend",    limit: 1
+    t.boolean  "on_sale",      limit: 1
+    t.decimal  "price",                      precision: 8, scale: 2
+    t.integer  "storage",      limit: 4
+    t.integer  "sales",        limit: 4
+    t.integer  "status",       limit: 4
+    t.integer  "priority",     limit: 4
+    t.integer  "supplier_id",  limit: 4
+    t.integer  "category_id",  limit: 4
+    t.string   "barcode",      limit: 255
+    t.decimal  "origin_price",               precision: 8, scale: 2
+    t.string   "type",         limit: 255
   end
 
   add_index "products", ["name", "description", "article"], name: "fulltext_index", type: :fulltext
@@ -178,19 +248,33 @@ ActiveRecord::Schema.define(version: 20150917053827) do
   add_index "simple_captcha_data", ["key"], name: "idx_key", using: :btree
 
   create_table "specifications", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.string   "value",      limit: 255
-    t.integer  "product_id", limit: 4
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
-    t.decimal  "price",                  precision: 8, scale: 2
-    t.integer  "storage",    limit: 4
-    t.integer  "sales",      limit: 4
-    t.integer  "status",     limit: 4
-    t.integer  "count",      limit: 4
+    t.string   "name",         limit: 255
+    t.string   "value",        limit: 255
+    t.integer  "product_id",   limit: 4
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.decimal  "price",                    precision: 8, scale: 2
+    t.integer  "storage",      limit: 4
+    t.integer  "sales",        limit: 4
+    t.integer  "status",       limit: 4
+    t.integer  "count",        limit: 4
+    t.decimal  "origin_price",             precision: 8, scale: 2
+    t.string   "barcode",      limit: 255
   end
 
   add_index "specifications", ["product_id"], name: "fk_rails_9b321d46dc", using: :btree
+
+  create_table "staffs", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.integer  "workday",    limit: 4
+    t.string   "tel",        limit: 11
+    t.string   "scope",      limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "photo",      limit: 255
+    t.integer  "group_id",   limit: 4
+    t.boolean  "display",    limit: 1
+  end
 
   create_table "suppliers", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false
@@ -213,13 +297,21 @@ ActiveRecord::Schema.define(version: 20150917053827) do
     t.decimal  "supplier_balance",             precision: 8, scale: 2
   end
 
+  create_table "user_coupons", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.integer  "coupon_id",  limit: 4
+    t.integer  "status",     limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  limit: 255, default: ""
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "email",                  limit: 255,                         default: ""
+    t.string   "encrypted_password",     limit: 255,                         default: "", null: false
     t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
+    t.integer  "sign_in_count",          limit: 4,                           default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",     limit: 255
@@ -229,14 +321,16 @@ ActiveRecord::Schema.define(version: 20150917053827) do
     t.integer  "role",                   limit: 4
     t.integer  "group_id",               limit: 4
     t.integer  "status",                 limit: 4
-    t.string   "tel",                    limit: 11,               null: false
+    t.string   "tel",                    limit: 11,                                       null: false
     t.string   "wechat_openid",          limit: 255
     t.boolean  "order_notification",     limit: 1
-    t.integer  "failed_attempts",        limit: 4,   default: 0
+    t.integer  "failed_attempts",        limit: 4,                           default: 0
     t.string   "unlock_token",           limit: 255
     t.datetime "locked_at"
     t.integer  "introducer",             limit: 4
     t.string   "introducer_token",       limit: 255
+    t.integer  "supplier_id",            limit: 4
+    t.decimal  "balance",                            precision: 8, scale: 2
   end
 
   add_index "users", ["group_id"], name: "index_users_on_group_id", using: :btree

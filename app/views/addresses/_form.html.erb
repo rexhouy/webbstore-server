@@ -1,33 +1,33 @@
-<%= form_for @address, :html => {:class => "form-horizontal"} do |p| %>
-  <%= p.hidden_field :id, :class => "form-control" %>
+<%= form_for @address, html: {class: "form-horizontal"} do |p| %>
+  <%= p.hidden_field :id, class: "form-control" %>
   <div class="form-group">
-    <%= p.label :name, "名字",  :class => "col-sm-2 control-label" %>
+    <%= p.label :name, "名字",  class: "col-sm-2 control-label" %>
     <div class="col-sm-4">
-      <%= p.text_field :name, :class => "form-control" %>
+      <%= p.text_field :name, class: "form-control" %>
     </div>
   </div>
   <div class="form-group">
-    <%= p.label :tel, "电话",  :class => "col-sm-2 control-label"  %>
+    <%= p.label :tel, "电话",  class: "col-sm-2 control-label"  %>
     <div class="col-sm-4">
-      <%= p.telephone_field :tel, :class => "form-control" %>
+      <%= p.telephone_field :tel, class: "form-control" %>
     </div>
   </div>
   <div class="form-group">
-    <%= p.label :state, "市",  :class => "col-sm-2 control-label"  %>
+    <%= p.label :state, "市",  class: "col-sm-2 control-label"  %>
     <div class="col-sm-4">
       <%= p.select :state, [], {}, {class: "form-control", "onchange": "address.stateChange()"} %>
     </div>
   </div>
   <div class="form-group">
-    <%= p.label :city, "区", :class => "col-sm-2 control-label"  %>
+    <%= p.label :city, "区", class: "col-sm-2 control-label"  %>
     <div class="col-sm-4">
       <%= p.select :city, {}, {}, {class: "form-control"} %>
     </div>
   </div>
   <div class="form-group">
-    <%= p.label :street, "街道地址", :class => "col-sm-2 control-label"  %>
+    <%= p.label :street, "街道地址", class: "col-sm-2 control-label"  %>
     <div class="col-sm-10">
-      <%= p.text_field :street, :class => "form-control" %>
+      <%= p.text_field :street, class: "form-control" %>
     </div>
   </div>
 <% end %>

@@ -4,10 +4,10 @@
   <li><a href="/admin/products">商品</a></li>
   <li class="active">类目</li>
 </ol>
-<%= link_to new_admin_category_path,  :class => "btn btn-primary" do %>
+<%= link_to new_admin_category_path,  class: "btn btn-primary" do %>
 <span class="glyphicon glyphicon-plus"></span> 新建
 <% end %>
-
+<%= alert_info %>
 <table class="table">
   <thead>
     <tr>

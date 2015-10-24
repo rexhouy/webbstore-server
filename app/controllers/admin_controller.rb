@@ -25,7 +25,8 @@ class AdminController < ApplicationController
                           {url: admin_trades_url, text: "交易", class: "", resource: Trade },
                           {url: admin_channels_url, text: "CMS", class: "", resource: Channel },
                           {url: admin_users_url, text: "用户", class: "", resource: User },
-                          {url: admin_groups_url, text: "机构", class: "", resource: Group },]
+                          {url: admin_groups_url, text: "机构", class: "", resource: Group },
+                          {url: admin_coupons_url, text: "促销", class: "", resource: Coupon }]
                 @menus.select! do |menu|
                         menu[:class] = "active" if menu[:url].end_with? controller_name
                         can? :manage, menu[:resource]

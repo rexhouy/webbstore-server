@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
 
         has_many :addresses, -> { where(status: Address.statuses[:active]) }
         has_many :cards, -> { where.not(status: Card.statuses[:unpaid]).order(created_at: :desc) }
+        has_many :coupons, through: :user_coupons
+        has_many :account_balance_histories
         belongs_to :group
 
         before_create :set_default_value

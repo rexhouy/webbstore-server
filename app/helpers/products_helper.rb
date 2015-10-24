@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-module Api::ProductsHelper
+module ProductsHelper
 
         def specification_group(specifications)
                 specifications.reduce(Hash.new) do |group, spec|

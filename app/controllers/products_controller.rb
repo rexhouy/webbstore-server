@@ -14,7 +14,7 @@ class ProductsController < ApiController
                                 render :index
                         }
                         format.json {
-                                @products = Product.owner(owner).category(@category).available.valid.order(priority: :desc).paginate(:page => params[:page])
+                                @products = Product.owner(owner).category(@category).available.valid.order(priority: :desc).paginate(page: params[:page])
                                 render json: @products
                         }
                 end

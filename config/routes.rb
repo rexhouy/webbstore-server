@@ -80,6 +80,7 @@ Rails.application.routes.draw do
 
                 # Users
                 resources :users
+                get "customers" => "users#customer"
 
                 # Orders
                 get "orders/cards" => "orders#cards", as: :orders_cards # cards
@@ -103,6 +104,10 @@ Rails.application.routes.draw do
 
                 # Trade
                 get "trades" => "trades#index", as: :trades
+
+                # Coupon
+                resources :coupons
+                post "coupons/dispense/:id" => "coupons#dispense"
 
                 # Image
                 post 'image' => 'images#create'

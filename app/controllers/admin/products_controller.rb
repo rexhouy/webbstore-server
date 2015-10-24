@@ -1,35 +1,29 @@
+# -*- coding: utf-8 -*-
 class Admin::ProductsController < AdminController
         # Checks authorization for all actions using cancan
         load_and_authorize_resource
+        before_action :set_product, only: [:show, :edit, :update, :destroy]
 
         def index
                 @search_text = params[:search_text]
                 if @search_text.present?
                         @products = Product.search_by_owner(@search_text, owner)
                 else
-                        @products = Product.owner(owner).available.paginate(:page => params[:page])
+                        @products = Product.owner(owner).available.paginate(page: params[:page])
                 end
         end
 
         def edit
-                @product = Product.find(params[:id])
-                @suppliers = Supplier.owner(owner).all || []
-                @channels = Channel.owner(owner).all
-                return head(:forbidden) unless @product.owner_id.eql? owner
         end
 
         def update
-                @product = Product.find(params[:id])
-                return head(:forbidden) unless @product.owner_id.eql? owner
                 Product.transaction do
                         destroyed_specs(@product.specifications).each do |spec|
                                 spec.update(status: Specification.statuses[:disabled])
                         end
                         if @product.update(product_params)
-                                redirect_to :action => "show", :id => @product.id
+                                redirect_to action: "show", id: @product.id, notice: "更新成功"
                         else
-                                @suppliers = Supplier.owner(owner).all || []
-                                @channels = Channel.owner(owner).all
                                 render "edit"
                         end
                 end
@@ -37,40 +31,38 @@ class Admin::ProductsController < AdminController
 
         def new
                 @product = Product.new
-                @suppliers = Supplier.owner(owner).all || []
-                @channels = Channel.owner(owner).all
+
         end
 
         def show
-                @product = Product.find(params[:id])
-                return head(:forbidden) unless @product.owner_id.eql? owner
         end
 
         def create
                 @product = Product.new(product_params)
                 @product.owner_id = owner
                 if @product.save
-                        redirect_to :action => "show", :id => @product.id
+                        redirect_to action: "show", id: @product.id, notice: "创建成功"
                 else
-                        @suppliers = Supplier.owner(owner).all || []
-                        @channels = Channel.owner(owner).all
                         render "new"
                 end
         end
 
         def preview
                 @product = Product.new(preview_params)
-                render "/products/show", :layout => "application"
+                render "/products/show", layout: "application"
         end
 
         def destroy
-                @product = Product.find(params[:id])
-                return head(:forbidden) unless @product.owner_id.eql? owner
                 @product.update(status: Product.statuses[:disabled], on_sale: false)
-                redirect_to admin_products_path
+                redirect_to admin_products_path, notice: "删除成功"
         end
 
         private
+        def set_product
+                @product = Product.find(params[:id])
+                render_404 unless @product.owner_id.eql?  owner
+        end
+
         def destroyed_specs(specs)
                 specs ||= []
                 if params[:product][:specifications_attributes].nil?

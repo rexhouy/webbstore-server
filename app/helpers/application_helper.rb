@@ -60,6 +60,17 @@ module ApplicationHelper
                 ).html_safe
         end
 
+        def alert_info
+                if notice.present?
+                        return %(
+                                   <div class="alert alert-info" role="alert">
+                                      #{notice}
+                                  </div>
+                        ).html_safe
+                end
+                ""
+        end
+
         def category
                 return 1 if session[:category].nil?
                 session[:category]["id"]
@@ -69,6 +80,20 @@ module ApplicationHelper
                 cart = session[:cart] || []
                 cart.reduce(0) do |sum, product|
                         sum += product["count"].to_i
+                end
+        end
+
+        def product_price(product)
+                product["count"].to_f * unit_price(product)
+        end
+
+        def unit_price(product)
+                (product["spec"].nil?) ? product["detail"].price.to_f : product["spec"].price.to_f
+        end
+
+        def cart_price(cart)
+                cart.reduce(0) do |memo, product|
+                        memo += product_price(product)
                 end
         end
 

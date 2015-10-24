@@ -11,8 +11,7 @@ class Admin::TradesController < AdminController
                         @trades = Trade.owner(owner).filter(params).order(time: :asc)
                         render :excel, layout: false
                 else
-                        @trades = Trade.owner(owner).filter(params).order(time: :asc).paginate(:page => params[:page])
-                        @suppliers = Supplier.owner(owner).all
+                        @trades = Trade.owner(owner).filter(params).order(time: :asc).paginate(page: params[:page])
                 end
         end
 

@@ -1,0 +1,54 @@
+<%= form_for([:admin, @coupon], html: {class: "form-horizontal"}) do |s| %>
+<% if @coupon.errors.any? %>
+<div class="alert alert-danger" role="alert">
+  <strong>保存失败</strong>
+  <ul>
+    <% @coupon.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+<div class="form-group">
+  <%= s.label :name, "名称", class: "col-sm-2 control-label"  %>
+  <div class="col-sm-4">
+    <%= s.text_field :title, class: "form-control", required: true, autofocus: true %>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= s.label :name, "金额", class: "col-sm-2 control-label"  %>
+  <div class="col-sm-2">
+    <%= s.number_field :amount, class: "form-control", required: true, step: :any, min: 0 %>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= s.label :name, "有效期", class: "col-sm-2 control-label"  %>
+  <div class="col-sm-3">
+    <%= s.date_field :start_date, class: "form-control", required: true %>
+  </div>
+  <div class="col-sm-3">
+    <%= s.date_field :end_date, class: "form-control", required: true %>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= s.label :name, "使用条件", class: "col-sm-2 control-label"  %>
+  <div class="col-sm-2">
+    <p class="form-control-static">最低消费金额不低于</p>
+  </div>
+  <div class="col-sm-2">
+    <%= s.number_field :limit, class: "form-control", required: true, step: :any, min: 0 %>
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <%= submit_tag "确认",  data: { disable_with: "请稍后..."},  class: "btn btn-primary" %>
+    <%= link_to "取消", admin_coupons_path, class: "btn btn-default" %>
+  </div>
+</div>
+
+<% end %>

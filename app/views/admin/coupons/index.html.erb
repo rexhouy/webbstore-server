@@ -1,0 +1,79 @@
+<h1 class="page-header">优惠券管理</h1>
+<%= alert_info %>
+<%= link_to "/admin/coupons/new", method: "GET",  class: "btn btn-primary" do %>
+<span class="glyphicon glyphicon-plus"></span> 新建
+<% end %>
+
+<%= alert_info %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <td>#</td>
+      <td>名称</td>
+      <td>有效期</td>
+      <td>金额</td>
+      <td>使用条件</td>
+      <td>状态</td>
+      <td>操作</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @coupons.each_with_index do |coupon, index| %>
+    <tr>
+      <td><%= index+1 %></td>
+      <td><%= coupon.title  %></td>
+      <td><%= display_date coupon.start_date %> - <%= display_date coupon.end_date %></td>
+      <td><%= number_to_currency coupon.amount, locale: :'zh-CN', precision: 0 %></td>
+      <td>订单总金额满<%= coupon.limit %>元</td>
+      <td><%= coupon_status coupon %></td>
+      <td>
+        <%= link_to admin_coupon_path(coupon) do %>
+          <span class="glyphicon glyphicon-eye-open icon"></span>
+        <% end %>
+        <% unless coupon.dispensed %>
+          <a href="#" onclick="coupon.confirm(<%=coupon.id%>, '<%=coupon.title%>')" title="发放"><span class="glyphicon glyphicon-send"></span></a>
+          <%= link_to edit_admin_coupon_path(coupon) do %>
+            <span class="glyphicon glyphicon-pencil icon"></span>
+          <% end %>
+          <%= link_to admin_coupon_path(coupon), method: :delete, data: {confirm: %(确定要删除"#{coupon.title}"吗？)} do %>
+            <span class="glyphicon glyphicon-trash icon"></span>
+          <% end %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="7">
+        <%= page_info @coupons %>
+        <%= will_paginate @coupons, page_links: false %>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="dispenseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="dispenseModalLabel"></h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <p>点击<small class="btn-word">发放</small>发送给所有用户</p>
+          <p>如果需要发放给指定用户，请到<a href="">用户管理</a>中操作</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <%=form_tag "", method: "POST", id: "dispense_form", style: "display:inline;" do %>
+        <button type="button" class="btn btn-primary" onclick="coupon.dispense()">发放</button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

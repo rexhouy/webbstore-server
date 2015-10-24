@@ -1,0 +1,27 @@
+// Place all the styles related to the admin::coupons controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "variables";
+.coupon {
+    width: 100%;
+    max-width: 400px;
+    background: $accent-color-light;
+    padding: 10px 20px;
+    color: #888;
+    div {
+        margin: 8px 0;
+    }
+    .title {
+        overflow:hidden;
+        margin: 0;
+    }
+    .amount {
+        color: #090;
+        font-weight: bold;
+        font-size: 24px;
+        small {
+            padding-right: 8px;
+            font-size: 12px;
+        }
+    }
+}

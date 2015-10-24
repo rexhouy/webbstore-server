@@ -7,7 +7,7 @@ class OrdersController < ApiController
 
         def index
                 @type = params[:type] || "all"
-                @orders = Order.where(customer: current_user).owner(Rails.application.config.owner).type(@type).order(id: :desc).paginate(:page => params[:page])
+                @orders = Order.where(customer: current_user).owner(Rails.application.config.owner).type(@type).order(id: :desc).paginate(page: params[:page])
         end
 
         def show

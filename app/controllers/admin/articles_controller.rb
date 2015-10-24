@@ -1,14 +1,14 @@
+# -*- coding: utf-8 -*-
 class Admin::ArticlesController < AdminController
         # Checks authorization for all actions using cancan
         load_and_authorize_resource except: :create
+        before_action :set_article, only: [:show, :edit, :update, :destroy]
 
         def index
-                @articles = Article.owner(owner).paginate(:page => params[:page])
+                @articles = Article.owner(owner).paginate(page: params[:page])
         end
 
         def edit
-                @article = Article.find(params[:id])
-                render_404 unless @article.group_id.eql? current_user.group_id
         end
 
         def new
@@ -16,10 +16,8 @@ class Admin::ArticlesController < AdminController
         end
 
         def destroy
-                article = Article.find(params[:id])
-                return render_404 unless article.group_id.eql? current_user.group_id
                 article.destroy
-                redirect_to admin_articles_path
+                redirect_to admin_articles_path, notice: "删除成功"
         end
 
         def create
@@ -27,26 +25,28 @@ class Admin::ArticlesController < AdminController
                 authorize! :create, @article
                 @article.group_id = owner
                 if @article.save
-                        redirect_to :action => "show", :id => @article.id
+                        redirect_to action: "show", id: @article.id, notice: "创建成功"
                 else
                         render :new
                 end
         end
 
         def update
-                @article = Article.find(params[:id])
                 if @article.update(article_param)
-                        redirect_to :action => "show", :id => @article.id
+                        redirect_to action: "show", id: @article.id, notice: "更新成功"
                 else
                         render :edit
                 end
         end
 
         def show
-                @article = Article.find_by_id(params[:id])
         end
 
         private
+        def set_article
+                @article = Article.find(params[:id])
+                render_404 unless @article.group_id.eql? owner
+        end
         def article_param
                 params.require(:article).permit(:title, :content)
         end

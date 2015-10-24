@@ -31,7 +31,7 @@
     max-width: 300px;
     height: 100%;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     box-shadow: $shadow;
     position: fixed;
     left: -100%;
@@ -96,6 +96,7 @@
     overflow: hidden;
     max-width: 800px;
     background-color: #F8F8F8;
+    z-index: 999;
     .btn {
         position: absolute;
     }

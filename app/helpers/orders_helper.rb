@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-module Api::OrdersHelper
+module OrdersHelper
 
         def order_status(order)
                 if order.placed? && !order.offline_pay?

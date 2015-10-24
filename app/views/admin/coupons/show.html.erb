@@ -1,0 +1,20 @@
+<h1 class="page-header">优惠券详情</h1>
+<%= alert_info %>
+<div class="control-panel">
+  <% unless @coupon.dispensed %>
+  <%= link_to "编辑", "/admin/coupons/#{@coupon.id}/edit", class: "btn btn-primary"%>
+  <% end %>
+  <%= link_to "返回", admin_coupons_path, class: "btn btn-default" %>
+</div>
+<div class="coupon">
+  <div class="title">
+    <span class="amount pull-left"><small>&#165;</small><%= @coupon.amount %></span>
+    <span class="title pull-right"><%= @coupon.title %></span>
+  </div>
+  <div>
+    使用条件：订单总金额满<%= @coupon.limit %>元
+  </div>
+  <div>
+    有效期：<%= display_date @coupon.start_date %> - <%= display_date @coupon.end_date %>
+  </div>
+</div>

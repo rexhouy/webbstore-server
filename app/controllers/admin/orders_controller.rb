@@ -2,20 +2,20 @@
 class Admin::OrdersController < AdminController
         # Checks authorization for all actions using cancan
         authorize_resource
+        before_action :set_order, only: [:show, :cancel, :shipping, :deliver]
 
         def index
                 @order_id_or_tel = params[:order_id_or_tel] || ""
                 @order_date = params[:order_date] || ""
                 if @order_id_or_tel.blank? && @order_date.blank?
                         @type = params[:type] || "wait_shipping"
-                        @orders = Order.type(@type).owner(owner).paginate(:page => params[:page])
+                        @orders = Order.type(@type).owner(owner).paginate(page: params[:page])
                 else
-                        @orders = Order.search(@order_id_or_tel, @order_date).owner(owner).paginate(:page => params[:page])
+                        @orders = Order.search(@order_id_or_tel, @order_date).owner(owner).paginate(page: params[:page])
                 end
         end
 
         def show
-                @order = Order.find(params[:id])
         end
 
         def cancel
@@ -55,9 +55,9 @@ class Admin::OrdersController < AdminController
         def cards
                 @type = params[:type] || "all"
                 if @type.eql? "all"
-                        @cards = Card.where(status: Card.statuses[:open]).where("remain > 0").paginate(:page => params[:page])
+                        @cards = Card.where(status: Card.statuses[:open]).where("remain > 0").paginate(page: params[:page])
                 else
-                        @cards = Card.where(next: date_of_next("Wednesday")).where("remain > 0").paginate(:page => params[:page])
+                        @cards = Card.where(next: date_of_next("Wednesday")).where("remain > 0").paginate(page: params[:page])
                 end
         end
 
@@ -85,6 +85,10 @@ class Admin::OrdersController < AdminController
         end
 
         private
+        def set_order
+                @order = Order.find(params[:id])
+                render_404 unless @order.seller_id.eql? owner
+        end
         def date_of_next(day)
                 date  = Date.parse(day)
                 delta = date > Date.today ? 0 : 7
@@ -92,7 +96,6 @@ class Admin::OrdersController < AdminController
         end
 
         def change_status(status)
-                @order = Order.find(params[:id])
                 @order.status = status
                 Order.transaction do
                         @order.save!

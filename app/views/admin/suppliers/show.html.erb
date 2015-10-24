@@ -1,11 +1,5 @@
 <h1 class="page-header">预览</h1>
-
-<% if notice.present? %>
-<div class="alert alert-info" role="alert">
-  <%= notice %>
-</div>
-<% end %>
-
+<%= alert_info %>
 <div class="control-panel">
   <%= link_to "编辑", edit_admin_supplier_path(@supplier), class: "btn btn-primary"%>
   <%= link_to "返回", admin_suppliers_path, class: "btn btn-default" %>

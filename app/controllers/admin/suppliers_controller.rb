@@ -5,7 +5,7 @@ class Admin::SuppliersController < AdminController
         # GET /admin/suppliers
         # GET /admin/suppliers.json
         def index
-                @suppliers = Supplier.owner(owner).paginate(:page => params[:page])
+                @suppliers = Supplier.owner(owner).paginate(page: params[:page])
         end
 
         # GET /admin/suppliers/1
@@ -67,6 +67,7 @@ class Admin::SuppliersController < AdminController
         # Use callbacks to share common setup or constraints between actions.
         def set_supplier
                 @supplier = Supplier.find(params[:id])
+                render_404 unless @supplier.group_id.eql?  owner
         end
 
         # Never trust parameters from the scary internet, only allow the white list through.

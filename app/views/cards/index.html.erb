@@ -68,7 +68,7 @@
 <!-- 开卡 -->
 <article class="modal fade" id="cards_open_modal">
   <div class="modal-dialog">
-    <%= form_for "", method: "put", :html => {:class => "form-horizontal", id: "open_form"} do %>
+    <%= form_for "", method: "put", html: {class: "form-horizontal", id: "open_form"} do %>
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" onclick="address.closeModal('#cards_open_modal')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -76,33 +76,33 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <%= label_tag :name, "名字",  :class => "col-sm-2 control-label" %>
+          <%= label_tag :name, "名字",  class: "col-sm-2 control-label" %>
           <div class="col-sm-4">
-            <%= text_field_tag :name, "", :class => "form-control", id: "address_name", required: true %>
+            <%= text_field_tag :name, "", class: "form-control", id: "address_name", required: true %>
           </div>
         </div>
         <div class="form-group">
-          <%= label_tag :tel, "电话",  :class => "col-sm-2 control-label"  %>
+          <%= label_tag :tel, "电话",  class: "col-sm-2 control-label"  %>
           <div class="col-sm-4">
-            <%= telephone_field_tag :tel, "", :class => "form-control", id: "address_tel", required: true %>
+            <%= telephone_field_tag :tel, "", class: "form-control", id: "address_tel", required: true %>
           </div>
         </div>
         <div class="form-group">
-          <%= label_tag :state, "省",  :class => "col-sm-2 control-label"  %>
+          <%= label_tag :state, "省",  class: "col-sm-2 control-label"  %>
           <div class="col-sm-4">
             <%= select_tag :state, [], {class: "form-control", "onchange": "address.stateChange()", id: "address_state"} %>
           </div>
         </div>
         <div class="form-group">
-          <%= label_tag :city, "市", :class => "col-sm-2 control-label"  %>
+          <%= label_tag :city, "市", class: "col-sm-2 control-label"  %>
           <div class="col-sm-4">
             <%= select_tag :city, {}, {class: "form-control", id: "address_city"} %>
           </div>
         </div>
         <div class="form-group">
-          <%= label_tag :street, "街道地址", :class => "col-sm-2 control-label"  %>
+          <%= label_tag :street, "街道地址", class: "col-sm-2 control-label"  %>
           <div class="col-sm-10">
-            <%= text_field_tag :street, "", :class => "form-control", required: true, id: "address_street" %>
+            <%= text_field_tag :street, "", class: "form-control", required: true, id: "address_street" %>
           </div>
         </div>
       </div>
@@ -118,7 +118,7 @@
 <!-- 转赠 -->
 <article class="modal fade" id="cards_modal">
   <div class="modal-dialog">
-    <%= form_for "", method: "post", :html => {:class => "form-horizontal", id: "gift_form"} do %>
+    <%= form_for "", method: "post", html: {class: "form-horizontal", id: "gift_form"} do %>
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" onclick="cards.closeModal('#cards_modal')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -126,7 +126,7 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <%= label_tag :tel, "接收人手机号",  :class => "col-sm-2 control-label" %>
+          <%= label_tag :tel, "接收人手机号",  class: "col-sm-2 control-label" %>
           <div class="col-sm-4">
             <%= telephone_field_tag :tel, "", class: "form-control", required: true %>
           </div>

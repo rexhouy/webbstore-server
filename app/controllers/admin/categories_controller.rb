@@ -1,27 +1,23 @@
+# -*- coding: utf-8 -*-
 class Admin::CategoriesController < AdminController
         # Checks authorization for all actions using cancan
         load_and_authorize_resource except: :create
+        before_action :set_category, only: [:show, :edit, :update, :destroy]
 
         def index
-                @categories = Category.owner(owner).paginate(:page => params[:page])
+                @categories = Category.owner(owner).paginate(page: params[:page])
         end
 
         def edit
-                @category = Category.find(params[:id])
-                render_404 unless @category.group_id.eql?(current_user.group_id)
-                @root = Category.root.owner(owner)
         end
 
         def new
                 @category = Category.new
-                @root = Category.root.owner(owner)
         end
 
         def destroy
-                category = Category.find(params[:id])
-                return render_404 unless category.group_id.eql? current_user.group_id
-                category.destroy
-                redirect_to admin_categories_path
+                @category.destroy
+                redirect_to admin_categories_path, notice: "删除成功"
         end
 
         def create
@@ -29,28 +25,29 @@ class Admin::CategoriesController < AdminController
                 authorize! :create, @category
                 @category.group_id = owner
                 if @category.save
-                        redirect_to :action => "show", :id => @category.id
+                        redirect_to action: "show", id: @category.id
                 else
-                        @root = Category.root.owner(owner)
                         render :new
                 end
         end
 
         def update
-                @category = Category.find(params[:id])
                 if @category.update(category_param)
-                        redirect_to :action => "show", :id => @category.id
+                        redirect_to action: "show", id: @category.id
                 else
-                        @root = Category.root.owner(owner)
                         render :edit
                 end
         end
 
         def show
-                @category = Category.find_by_id(params[:id])
         end
 
         private
+        def set_category
+                @category = Category.find(params[:id])
+                render_404 unless @category.group_id.eql? owner
+        end
+
         def category_param
                 params.require(:category).permit(:name, :category_id, :priority)
         end

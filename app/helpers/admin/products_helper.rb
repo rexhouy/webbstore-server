@@ -1,4 +1,10 @@
 module Admin::ProductsHelper
+
+        def supplier_options(selected)
+                suppliers = Supplier.owner(current_user.group_id).all || []
+                options_from_collection_for_select(suppliers, :id, :name, selected)
+        end
+
         def category_options(category_id)
                 root = Category.root.owner(current_user.group.id)
                 options = ""

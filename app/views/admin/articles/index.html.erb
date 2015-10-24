@@ -4,9 +4,11 @@
   <li><a href="/admin/channels">CMS</a></li>
   <li class="active">文章</li>
 </ol>
-<%= link_to new_admin_article_path,  :class => "btn btn-primary" do %>
+<%= link_to new_admin_article_path,  class: "btn btn-primary" do %>
 <span class="glyphicon glyphicon-plus"></span> 新建
 <% end %>
+
+<%= alert_info %>
 
 <table class="table">
   <thead>

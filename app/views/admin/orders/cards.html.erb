@@ -9,11 +9,7 @@
     <%= link_to "全部", "/admin/orders/cards?type=all", class: "#{'highlight' if @type.eql?('all')} filter-link" %>
     <%= link_to "待发货", "/admin/orders/cards?type=wait_shipping", class: "#{'highlight' if @type.eql?('wait_shipping')} filter-link" %>
   </div>
-  <% if notice.present? %>
-    <div class="alert alert-info" role="alert">
-      <%= notice %>
-    </div>
-  <% end %>
+  <%= alert_info %>
   <table class="table">
     <thead>
       <tr>

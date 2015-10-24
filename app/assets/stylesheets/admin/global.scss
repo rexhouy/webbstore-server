@@ -72,3 +72,16 @@ table {
         font-weight: normal;
     }
 }
+
+.btn-word {
+    border:1px solid #aaa;
+    background: $theme-color;
+    color: #fff;
+    padding:2px 4px;
+    border-radius: 4px;
+    margin: 0 4px;
+}
+
+.alert {
+    margin-top: 8px;
+}

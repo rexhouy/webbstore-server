@@ -3,7 +3,7 @@
 <%= form_tag "", method: "GET", class: "form-inline query-form" do %>
 <div class="form-group">
   <label class="control-label">供应商</label>
-  <%= select_tag :supplier, options_from_collection_for_select(@suppliers, :name, :name, @supplier), include_blank: true, class: "form-control"%>
+  <%= select_tag :supplier, supplier_options(@supplier), include_blank: true, class: "form-control"%>
 </div>
 <div class="form-group">
   <label class="control-label">交易日期</label>
@@ -14,6 +14,8 @@
 <button type="reset" class="btn btn-default" >重置</button>
 <%= submit_tag "导出Excel", name: "export", class: "pull-right btn btn-default" %>
 <% end %>
+
+<%= alert_info %>
 
 <table class="table">
   <thead>

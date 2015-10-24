@@ -1,2 +1,0 @@
-module Api::PurchaseHelper
-end
