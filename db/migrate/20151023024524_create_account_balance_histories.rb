@@ -6,7 +6,6 @@ class CreateAccountBalanceHistories < ActiveRecord::Migration
                         t.decimal :balance, precision: 8, scale: 2
                         t.string :operator
                         t.references :user
-                        t.string :order_no
                         t.string :comment
 
                         t.timestamps null: false

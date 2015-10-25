@@ -1,0 +1,37 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>手机号</th>
+      <th>状态</th>
+      <th>账户余额</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+    <tr>
+      <td><%= user.tel  %></td>
+      <td><%= user_status user %></td>
+      <td><%= number_to_currency user.balance, locale: :'zh-CN', precision: 2 %></td>
+      <td>
+        <%= link_to admin_user_path(user) do %>
+        <span class="glyphicon glyphicon-eye-open icon"></span>
+        <% end %>
+        <%= link_to edit_admin_user_path(user) do %>
+        <span class="glyphicon glyphicon-pencil icon"></span>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+  <% unless @tel.present? %>
+  <tfoot>
+    <tr>
+      <td colspan="4">
+        <%= page_info @users %>
+        <%= will_paginate @users, page_links: false %>
+      </td>
+    </tr>
+  </tfoot>
+  <% end %>
+</table>

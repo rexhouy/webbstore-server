@@ -6,8 +6,10 @@ class User < ActiveRecord::Base
 
         has_many :addresses, -> { where(status: Address.statuses[:active]) }
         has_many :cards, -> { where.not(status: Card.statuses[:unpaid]).order(created_at: :desc) }
-        has_many :coupons, through: :user_coupons
-        has_many :account_balance_histories
+        has_many :user_coupons, -> { where(status: UserCoupon.statuses[:unused]) }
+        has_many :coupons,  -> { where("end_date > now()") }, through: :user_coupons
+        has_many :account_balance_histories, -> { order(created_at: :desc) }
+        has_many :orders, class_name: "Order", foreign_key: :customer_id
         belongs_to :group
 
         before_create :set_default_value

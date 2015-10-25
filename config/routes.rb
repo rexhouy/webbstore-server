@@ -80,7 +80,10 @@ Rails.application.routes.draw do
 
                 # Users
                 resources :users
-                get "customers" => "users#customer"
+                get "users/:id/coupons" => "users#coupons"
+                get "users/:id/account_balance" => "users#account_balance"
+                put "users/:id/account_balance" => "users#deposit"
+                put "users/:id/coupons" => "users#dispense"
 
                 # Orders
                 get "orders/cards" => "orders#cards", as: :orders_cards # cards
@@ -106,8 +109,9 @@ Rails.application.routes.draw do
                 get "trades" => "trades#index", as: :trades
 
                 # Coupon
-                resources :coupons
+                get "coupons/list_available" => "coupons#list_available"
                 post "coupons/dispense/:id" => "coupons#dispense"
+                resources :coupons
 
                 # Image
                 post 'image' => 'images#create'

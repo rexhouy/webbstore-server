@@ -1,0 +1,39 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>手机号</th>
+      <th>角色</th>
+      <th>所属卖家</th>
+      <th>状态</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+    <tr>
+      <td><%= user.tel  %></td>
+      <td><%= role_name user  %></td>
+      <td><%= user.group.name unless user.group.nil? %></td>
+      <td><%= user_status user %></td>
+      <td>
+        <%= link_to admin_user_path(user) do %>
+        <span class="glyphicon glyphicon-eye-open icon"></span>
+        <% end %>
+        <%= link_to edit_admin_user_path(user) do %>
+        <span class="glyphicon glyphicon-pencil icon"></span>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+  <% unless @tel.present? %>
+  <tfoot>
+    <tr>
+      <td colspan="6">
+        <%= page_info @users %>
+        <%= will_paginate @users, page_links: false %>
+      </td>
+    </tr>
+  </tfoot>
+  <% end %>
+</table>

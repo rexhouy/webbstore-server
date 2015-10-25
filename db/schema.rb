@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(version: 20151023024553) do
     t.decimal  "balance",                 precision: 8, scale: 2
     t.string   "operator",    limit: 255
     t.integer  "user_id",     limit: 4
-    t.string   "order_no",   limit: 255
     t.string   "comment",     limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false

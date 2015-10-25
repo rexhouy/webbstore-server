@@ -15,39 +15,4 @@
 
 <%= alert_info %>
 
-<table class="table">
-  <thead>
-    <tr>
-      <td>手机号</td>
-      <td>角色</td>
-      <td>所属卖家</td>
-      <td>状态</td>
-      <td>操作</td>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.tel  %></td>
-        <td><%= role_name user  %></td>
-        <td><%= user.group.name unless user.group.nil? %></td>
-        <td><%= user_status user %></td>
-        <td>
-          <%= link_to edit_admin_user_path(user) do %>
-            <span class="glyphicon glyphicon-pencil icon"></span>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-  <% unless @tel.present? %>
-  <tfoot>
-    <tr>
-      <td colspan="6">
-        <%= page_info @users %>
-        <%= will_paginate @users, page_links: false %>
-      </td>
-    </tr>
-  </tfoot>
-  <% end %>
-</table>
+<%= render_user @tel, @type, @users %>

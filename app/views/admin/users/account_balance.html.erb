@@ -1,0 +1,48 @@
+<h1 class="page-header">用户账户余额</h1>
+
+<div>
+  <%= link_to admin_user_path(@user),  class: "btn btn-default" do %>
+    <span class="glyphicon glyphicon-arrow-left"></span> 返回
+  <% end %>
+</div>
+
+<br>
+<p>
+  <label class="control-label">用户名： </label><%=@user.tel%>
+</p>
+<p>
+  <label class="control-label">账户余额：  </label><%=number_to_currency @user.balance, locale: :'zh-CN', precision: 2%>
+</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>日期</th>
+      <th>入账</th>
+      <th>出账</th>
+      <th>余额</th>
+      <th>操作人</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @account_balance_histories.each do |history| %>
+      <tr>
+        <td><%=display_datetime history.created_at%></td>
+        <td><%=number_to_currency history.receipt, locale: :'zh-CN', precision: 2%></td>
+        <td><%=number_to_currency history.disbursment, locale: :'zh-CN', precision: 2%></td>
+        <td><%=number_to_currency history.balance, locale: :'zh-CN', precision: 2%></td>
+        <td><%=history.operator%></td>
+        <td><%=history.comment%></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="6">
+        <%= page_info @account_balance_histories %>
+        <%= will_paginate @account_balance_histories, page_links: false %>
+      </td>
+    </tr>
+  </tfoot>
+</table>

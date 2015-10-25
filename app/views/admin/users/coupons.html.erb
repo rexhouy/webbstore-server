@@ -1,0 +1,43 @@
+<h1 class="page-header">用户优惠券</h1>
+
+<div>
+  <%= link_to admin_user_path(@user),  class: "btn btn-default" do %>
+    <span class="glyphicon glyphicon-arrow-left"></span> 返回
+  <% end %>
+</div>
+
+<br>
+<p>
+  <label class="control-label">用户名： </label><%=@user.tel%>
+</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>名称</th>
+      <th>有效期</th>
+      <th>金额</th>
+      <th>使用条件</th>
+      <th>状态</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @user_coupons.each do |user_coupon| %>
+      <tr>
+        <td><%=user_coupon.coupon.title%></td>
+        <td><%=user_coupon.coupon.start_date%> - <%=user_coupon.coupon.end_date%></td>
+        <td><%= number_to_currency user_coupon.coupon.amount, locale: :'zh-CN', precision: 0 %></td>
+        <td>订单总金额满<%= user_coupon.coupon.limit %>元</td>
+        <td><%= coupon_status(user_coupon) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="5">
+        <%= page_info @user_coupons %>
+        <%= will_paginate @user_coupons, page_links: false %>
+      </td>
+    </tr>
+  </tfoot>
+</table>

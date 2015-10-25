@@ -1,0 +1,22 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>名称</th>
+      <th>有效期</th>
+      <th>金额</th>
+      <th>使用条件</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @coupons.each do |coupon| %>
+      <tr>
+        <td><input type="checkbox" name="coupon_ids[]" value="<%=coupon.id%>"></td>
+        <td><%=coupon.title%></td>
+                <td><%=coupon.start_date%> - <%=coupon.end_date%></td>
+                <td><%=number_to_currency coupon.amount, locale: :'zh-CN', precision: 0 %></td>
+                <td>订单总金额满<%=coupon.limit %>元</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

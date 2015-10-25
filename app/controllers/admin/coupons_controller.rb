@@ -56,6 +56,11 @@ class Admin::CouponsController < AdminController
                 end
         end
 
+        def list_available
+                @coupons = Coupon.owner(owner).available
+                render layout: false
+        end
+
         private
         def set_coupon
                 @coupon = Coupon.find(params[:id])

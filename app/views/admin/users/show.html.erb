@@ -1,9 +1,20 @@
 <h1 class="page-header">用户信息</h1>
+
 <%= alert_info %>
+
 <div class="control-panel">
-  <%= link_to "编辑", edit_admin_user_path(@user), class: "btn btn-primary"%>
-  <%= link_to "返回", admin_users_path, class: "btn btn-default" %>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#couponModal">
+    <span class="glyphicon glyphicon-tag"></span> 发放优惠券</button>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#depositModal">
+    <span class="glyphicon glyphicon-yen"></span> 账户充值</button>
+  <%= link_to edit_admin_user_path(@user), class: "btn btn-primary" do %>
+    <span class="glyphicon glyphicon-pencil"></span> 编辑
+  <% end %>
+  <%= link_to admin_users_path, class: "btn btn-default" do %>
+    <span class="glyphicon glyphicon-arrow-left"></span> 返回
+  <% end %>
 </div>
+
 <div class="form-horizontal">
   <div class="form-group">
     <label class="col-sm-2 control-label">名字</label>
@@ -12,22 +23,101 @@
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-2 control-label">角色</label>
-    <div class="col-sm-10">
-      <p class="form-control-static"><%= role_name @user %></p>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-2 control-label">所属卖家</label>
-    <div class="col-sm-10">
-      <p class="form-control-static"><%= @user.group.name unless @user.group.nil? %></p>
-    </div>
-  </div>
-  <div class="form-group">
     <label class="col-sm-2 control-label">状态</label>
     <div class="col-sm-10">
       <p class="form-control-static"><%= user_status @user %></p>
     </div>
   </div>
+  <% unless @user.customer? %>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">角色</label>
+      <div class="col-sm-10">
+        <p class="form-control-static"><%= role_name @user %></p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">所属卖家</label>
+      <div class="col-sm-10">
+        <p class="form-control-static"><%= @user.group.name unless @user.group.nil? %></p>
+      </div>
+    </div>
+  <% end %>
+  <% if @user.customer? %>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">订单信息</label>
+      <div class="col-sm-10">
+        <p class="form-control-static">
+          订单数量：<%= @user.orders.size %>
+          <br>
+          <%=link_to "查看订单详情", "/admin/orders?order_id_or_tel=#{@user.tel}" %>
+          </p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">账户余额</label>
+      <div class="col-sm-10">
+        <p class="form-control-static">
+          <%=number_to_currency @user.balance, locale: :'zh-CN', precision: 2%>
+          <br>
+          <%=link_to "查看账户余额详情", "/admin/users/#{@user.id}/account_balance" %>
+        </p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">优惠券</label>
+      <div class="col-sm-10">
+        <p class="form-control-static">
+          <%=link_to "#{@user.coupons.size}张", "/admin/users/#{@user.id}/coupons" %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+</div>
 
+<!-- 账户充值 -->
+<div class="modal fade" id="depositModal" tabindex="-1" role="dialog" aria-labelledby="depositModalLabel">
+  <div class="modal-dialog" role="document">
+    <%= form_tag "/admin/users/#{@user.id}/account_balance", class: "modal-content", method: "PUT" do %>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="depositModalLabel">账户充值</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">充值金额</label>
+            <div class="col-sm-10">
+              <div class="input-group">
+                <span class="input-group-addon">¥</span>
+                <input type="number" step="0.01" min="0" name="amount" class="form-control" required>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" class="btn btn-primary">确定</button>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<!-- 发放优惠券 -->
+<div class="modal fade" id="couponModal" tabindex="-1" role="dialog" aria-labelledby="couponModalLabel">
+  <div class="modal-dialog" role="document">
+    <%= form_tag "/admin/users/#{@user.id}/coupons", class: "modal-content", method: "PUT", onsubmit: "return user.checkDispense()" do %>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="couponModalLabel">发放优惠券</h4>
+      </div>
+      <div class="modal-body" id="couponModalBody">
+        <p>加载中...</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" class="btn btn-primary">确定</button>
+      </div>
+    <% end %>
+  </div>
 </div>
