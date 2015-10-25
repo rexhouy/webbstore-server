@@ -2,9 +2,13 @@
 <%= alert_info %>
 <div class="control-panel">
   <% unless @coupon.dispensed %>
-  <%= link_to "编辑", "/admin/coupons/#{@coupon.id}/edit", class: "btn btn-primary"%>
+  <%= link_to "/admin/coupons/#{@coupon.id}/edit", class: "btn btn-primary" do %>
+        <span class="glyphicon glyphicon-pencil"></span> 编辑
+    <% end %>
   <% end %>
-  <%= link_to "返回", admin_coupons_path, class: "btn btn-default" %>
+  <%= link_to admin_coupons_path, class: "btn btn-default" do %>
+        <span class="glyphicon glyphicon-arrow-left"></span> 返回
+    <% end %>
 </div>
 <div class="coupon">
   <div class="title">

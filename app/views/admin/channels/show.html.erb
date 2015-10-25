@@ -1,8 +1,14 @@
 <h1 class="page-header">查看频道</h1>
+
 <%= alert_info %>
+
 <div class="control-panel">
-  <%= link_to "编辑", edit_admin_channel_path(@channel), class: "btn btn-primary"%>
-  <%= link_to "返回", admin_channels_path, class: "btn btn-default" %>
+  <%= link_to edit_admin_channel_path(@channel), class: "btn btn-primary" do %>
+    <span class="glyphicon glyphicon-pencil"></span> 编辑
+  <% end %>
+  <%= link_to admin_channels_path, class: "btn btn-default" do %>
+    <span class="glyphicon glyphicon-arrow-left"></span> 返回
+  <% end %>
 </div>
 
 <div class="form">
