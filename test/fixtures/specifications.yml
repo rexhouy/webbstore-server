@@ -4,8 +4,31 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
+one:
+  id: 1
+  name: "规格"
+  value: "300KG"
+  product_id: 2
+  price: 2.0
+  storage: 5
+  sales: 0
+  status: 0
+  created_at: <%=Date.today%>
+  updated_at: <%=Date.today%>
+
 # column: value
 #
-two: {}
+two:
+  id: 2
+  name: "规格"
+  value: "400KG"
+  product_id: 2
+  price: 2.5
+  storage: 5
+  sales: 4
+  count: 5
+  status: 0
+  created_at: <%=Date.today%>
+  updated_at: <%=Date.today%>
+
 #  column: value

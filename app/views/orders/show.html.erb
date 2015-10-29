@@ -46,7 +46,7 @@
     </section>
     <section>
       <h3>配送信息</h3>
-      <address class="address">
+      <address class="address" style="border:none;">
         <div class="header">
           <span class="pull-left name"><%= @order.contact_name %></span>
           <span class="pull-right"><%= phone_number @order.contact_tel %></span>
@@ -58,6 +58,27 @@
       <h3>留言</h3>
       <p><%= @order.memo %></p>
     </section>
+    <% if @order.coupon_amount > 0 %>
+    <section>
+      <h3>订单总价</h3>
+      <p><%= number_to_currency @order.subtotal, locale: :'zh-CN', precision: 2 %></p>
+    </section>
+    <section>
+      <h3>使用优惠券</h3>
+      <p><%= number_to_currency @order.coupon_amount, locale: :'zh-CN', precision: 2 %></p>
+    </section>
+    <% end %>
+    <% if @order.user_account_balance > 0 %>
+    <section>
+      <h3>使用账户余额</h3>
+      <p><%= number_to_currency @order.user_account_balance, locale: :'zh-CN', precision: 2 %></p>
+    </section>
+    <% end %>
+    <section>
+      <h3>支付总价</h3>
+      <p><%= number_to_currency (@order.subtotal - @order.coupon_amount - @order.user_account_balance), locale: :'zh-CN', precision: 2 %></p>
+    </section>
+
     <section>
       <h3>历史</h3>
       <table class="table" style="max-width: 600px">

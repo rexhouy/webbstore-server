@@ -1,0 +1,32 @@
+// Variable define
+@import "variable.scss";
+
+.confirm-content {
+    overflow: hidden;
+    background: #fff;
+}
+
+.address {
+    cursor: pointer;
+    border: 2px solid #eee;
+    .name {
+        font-weight: bold;
+    }
+    .header {
+        overflow: hidden;
+        border-bottom: 1px solid #aaa;
+    }
+}
+.address.highlight {
+    .header {
+        border-bottom: 1px solid #555;
+    }
+}
+
+.create-address {
+    .btn {
+        font-weight: bold;
+        width: 100%;
+        color: $link-color;
+    }
+}

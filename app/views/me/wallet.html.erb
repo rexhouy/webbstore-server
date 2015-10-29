@@ -1,0 +1,52 @@
+<div class="banner row">
+  <h2 class="pull-left inherit-height table-center-wrap"><span class="table-center">我的账户余额</span></h2>
+  <a class="btn btn-lg pull-right highlight-link icon-link-right inherit-height table-center-wrap" href="/me">
+    <span class="table-center"><i class="glyphicon glyphicon-arrow-left"></i> 返回</span>
+  </a>
+</div>
+<div class="row main">
+  <section>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <h3>可用账户余额</h3>
+    </div>
+    <div class="col-md-8 col-sm-8 col-xs-12 main-body">
+      <p class="account-balance"><%= number_to_currency current_user.balance, locale: :'zh-CN', precision: 2 %></p>
+    </div>
+  </section>
+  <section>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <h3>账户余额历史</h3>
+    </div>
+    <div class="col-md-8 col-sm-8 col-xs-12 main-body">
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>日期</th>
+            <th>收入</th>
+            <th>支出</th>
+            <th>余额</th>
+            <th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @account_balance_histories.each do |history| %>
+          <tr>
+            <td><%=display_date history.created_at%></td>
+            <td><%=history.receipt%></td>
+            <td><%=history.disbursment%></td>
+            <td><%=history.balance%></td>
+            <td><%=history.comment%></td>
+          </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="5">
+              <%= paginate "/wallet", @account_balance_histories %>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,131 @@
+@import "variable.scss";
+
+.order-filter {
+    font-size: 16px;
+    line-height: 30px;
+    a {
+        padding: 0 10px;
+    }
+    .highlight-icon {
+        border-left: 2px solid $theme-color;
+    }
+    @media(max-width:768px) {
+        overflow: hidden;
+        li {
+            float: left
+        }
+        .highlight-icon {
+            border-left: 0;
+            padding: 0 10px;
+            border-bottom: 1px solid $theme-color;
+        }
+    }
+}
+
+.order-detail {
+    width: 100%;
+    max-width: 600px;
+    background: #fff;
+    border: 1px solid #ccc;
+    margin: 0 auto;
+    padding: 20px;
+    section {
+        &:not(:last-child) {
+            border-bottom: 1px solid #ddd;
+        }
+        overflow: hidden;
+        padding: 10px;
+        h3 {
+            margin-top: 0;
+            font-size: 13px;
+            color: #aaa;
+        }
+    }
+}
+
+.order-total {
+    list-style: none;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    label {
+        width: 90px;
+        display: inline-block;
+    }
+    span {
+        width: 120px;
+        display:inline-block;
+        text-align:right;
+    }
+    .amount {
+        font-weight: bold;
+        color: $theme-color-dark;
+    }
+}
+
+.coupon.selectable {
+    height: 80px;
+    padding: 0 8px;
+    font-size: 12px;
+    box-shadow: none;
+    div {
+        margin: 2px 0;
+    }
+}
+
+.selected-coupon {
+    .title {
+        font-weight: bold;
+    }
+    .amount {
+        color: #090;
+        font-weight: bold;
+        font-size: 24px;
+        margin-top: -8px;
+        small {
+            padding-right: 8px;
+            font-size: 18px;
+        }
+    }
+}
+
+.use-account-balance {
+    .glyphicon-ok-sign {
+        padding-right: 8px;
+        position: relative;
+        top: 2px;
+    }
+    &.active {
+        .glyphicon-ok-sign {
+            color: #090;
+        }
+    }
+}
+
+.payment-type.selectable {
+    font-size: 20px;
+    font-style: italic;
+    padding: 0;
+    margin: 8px 0;
+    border: 2px solid #eee;
+    @media(max-width:768px) {
+        font-size: 18px;
+        height: 52px;
+    }
+    i {
+        float: right;
+        padding: 14px 20px;
+        color: #eee;
+    }
+    img {
+        display: inline-block;
+        width: 48px;
+        margin-right: 12px;
+    }
+}
+.payment-type.selected {
+    color: $theme-color-dark;
+    i {
+        color:#090;
+    }
+}

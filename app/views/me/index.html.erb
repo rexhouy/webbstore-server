@@ -6,13 +6,19 @@
     <div class="col-md-3 col-sm-3 col-xs-12">
       <h3>账户</h3>
     </div>
-    <div class="col-md-8 col-sm-8 col-xs-12 btn-group-vertical me-btn-group">
+    <div class="col-md-8 col-sm-8 col-xs-12 btn-group-vertical me-btn-group main-body">
       <a href="/addresses" class="btn btn-default btn-block">
         <i class="glyphicon glyphicon-menu-right"></i> 收货地址
       </a>
       <%= link_to edit_user_registration_path, class: "btn btn-default btn-block", target: "_self" do %>
         <i class="glyphicon glyphicon-menu-right"></i> 修改密码
       <% end %>
+      <a href="/me/coupons" class="btn btn-default btn-block">
+        <i class="glyphicon glyphicon-menu-right"></i> 优惠券
+      </a>
+      <a href="/me/wallet" class="btn btn-default btn-block">
+        <i class="glyphicon glyphicon-menu-right"></i> 账户余额
+      </a>
       <a href="/me/introduce" class="btn btn-default btn-block">
         <i class="glyphicon glyphicon-menu-right"></i> 推荐给好友
       </a>
@@ -22,7 +28,7 @@
     <div class="col-md-3 col-sm-3 col-xs-12">
       <h3>订单</h3>
     </div>
-    <div class="col-md-8 col-sm-8 col-xs-12 btn-group-vertical me-btn-group">
+    <div class="col-md-8 col-sm-8 col-xs-12 btn-group-vertical me-btn-group main-body">
       <a href="/orders" class="btn btn-default btn-block">
         <i class="glyphicon glyphicon-menu-right"></i> 我的订单
       </a>

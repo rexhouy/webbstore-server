@@ -1,9 +1,10 @@
 (function(){
         var carts = function() {
                 var self = {};
-                self.updateCount = function(select, id, spec_id) {
+
+                var update = function(count, id, spec_id) {
                         $("#confirm_carts_btn").attr("disabled", "disabled");
-                        if (select.value <= 0 || select.value > 1000) {
+                        if (count <= 0 || count > 1000) {
                                 alert("购买数量不正确");
                                 return;
                         }
@@ -17,7 +18,7 @@
                                         _method : "put",
                                         id : id,
                                         spec_id : spec_id,
-                                        count : select.value
+                                        count : count
                                 }
                         }).done(function(data){
                                 if (data.succeed) {
@@ -28,6 +29,41 @@
                                 }
                                 spinner.hide();
                         });
+
+                };
+
+                var updateTimer = {};
+                var UPDATE_DELAY = 500;
+                self.add = function(id, spec_id) {
+                        var key = id+"_"+spec_id;
+                        clearTimeout(updateTimer[key]);
+                        var count = updateView(id, spec_id, 1);
+                        updateTimer[key] = setTimeout(function() {
+                                update(count, id, spec_id);
+                        }, UPDATE_DELAY);
+                };
+
+                self.remove = function(id, spec_id) {
+                        var key = id+"_"+spec_id;
+                        clearTimeout(updateTimer[key]);
+                        var count = updateView(id, spec_id, -1);
+                        updateTimer[key] = setTimeout(function() {
+                                update(count, id, spec_id);
+                        }, UPDATE_DELAY);
+                };
+
+                var updateView = function(id, spec_id, change) {
+                        var input = $("#count_"+id+"_"+spec_id);
+                        var count = Number(input.val()) + change;
+                        if (count < 1 || count > 1000) {
+                                return input.val();
+                        }
+                        input.val(count);
+                        return count;
+                };
+
+                self.updateCount = function(select, id, spec_id) {
+                        update(select.value, id, spec_id);
                 };
 
                 return self;

@@ -16,7 +16,7 @@ class AlipayService
                         return_url: MOBILE_PAY["return_url"],
                         out_trade_no: order.order_id,
                         subject: order.name,
-                        total_fee: sprintf("%0.2f", order.subtotal),
+                        total_fee: sprintf("%0.2f", order.subtotal - order.coupon_amount - order.user_account_balance),
                         seller_id: ALIPAY["seller_id"],
                         payment_type: MOBILE_PAY["payment_type"],
                         body: order.detail

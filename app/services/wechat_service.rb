@@ -82,7 +82,7 @@ class WechatService
                         body: order.name[0..30],
                         detail: order.detail,
                         out_trade_no: order.order_id,
-                        total_fee: (order.subtotal * 100).to_i.to_s,
+                        total_fee: ((order.subtotal - order.coupon_amount - order.user_account_balance) * 100).to_i.to_s,
                         spbill_create_ip: client_ip,
                         notify_url: WECHAT["notify_url"],
                         trade_type: "JSAPI",

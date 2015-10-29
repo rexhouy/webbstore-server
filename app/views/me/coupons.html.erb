@@ -1,0 +1,26 @@
+<div class="banner row">
+  <h2 class="pull-left inherit-height table-center-wrap"><span class="table-center">我的优惠券</span></h2>
+  <a class="btn btn-lg pull-right highlight-link icon-link-right inherit-height table-center-wrap" href="/me">
+    <span class="table-center"><i class="glyphicon glyphicon-arrow-left"></i> 返回</span>
+  </a>
+</div>
+<div class="row main" style="padding:20px 0;">
+  <div>
+    <% @user_coupons.each do |user_coupon| %>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="coupon">
+        <div class="header">
+          <span class="amount pull-left"><small>&#165;</small><%= user_coupon.coupon.amount %></span>
+          <span class="title pull-right"><%= user_coupon.coupon.title %></span>
+        </div>
+        <div>
+          使用条件：订单总金额满<%= user_coupon.coupon.limit %>元
+        </div>
+        <div>
+          有效期：<%= display_date user_coupon.coupon.start_date %> - <%= display_date user_coupon.coupon.end_date %>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>

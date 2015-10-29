@@ -56,6 +56,8 @@ Rails.application.routes.draw do
         # User home
         get 'me' => 'me#index'
         get "me/introduce" => "me#introduce"
+        get "me/coupons" => "me#coupons"
+        get "me/wallet" => "me#wallet"
 
         # Payment callback
         get 'payment/wechat/front_notify' => 'payments#wechat_front_notify'

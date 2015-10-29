@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151023024553) do
+ActiveRecord::Schema.define(version: 20151029124812) do
 
   create_table "account_balance_histories", force: :cascade do |t|
     t.decimal  "receipt",                 precision: 8, scale: 2
@@ -134,7 +134,7 @@ ActiveRecord::Schema.define(version: 20151023024553) do
     t.decimal  "amount",                 precision: 8, scale: 2
     t.integer  "limit",      limit: 4
     t.integer  "seller_id",  limit: 4
-    t.boolean  "dispensed",   limit: 1
+    t.boolean  "dispensed",  limit: 1
     t.datetime "created_at",                                     null: false
     t.datetime "updated_at",                                     null: false
   end
@@ -181,7 +181,6 @@ ActiveRecord::Schema.define(version: 20151023024553) do
     t.text     "memo",                 limit: 65535
     t.integer  "delivery_type",        limit: 4
     t.string   "type",                 limit: 255
-    t.integer  "coupon_id",            limit: 4
     t.decimal  "coupon_amount",                      precision: 8,  scale: 2
     t.decimal  "user_account_balance",               precision: 8,  scale: 2
   end
@@ -302,6 +301,7 @@ ActiveRecord::Schema.define(version: 20151023024553) do
     t.integer  "status",     limit: 4
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.integer  "order_id",   limit: 4
   end
 
   create_table "users", force: :cascade do |t|

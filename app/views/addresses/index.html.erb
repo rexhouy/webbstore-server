@@ -5,19 +5,23 @@
   </a>
 </div>
 <div class="main row">
-  <h3 class="col-md-2 col-sm-2 col-xs-12 icon-link-left form-group-title">配送地址</h3>
-  <div class="col-md-8 col-sm-8 col-xs-12">
-    <div class="confirm-content">
-      <div class="create-address">
-        <button class="btn btn-default block" onclick="address.create()">新建地址</button>
-      </div>
+  <section>
+    <div>
+      <h3 class="col-md-2 col-sm-2 col-xs-12 icon-link-left form-group-title">配送地址</h3>
+    </div>
+    <div class="col-md-8 col-sm-8 col-xs-12 main-body">
+      <div class="confirm-content">
+        <div class="create-address">
+          <button class="btn btn-default block" onclick="address.create()">新建地址</button>
+        </div>
 
-    <div id="addresses">
-      <% @addresses.each do |address| %>
-      <%= render partial: "item", object: address %>
-      <% end %>
+        <div id="addresses">
+          <% @addresses.each do |address| %>
+            <%= render partial: "item", object: address %>
+          <% end %>
+        </div>
+      </div>
     </div>
-    </div>
-  </div>
+  </section>
   <%= render partial: "modal" %>
 </div>

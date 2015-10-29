@@ -3,10 +3,10 @@
 <div class="control-panel">
   <%= link_to edit_admin_article_path(@article), class: "btn btn-primary" do%>
   <span class="glyphicon glyphicon-pencil"></span> 编辑
-  <% end %>
-  <%= link_to admin_articles_path, class: "btn btn-default" do %>
-    <span class="glyphicon glyphicon-arrow-left"></span> 返回
-    <% end %>
+<% end %>
+<%= link_to admin_articles_path, class: "btn btn-default" do %>
+  <span class="glyphicon glyphicon-arrow-left"></span> 返回
+<% end %>
 </div>
 <div class="preview">
   <iframe src="/articles/<%=@article.id%>" />

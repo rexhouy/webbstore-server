@@ -11,4 +11,12 @@ class MeController < ApiController
                 @qr_code = RQRCode::QRCode.new(url, size: 12, level: :m )
         end
 
+        def coupons
+                @user_coupons = UserCoupon.where(user_id: current_user.id, status: UserCoupon.statuses[:unused])
+        end
+
+        def wallet
+                @account_balance_histories = AccountBalanceHistory.owner(current_user.id).order(id: :desc).paginate(page: params[:page])
+        end
+
 end

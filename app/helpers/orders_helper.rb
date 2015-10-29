@@ -48,4 +48,10 @@ module OrdersHelper
                 return "货到付款" if order.offline_pay?
         end
 
+        def usable_account_balance(cart)
+                total_price = cart_price(cart)
+                account_balance = current_user.balance
+                total_price > account_balance ? account_balance : total_price
+        end
+
 end

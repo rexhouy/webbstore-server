@@ -1,19 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  start_date: 
-  end_date_date,: MyString
-  title: 
-  amount: 
-  limit: 
-  seller_id: 
-  dispesed: false
-
-two:
-  start_date: 
-  end_date_date,: MyString
-  title: 
-  amount: 
-  limit: 
-  seller_id: 
-  dispesed: false
+  id: 1
+  start_date: <%=Date.today%>
+  end_date: <%=Date.today%>
+  title: "测试"
+  amount: 1
+  limit: 2
+  seller_id: 1
+  dispensed: false
+  created_at: <%=Date.today%>
+  updated_at: <%=Date.today%>

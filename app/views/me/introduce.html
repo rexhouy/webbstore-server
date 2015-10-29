@@ -10,7 +10,7 @@
     <div class="col-md-3 col-sm-3 col-xs-12">
       <h3>我的推荐码</h3>
     </div>
-    <div class="col-md-8 col-sm-8 col-xs-12" style="background:#fff;padding:20px;">
+    <div class="col-md-8 col-sm-8 col-xs-12 main-body">
       <p class="text-info" style="text-align:center">推荐好友扫描以下二维码加入<%=Rails.application.config.name%></p>
       <div class="qr-code qr-code-center">
       <%= raw @qr_code.as_html %>
@@ -22,7 +22,7 @@
     <div class="col-md-3 col-sm-3 col-xs-12">
       <h3>我推荐的社员</h3>
     </div>
-    <div class="col-md-8 col-sm-8 col-xs-12" style="background:#fff;padding:20px;">
+    <div class="col-md-8 col-sm-8 col-xs-12 main-body">
       <table class="table">
         <thead>
           <tr>

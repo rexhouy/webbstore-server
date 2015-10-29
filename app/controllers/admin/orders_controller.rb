@@ -19,16 +19,25 @@ class Admin::OrdersController < AdminController
         end
 
         def cancel
-                change_status Order.statuses[:canceled]
+                begin
+                        OrderService.new.cancel(@order, current_user)
+                rescue => e
+                        logger.error e
+                        logger.error e.backtrace.join("\n")
+                        return redirect_to [:admin, @order], notice: e.to_s
+                end
+                redirect_to [:admin, @order], notice: "修改成功"
         end
 
         def shipping
-                change_status Order.statuses[:shipping]
+                OrderService.new.change_status(@order, Order.statuses[:shipping], current_user.id)
                 NotificationService.new.send_order_delivery_notify(@order, @order.customer)
+                redirect_to [:admin, @order], notice: "修改成功"
         end
 
         def deliver
-                change_status Order.statuses[:delivered]
+                OrderService.new.change_status(@order, Order.statuses[:delivered], current_user.id)
+                redirect_to [:admin, @order], notice: "修改成功"
         end
 
         ## 到注册监听页面，提示用户使用微信扫描二维码，注册订单监听。（获取用户openid）
@@ -42,6 +51,7 @@ class Admin::OrdersController < AdminController
         end
 
         ## 用户注册订单监听回调，
+        # TODO 限制管理员
         def wechat_register_notification
                 code = params[:code]
                 logger.debug "register notification callback, received code #{code}, user #{params[:uid]}"
@@ -93,24 +103,6 @@ class Admin::OrdersController < AdminController
                 date  = Date.parse(day)
                 delta = date > Date.today ? 0 : 7
                 date + delta
-        end
-
-        def change_status(status)
-                @order.status = status
-                Order.transaction do
-                        @order.save!
-                        create_order_history(@order)
-                end
-                redirect_to [:admin, @order], notice: "修改成功"
-        end
-
-        def create_order_history(order)
-                history = OrderHistory.new
-                history.order_id = order.id
-                history.status = order.status
-                history.time = Time.now
-                history.operator_id = current_user.id
-                history.save!
         end
 
 end

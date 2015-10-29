@@ -9,6 +9,10 @@ one:
   name: "测试1"
   owner_id: 1
   supplier_id: 1
+  storage: 10
+  sales: 0
+  price: 1.0
+  status: 0
   created_at: <%=Date.today%>
   updated_at: <%=Date.today%>
 
@@ -18,5 +22,9 @@ two:
   name: "测试2"
   owner_id: 1
   supplier_id: 2
+  storage: 10
+  sales: 0
+  price: 1.5
+  status: 0
   created_at: <%=Date.today%>
   updated_at: <%=Date.today%>
