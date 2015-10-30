@@ -38,6 +38,31 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="col-sm-2 control-label">订单总价</label>
+      <div class="col-sm-9">
+        <p class="form-control-static"><%= number_to_currency @order.subtotal, locale: :'zh-CN', precision: 2 %></p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">使用优惠券</label>
+      <div class="col-sm-9">
+        <p class="form-control-static"><%= number_to_currency @order.coupon_amount, locale: :'zh-CN', precision: 2 %></p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">使用账户余额</label>
+      <div class="col-sm-9">
+        <p class="form-control-static"><%= number_to_currency @order.user_account_balance, locale: :'zh-CN', precision: 2 %></p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">支付总价</label>
+      <div class="col-sm-9">
+        <p class="form-control-static"><%= number_to_currency (@order.subtotal - @order.coupon_amount - @order.user_account_balance), locale: :'zh-CN', precision: 2 %></p>
+      </div>
+    </div>
+
+    <div class="form-group">
       <label class="col-sm-2 control-label">下订单时间</label>
       <div class="col-sm-9">
         <p class="form-control-static"><%= display_datetime @order.created_at %></p>

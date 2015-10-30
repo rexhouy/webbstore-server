@@ -19,7 +19,7 @@ module Admin::OrdersHelper
         end
 
         def order_status_change_operator(history)
-                "系统" if history.operator.nil?
+                return "系统" if history.operator.nil?
                 history.operator.tel
         end
 
