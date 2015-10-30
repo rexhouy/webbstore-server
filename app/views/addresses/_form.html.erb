@@ -1,32 +1,32 @@
-<%= form_for @address, html: {class: "form-horizontal"} do |p| %>
+<%= form_for @address, html: {class: "form form-horizontal"} do |p| %>
   <%= p.hidden_field :id, class: "form-control" %>
   <div class="form-group">
-    <%= p.label :name, "名字",  class: "col-sm-2 control-label" %>
-    <div class="col-sm-4">
+    <%= p.label :name, "名字",  class: "col-sm-4 control-label" %>
+    <div class="col-sm-6">
       <%= p.text_field :name, class: "form-control" %>
     </div>
   </div>
   <div class="form-group">
-    <%= p.label :tel, "电话",  class: "col-sm-2 control-label"  %>
-    <div class="col-sm-4">
+    <%= p.label :tel, "电话",  class: "col-sm-4 control-label"  %>
+    <div class="col-sm-6">
       <%= p.telephone_field :tel, class: "form-control" %>
     </div>
   </div>
   <div class="form-group">
-    <%= p.label :state, "省（市）",  class: "col-sm-2 control-label"  %>
-    <div class="col-sm-4">
+    <%= p.label :state, "省（市）",  class: "col-sm-4 control-label"  %>
+    <div class="col-sm-6">
       <%= p.select :state, options_for_select(["安徽省", "北京市", "重庆市", "福建省", "甘肃省", "广东省", "广西省", "贵州省", "海南省", "河北省", "黑龙江省", "河南省", "湖北省", "湖南省", "江苏省", "江西省", "吉林省", "辽宁省", "内蒙古省", "宁夏省", "青海省", "山东省", "上海市", "山西省", "陕西省", "四川省", "天津市", "云南省", "浙江省"], "北京市"), {}, {class: "form-control"} %>
     </div>
   </div>
   <div class="form-group">
-    <%= p.label :city, "市（区）", class: "col-sm-2 control-label"  %>
-    <div class="col-sm-4">
+    <%= p.label :city, "市（区）", class: "col-sm-4 control-label"  %>
+    <div class="col-sm-6">
       <%= p.text_field :city, class: "form-control" %>
     </div>
   </div>
   <div class="form-group">
-    <%= p.label :street, "街道地址", class: "col-sm-2 control-label"  %>
-    <div class="col-sm-10">
+    <%= p.label :street, "街道地址", class: "col-sm-4 control-label"  %>
+    <div class="col-sm-8">
       <%= p.text_field :street, class: "form-control" %>
     </div>
   </div>

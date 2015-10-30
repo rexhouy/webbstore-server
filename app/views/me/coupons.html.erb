@@ -7,29 +7,30 @@
 <div class="row main" style="padding:20px 0;">
   <div>
     <% @user_coupons.each do |user_coupon| %>
-    <div class="col-md-4 col-sm-6 col-xs-12">
-      <div class="coupon">
-        <div class="header">
-          <span class="amount pull-left"><small>&#165;</small><%= user_coupon.coupon.amount %></span>
-          <span class="title pull-right"><%= user_coupon.coupon.title %></span>
-        </div>
-        <div>
-          使用条件：订单总金额满<%= user_coupon.coupon.limit %>元
-        </div>
-        <div>
-          有效期：<%= display_date user_coupon.coupon.start_date %> - <%= display_date user_coupon.coupon.end_date %>
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="coupon">
+          <div class="header">
+            <span class="amount pull-left"><small>&#165;</small><%= user_coupon.coupon.amount %></span>
+            <span class="title pull-right"><%= user_coupon.coupon.title %></span>
+          </div>
+          <div>
+            使用条件：订单总金额满<%= user_coupon.coupon.limit %>元
+          </div>
+          <div>
+            有效期：<%= display_date user_coupon.coupon.start_date %> - <%= display_date user_coupon.coupon.end_date %>
+          </div>
         </div>
       </div>
-    </div>
     <% end %>
     <% if @user_coupons.empty? %>
-    <div class="table-center-wrap empty-cart">
-      <i class="glyphicon glyphicon-tag table-center bg-img"></i>
-      <div class="table-center-wrap empty-cart-desc inherit-height">
-        <div class="table-center">
-          <p>很遗憾，您没有优惠券。</p>
+      <div class="table-center-wrap empty-cart">
+        <i class="glyphicon glyphicon-tag table-center bg-img"></i>
+        <div class="table-center-wrap empty-cart-desc inherit-height">
+          <div class="table-center">
+            <p>很遗憾，您没有优惠券。</p>
+          </div>
         </div>
-    </div>
+      </div>
     <% end %>
   </div>
 </div>
