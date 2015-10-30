@@ -2,8 +2,13 @@
 (function(){
 
         window.openGift = function() {
-                $(".coupon").css("top", "-22px");
-                $(".btn").css("visibility", "hidden");
+                $(".seals").css("top", "-100px");
+                $(".seals-strip").css("top", "-500px");
+                setTimeout(function(){
+                        $(".coupon").css("top", "-80px");
+                        $("#succeed").css("visibility", "visible");
+                        $(".btn").html("前往拾惠社购物");
+                }, 300);
         };
 
 })();

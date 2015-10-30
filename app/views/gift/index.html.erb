@@ -11,8 +11,10 @@
   </head>
   <body>
     <div class="container-me">
-
+      <h2 style="color:#fff;font-weight:bolder;width:100%;text-align:center;margin:0;font-size:29px;">
+        拾惠社 &#8226; <strong style="font-size:34px;top:1px;position:relative;">2015</strong></h2>
       <div class="gift">
+        <h1 id="succeed" style="visibility: hidden;">恭喜您！抽中了</h1>
         <div class="seals-strip"></div>
         <%= image_tag "seals.png", class: "seals"%>
         <p class="cm">拾惠社给您送红包啦</p>
@@ -36,6 +38,15 @@
 
       <p class="remarks">
         活动时间：2015年11月5日～2015年11月15日
+      </p>
+      <p class="remarks">
+        活动规则：1. 每人限抽一次
+      </p>
+      <p class="remarks" style="padding-left:5.3em;">
+        2. 最高可以抽到88元，中奖率100%
+      </p>
+      <p class="remarks" style="padding-left:5.3em;">
+        3. 红包可以在拾惠社购买商品时使用
       </p>
     </div>
     <%= javascript_include_tag "gift" %>

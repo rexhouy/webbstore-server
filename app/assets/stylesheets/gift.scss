@@ -8,6 +8,7 @@ html, body {
     padding: 0;
     background: #353535;
     height: 100%;
+    position: relative;
 }
 
 .container-me {
@@ -40,6 +41,8 @@ html, body {
 
 .seals-strip {
     position: absolute;
+    -webkit-transition: top .3s, -webkit-transform .3s;
+    transition: top .3s, transform .3s;
     top: -258px;
     left: -31px;
     border-radius: 50%;
@@ -47,14 +50,16 @@ html, body {
     height: 340px;
     border: 6px solid #ffd93e;
     z-index: 9;
-    box-shadow: 0em .2em .2em rgba(0,0,0,0.1);
-    background: #d60e39;
+    box-shadow: 0em .2em .2em rgba(0,0,0,0.2);
+    background: #d20532;
 }
 
 .seals {
     position: absolute;
+    -webkit-transition: top .3s, -webkit-transform .3s;
+    transition: top .3s, transform .3s;
     top: 32px;
-    z-index: 10;
+    z-index: 9999;
     width: 88px;
     position: relative;
 }
@@ -65,12 +70,13 @@ html, body {
     color: #fff;
     position: absolute;
     bottom: 35px;
-    left: 40px;
-    width: 200px;
+    left: 20px;
+    width: 240px;
     height: 48px;
     font-size: 24px;
-    color: #891f23;
+    color: #891f23 !important;
     border-radius: 4px;
+    outline: none !important;
 }
 
 .cm {
@@ -85,7 +91,13 @@ html, body {
 .remarks {
     color: #ccc;
     font-size: 13px;
-    text-align: center;
+    text-align: left;
+    width: $width;
+    margin: 0 auto;
+    padding-left: 2px;
+}
+ul.remarks {
+    padding-left: 5.2em;
 }
 
 h1 {
@@ -95,6 +107,11 @@ h1 {
     z-index: 10;
     position: relative;
     top: 20px;
+}
+#succeed {
+    position: absolute;
+    text-align: center;
+    width: 100%;
 }
 
 .coupon {
