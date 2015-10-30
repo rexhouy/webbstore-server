@@ -48,6 +48,7 @@ class OrderService
                         create_order_history(order, current_user.id)
                         return_coupon(order)
                         return_account_balance(order, current_user)
+                        destroy_card(order)
                 end
                 order
         end
@@ -189,6 +190,12 @@ class OrderService
 
         def need_payment?(order)
                 order.subtotal - order.coupon_amount - order.user_account_balance > 0
+        end
+
+        def destroy_card(order)
+                order.cards.each do |card|
+                        card.update(status: Card.statuses[:canceled])
+                end
         end
 
 end

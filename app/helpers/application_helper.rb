@@ -97,4 +97,8 @@ module ApplicationHelper
                 end
         end
 
+        def admin_back_url(default)
+                session[:index_path] || default
+        end
+
 end

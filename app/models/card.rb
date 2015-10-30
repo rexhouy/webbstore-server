@@ -5,6 +5,6 @@ class Card < ActiveRecord::Base
         belongs_to :order
         has_many :card_history
 
-        enum status: [:open, :closed, :unpaid]
+        enum status: [:open, :closed, :unpaid, :canceled]
 
 end

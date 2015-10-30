@@ -11,7 +11,14 @@
   <% end %>
 <div class="row main">
   <% if @cards.empty? %>
-  <p style="text-align:center;padding:20px;">无年（季）卡</p>
+    <div class="main empty-cart table-center-wrap">
+      <i class="glyphicon glyphicon-credit-card table-center bg-img"></i>
+      <div class="table-center-wrap empty-cart-desc inherit-height">
+        <div class="table-center">
+          <p>您没有年（季）卡</p>
+        </div>
+      </div>
+    </div>
   <% end %>
   <% @cards.each do |card| %>
   <section class="white-card">

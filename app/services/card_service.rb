@@ -13,6 +13,7 @@ class CardService
                         card.count = spec.count
                         card.remain = spec.count
                         card.status = order.paid? ? Card.statuses[:open] : Card.statuses[:unpaid]
+                        card.next = Date.today.next_week(:wednesday) if card.open?
                         card.contact_name = order.contact_name
                         card.contact_tel = order.contact_tel
                         card.contact_address = order.contact_address

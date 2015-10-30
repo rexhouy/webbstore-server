@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
         devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :lockable, :authentication_keys => [:tel]
 
         has_many :addresses, -> { where(status: Address.statuses[:active]) }
-        has_many :cards, -> { where.not(status: Card.statuses[:unpaid]).order(created_at: :desc) }
+        has_many :cards, -> { where.not(status: [Card.statuses[:unpaid], Card.statuses[:canceled]]).order(created_at: :desc) }
         has_many :user_coupons, -> { where(status: UserCoupon.statuses[:unused]) }
         has_many :coupons,  -> { where("end_date > now()") }, through: :user_coupons
         has_many :account_balance_histories, -> { order(created_at: :desc) }

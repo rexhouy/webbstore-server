@@ -4,7 +4,7 @@
   <%= link_to edit_admin_group_path(@group), class: "btn btn-primary" do%>
   <span class="glyphicon glyphicon-pencil"></span> 编辑
 <% end %>
-<%= link_to admin_groups_path, class: "btn btn-default" do %>
+<%= link_to admin_back_url(admin_groups_path), class: "btn btn-default" do %>
   <span class="glyphicon glyphicon-arrow-left"></span> 返回
 <% end %>
 </div>

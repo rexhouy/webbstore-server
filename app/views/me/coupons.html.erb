@@ -22,5 +22,14 @@
       </div>
     </div>
     <% end %>
+    <% if @user_coupons.empty? %>
+    <div class="table-center-wrap empty-cart">
+      <i class="glyphicon glyphicon-tag table-center bg-img"></i>
+      <div class="table-center-wrap empty-cart-desc inherit-height">
+        <div class="table-center">
+          <p>很遗憾，您没有优惠券。</p>
+        </div>
+    </div>
+    <% end %>
   </div>
 </div>

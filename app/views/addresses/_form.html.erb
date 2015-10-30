@@ -13,15 +13,15 @@
     </div>
   </div>
   <div class="form-group">
-    <%= p.label :state, "市",  class: "col-sm-2 control-label"  %>
+    <%= p.label :state, "省（市）",  class: "col-sm-2 control-label"  %>
     <div class="col-sm-4">
-      <%= p.select :state, [], {}, {class: "form-control", "onchange": "address.stateChange()"} %>
+      <%= p.select :state, options_for_select(["安徽省", "北京市", "重庆市", "福建省", "甘肃省", "广东省", "广西省", "贵州省", "海南省", "河北省", "黑龙江省", "河南省", "湖北省", "湖南省", "江苏省", "江西省", "吉林省", "辽宁省", "内蒙古省", "宁夏省", "青海省", "山东省", "上海市", "山西省", "陕西省", "四川省", "天津市", "云南省", "浙江省"], "北京市"), {}, {class: "form-control"} %>
     </div>
   </div>
   <div class="form-group">
-    <%= p.label :city, "区", class: "col-sm-2 control-label"  %>
+    <%= p.label :city, "市（区）", class: "col-sm-2 control-label"  %>
     <div class="col-sm-4">
-      <%= p.select :city, {}, {}, {class: "form-control"} %>
+      <%= p.text_field :city, class: "form-control" %>
     </div>
   </div>
   <div class="form-group">

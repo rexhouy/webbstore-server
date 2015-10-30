@@ -5,8 +5,7 @@ window.address = (function() {
         var edit = false;
 
         self.closeModal = function() {
-                $("#new_address")[0].reset(); // Clear form
-                $("#address_modal").modal("hide");
+                close();
         };
         var registerSelectable = function(obj) {
                 obj.click(function(){
@@ -31,6 +30,20 @@ window.address = (function() {
                 return true;
         };
 
+        // 在市（区）后根据省（市）将其名字补充完整
+        var updateCity = function(address) {
+                console.log(address);
+                if (address["address[state]"].endsWith("市")) { // 使用区补充
+                        if (!address["address[city]"].endsWith("区")) {
+                                address["address[city]"] += "区";
+                        }
+                } else { // 使用市补充
+                        if (!address["address[city]"].endsWith("市")) {
+                                address["address[city]"] += "市";
+                        }
+                }
+        };
+
         self.saveOrCreate = function() {
                 if (!check()) {
                         return false;
@@ -43,6 +56,7 @@ window.address = (function() {
                         address["_method"] = "put";
                         url += "/"+address["address[id]"];
                 }
+                updateCity(address);
                 $.ajax(url, {
                         method : "post",
                         headers : {
@@ -67,8 +81,9 @@ window.address = (function() {
                                                 address.click();// Set as selected.
                                         }
                                 }
-                                $("#address_modal").modal("hide"); // Close dialog
+                                close();
                                 $("#new_address")[0].reset(); // Clear form
+                                $(".empty-cart").hide();
                         } else {
                                 alert("保存地址失败");
                         }
@@ -98,7 +113,6 @@ window.address = (function() {
                 $("#address_tel").val(data.tel);
                 $("#address_street").val(data.street);
                 $("#address_state").val(data.state);
-                self.stateChange();
                 $("#address_city").val(data.city);
         };
         self.stateChange = function() {
@@ -123,7 +137,7 @@ window.address = (function() {
         };
 
         self.init = function(isEditable, isSelectable) {
-                initStateSelector();
+                // initStateSelector();
                 editable = isEditable ? true : false;
                 selectable = isSelectable ? true : false;
                 if (selectable) {
@@ -134,19 +148,28 @@ window.address = (function() {
         };
 
         var setModalTitle = function(content) {
-                $("#address_modal").find(".modal-title").html(content);
+                $("#addressbar").find("#titlebar").html(content);
+        };
+
+        var open = function() {
+                $("#addressbar").css("right", 0);
+        };
+        var close = function() {
+                $("#addressbar").css("right", "-100%");
+                $("#new_address")[0].reset(); // Clear form
+                $("#address_id").val(""); // reset form does not reset hidden field
         };
 
         self.create = function() {
                 setModalTitle("新建地址");
-                $("#address_modal").modal();
+                open();
         };
 
         self.edit = function(id) {
                 $.getJSON("/addresses/"+id+".json", function(data){
                         setModalTitle("修改地址");
                         self.setValue(data);
-                        $("#address_modal").modal();
+                        open();
                 });
         };
 
@@ -166,7 +189,6 @@ window.address = (function() {
                 });
                 return false;
         };
-
 
         return self;
 })();

@@ -15,6 +15,17 @@
           <button class="btn btn-default block" onclick="address.create()">新建地址</button>
         </div>
 
+        <% if @addresses.empty? %>
+        <div class="empty-cart table-center-wrap">
+          <i class="glyphicon glyphicon-map-marker table-center bg-img"></i>
+          <div class="table-center-wrap empty-cart-desc inherit-height">
+            <div class="table-center">
+              <p>没有您的配送地址信息</p>
+            </div>
+          </div>
+        </div>
+        <% end %>
+
         <div id="addresses">
           <% @addresses.each do |address| %>
             <%= render partial: "item", object: address %>

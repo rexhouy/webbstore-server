@@ -3,6 +3,7 @@ class AdminController < ApplicationController
 
         # Authenticate users using devise
         before_action :auth_user
+        before_filter :store_index_location
 
         # Load menu info
         before_action :menu
@@ -15,6 +16,13 @@ class AdminController < ApplicationController
                 return redirect_to :user_session  unless user_signed_in?
                 unless public_resources?
                         redirect_to :admin_unauthorized_access if current_user.customer?
+                end
+        end
+
+        def store_index_location
+                return unless request.get?
+                unless (/^\/admin\/\w+$/ =~ request.path).nil?
+                        session[:index_path] = request.fullpath
                 end
         end
 

@@ -11,7 +11,7 @@
     <% if @order.shipping? %>
       <%= link_to "确认完成", admin_orders_deliver_url, method: :put, style: "display:inline-block", class: "btn btn-primary" %>
     <% end %>
-    <%= link_to admin_orders_url, class: "btn btn-default" do %>
+    <%= link_to admin_back_url(admin_orders_url), class: "btn btn-default" do %>
       <i class="glyphicon glyphicon-arrow-left"></i> 返回
     <% end %>
     <a href="" onclick="printer.print()" class="btn btn-default pull-right">
