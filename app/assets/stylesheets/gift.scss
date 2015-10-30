@@ -1,0 +1,150 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+$width: 280px;
+html, body {
+    overflow:hidden;
+    margin: 0;
+    padding: 0;
+    background: #353535;
+    height: 100%;
+}
+
+.container-me {
+    height: 100%;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 480px;
+    padding: 20px 0;
+    background: #353535;
+    background: repeating-linear-gradient(
+        -45deg,
+        #353535,
+        #353535 10px,
+        #383838 10px,
+        #383838 30px
+    );
+}
+
+.gift {
+    width: $width;
+    text-align: center;
+    height: 320px;
+    background: #ee0a3b;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 .1em .3em .3em rgba(0,0,0,.2);
+    overflow: hidden;
+    position: relative;
+}
+
+.seals-strip {
+    position: absolute;
+    top: -258px;
+    left: -31px;
+    border-radius: 50%;
+    width: 340px;
+    height: 340px;
+    border: 6px solid #ffd93e;
+    z-index: 9;
+    box-shadow: 0em .2em .2em rgba(0,0,0,0.1);
+    background: #d60e39;
+}
+
+.seals {
+    position: absolute;
+    top: 32px;
+    z-index: 10;
+    width: 88px;
+    position: relative;
+}
+
+.btn {
+    border: none;
+    background: #ffd93e;
+    color: #fff;
+    position: absolute;
+    bottom: 35px;
+    left: 40px;
+    width: 200px;
+    height: 48px;
+    font-size: 24px;
+    color: #891f23;
+    border-radius: 4px;
+}
+
+.cm {
+    color: #eee;
+    vertical-align: middle;
+    position: relative;
+    top: 108px;
+    font-size: 14px;
+    z-index: 10;
+}
+
+.remarks {
+    color: #ccc;
+    font-size: 13px;
+    text-align: center;
+}
+
+h1 {
+    color: #fff;
+    font-weight: bolder;
+    font-size: 28px;
+    z-index: 10;
+    position: relative;
+    top: 20px;
+}
+
+.coupon {
+    width: 240px;
+    height: 128px;
+    background: #ffd93e;
+    color: #888;
+    z-index: 999;
+    position: relative;
+    left: 20px;
+    /* top: -22px; */
+    top: -500px;
+    -webkit-transition: top .3s, -webkit-transform .3s;
+    transition: top .3s, transform .3s;
+    padding: 8px 0;
+    border-radius: 5px;
+    box-shadow: 0 .1em .3em .3em rgba(0,0, 0,.1);
+    hr {
+        color: #d60e39;
+        border: 2px solid #d60e39;
+        margin: 8px 0 0 0;
+    }
+    div {
+        font-size: 10px;
+        color: #891f23;
+        margin: 4px 0;
+        text-align: left;
+        padding-left: 20px;
+    }
+    .header {
+        padding: 0;
+        text-align: center;
+        overflow:hidden;
+        margin: 8px 0;
+        line-height: 1;
+    }
+    .amount {
+        color: #090;
+        font-weight: bold;
+        font-size: 52px;
+        margin-left: -40px;
+        small {
+            padding-right: 8px;
+        }
+    }
+    .card-background {
+        font-size: 20px;
+        float: left;
+        margin: 6px 20px;
+        top: 8px;
+        color: #891f23;
+    }
+}

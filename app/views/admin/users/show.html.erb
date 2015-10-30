@@ -28,50 +28,49 @@
       <p class="form-control-static"><%= user_status @user %></p>
     </div>
   </div>
-  <% unless @user.customer? %>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">角色</label>
-      <div class="col-sm-10">
-        <p class="form-control-static"><%= role_name @user %></p>
-      </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">角色</label>
+    <div class="col-sm-10">
+      <p class="form-control-static"><%= role_name @user %></p>
     </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">所属卖家</label>
-      <div class="col-sm-10">
-        <p class="form-control-static"><%= @user.group.name unless @user.group.nil? %></p>
-      </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">所属卖家</label>
+    <div class="col-sm-10">
+      <p class="form-control-static"><%= @user.group.name unless @user.group.nil? %></p>
     </div>
-  <% end %>
-  <% if @user.customer? %>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">订单信息</label>
-      <div class="col-sm-10">
-        <p class="form-control-static">
-          订单数量：<%= @user.orders.size %>
-          <br>
-          <%=link_to "查看订单详情", "/admin/orders?order_id_or_tel=#{@user.tel}" %>
-          </p>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">账户余额</label>
-      <div class="col-sm-10">
-        <p class="form-control-static">
-          <%=number_to_currency @user.balance, locale: :'zh-CN', precision: 2%>
-          <br>
-          <%=link_to "查看账户余额详情", "/admin/users/#{@user.id}/account_balance" %>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">订单信息</label>
+    <div class="col-sm-10">
+      <p class="form-control-static">
+        订单数量：<%= @user.orders.size %>
+        <br>
+        <%=link_to "查看订单详情", "/admin/orders?order_id_or_tel=#{@user.tel}" %>
         </p>
-      </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">优惠券</label>
-      <div class="col-sm-10">
-        <p class="form-control-static">
-          <%=link_to "#{@user.coupons.size}张", "/admin/users/#{@user.id}/coupons" %>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">账户余额</label>
+    <div class="col-sm-10">
+      <p class="form-control-static">
+        <%=number_to_currency @user.balance, locale: :'zh-CN', precision: 2%>
+        <br>
+        <%=link_to "查看账户余额详情", "/admin/users/#{@user.id}/account_balance" %>
         </p>
-      </div>
     </div>
-  <% end %>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">优惠券</label>
+    <div class="col-sm-10">
+      <p class="form-control-static">
+        <%=link_to "#{@user.coupons.size}张", "/admin/users/#{@user.id}/coupons" %>
+        </p>
+    </div>
+  </div>
+
 </div>
 
 <!-- 账户充值 -->

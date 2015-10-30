@@ -1,0 +1,43 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>拾惠社</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,user-scalable=no">
+    <link href="<%=image_url('favicon.ico')%>" rel="icon">
+    <%= stylesheet_link_tag "gift", media: "all", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div class="container-me">
+
+      <div class="gift">
+        <div class="seals-strip"></div>
+        <%= image_tag "seals.png", class: "seals"%>
+        <p class="cm">拾惠社给您送红包啦</p>
+        <h1>双十一拆红包</h1>
+        <button class="btn" onclick="openGift()">点击拆红包</button>
+
+        <div class="coupon">
+          <hr>
+          <div class="header">
+            <i class="glyphicon glyphicon-gift card-background"></i>
+            <span class="amount"><small>&#165;</small>10</span>
+          </div>
+          <div>
+            使用条件：订单总金额满50元
+          </div>
+          <div>
+            有效期：2015年11月5日 - 2016年1月5日
+          </div>
+        </div>
+      </div>
+
+      <p class="remarks">
+        活动时间：2015年11月5日～2015年11月15日
+      </p>
+    </div>
+    <%= javascript_include_tag "gift" %>
+  </body>
+</html>

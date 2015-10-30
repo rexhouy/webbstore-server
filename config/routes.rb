@@ -68,6 +68,9 @@ Rails.application.routes.draw do
         # About
         get 'about' => 'about#index'
 
+        # Tmp
+        get "gift" => "gift#index"
+
         # Administration
         namespace :admin do
                 root "home#index"
