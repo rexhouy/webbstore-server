@@ -70,6 +70,7 @@ Rails.application.routes.draw do
 
         # Tmp
         get "gift" => "gift#index"
+        post "gift/lottery" => "gift#lottery"
 
         # Administration
         namespace :admin do

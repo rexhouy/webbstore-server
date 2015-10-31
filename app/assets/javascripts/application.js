@@ -14,10 +14,12 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require mustache.min.js
+//= require fastclick.js
 //= require_self
 //= require_tree ./common
 (function(){
         $(function(){
+                Origami.fastclick(document.body);
                 if ("ontouchstart" in document.documentElement) {
                         $(document.body).removeClass("no-touch");
                 }

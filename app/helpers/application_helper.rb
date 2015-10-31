@@ -24,6 +24,10 @@ module ApplicationHelper
                 date.strftime("%Y-%m-%d") if date.present?
         end
 
+        def display_date_zh(date)
+                date.strftime("%Y年%m月%d日") if date.present?
+        end
+
         def display_datetime(date)
                 date.strftime("%Y-%m-%d %H:%M:%S") if date.present?
         end
