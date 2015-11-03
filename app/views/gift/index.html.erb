@@ -10,6 +10,7 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
+    <input type="hidden" id="current_user" value="<%='true' if current_user%>">
     <div class="container-me">
       <h2 style="color:#fff;font-weight:bolder;width:100%;text-align:center;margin:0;font-size:27px;">
         拾惠社 &#8226; <strong style="font-size:32px;top:1px;position:relative;">2015 11.11</strong></h2>
@@ -18,7 +19,7 @@
         <div class="seals-strip"></div>
         <%= image_tag "seals.png", class: "seals"%>
         <p class="cm">拾惠社给您送红包啦</p>
-        <% @game_start = Time.now < DateTime.new(2015, 11, 5, 0, 0, 0, "+8" ) %>
+        <% @game_start = Time.now < DateTime.new(2015, 11, 2, 0, 0, 0, "+8" ) %>
         <% @game_end = Time.now > DateTime.new(2015, 11, 16, 0, 0, 0, "+8" ) %>
         <% if @game_start %>
           <h1>活动尚未开始</h1>

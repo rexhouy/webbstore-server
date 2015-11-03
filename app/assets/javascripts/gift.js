@@ -42,8 +42,12 @@
         };
 
         window.openGift = function(btn) {
+                if ($("#current_user").val() != "true") {
+                        window.location.href = "/users/sign_in";
+                        return;
+                }
                 if (opend) {
-                        window.location.href="http://www.tenhs.com/";
+                        window.location.href="/";
                 } else {
                         getCoupon();
                 }
