@@ -18,9 +18,16 @@
         <div class="seals-strip"></div>
         <%= image_tag "seals.png", class: "seals"%>
         <p class="cm">拾惠社给您送红包啦</p>
-        <h1>双十一拆红包</h1>
-        <button class="btn" onclick="openGift(this)">点击拆红包</button>
-
+        <% @game_start = Time.now < DateTime.new(2015, 11, 5, 0, 0, 0, "+8" ) %>
+        <% @game_end = Time.now > DateTime.new(2015, 11, 16, 0, 0, 0, "+8" ) %>
+        <% if @game_start %>
+          <h1>活动尚未开始</h1>
+        <% elsif @game_end %>
+          <h1>活动已经结束</h1>
+        <% else %>
+          <h1>双十一拆红包</h1>
+        <% end %>
+        <button class="btn" onclick="openGift(this)" <% if @game_start || @game_end %>disabled="disabled"<% end %>>点击拆红包</button>
         <div class="coupon">
           <hr>
           <div class="header">
