@@ -31,7 +31,7 @@
       价格
   <% end %>
   <div class="col-sm-4">
-    <%= p.number_field :price, class: "form-control", step: "any", min: 0 %>
+    <%= p.number_field :price, class: "form-control", step: "0.01", min: 0 %>
   </div>
   </div>
 
@@ -92,9 +92,9 @@
               <td style="display:none"><input type="hidden" value="<%= spec.id%>"></td>
               <td><input type="text" class="form-control" value="<%= spec.name %>"></td>
               <td><input type="text" class="form-control" value="<%= spec.value %>"></td>
-              <td><input type="number" class="form-control" value="<%= spec.price %>"></td>
-              <td><input type="number" class="form-control" value="<%= spec.storage %>"></td>
-              <td><input type="number" class="form-control" value="<%= spec.count %>"></td>
+              <td><input type="number" class="form-control" value="<%= spec.price %>" step=0.01 min=0></td>
+              <td><input type="number" class="form-control" value="<%= spec.storage %>" step=1 min=1></td>
+              <td><input type="number" class="form-control" value="<%= spec.count %>" step=1 min=1></td>
               <td>
                 <button type="button" class="btn btn-danger" onclick="product.removeSpec(this)" title="删除">
                   <span class='glyphicon glyphicon-trash' style='color:#fff;'></span>
@@ -189,9 +189,9 @@
   <td style="display:none"><input type="hidden"></td>
   <td><input class="form-control" type="text"></td>
   <td><input class="form-control" type="text"></td>
-  <td><input class="form-control" type="number"></td>
-  <td><input class="form-control" type="number"></td>
-  <td><input class="form-control" type="number"></td>
+  <td><input class="form-control" type="number" step=0.01 min=0></td>
+  <td><input class="form-control" type="number" step=1 min=1></td>
+  <td><input class="form-control" type="number" step=1 min=1></td>
   <td>
   <button type="button" class="btn btn-danger" onclick="product.removeSpec(this)" title="删除">
   <span class="glyphicon glyphicon-trash" style="color:#fff;"></span>
