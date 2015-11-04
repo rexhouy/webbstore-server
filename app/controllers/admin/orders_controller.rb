@@ -51,7 +51,6 @@ class Admin::OrdersController < AdminController
         end
 
         ## 用户注册订单监听回调，
-        # TODO 限制管理员
         def wechat_register_notification
                 code = params[:code]
                 logger.debug "register notification callback, received code #{code}, user #{params[:uid]}"

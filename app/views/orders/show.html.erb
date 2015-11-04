@@ -45,20 +45,22 @@
       <div><%= payment_name @order %></div>
     </section>
     <section>
-      <h3>订单总价</h3>
-      <p><%= number_to_currency @order.subtotal, locale: :'zh-CN', precision: 2 %></p>
-    </section>
-    <section>
-      <h3>使用优惠券</h3>
-      <p><%= number_to_currency @order.coupon_amount, locale: :'zh-CN', precision: 2 %></p>
-    </section>
-    <section>
-      <h3>使用账户余额</h3>
-      <p><%= number_to_currency @order.user_account_balance, locale: :'zh-CN', precision: 2 %></p>
-    </section>
-    <section>
-      <h3>支付总价</h3>
-      <p><%= number_to_currency (@order.subtotal - @order.coupon_amount - @order.user_account_balance), locale: :'zh-CN', precision: 2 %></p>
+      <h3>支付信息</h3>
+      <table class="table table-bordered" style="max-width: 600px">
+        <thead>
+          <tr>
+            <th>订单总价</th><th>优惠券</th><th>账户余额</th><th>需支付总价</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= number_to_currency @order.subtotal, locale: :'zh-CN', precision: 2 %></td>
+            <td><%= number_to_currency @order.coupon_amount, locale: :'zh-CN', precision: 2 %></td>
+            <td><%= number_to_currency @order.user_account_balance, locale: :'zh-CN', precision: 2 %></td>
+            <td><%= number_to_currency (@order.subtotal - @order.coupon_amount - @order.user_account_balance), locale: :'zh-CN', precision: 2 %></td>
+          </tr>
+        </tbody>
+      </table>
     </section>
     <section>
       <h3>配送信息</h3>
