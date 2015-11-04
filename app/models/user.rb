@@ -56,6 +56,7 @@ class User < ActiveRecord::Base
                 self.role ||= User.roles[:customer]
                 self.status = User.statuses[:active]
                 self.introducer_token = SecureRandom.hex(8)
+                self.balance = 0
         end
 
 end

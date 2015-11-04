@@ -56,8 +56,17 @@ class Admin::OrdersController < AdminController
                 code = params[:code]
                 logger.debug "register notification callback, received code #{code}, user #{params[:uid]}"
                 openid = WechatService.new.get_open_id(code)
+                unless openid.present?
+                        logger.error "Register notification failed fro user #{params[:uid]}, get openid has failed."
+                        @error = "获取openid失败"
+                        return
+                end
                 # Save open id to user set order notification to true
                 user = User.find(params[:uid])
+                if user.customer?
+                        @error = "您没有权限进行该操作"
+                        return
+                end
                 user.update(wechat_openid: openid, order_notification: true)
                 logger.info "Register notification success for user #{user.id}, openid: #{openid}"
         end
