@@ -1,6 +1,8 @@
 <h1 class="page-header">报修与投诉详情</h1>
 <div class="control-panel">
-  <%= link_to "返回", admin_complains_path, class: "btn btn-default" %>
+  <%= link_to admin_back_url(admin_complains_path), class: "btn btn-default" do %>
+  <span class="glyphicon glyphicon-arrow-left"></span> 返回
+  <% end %>
   <% if @complain.created? %>
     <button class="btn btn-primary"  data-toggle="modal" data-target="#complainModal">开始处理</button>
   <% elsif @complain.processing? %>

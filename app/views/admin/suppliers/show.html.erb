@@ -8,7 +8,9 @@
 
 <div class="control-panel">
   <%= link_to "编辑", edit_admin_supplier_path(@supplier), class: "btn btn-primary"%>
-  <%= link_to "返回", admin_suppliers_path, class: "btn btn-default" %>
+  <%= link_to admin_back_url(admin_suppliers_path), class: "btn btn-default" do %>
+  <span class="glyphicon glyphicon-arrow-left"></span> 返回
+  <% end %>
 </div>
 
 <div class="form-horizontal">

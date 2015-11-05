@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="application/vnd.ms-excel; charset=UTF-8">
+    <title>订单</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td><h1>订单</h1></td>
+      </tr>
+      <% if @order_id_or_tel.present? %>
+      <tr>
+        <td>订单号或手机号：<%=@order_id_or_tel%></td>
+      </tr>
+      <% end %>
+      <% if @order_date_start.present? || @order_date_end.present? %>
+      <tr>
+        <td>日期： <%= "#{@order_date_start} ~  #{@order_date_end}" %></td>
+      </tr>
+      <% end %>
+    </table>
+    <table class="table">
+      <thead>
+        <tr>
+          <td>创建时间</td>
+          <td>订单号</td>
+          <td>用户</td>
+          <td class="number">总价</td>
+          <td>状态</td>
+          <td>支付方式</td>
+          <td>配送方式</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% @orders.each_with_index do |order, index| %>
+        <tr>
+          <td><%= display_datetime order.created_at %></td>
+          <td><%= order.order_id  %></td>
+          <td><%= order.customer.tel  %></td>
+          <td class="number-align"><%= number_to_currency order.subtotal, locale: :'zh-CN', precision: 2  %></td>
+          <td><%= order_status order %></td>
+          <td><%= order_payment order %></td>
+          <td><%= order_delivery order %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  </body>
+</html>

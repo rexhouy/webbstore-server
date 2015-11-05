@@ -33,7 +33,7 @@ class Order < ActiveRecord::Base
                 end
         end
 
-        def self.search(order_id_or_tel, order_date)
+        def self.search(order_id_or_tel, order_date_start, order_date_end)
                 scopes = nil
                 unless order_id_or_tel.blank?
                         # test if it is order_id or tel
@@ -43,12 +43,20 @@ class Order < ActiveRecord::Base
                                 scopes = joins(:customer).where(users: {tel: order_id_or_tel})
                         end
                 end
-                unless order_date.blank?
-                        d = Date.parse(order_date)
+                unless order_date_start.blank?
+                        d = Date.parse(order_date_start)
                         if scopes.nil?
-                                scopes = where(created_at: d.beginning_of_day..d.end_of_day)
+                                scopes = where("created_at > ? ", d.beginning_of_day)
                         else
-                                scopes = scopes.where(created_at: d.beginning_of_day..d.end_of_day)
+                                scopes = scopes.where("created_at > ? ", d.beginning_of_day)
+                        end
+                end
+                unless order_date_end.blank?
+                        d = Date.parse(order_date_end)
+                        if scopes.nil?
+                                scopes = where("created_at < ? ", d.end_of_day)
+                        else
+                                scopes = scopes.where("created_at < ? ", d.end_of_day)
                         end
                 end
                 scopes || all

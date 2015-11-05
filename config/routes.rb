@@ -110,6 +110,8 @@ Rails.application.routes.draw do
                 get "orders/cards" => "orders#cards", as: :orders_cards # cards
                 get "orders/cards/:id" => "orders#card"
                 put "orders/cards/deliver/:id" => "orders#card_deliver"
+                # Export orders to excel
+                get 'orders/export' => 'orders#export'
                 resources :orders
                 put 'orders/cancel/:id' => 'orders#cancel', as: :orders_cancel
                 put 'orders/shipping/:id' => 'orders#shipping', as: :orders_shipping

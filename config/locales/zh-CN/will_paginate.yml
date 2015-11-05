@@ -1,7 +1,8 @@
 zh-CN:
   will_paginate:
-    previous_label: "<span aria-hidden=true>&larr;</span> 上一页"
-    next_label: "下一页 <span aria-hidden=true>&rarr;</span>"
+    previous_label: "&larr;"
+    next_label: "&rarr;"
+    page_gap: "&hellip;"
     page_entries_info:
       single_page:
         zero:  "没有记录"

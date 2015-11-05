@@ -17,7 +17,22 @@
 
                 return self;
         };
+
+        var orders = function() {
+                var self = {};
+
+                self.export = function() {
+                        var params = window.location.search;
+                        var path = "/admin/orders/export";
+                        var host = window.location.host;
+                        window.open(window.location.protocol + "//" + host+path+params);
+                };
+
+                return self;
+        };
+
         window.cards = cards();
+        window.orders = orders();
 
         $(function () {
                 $('[data-toggle="popover"]').popover();

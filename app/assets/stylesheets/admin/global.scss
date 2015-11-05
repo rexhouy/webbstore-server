@@ -35,15 +35,15 @@ table {
 
 // will paginate
 .previous_page, .next_page {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 15px;
     display: inline-block;
     padding: 5px 14px;
-    margin-right: 20px;
+    font-weight: bolder;
 }
 .pagination {
     margin-top: 4px;
+    em {
+        padding: 10px;
+    }
 }
 
 .link-group {

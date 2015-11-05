@@ -4,6 +4,8 @@ class AdminController < ApplicationController
         # Authenticate users using devise
         before_action :auth_user
 
+        before_filter :store_index_location
+
         # Load menu info
         before_action :menu
 
@@ -33,6 +35,14 @@ class AdminController < ApplicationController
                         can? :manage, menu[:resource]
                 end
         end
+
+        def store_index_location
+                return unless request.get?
+                unless (/^\/admin\/\w+$/ =~ request.path).nil?
+                        session[:index_path] = request.fullpath
+                end
+        end
+
 
         rescue_from CanCan::AccessDenied do |exception|
                 logger.debug exception

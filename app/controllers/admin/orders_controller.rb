@@ -5,13 +5,22 @@ class Admin::OrdersController < AdminController
 
         def index
                 @order_id_or_tel = params[:order_id_or_tel] || ""
-                @order_date = params[:order_date] || ""
-                if @order_id_or_tel.blank? && @order_date.blank?
+                @order_date_start = params[:order_date_start] || ""
+                @order_date_end = params[:order_date_end] || ""
+                if @order_id_or_tel.blank? && @order_date_start.blank? && @order_date_end.blank?
                         @type = params[:type] || "wait_shipping"
                         @orders = Order.type(@type).owner(owner).paginate(:page => params[:page])
                 else
-                        @orders = Order.search(@order_id_or_tel, @order_date).owner(owner).paginate(:page => params[:page])
+                        @orders = Order.search(@order_id_or_tel, @order_date_start, @order_date_end).owner(owner).paginate(:page => params[:page])
                 end
+        end
+
+        def export
+                index
+                response.headers["Content-disposition"] = "attachment; filename=orders.xls"
+                response.headers["Pragma"] = "no-cache"
+                response.headers["Content-Type"] = "application/vnd.ms-excel; charset=UTF-8"
+                render layout: false
         end
 
         def show

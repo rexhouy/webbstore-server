@@ -1,7 +1,9 @@
 <h1 class="page-header">机构信息</h1>
 <div class="control-panel">
   <%= link_to "编辑", edit_admin_group_path(@group), class: "btn btn-primary"%>
-  <%= link_to "返回", admin_groups_path, class: "btn btn-default" %>
+  <%= link_to admin_back_url(admin_groups_path), class: "btn btn-default" do %>
+  <span class="glyphicon glyphicon-arrow-left"></span> 返回
+  <% end %>
 </div>
 <div class="form">
   <div class="form-group">
