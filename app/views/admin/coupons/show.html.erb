@@ -2,7 +2,7 @@
 <%= alert_info %>
 <div class="control-panel">
   <% unless @coupon.dispensed %>
-  <%= link_to "/admin/coupons/#{@coupon.id}/edit", class: "btn btn-primary" do %>
+  <%= link_to "/admin/coupons/#{@coupon.id}/edit", class: "btn btn-default" do %>
         <span class="glyphicon glyphicon-pencil"></span> 编辑
     <% end %>
   <% end %>

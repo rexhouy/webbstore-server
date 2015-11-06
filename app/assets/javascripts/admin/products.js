@@ -74,6 +74,20 @@
                         return false;
                 };
 
+                self.supplement = function(id, element) {
+                        $(".input-well").each(function() {
+                                $(this).hide();
+                        });
+                        var pos = $(element).position();
+                        pos.left -= 300;
+                        pos.top -=15;
+                        $("#supplement_"+id).css("top", pos.top).css("left", pos.left).show().find(".form-control").focus();
+                };
+
+                self.hideSupplement = function(id) {
+                        $("#supplement_"+id).hide();
+                };
+
                 return self;
         }();
 

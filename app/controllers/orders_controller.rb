@@ -45,7 +45,7 @@ class OrdersController < ApiController
                 end
                 begin
                         order = OrderService.new.create(get_cart, params[:paymentType], params[:memo],
-                                                params[:use_coupon], params[:use_account_balance], params[:addressId], current_user)
+                                                params[:use_coupon], params[:use_account_balance].eql?("true"), params[:addressId], current_user)
                         clear_cart
                         redirect_to payment_redirect_url(order)
                 rescue => e

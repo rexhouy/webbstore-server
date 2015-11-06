@@ -65,6 +65,10 @@ class Product < ActiveRecord::Base
                 __elasticsearch__.search(search_params).records
         end
 
+        def self.out_of_stock
+                where("sales >= storage - 2")
+        end
+
         private
         def check_specifications
                 unless specifications.present? or storage.present?

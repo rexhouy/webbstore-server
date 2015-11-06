@@ -15,7 +15,7 @@ class OrderService
                         order.orders_products = get_orders_products(cart)
                         order.subtotal = subtotal(order.orders_products)
                         coupon_amount = set_coupon(order, current_user.id, user_coupon)
-                        set_user_account_balance(order, current_user, coupon_amount)
+                        set_user_account_balance(order, current_user, coupon_amount, use_account_balance)
                         order.name = order_name order.orders_products
                         order.status = need_payment?(order) ? Order.statuses[:placed] : Order.statuses[:paid]
                         order.save!
@@ -95,7 +95,11 @@ class OrderService
                 user_coupon.coupon.amount
         end
 
-        def set_user_account_balance(order, current_user, coupon_amount)
+        def set_user_account_balance(order, current_user, coupon_amount, use_account_balance)
+                unless use_account_balance
+                        order.user_account_balance = 0
+                        return order
+                end
                 total_price = order.subtotal - coupon_amount
                 account_balance = current_user.balance
                 if account_balance.eql? 0

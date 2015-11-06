@@ -1,5 +1,31 @@
 <h1 class="page-header">注册订单提醒</h1>
+  <%= alert_info %>
 <div class="qr-code">
   <h4 class="text-info">请使用微信扫描以下二维码绑定微信提醒。</h4>
   <%= raw @qr_code.as_html %>
+</div>
+<div>
+  <h2 class="sub-header">已绑定微信提示用户列表</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>手机号</th>
+        <th>角色</th>
+        <th>解绑</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @notification_users.each do |user| %>
+      <tr>
+        <td><%=user.tel%></td>
+        <td><%=role_name user%></td>
+        <td>
+          <%=link_to "/admin/users/#{user.id}/cancel_notification", method: "PUT" do%>
+          <i class="glyphicon glyphicon-ban-circle"></i>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>

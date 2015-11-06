@@ -1,6 +1,10 @@
 <h1 class="page-header">优惠券管理</h1>
 
-<%= link_to "/admin/coupons/new", method: "GET",  class: "btn btn-primary" do %>
+<div class="alert alert-info" role="alert">
+  参与红包游戏人数：<%=@count%>人
+</div>
+
+<%= link_to "/admin/coupons/new", method: "GET",  class: "btn btn-default" do %>
 <span class="glyphicon glyphicon-plus"></span> 新建
 <% end %>
 

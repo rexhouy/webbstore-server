@@ -5,6 +5,7 @@ class Admin::CouponsController < AdminController
 
         def index
                 @coupons = Coupon.owner(owner).paginate(page: params[:page])
+                @count = UserCoupon.where(from: "gift").count
         end
 
         def new

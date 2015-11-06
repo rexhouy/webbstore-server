@@ -2,7 +2,7 @@
 class Admin::ProductsController < AdminController
         # Checks authorization for all actions using cancan
         load_and_authorize_resource
-        before_action :set_product, only: [:show, :edit, :update, :destroy]
+        before_action :set_product, only: [:show, :edit, :update, :destroy, :supplement]
 
         def index
                 @search_text = params[:search_text]
@@ -11,6 +11,7 @@ class Admin::ProductsController < AdminController
                 else
                         @products = Product.owner(owner).available.paginate(page: params[:page])
                 end
+                @out_of_stock_products = Product.owner(owner).available.out_of_stock unless params[:page].present?
         end
 
         def edit
@@ -55,6 +56,18 @@ class Admin::ProductsController < AdminController
         def destroy
                 @product.update(status: Product.statuses[:disabled], on_sale: false)
                 redirect_to admin_products_path, notice: "删除成功"
+        end
+
+        def supplement
+                count = params[:count].to_i
+                Product.transaction do
+                        if params[:spec_id].present?
+                                spec = Specification.find(params[:spec_id])
+                                spec.update(storage: spec.storage+count)
+                        end
+                        @product.update(storage: @product.storage+count)
+                end
+                redirect_to admin_product_path(@product), notice: "补货完成"
         end
 
         private

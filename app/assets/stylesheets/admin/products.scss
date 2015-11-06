@@ -1,7 +1,7 @@
 // Place all the styles related to the products controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
+@import "variables";
 .editor {
     overflow:scroll;
     width: 100%;
@@ -26,5 +26,20 @@
     .btn {
         margin: 0 20px 0 0;
         float: left;
+    }
+}
+
+.input-well {
+    display: none;
+    position:absolute;
+    right:180px;
+    width:300px;
+    z-index:9;
+    box-shadow: $shadow;
+    padding: 8px;
+    .form-control {
+        display: inline-block !important;
+        width: 50% !important;
+        text-align: right;
     }
 }

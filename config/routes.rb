@@ -90,6 +90,7 @@ Rails.application.routes.draw do
                 get "users/:id/account_balance" => "users#account_balance"
                 put "users/:id/account_balance" => "users#deposit"
                 put "users/:id/coupons" => "users#dispense"
+                put "users/:id/cancel_notification" => "users#cancel_notification"
 
                 # Orders
                 get "orders/cards" => "orders#cards", as: :orders_cards # cards
@@ -100,7 +101,7 @@ Rails.application.routes.draw do
                 put 'orders/shipping/:id' => 'orders#shipping', as: :orders_shipping
                 put 'orders/deliver/:id' => 'orders#deliver', as: :orders_deliver
                 # Register wechat notification page
-                get 'orders/notification/wechat' => 'orders#notification'
+                get 'orders/notification/wechat' => 'orders#notification', as: :order_notification_registry
                 get 'orders/notification_redirect/wechat' => 'orders#notification_redirect_page'
                 # Register wechat notification callback
                 get 'orders/wechat_register_notification/:uid' => 'orders#wechat_register_notification'
@@ -110,6 +111,8 @@ Rails.application.routes.draw do
                         resources :specifications
                 end
                 post 'product/preview' => 'products#preview', as: :product_preview
+                put "products/:id/supplement" => "products#supplement"
+                put "products/:id/spec/:spec_id/supplement" => "products#supplement"
 
                 # Trade
                 get "trades" => "trades#index", as: :trades
