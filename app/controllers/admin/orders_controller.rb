@@ -44,6 +44,7 @@ class Admin::OrdersController < AdminController
         def notification
                 url = "http://#{Rails.application.config.domain}/admin/orders/notification_redirect/wechat"
                 @qr_code = RQRCode::QRCode.new(url, size: 12, level: :m )
+                @notification_users = User.owner(owner).where(order_notification: true).where("wechat_openid is not null")
         end
 
         def notification_redirect_page

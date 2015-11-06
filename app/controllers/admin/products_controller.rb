@@ -9,6 +9,7 @@ class Admin::ProductsController < AdminController
                 else
                         @products = Product.owner(owner).available.paginate(:page => params[:page])
                 end
+                @out_of_stock_products = Product.owner(owner).available.out_of_stock unless params[:page].present?
         end
 
         def edit

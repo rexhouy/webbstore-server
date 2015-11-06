@@ -104,6 +104,7 @@ Rails.application.routes.draw do
 
                 # Users
                 put "users/:id/unlock" => "users#unlock"
+                put "users/:id/cancel_notification" => "users#cancel_notification"
                 resources :users
 
                 # Orders
@@ -117,7 +118,7 @@ Rails.application.routes.draw do
                 put 'orders/shipping/:id' => 'orders#shipping', as: :orders_shipping
                 put 'orders/deliver/:id' => 'orders#deliver', as: :orders_deliver
                 # Register wechat notification page
-                get 'orders/notification/wechat' => 'orders#notification'
+                get 'orders/notification/wechat' => 'orders#notification', as: :order_notification_registry
                 get 'orders/notification_redirect/wechat' => 'orders#notification_redirect_page'
                 # Register wechat notification callback
                 get 'orders/wechat_register_notification/:uid' => 'orders#wechat_register_notification'

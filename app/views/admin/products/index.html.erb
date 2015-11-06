@@ -8,6 +8,23 @@
   </li>
 </ul>
 
+<% if @out_of_stock_products.present? && @out_of_stock_products.any? %>
+<div class="alert alert-warning alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <i class="glyphicon glyphicon-warning-sign"></i>
+  <strong>以下商品库存不足</strong>
+  <ul>
+    <% @out_of_stock_products.each do |p| %>
+    <li>
+      <%=link_to admin_product_path(p) do%>
+      <span style="width:180px;display:inline-block;"><%= p.name %></span>库存：<%=p.storage-p.sales%>
+      <% end %>
+    </li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
 <div>
   <%= link_to new_admin_product_path,  class: "btn btn-primary pull-right" do %>
     <span class="glyphicon glyphicon-plus"></span> 新建

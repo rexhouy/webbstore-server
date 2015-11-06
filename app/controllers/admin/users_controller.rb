@@ -41,6 +41,11 @@ class Admin::UsersController < AdminController
                 end
         end
 
+        def cancel_notification
+                @user.update(order_notification: false)
+                redirect_to admin_order_notification_registry_path
+        end
+
         private
         def search(tel)
                 user = User.find_by_tel(tel)
