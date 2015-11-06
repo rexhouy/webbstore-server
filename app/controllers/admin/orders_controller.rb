@@ -24,20 +24,20 @@ class Admin::OrdersController < AdminController
                 rescue => e
                         logger.error e
                         logger.error e.backtrace.join("\n")
-                        return redirect_to [:admin, @order], notice: e.to_s
+                        return redirect_to admin_order_path(@order), notice: e.to_s
                 end
-                redirect_to [:admin, @order], notice: "修改成功"
+                redirect_to admin_order_path(@order), notice: "修改成功"
         end
 
         def shipping
                 OrderService.new.change_status(@order, Order.statuses[:shipping], current_user.id)
                 NotificationService.new.send_order_delivery_notify(@order, @order.customer)
-                redirect_to [:admin, @order], notice: "修改成功"
+                redirect_to admin_order_path(@order), notice: "修改成功"
         end
 
         def deliver
                 OrderService.new.change_status(@order, Order.statuses[:delivered], current_user.id)
-                redirect_to [:admin, @order], notice: "修改成功"
+                redirect_to admin_order_path(@order), notice: "修改成功"
         end
 
         ## 到注册监听页面，提示用户使用微信扫描二维码，注册订单监听。（获取用户openid）

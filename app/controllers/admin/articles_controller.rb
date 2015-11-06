@@ -25,7 +25,7 @@ class Admin::ArticlesController < AdminController
                 authorize! :create, @article
                 @article.group_id = owner
                 if @article.save
-                        redirect_to action: "show", id: @article.id, notice: "创建成功"
+                        redirect_to admin_article_path(@article), notice: "创建成功"
                 else
                         render :new
                 end
@@ -33,7 +33,7 @@ class Admin::ArticlesController < AdminController
 
         def update
                 if @article.update(article_param)
-                        redirect_to action: "show", id: @article.id, notice: "更新成功"
+                        redirect_to admin_article_path(@article), notice: "更新成功"
                 else
                         render :edit
                 end

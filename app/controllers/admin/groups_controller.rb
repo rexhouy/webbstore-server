@@ -14,7 +14,7 @@ class Admin::GroupsController < AdminController
 
         def update
                 if @group.update(group_params)
-                        redirect_to action: "show", id: @group.id, notice: "更新成功"
+                        redirect_to admin_group_path(@group), notice: "更新成功"
                 else
                         render "edit"
                 end
@@ -23,7 +23,7 @@ class Admin::GroupsController < AdminController
         def create
                 @group = Group.new(group_params)
                 if @group.save
-                        redirect_to action: "show", id: @group.id, notice: "创建成功"
+                        redirect_to admin_group_path(@group), notice: "创建成功"
                 else
                         render "new"
                 end
@@ -37,7 +37,7 @@ class Admin::GroupsController < AdminController
         def destroy
                 @group.status = Group.statuses[:disabled]
                 @group.save
-                redirect_to action: "index", notice: "删除成功"
+                redirect_to admin_groups_path, notice: "删除成功"
         end
 
         private

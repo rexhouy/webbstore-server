@@ -3,7 +3,7 @@ require 'securerandom'
 class Admin::UsersController < AdminController
         # Checks authorization for all actions using cancan
         load_and_authorize_resource
-        before_action :set_user, only: [:edit, :update, :coupon, :account_balance, :show, :deposit, :dispense, :cancel_notification]
+        before_action :set_user, only: [:edit, :update, :coupon, :account_balance, :show, :deposit, :dispense, :cancel_notification, :unlock]
 
         def index
                 @tel = params[:tel]
@@ -27,7 +27,7 @@ class Admin::UsersController < AdminController
 
         def update
                 if @user.update(user_params)
-                        redirect_to action: "show", id: @user.id, notice: "更新成功"
+                        redirect_to admin_user_path(@user), notice: "更新成功"
                 else
                         render "edit"
                 end
@@ -69,6 +69,11 @@ class Admin::UsersController < AdminController
         def cancel_notification
                 @user.update(order_notification: false)
                 redirect_to admin_order_notification_registry_path, notice: "取消用户#{@user.tel}的订单提醒成功！"
+        end
+
+        def unlock
+                @user.update(failed_attempts: 0, locked_at: nil)
+                redirect_to admin_user_path(@user), notice: "解锁完成！该用户可以登录了。"
         end
 
         private

@@ -25,7 +25,7 @@ class Admin::ChannelsController < AdminController
                 authorize! :create, @channel
                 @channel.group_id = owner
                 if @channel.save
-                        redirect_to action: "show", id: @channel.id, notice: "创建成功"
+                        redirect_to admin_channel_path(@channel), notice: "创建成功"
                 else
                         render :new
                 end
@@ -33,7 +33,7 @@ class Admin::ChannelsController < AdminController
 
         def update
                 if @channel.update(channel_param)
-                        redirect_to action: "show", id: @channel.id, notice: "更新成功"
+                        redirect_to admin_channel_path(@channel), notice: "更新成功"
                 else
                         render :edit
                 end

@@ -23,7 +23,7 @@ class Admin::ProductsController < AdminController
                                 spec.update(status: Specification.statuses[:disabled])
                         end
                         if @product.update(product_params)
-                                redirect_to action: "show", id: @product.id, notice: "更新成功"
+                                redirect_to admin_product_path(@product), notice: "更新成功"
                         else
                                 render "edit"
                         end
@@ -42,7 +42,7 @@ class Admin::ProductsController < AdminController
                 @product = Product.new(product_params)
                 @product.owner_id = owner
                 if @product.save
-                        redirect_to action: "show", id: @product.id, notice: "创建成功"
+                        redirect_to admin_product_path(@product), notice: "创建成功"
                 else
                         render "new"
                 end

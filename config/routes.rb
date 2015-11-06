@@ -91,6 +91,7 @@ Rails.application.routes.draw do
                 put "users/:id/account_balance" => "users#deposit"
                 put "users/:id/coupons" => "users#dispense"
                 put "users/:id/cancel_notification" => "users#cancel_notification"
+                put "users/:id/unlock" => "users#unlock"
 
                 # Orders
                 get "orders/cards" => "orders#cards", as: :orders_cards # cards

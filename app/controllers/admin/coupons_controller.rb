@@ -16,14 +16,14 @@ class Admin::CouponsController < AdminController
         end
 
         def edit
-                render :show, notice: "该优惠券已经发放，不能编辑" if @coupon.dispensed
+                render :show if @coupon.dispensed
         end
 
         def create
                 @coupon = Coupon.new(coupon_params)
                 @coupon.seller_id = owner
                 if @coupon.save!
-                        redirect_to action: "show", id: @coupon.id, notice: "创建成功"
+                        redirect_to admin_coupon_path(@coupon), notice: "创建成功"
                 else
                         render :new
                 end
