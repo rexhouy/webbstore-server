@@ -30,15 +30,25 @@ window.address = (function() {
                 return true;
         };
 
+        // 微信没有endsWith方法
+        var endsWith = function(a, b) {
+                if (a.endsWith) {
+                        return a.endsWith(b);
+                } else {
+                        return a.substring(a.length -1, a.length) == b;
+                }
+        };
+
         // 在市（区）后根据省（市）将其名字补充完整
         var updateCity = function(address) {
-                console.log(address);
-                if (address["address[state]"].endsWith("市")) { // 使用区补充
-                        if (!address["address[city]"].endsWith("区")) {
+                var state = address["address[state]"];
+                var city = address["address[city]"];
+                if (endsWith(state, "市")) { // 使用区补充
+                        if (!endsWith(city, "区")) {
                                 address["address[city]"] += "区";
                         }
                 } else { // 使用市补充
-                        if (!address["address[city]"].endsWith("市")) {
+                        if (!endsWith(city, "市")) {
                                 address["address[city]"] += "市";
                         }
                 }
