@@ -113,48 +113,72 @@
     overflow: hidden;
     a {
         text-align: center;
-        background-color: #f6f6f6;
+        background-color: #f1f1f1;
         display: block;
         height: 100%;
         padding: 0;
-        border: 1px solid #f1f1f1;
+        border: 1px solid #eee;
         border-radius: 4px;
     }
     .image {
         height: 200px;
         overflow: hidden;
     }
-    h3 {
-        margin: 0;
-        padding: 12px 0 12px 8px;
+    .title {
+        height: 18px;
+        margin: 12px 4px 4px 8px !important;
         overflow: hidden;
-        text-align: left;
-        font-size: 14px;
-        width: 70%;
-        float: left;
+        h3 {
+            margin: 0;
+            overflow: hidden;
+            width: 70%;
+            height: 20px;
+            text-align: left;
+            line-height: 18px;
+            float: left;
+            margin: 0;
+            font-size: 13px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: #333;
+        }
+        .price {
+            float: right;
+            width: 30%;
+            text-align: right;
+            font-size: 12px;
+            font-weight: bold;
+            color: $accent-color;
+        }
     }
-    span {
-        color:$accent-color;
-        float: right;
-        width: 30%;
-        padding: 10px 8px 10px 0;
+    .desc {
         font-size: 12px;
-        font-weight: bold;
+        text-align: left;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin: 0 8px;
+        overflow: hidden;
     }
     @media (max-width:800px) {
         padding: 8px;
-        height: 198px;
+        height: 192px;
         .image {
-            height: 140px;
+            height: 130px;
         }
-        h3 {
-            padding: 8px 0 8px 4px;
-            margin: 0;
-            font-size: 12px;
+        .title {
+            height: 18px;
+            margin: 4px 4px 2px 4px !important;
+            h3 {
+                margin: 0;
+                font-size: 11px;
+            }
+            .price {
+                font-size: 11px;
+            }
         }
-        span {
-            padding: 8px 0 8px 4px;
+        .desc {
             font-size: 10px;
+            margin: 0 4px;
         }
     }
 }

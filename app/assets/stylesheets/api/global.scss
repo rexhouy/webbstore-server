@@ -21,10 +21,7 @@ header {
     background: $theme-color;
     box-shadow: $shadow;
     z-index: 100;
-    position: absolute;
-    width: 100%;
-    top: 0;
-    left: 0;
+    position: relative;
 }
 
 footer {
