@@ -109,7 +109,7 @@
 
 .card {
     padding: 15px;
-    height: 290px;
+    height: 250px;
     overflow: hidden;
     a {
         text-align: center;
@@ -121,7 +121,7 @@
         border-radius: 4px;
     }
     .image {
-        height: 200px;
+        height: 160px;
         overflow: hidden;
     }
     .title {
@@ -161,9 +161,9 @@
     }
     @media (max-width:800px) {
         padding: 8px;
-        height: 192px;
+        height: 172px;
         .image {
-            height: 130px;
+            height: 110px;
         }
         .title {
             height: 18px;
@@ -174,6 +174,7 @@
             }
             .price {
                 font-size: 11px;
+                padding-top: 2px;
             }
         }
         .desc {
