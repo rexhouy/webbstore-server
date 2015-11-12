@@ -7,7 +7,11 @@
           <div class="image">
             <%= image_tag product.cover_image %>
           </div>
-          <h3><%=product.name%></h3>
+          <div class="title">
+            <h3><%=product.name%></h3>
+            <div class="price">&yen; <%=product.price%></div>
+          </div>
+          <div class="desc"><%=product.description%></div>
         </a>
       </section>
     <% end %>
