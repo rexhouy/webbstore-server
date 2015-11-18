@@ -1,4 +1,5 @@
 <div>
+  <% if @channels.any? %>
   <div class="row">
     <a href="<%=@channels.first.url%>">
       <%= image_tag @channels.first.image, alt: @channels.first.name%>
@@ -6,12 +7,13 @@
   </div>
   <div class="row home-nav" style="background:#fff;">
     <% @channels[1..@channels.size].each do |c| %>
-    <section class="col-sm-6 col-md-6 col-xs-12 col-lg-4" style="padding: 0; margin: 2px 0;">
-      <a href="<%=c.url%>" style="" class="products">
-        <%= image_tag c.image, alt: c.name%>
-        <h3><%=c.name%></h3>
-      </a>
-    </section>
+      <section class="col-sm-6 col-md-6 col-xs-12 col-lg-4" style="padding: 0; margin: 2px 0;">
+        <a href="<%=c.url%>" style="" class="products">
+          <%= image_tag c.image, alt: c.name%>
+          <h3><%=c.name%></h3>
+        </a>
+      </section>
     <% end %>
   </div>
+  <% end %>
 </div>
