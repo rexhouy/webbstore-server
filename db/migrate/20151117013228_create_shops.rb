@@ -7,7 +7,7 @@ class CreateShops < ActiveRecord::Migration
                         t.string :address
                         t.string :tel
                         t.references :group
-                        t.integer status
+                        t.integer :status
 
                         t.timestamps null: false
                 end
