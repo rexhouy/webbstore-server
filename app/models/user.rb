@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
         end
 
         def self.manager
-                where("role in (?)", [roles[:seller], roles[:admin]])
+                where.not(role: roles[:customer])
         end
 
         def self.active
@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
         end
 
         def self.owner(owner)
-                where(group_id: owner)
+                where("group_id in (select id from groups g where g.id = ? or g.parent_id = ?)", owner, owner)
         end
 
         private

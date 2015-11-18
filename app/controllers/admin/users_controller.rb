@@ -79,7 +79,11 @@ class Admin::UsersController < AdminController
         private
         def set_user
                 @user = User.find(params[:id])
-                render_404 unless @user.group_id.nil? || @user.group_id.eql?(owner)
+                render_404 unless @user.group_id.nil? || can_manage?(@user, owner)
+        end
+        def can_manage?(user, group_id)
+                # can visit group or sub group users
+                user.group_id.eql?(group_id) || user.group.parent_id.eql?(group_id)
         end
         def search(tel)
                 user = User.find_by_tel(tel)

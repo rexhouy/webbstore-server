@@ -48,7 +48,7 @@ class AdminController < ApplicationController
         end
 
         def owner
-                current_user.group.id
+                current_user.group_id
         end
 
 
