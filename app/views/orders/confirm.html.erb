@@ -78,14 +78,9 @@
       <h3 class="col-md-2 col-sm-3 col-xs-12 icon-link-left"><span class="circle highlight">3</span>支付方式</h3>
       <div class="col-md-8 col-sm-7 col-xs-12 main-body">
         <div class="confirm-content">
-          <div class="payment-type selectable" name="payment" data="wechat">
-            <%=image_tag "weixinpay.png"%>
-            <span>微信支付</span>
-            <i class="glyphicon glyphicon-ok-sign"></i>
-          </div>
-          <div class="payment-type selectable" name="payment" data="alipay">
-            <%=image_tag "alipay.png"%>
-            <span>支付宝</span>
+          <div class="payment-type selectable" name="payment" data="offline_pay">
+            <%=image_tag "offline_pay.png"%>
+            <span>货到付款</span>
             <i class="glyphicon glyphicon-ok-sign"></i>
           </div>
           <input type="hidden" name="paymentType" id="payment_type">

@@ -49,6 +49,6 @@ test:
 #
 production:
   <<: *default
-  database: webstore_production
+  database: qqxp_production
   username: webstore
   password: <%= ENV['WEBSTORE_DATABASE_PASSWORD'] %>
