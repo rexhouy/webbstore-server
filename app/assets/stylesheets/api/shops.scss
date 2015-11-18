@@ -1,0 +1,73 @@
+// Variable define
+@import "variable.scss";
+
+.header-image {
+    overflow: hidden;
+    height: 180px;
+    margin-top: -5px;
+    img {
+        height: 180px;
+        width: auto;
+        @media (min-width: 992px) {
+            width: 100%;
+        }
+    }
+}
+.bookmark {
+    border: none;
+    position: absolute;
+    top: 156px;
+    right: 40px;
+    border-radius: 50%;
+    background: $accent-color;
+    color: #fff;
+    font-size: 24px;
+    height: 48px;
+    width: 48px;
+    text-align: center;
+    padding-left: 11px;
+    i {
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+    }
+}
+
+.shop-info {
+    padding: 8px 15px 0 15px;
+    h2 {
+        margin: 0;
+        font-size: 20px;
+        padding: 15px 0;
+        border-bottom: 1px solid #aaa;
+    }
+    ul {
+        margin: 0;
+        padding: 12px 0 0 0;
+        list-style: none;
+    }
+    li {
+        i {
+            color: $theme-color;
+            float: left;
+            padding-top: 4px;
+        }
+        p {
+            color: #555;
+            font-size: 14px;
+            line-height: 24px;
+            margin-left: 28px;
+        }
+    }
+}
+.shop-products-link {
+    padding: 16px;
+    font-size: 20px;
+    margin-bottom: 40px;
+    display: block;
+    color: $link-color;
+    i {
+        float: right;
+        padding: 4px;
+    }
+}

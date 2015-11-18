@@ -1,9 +1,11 @@
 <h1 class="page-header">频道管理<small> 主页显示项目</small></h1>
 
 <ul class="link-group">
+  <% if can? :manage, Article%>
   <li>
     <%= link_to "文章管理", admin_articles_path %>
   </li>
+  <% end %>
 </ul>
 
 <%= link_to new_admin_channel_path,  class: "btn btn-default" do %>

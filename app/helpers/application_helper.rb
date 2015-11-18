@@ -9,7 +9,7 @@ module ApplicationHelper
                 return "管理员" if user.admin?
                 return "卖家" if user.seller?
                 return "顾客" if user.customer?
-                return "机构管理员" if user.group_admin?
+                return "商户" if user.shop_manager?
                 ""
         end
 

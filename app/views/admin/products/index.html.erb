@@ -1,11 +1,16 @@
 <h1 class="page-header">商品管理</h1>
+
 <ul class="link-group">
+  <% if can? :manage, Category %>
   <li>
     <%= link_to "类目管理", admin_categories_path %>
   </li>
+  <% end %>
+  <% if can? :manage, Supplier %>
   <li>
     <%= link_to "供应商管理", admin_suppliers_path %>
   </li>
+  <% end %>
 </ul>
 
 <div>

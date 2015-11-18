@@ -9,14 +9,18 @@
 
 .preview {
     iframe {
-        border: 1px solid #eee;
+        border: 1px solid #ddd;
+        box-shadow: $shadow;
+        border-radius: 5px;
         width: 100%;
-        min-height: 600px;
+        min-height: 620px;
     }
 }
 
 .preview-frame {
-        border: 0;
+        border: 1px solid #ddd;
+        box-shadow: $shadow;
+        border-radius: 5px;
         width: 100%;
         display: none;
 }

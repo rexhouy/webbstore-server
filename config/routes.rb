@@ -20,6 +20,10 @@ Rails.application.routes.draw do
         # You can have the root of your site routed with "root"
         root 'home#index'
 
+        # Shop
+        get "shops/:id" => "shops#index"
+        get "shops/:id/products" => "shops#products"
+
         # 宣传文章
         get 'articles/:id' => 'articles#index'
 
@@ -122,6 +126,12 @@ Rails.application.routes.draw do
                 get "coupons/list_available" => "coupons#list_available"
                 post "coupons/dispense/:id" => "coupons#dispense"
                 resources :coupons
+
+                # Shops
+                get "shops" => "shops#show", as: :shops
+                get "shops/edit" => "shops#edit", as: :shop
+                post "shops/preview" => "shops#preview"
+                put "shops" => "shops#update"
 
                 # Image
                 post 'image' => 'images#create'

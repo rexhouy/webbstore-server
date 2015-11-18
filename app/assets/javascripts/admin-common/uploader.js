@@ -9,6 +9,7 @@
                 self.upload = function(event) {
                         var files = event.target.files;
                         var data = new FormData();
+                        data.append("thumb", $("#thumb").val());
                         $.each(files, function(index, file) {
                                 data.append("file", file, file.name);
                         });

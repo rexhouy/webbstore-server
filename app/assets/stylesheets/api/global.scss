@@ -172,11 +172,11 @@ div.simple_captcha {
 
 .cart-number {
     background-color: $accent-color;
-    font-size: 12px;
+    height: 22px;
+    width: 22px;
+    font-size: 13px;
     margin-left: -6px;
-    padding: 1px;
-    height: 18px;
-    width: 18px;
+    padding: 3px 4px 2px 4px;
     display: inline-block;
     vertical-align: top;
     font-weight: bold;

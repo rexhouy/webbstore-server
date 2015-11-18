@@ -4,9 +4,11 @@
     <li>
       <a href="/admin/orders/notification/wechat">绑定微信提醒</a>
     </li>
+    <% if can? :manage, Card %>
     <li>
       <a href="/admin/orders/cards">年/季卡</a>
     </li>
+    <% end %>
   </ul>
 
   <%= alert_info %>

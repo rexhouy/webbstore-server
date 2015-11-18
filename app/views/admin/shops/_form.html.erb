@@ -1,0 +1,76 @@
+<%= form_for([:admin, @shop], url: "/admin/shops", method: "PUT", html: {class: "form-horizontal"}) do |s| %>
+  <% if @shop.errors.any? %>
+  <div class="alert alert-danger" role="alert">
+    <strong>保存失败</strong>
+    <ul>
+      <% @shop.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= s.label :name, "电话", class: "col-sm-2 control-label"  %>
+    <div class="col-sm-6">
+      <%= s.text_field :tel, class: "form-control", required: true %>
+    </div>
+  </div>
+    <div class="form-group">
+    <%= s.label :name, "地址", class: "col-sm-2 control-label"  %>
+    <div class="col-sm-6">
+      <%= s.text_field :address, class: "form-control", required: true %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= s.label :name, "描述", class: "col-sm-2 control-label"  %>
+    <div class="col-sm-6">
+      <%= s.text_field :introduce, class: "form-control", required: true %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= s.label :image, "主页图片", class: "col-sm-2 control-label" %>
+    <div class="col-sm-5">
+      <% if s.object.image.nil? %>
+      <%= image_tag "empty-img.png", class: "img-thumbnail", onclick: "uploader.open()", id: "cover_image", style: "overflow:hidden;height: 120px;" %>
+      <% else %>
+      <%= image_tag s.object.image, class: "img-thumbnail", onclick: "uploader.open()", id: "cover_image", style: "overflow:hidden;height: 120px;" %>
+      <% end %>
+      <%= s.hidden_field :image, id: "product_cover_image" %>
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= submit_tag "确认",  data: { disable_with: "请稍后..."},  class: "btn btn-primary" %>
+      <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#previewModal">预览</button>
+      <%= link_to "取消", admin_shops_path, class: "btn btn-default" %>
+    </div>
+  </div>
+
+<% end %>
+
+<!-- Preview -->
+<section class="modal fade" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">预览</h4>
+      </div>
+      <div class="modal-body" style="text-align:center;">
+        <div class="spinner-container img-circle">
+          <div class="spinner"></div>
+        </div>
+        <iframe id="preview" name="preview" class="preview-frame" src="" style="width: 400px;"></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<input type="hidden" id="thumb" value="false">
+<%= render partial: "/admin/products/upload_form" %>

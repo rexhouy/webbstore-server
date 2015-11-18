@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151031020150) do
+ActiveRecord::Schema.define(version: 20151117013228) do
 
   create_table "account_balance_histories", force: :cascade do |t|
     t.decimal  "receipt",                 precision: 8, scale: 2
@@ -235,6 +235,18 @@ ActiveRecord::Schema.define(version: 20151031020150) do
 
   add_index "products", ["name", "description", "article"], name: "fulltext_index", type: :fulltext
   add_index "products", ["owner_id"], name: "fk_rails_718105988b", using: :btree
+
+  create_table "shops", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "image",      limit: 255
+    t.string   "introduce",  limit: 255
+    t.string   "address",    limit: 255
+    t.string   "tel",        limit: 255
+    t.integer  "group_id",   limit: 4
+    t.integer  "status",   limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "simple_captcha_data", force: :cascade do |t|
     t.string   "key",        limit: 40
