@@ -1,5 +1,5 @@
 <article class="row main">
-  <div class="order-detail">
+  <div class="order-detail" style="margin-bottom: 20px;">
     <section>
       <h2 class="pull-left inherit-height table-center-wrap"><span class="table-center">订单</span></h2>
       <a class="btn btn-lg pull-right highlight-link icon-link-left inherit-height" href="/orders" style="position:relative;top:15px;padding-right:0">
@@ -96,6 +96,7 @@
       </table>
     </section>
 
+    <% if need_online_pay?(@order) || is_cancelable?(@order) %>
     <section>
       <% if need_online_pay? @order %>
         <a class="btn btn-primary btn-block" target="_self" href="<%=@url%>">立即支付</a>
@@ -106,6 +107,7 @@
         <%= link_to "取消订单", :orders_cancel, method: "PUT", class: "btn btn-danger btn-block"%>
       <% end %>
     </section>
+    <% end %>
   </div>
 
 </article>

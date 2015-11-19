@@ -1,10 +1,21 @@
 @import "variable.scss";
 
+@media(max-width:768px) {
+    .order-filter-container {
+        background: #fff;
+        margin-bottom: 12px;
+    }
+    .order-main {
+        padding: 0 !important;
+    }
+ }
+
 .order-filter {
     font-size: 16px;
     line-height: 30px;
     a {
-        padding: 0 10px;
+        padding: 0 18px;
+        display: inline-block;
     }
     .highlight-icon {
         border-left: 2px solid $theme-color;
@@ -16,8 +27,7 @@
         }
         .highlight-icon {
             border-left: 0;
-            padding: 0 10px;
-            border-bottom: 1px solid $theme-color;
+            border-bottom: 2px solid $theme-color;
         }
     }
 }
@@ -26,7 +36,7 @@
     width: 100%;
     max-width: 600px;
     background: #fff;
-    border: 1px solid #ccc;
+    box-shadow: $shadow;
     margin: 0 auto;
     padding: 20px;
     section {
@@ -127,5 +137,25 @@
     color: $theme-color-dark;
     i {
         color:#090;
+    }
+}
+
+.order-list {
+    li {
+        display: inline-block;
+        padding: 0px 12px 8px 12px;
+        background: #fff;
+        width: 100%;
+        box-shadow: $shadow;
+    }
+    .glyphicon {
+        color: $link-color;
+    }
+    h3 {
+        font-size: 16px;
+    }
+    span {
+        font-size: 12px;
+        color: #999;
     }
 }
