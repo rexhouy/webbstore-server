@@ -40,6 +40,10 @@ class CartsController < ApiController
         end
 
         private
+        def set_header
+                @title = "购物车"
+                @back_url = "/products?category=#{session[:category]["id"] || 1}"
+        end
         def same_product?(product, id, spec_id)
                 product["id"].to_s.eql?(id.to_s) && product["spec_id"].to_s.eql?(spec_id.to_s)
         end

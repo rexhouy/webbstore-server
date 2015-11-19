@@ -1,14 +1,8 @@
-<div class="banner row">
-  <h2 class="pull-left inherit-height table-center-wrap"><span class="table-center">我的年（季）卡</span></h2>
-  <a class="btn btn-lg pull-right highlight-link icon-link-right inherit-height table-center-wrap" href="/me">
-    <span class="table-center"><i class="glyphicon glyphicon-arrow-left"></i> 返回</span>
-  </a>
-</div>
-  <% if notice.present? %>
-    <p class="alert alert-info">
-      <%=notice%>
+<% if notice.present? %>
+  <p class="alert alert-info">
+    <%=notice%>
     <p>
-  <% end %>
+<% end %>
 <div class="row main">
   <% if @cards.empty? %>
     <div class="main empty-cart table-center-wrap">

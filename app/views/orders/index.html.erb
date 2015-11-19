@@ -1,33 +1,16 @@
-<div class="banner row">
-  <h2 class="pull-left inherit-height table-center-wrap"><span class="table-center">订单</span></h2>
-  <a class="btn btn-lg pull-right highlight-link icon-link-left inherit-height table-center-wrap" href="/products?category=<%=category%>">
-    <span class="table-center"><i class="glyphicon glyphicon-arrow-left"></i>返回</span>
-  </a>
-</div>
-<div class="row main order-main">
-  <div>
-    <div class="col-md-3 col-sm-3 col-xs-12 order-filter-container">
-      <ul class="order-filter no-list-style">
-        <li><a <%= @type.eql?("all") ? 'class=highlight-icon' : '' %> href="/orders">所有订单</a></li>
-        <li><a <%= @type.eql?("unfinished") ? 'class=highlight-icon' : '' %> href="/orders?type=unfinished">未完成订单</a></li>
-        <li><a <%= @type.eql?("canceled") ? 'class=highlight-icon' : '' %> href="/orders?type=canceled">已取消订单</a></li>
-      </ul>
-    </div>
-    <div class="col-md-8 col-sm-8 col-xs-12">
-      <ul class="no-list-style order-list">
-        <% @orders.each do |order| %>
-        <li class="order" onclick="orders.toDetail(<%=order.id%>)">
-            <h3><%= order.name %>
-              <i class="pull-right glyphicon glyphicon-info-sign"></i>
-            </h3>
-          <div>
-            <span class="pull-left"><%= order_status order %></span>
-            <span class="pull-right"><%= display_date order.created_at %></span>
-          </div>
-        </li>
-        <% end %>
-      </ul>
-      <%= paginate "/orders/#{@type}", @orders %>
-    </div>
-  </div>
+<div class="row order-main">
+  <ul class="no-list-style order-list">
+    <% @orders.each do |order| %>
+      <li class="order" onclick="orders.toDetail(<%=order.id%>)">
+        <h3><%= order.name %>
+          <i class="pull-right glyphicon glyphicon-info-sign"></i>
+        </h3>
+        <div>
+          <span class="pull-left"><%= order_status order %></span>
+          <span class="pull-right"><%= display_date order.created_at %></span>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+  <%= paginate "/orders/#{@type}", @orders %>
 </div>

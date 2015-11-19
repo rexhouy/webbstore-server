@@ -33,5 +33,7 @@ class ProductsController < ApiController
         def owner
                 Rails.application.config.owner
         end
+        def set_header
+        end
 
 end

@@ -10,28 +10,6 @@
     }
  }
 
-.order-filter {
-    font-size: 16px;
-    line-height: 30px;
-    a {
-        padding: 0 12px;
-        display: inline-block;
-    }
-    .highlight-icon {
-        border-left: 2px solid $theme-color;
-    }
-    @media(max-width:768px) {
-        overflow: hidden;
-        li {
-            float: left
-        }
-        .highlight-icon {
-            border-left: 0;
-            border-bottom: 2px solid $theme-color;
-        }
-    }
-}
-
 .order-detail {
     width: 100%;
     max-width: 600px;
@@ -143,10 +121,10 @@
 .order-list {
     li {
         display: inline-block;
-        padding: 0px 12px 8px 12px;
+        padding: 0px 16px 8px 16px;
         background: #fff;
         width: 100%;
-        box-shadow: $shadow;
+        border-bottom: 1px solid #ddd;
     }
     .glyphicon {
         color: $link-color;

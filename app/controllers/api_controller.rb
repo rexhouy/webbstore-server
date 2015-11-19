@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 class ApiController < ApplicationController
 
+        before_action :set_header
+
         def get_cart
                 session[:cart] || []
         end

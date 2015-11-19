@@ -14,16 +14,21 @@
 
     <header id="applicationHeader">
       <div class="navbar navbar-default" role="navigation">
-        <div class="navbar-header" style="height:50px">
-
+        <div class="navbar-header" style="height:56px">
           <section class="inherit-height pull-left">
+            <% if @back_url.present? %>
+            <a class="btn btn-lg pull-left icon table-center inherit-height" href="<%=@back_url%>">
+              <i class="glyphicon glyphicon-arrow-left" style="position:relative;top:7px;"></i>
+            </a>
+            <% else %>
             <button class="btn pull-left icon table-center inherit-height" onclick="menu.open();">
               <i class="glyphicon glyphicon-menu-hamburger"></i>
             </button>
+            <% end %>
           </section>
 
           <section class="navbar-brand pull-left inherit-height">
-            <a class="" href="/"><%=Rails.application.config.name%></a>
+            <a href="#"><%=@title || Rails.application.config.name%></a>
           </section>
 
           <section class="inherit-height search-container" id="search">
@@ -35,9 +40,11 @@
           </section>
 
           <section class="pull-right inherit-height table-center-wrap" id="menu_control_pannel">
+            <% unless @back_url.present? %>
             <button type="button" class="icon btn btn-lg table-center inherit-height" onclick="search.open();">
               <i class="glyphicon glyphicon-search"></i>
             </button>
+            <% end %>
             <button type="button" class="icon btn btn-lg table-center inherit-height" onclick="window.location.href='/carts'" style="outline:none;">
               <i class="glyphicon glyphicon-shopping-cart"></i>
               <% if cart_number > 0 %>
@@ -49,9 +56,18 @@
             </button>
 
           </section>
+        </div>
 
+        <% if @submenu.present? %>
+        <div class="navbar-submenu container">
+          <ul class="no-list-style" style="margin:0 -15px;">
+            <% @submenu.each do |link| %>
+            <li><%= link_to link[:name], link[:href], class: link[:class] %></li>
+            <% end %>
+          </ul>
         </div>
       </div>
+      <% end %>
     </header>
 
     <nav id="menu" class="navbar-side">

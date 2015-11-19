@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-class CardsController < ApplicationController
+class CardsController < ApiController
 
         def index
                 @cards = current_user.cards
@@ -8,6 +8,8 @@ class CardsController < ApplicationController
         def history
                 @card = Card.find(params[:id])
                 @card.card_history
+                @title = "年（季）卡历史"
+                @back_url = "/cards"
         end
 
         def delay
@@ -51,6 +53,10 @@ class CardsController < ApplicationController
         end
 
         private
+        def set_header
+                @title = "年（季）卡"
+                @back_url = "/me"
+        end
         def save_history(old_card, card)
                 old_history = CardHistory.new
                 old_history.card_id = old_card.id

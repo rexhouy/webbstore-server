@@ -13,14 +13,41 @@
 .navbar-header {
     width: 100%;
     position: relative;
+    float: none !important;
 }
 
 .navbar-brand {
     font-weight: bold;
+    padding: 18px 15px;
+    margin-left: 0 !important;
     a {
         color: #fff;
     }
-    margin-left: 0 !important;
+
+}
+
+.navbar-submenu {
+    height: 48px;
+    position: relative;
+    ul {
+        font-size: 16px;
+        overflow: hidden;
+        position: absolute;
+        bottom: 0;
+    }
+    li {
+        float: left;
+    }
+    a {
+        display: inline-block;
+        padding: 8px 16px;
+        color: $theme-color-light;
+    }
+    .highlight-icon {
+        border-left: 0;
+        color: #fff;
+        border-bottom: 3px solid #fff;
+    }
 }
 
 // Settings
@@ -64,7 +91,7 @@
     li {
         float: initial;
         a {
-            padding: 12px 40px;
+            padding: 12px 16px;
             color: $font-color;
         }
     }

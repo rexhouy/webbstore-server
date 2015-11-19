@@ -54,6 +54,10 @@ class AddressesController < ApiController
         def address_params
                 params.require(:address).permit(:id, :name, :state, :city, :street, :tel)
         end
+        def set_header
+                @title = "地址管理"
+                @back_url = "/me"
+        end
 
 
 end

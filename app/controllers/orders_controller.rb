@@ -8,12 +8,16 @@ class OrdersController < ApiController
         def index
                 @type = params[:type] || "all"
                 @orders = Order.where(customer: current_user).owner(Rails.application.config.owner).type(@type).order(id: :desc).paginate(page: params[:page])
+                @submenu = [{name: "所有订单", class: @type.eql?("all") ? "highlight-icon" : "", href: "/orders"},
+                            {name: "未完成订单", class: @type.eql?("unfinished") ? "highlight-icon" : "", href: "/orders?type=unfinished"},
+                            {name: "已取消订单", class: @type.eql?("canceled") ? "highlight-icon" : "", href: "/orders?type=canceled"}]
         end
 
         def show
                 @order = Order.find(params[:id])
                 return render_404 unless @order.customer_id.eql? current_user.id
                 @url = payment_redirect_url(@order)
+                @back_url = "/orders"
         end
 
         def wechat_pay
@@ -33,7 +37,7 @@ class OrdersController < ApiController
                         .where(user_id: current_user.id, status: UserCoupon.statuses[:unused])
                         .where("coupons.end_date > now()")
                         .where("coupons.limit <= ?", cart_price(@cart))
-                render :confirm
+                @title = "购买"
         end
 
         def add
@@ -69,6 +73,11 @@ class OrdersController < ApiController
         end
 
         private
+        def set_header
+                @title = "订单"
+                @back_url = "/carts"
+        end
+
         def alipay(order)
                 return AlipayService.new.pay(order)
         end

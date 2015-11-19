@@ -75,11 +75,6 @@ module ApplicationHelper
                 ""
         end
 
-        def category
-                return 1 if session[:category].nil?
-                session[:category]["id"]
-        end
-
         def cart_number
                 cart = session[:cart] || []
                 cart.reduce(0) do |sum, product|
