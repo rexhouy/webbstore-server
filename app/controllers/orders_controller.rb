@@ -20,14 +20,6 @@ class OrdersController < ApiController
                 @back_url = "/orders"
         end
 
-        def wechat_pay
-                code = params[:code]
-                open_id = params[:open_id]
-                @order_id = params[:state]
-                @wechat_params = WechatService.new.pay(Order.find(@order_id), request.remote_ip, open_id, code, current_user)
-                render layout: false
-        end
-
         def confirm
                 return redirect_to :carts if get_cart.empty?
                 @cart = get_cart_products_detail(get_cart)
@@ -78,10 +70,6 @@ class OrdersController < ApiController
                 @back_url = "/carts"
         end
 
-        def alipay(order)
-                return AlipayService.new.pay(order)
-        end
-
         def validate
                 if get_cart.empty?
                         @errors ||= []
@@ -91,22 +79,17 @@ class OrdersController < ApiController
                 true
         end
 
+        ## Redirect to a view and let the view handle the payment.
         def payment_redirect_url(order)
-                return "/orders/#{order.id}" if order.paid?
-                url = ""
-                if order.alipay?
-                        url = Config::PAYMENT["alipay"]["mobile_pay"]["url"].clone
-                        url << "?" << alipay(order).to_query
-                elsif order.wechat?
+                return "/orders/#{order.id}" if order.paid? || order.offline_pay?
+                return "http://#{Rails.application.config.domain}/payment/alipay/redirect?id=#{order.id}" if order.alipay?
+                if order.wechat?
                         if current_user.wechat_openid.present?
-                                url = "http://#{Rails.application.config.domain}/orders/payment/wechat_redirect?open_id=#{current_user.wechat_openid}&state=#{order.id}"
-                        else
-                                url = WechatService.new.auth_url("http://#{Rails.application.config.domain}/orders/payment/wechat_redirect", order.id)
+                                return "http://#{Rails.application.config.domain}/payment/wechat/redirect?open_id=#{current_user.wechat_openid}&state=#{order.id}"
                         end
-                elsif order.offline_pay?
-                        url = "/orders/#{order.id}"
+                        return WechatService.new.auth_url("http://#{Rails.application.config.domain}/payment/wechat/redirect", order.id)
                 end
-                url
+                render_404
         end
 
 end

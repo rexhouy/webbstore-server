@@ -54,8 +54,9 @@ Rails.application.routes.draw do
         get 'orders/:id' => 'orders#show'
         put 'orders/:id' => 'orders#cancel', as: :orders_cancel
 
-        # Wechat payment
-        get 'orders/payment/wechat_redirect' => 'orders#wechat_pay'
+        # Payment
+        get 'payment/wechat/redirect' => 'payments#wechat_redirect'
+        get 'payment/alipay/redirect' => 'payments#alipay_redirect'
 
         # User home
         get 'me' => 'me#index'

@@ -11,4 +11,8 @@ class ApiController < ApplicationController
                 session[:cart] = []
         end
 
+        private
+        def set_header
+        end
+
 end

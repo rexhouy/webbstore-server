@@ -1,6 +1,22 @@
 require "json"
 class PaymentsController < ApiController
 
+        def wechat_redirect
+                code = params[:code]
+                open_id = params[:open_id]
+                @order_id = params[:state]
+                @wechat_params = WechatService.new.pay(Order.find(@order_id), request.remote_ip, open_id, code, current_user)
+                render layout: false
+        end
+
+        def alipay_redirect
+                order = Order.find(params[:id])
+                @order_id = params[:id]
+                @url = Config::PAYMENT["alipay"]["mobile_pay"]["url"].clone
+                @url << "?" << AlipayService.new.pay(order).to_query
+                render layout: false
+        end
+
         def wechat_notify
                 result = request.body.read
                 logger.debug "Notification received from wechat: #{result}"

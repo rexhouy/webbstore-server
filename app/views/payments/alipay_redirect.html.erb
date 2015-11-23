@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title><%=Rails.application.config.name%>--支付宝支付</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link href="<%=image_url('favicon.ico')%>" rel="icon">
+    <style>
+      html, body {
+          overflow: hidden;
+          padding: 8px;
+          background: #f5f5f5;
+      }
+      * {
+          color: #555;
+      }
+      #redirect_result {
+          width: 100%;
+          display: none;
+      }
+      button {
+          width: 40%;
+          border: 1px solid #888;
+          float: left;
+          border-radius: 3px;
+          background-color: #fff;
+          height: 40px;
+          margin: 5%;
+      }
+    </style>
+  </head>
+  <body>
+    <p id="text_msg">
+      正在跳转到支付宝，请稍后...
+    </p>
+    <div id="wechat" style="display:none;">
+      <h3>由于微信的屏蔽，无法在微信中进行支付宝支付。请您在浏览器中打开下面的链接进行支付。给您造成不便我们深感抱歉。</h3>
+      <code>
+        https://<%=Rails.application.config.domain%>/orders/<%=@order_id%>
+      </code>
+    </div>
+    <p id="redirect_result">
+      <button onclick="javascript:window.location.href='/payment/<%=@order_id%>?success=true'">支付成功</button>
+      <button onclick="javascript:window.location.href='/payment/<%=@order_id%>?success=false'">支付遇到问题</button>
+    </p>
+     <script stype="text/javascript">
+       if (window.WeixinJSBridge != undefined) {
+         document.getElementById("text_msg").style.display = "none";
+         document.getElementById("wechat").style.display = "block";
+       } else {
+         window.location.href = "<%=@url.html_safe%>";
+       }
+     </script>
+</body>
+</html>
