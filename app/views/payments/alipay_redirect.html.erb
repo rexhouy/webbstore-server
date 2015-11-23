@@ -45,7 +45,16 @@
       <button onclick="javascript:window.location.href='/payment/<%=@order_id%>?success=false'">支付遇到问题</button>
     </p>
      <script stype="text/javascript">
-       if (window.WeixinJSBridge != undefined) {
+       function isWeiXin(){
+       var ua = window.navigator.userAgent.toLowerCase();
+       if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+       return true;
+       }else{
+       return false;
+       }
+       }
+
+       if (isWeiXin()) {
          document.getElementById("text_msg").style.display = "none";
          document.getElementById("wechat").style.display = "block";
        } else {
