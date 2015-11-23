@@ -50,7 +50,7 @@
            "paySign" : "<%= @wechat_params[:paySign] %>"
          };
          WeixinJSBridge.invoke("getBrandWCPayRequest", params,
-                               function(res){
+                               function(res) {
                                  document.getElementById("text_msg").style.display = "none";
                                  document.getElementById("redirect_result").style.display = "block";
                                  if(res.err_msg == "get_brand_wcpay_request:ok" ) {
@@ -60,9 +60,9 @@
                                    // 用户放弃操作或操作是失败，跳转到失败页面
                                    window.location.href = "/payment/wechat/front_notify?success=false&id=<%=@order_id%>"
                                  }
-                               }
-                              );
+                               });
        }
+
        if (typeof WeixinJSBridge == "undefined"){
          if ( document.addEventListener ) {
            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);

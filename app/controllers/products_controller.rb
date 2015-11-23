@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class ProductsController < ApiController
 
         def index
@@ -22,6 +23,9 @@ class ProductsController < ApiController
 
         def show
                 @product = Product.find(params[:id])
+                @title = "商品详情"
+                category = session[:category].present? ? session[:category]["id"] : 1
+                @back_url = "/products?category=#{category || 1}"
         end
 
         def search
