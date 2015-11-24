@@ -34,6 +34,9 @@ Rails.application.routes.draw do
         get 'products/search' => 'products#search'
         get 'products/:id' => 'products#show', as: :products_detail
 
+        # Categories
+        get "categories" => "categories#index"
+
         # Cards
         get 'cards' => 'cards#index', as: :cards
         get 'cards/history/:id' => 'cards#history'

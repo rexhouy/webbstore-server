@@ -1,0 +1,28 @@
+<div class="banner row">
+  <h2 class="pull-left inherit-height table-center-wrap"><span class="table-center">商品分类</span></h2>
+  <a class="btn btn-lg pull-right highlight-link icon-link-right inherit-height table-center-wrap" href="/products">
+    <span class="table-center">所有商品</span>
+  </a>
+</div>
+<div class="row">
+  <div id="categories" class="list-group" style="display:block;">
+    <% @categories.each do |category| %>
+    <button type="button" class="list-group-item" data-id="<%=category.id%>" data-has-children="<%=category.children.present?%>">
+      <span><%=category.name%></span>
+      <% if category.children.empty? %>
+      <span class="glyphicon glyphicon-menu-right pull-right"></span>
+      <% else %>
+      <span class="glyphicon glyphicon-menu-down pull-right" id="category_btn_icon_<%=category.id%>"></span>
+      <% end %>
+    </button>
+    <div class="list-group" style="display:none;" id="sub_category_<%=category.id%>">
+      <% category.children.each do |item| %>
+      <button type="button" class="list-group-item" data-id="<%=item.id%>">
+        <span class="glyphicon glyphicon-menu-right pull-left"></span>
+        <span style="padding-left:20px;"><%=item.name%></span>
+      </button>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+</div>

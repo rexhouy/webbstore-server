@@ -13,7 +13,15 @@
   </section>
 <% end %>
 <div>
-  <h2 style="padding-left:5px;"><%= title @category %></h2>
+
+  <div class="banner" style="height:72px;">
+    <h2 class="pull-left inherit-height table-center-wrap" style="font-size:24px;">
+      <span class="table-center"><%=title @category%></span>
+    </h2>
+    <a class="btn btn-lg pull-right highlight-link icon-link-right inherit-height table-center-wrap" href="/categories" style="margin-right:-15px;">
+      <span class="table-center">商品分类</span>
+    </a>
+  </div>
 
   <div class="products-list">
   </div>
