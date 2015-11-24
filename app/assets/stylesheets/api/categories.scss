@@ -1,9 +1,10 @@
-// Place all the styles related to the categories controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "variable.scss";
 .list-group {
-    margin-bottom: 0;
+    margin-bottom: 8px;
     button.list-group-item {
+        border: 0;
+        border-bottom: 1px solid #ddd;
+        border-radius: 0;
         text-align: left;
         width: 100%;
     }
