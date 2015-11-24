@@ -6,6 +6,7 @@ window.address = (function() {
 
         self.closeModal = function() {
                 $("#new_address")[0].reset(); // Clear form
+                $("#address_id").val(""); // reset form does not reset hidden field
                 $("#address_modal").modal("hide");
         };
         var registerSelectable = function(obj) {
@@ -93,7 +94,6 @@ window.address = (function() {
                                         }
                                 }
                                 self.closeModal();
-                                $("#new_address")[0].reset(); // Clear form
                                 $(".empty-cart").hide();
                         } else {
                                 alert("保存地址失败");
