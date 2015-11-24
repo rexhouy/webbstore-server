@@ -13,6 +13,4 @@
   <%= link_to "顾客", "#{admin_users_path}?type=customer", class: "#{'highlight' if @type.eql?('customer')} filter-link" %>
 </div>
 
-<%= alert_info %>
-
 <%= render_user @tel, @type, @users %>

@@ -5,7 +5,8 @@ window.address = (function() {
         var edit = false;
 
         self.closeModal = function() {
-                close();
+                $("#new_address")[0].reset(); // Clear form
+                $("#address_modal").modal("hide");
         };
         var registerSelectable = function(obj) {
                 obj.click(function(){
@@ -91,7 +92,7 @@ window.address = (function() {
                                                 address.click();// Set as selected.
                                         }
                                 }
-                                close();
+                                self.closeModal();
                                 $("#new_address")[0].reset(); // Clear form
                                 $(".empty-cart").hide();
                         } else {
@@ -158,16 +159,12 @@ window.address = (function() {
         };
 
         var setModalTitle = function(content) {
-                $("#addressbar").find("#titlebar").html(content);
+                $("#address_modal").find(".modal-title").html(content);
         };
 
         var open = function() {
-                $("#addressbar").css("right", 0);
-        };
-        var close = function() {
-                $("#addressbar").css("right", "-100%");
-                $("#new_address")[0].reset(); // Clear form
-                $("#address_id").val(""); // reset form does not reset hidden field
+                setModalTitle("新建地址");
+                $("#address_modal").modal();
         };
 
         self.create = function() {

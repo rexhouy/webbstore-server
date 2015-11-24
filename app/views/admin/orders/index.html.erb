@@ -11,8 +11,6 @@
     <% end %>
   </ul>
 
-  <%= alert_info %>
-
   <form action="<%= admin_orders_path %>" method="get" class="form-inline">
     <div class="form-group">
       <%= text_field_tag :order_id_or_tel, @order_id_or_tel, class: "form-control", placeholder: "订单号/手机号" %>

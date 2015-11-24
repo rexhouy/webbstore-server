@@ -1,5 +1,4 @@
 <h1 class="page-header">优惠券详情</h1>
-<%= alert_info %>
 <div class="control-panel">
   <% unless @coupon.dispensed %>
   <%= link_to "/admin/coupons/#{@coupon.id}/edit", class: "btn btn-default" do %>

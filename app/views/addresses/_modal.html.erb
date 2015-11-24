@@ -1,18 +1,16 @@
-<article class="specbar container" id="addressbar">
-  <header>
-    <div class="col-md-10 col-sm-10 col-xs-8 inherit-height table-center-wrap">
-      <h3 class="table-center" style="color:#fff;" id="titlebar">新建地址</h3>
-    </div>
-    <div class="col-md-2 col-sm-2 col-xs-4 inherit-height">
-      <button type="button" class="icon btn btn-lg pull-right inherit-height" style="color:#fff;" onclick="address.closeModal();">
-        <i class="glyphicon glyphicon-remove"></i>
-      </button>
-    </div>
-  </header>
-  <section class="col-md-12 spec-section">
-    <%= render partial: "/addresses/form" %>
-    <div>
-      <button type="button" class="btn btn-primary btn-block btn-lg" onclick="address.saveOrCreate()">保存</button>
-    </div>
-  </section>
+<article class="modal fade" id="address_modal">
+         <div class="modal-dialog">
+           <div class="modal-content">
+             <div class="modal-header">
+               <button type="button" class="close" onclick="address.closeModal()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+               <h4 class="modal-title">新增地址</h4>
+             </div>
+             <div class="modal-body">
+               <%= render partial: "/addresses/form" %>
+             </div>
+             <div class="modal-footer">
+               <button type="button" class="btn btn-default btn-block" onclick="address.closeModal()">取消</button>
+               <button type="button" class="btn btn-primary btn-block" onclick="address.saveOrCreate()">保存</button>
+             </div>
+           </div>
 </article>
