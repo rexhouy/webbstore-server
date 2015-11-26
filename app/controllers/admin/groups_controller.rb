@@ -33,7 +33,6 @@ class Admin::GroupsController < AdminController
 
         def new
                 @group = Group.new
-
         end
 
         def destroy
@@ -52,7 +51,7 @@ class Admin::GroupsController < AdminController
                 @group = Group.find(params[:id])
         end
         def group_params
-                params.require(:group).permit(:id, :name, :parent_id)
+                params.require(:group).permit(:id, :name)
         end
 
 end

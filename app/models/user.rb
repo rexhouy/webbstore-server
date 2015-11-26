@@ -20,8 +20,14 @@ class User < ActiveRecord::Base
         # Devise use tel instead of email
         validates :tel, presence: true, length: { is: 11 }
         validates_uniqueness_of :tel
+        validate :roles_and_groups
         def email_required?
                 false
+        end
+        def roles_and_groups
+                if !self.role.nil? && !self.customer? && self.group_id.nil?
+                        errors[:base] << "必须为后台管理用户指定所属店铺"
+                end
         end
 
         def self.manager
@@ -54,6 +60,7 @@ class User < ActiveRecord::Base
         private
         def set_default_value
                 self.role ||= User.roles[:customer]
+                p "++++++++++++++++++++++++++++++++"
                 self.status = User.statuses[:active]
                 self.introducer_token = SecureRandom.hex(8)
                 self.balance = 0

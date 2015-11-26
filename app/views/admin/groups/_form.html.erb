@@ -17,15 +17,9 @@
   </div>
 </div>
 <div class="form-group">
-  <%= u.label :parent_id, "上级机构", class: "col-sm-2 control-label"  %>
-  <div class="col-sm-4">
-    <%= u.select :parent_id, group_options(u.object.parent_id), {include_blank: true}, class: "form-control" %>
-  </div>
-</div>
-<div class="form-group">
   <div class="col-sm-offset-2 col-sm-10">
     <%= submit_tag "确认",  data: { disable_with: "请稍后..."},  class: "btn btn-primary" %>
-    <%= link_to "取消", admin_groups_path, class: "btn btn-default" %>
+    <%= link_to "取消", admin_back_url(admin_groups_path), class: "btn btn-default" %>
   </div>
 </div>
 

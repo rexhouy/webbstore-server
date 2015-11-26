@@ -20,6 +20,7 @@ class Group < ActiveRecord::Base
         private
         def set_default_value
                 self.status = Group.statuses[:active]
+                self.parent_id = 1
         end
 
 end

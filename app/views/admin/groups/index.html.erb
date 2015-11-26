@@ -1,4 +1,4 @@
-<h1 class="page-header">机构管理</h1>
+<h1 class="page-header">店铺管理</h1>
 <%= link_to new_admin_group_path,  class: "btn btn-default" do %>
 <span class="glyphicon glyphicon-plus"></span> 新建
 <% end %>
@@ -7,7 +7,7 @@
   <thead>
     <tr>
       <th>名字</th>
-      <th>所属机构</th>
+      <th>所属店铺</th>
       <th>店铺URL</th>
       <th>操作</th>
     </tr>
@@ -30,8 +30,10 @@
         <%= link_to edit_admin_group_path(group) do %>
           <span class="glyphicon glyphicon-pencil icon"></span>
         <% end %>
+        <% if group.parent_id.present? %>
         <%= link_to admin_group_path(group), method: :delete, data: {confirm: %(确定要删除"#{group.name}"吗？)} do %>
           <span class="glyphicon glyphicon-trash icon"></span>
+        <% end %>
         <% end %>
       </td>
     </tr>
