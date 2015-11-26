@@ -28,7 +28,7 @@ class Admin::ShopsController < AdminController
 
         def preview
                 @shop.assign_attributes(shop_params)
-                render "/shops/index", layout: "application"
+                render "/shops/show", layout: "application"
         end
 
         private

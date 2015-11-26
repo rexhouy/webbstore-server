@@ -21,7 +21,8 @@ Rails.application.routes.draw do
         root 'home#index'
 
         # Shop
-        get "shops/:id" => "shops#index"
+        get "shops" => "shops#index"
+        get "shops/:id" => "shops#show"
         get "shops/:id/products" => "shops#products"
 
         # 宣传文章

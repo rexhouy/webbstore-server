@@ -21,7 +21,11 @@
           <% @order.orders_products.each do |orders_products| %>
             <tr>
               <td><%= orders_products.count %></td>
-              <td><%= orders_products.product.name %> <%= orders_products.specification.value if orders_products.specification.present?%></td>
+              <td>
+                <a href="/products/<%= orders_products.product.id %>">
+                  <%= orders_products.product.name %> <%= orders_products.specification.value if orders_products.specification.present?%>
+                </a>
+              </td>
               <td class="number-align"><%= number_to_currency orders_products.count*orders_products.price, locale: :'zh-CN', precision: 2 %></td>
             </tr>
           <% end %>

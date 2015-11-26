@@ -8,6 +8,7 @@
     <tr>
       <th>名字</th>
       <th>所属机构</th>
+      <th>店铺URL</th>
       <th>操作</th>
     </tr>
   </thead>
@@ -16,6 +17,11 @@
     <tr>
       <td><%= group.name  %></td>
       <td><%= group.parent.name unless group.parent.nil? %></td>
+      <td>
+        <% if group.shop.present? %>
+        http://<%=Rails.application.config.domain%>/shops/<%=group.shop.id%>
+        <% end %>
+      </td>
       <td>
         <%= link_to admin_group_path(group) do %>
         <span class="glyphicon glyphicon-eye-open icon"></span>

@@ -1,0 +1,28 @@
+<div style="position:relative;">
+  <div class="row header-image">
+    <%=image_tag @shop.image%>
+  </div>
+  <button type="button" class="bookmark"><i class="glyphicon glyphicon-heart"></i></button>
+  <div class="row shop-info">
+    <h2><%=@shop.name%></h2>
+    <ul class="list">
+      <li>
+        <i class="glyphicon glyphicon-info-sign"></i>
+        <p><%=@shop.introduce%></p>
+      </li>
+      <li>
+        <i class="glyphicon glyphicon-map-marker"></i>
+        <p><%=@shop.address%></p>
+      </li>
+      <li>
+        <i class="glyphicon glyphicon-phone-alt"></i>
+        <p><%=@shop.tel%></p>
+      </li>
+    </ul>
+  </div>
+  <div class="row">
+    <a href="/shops/<%=@shop.id%>/products" class="shop-products-link">
+      <span>查看<%=@shop.name%>的商品</span>
+      <i class="glyphicon glyphicon-circle-arrow-right"></i></a>
+  </div>
+</div>

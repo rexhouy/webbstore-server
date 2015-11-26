@@ -37,9 +37,13 @@ class Admin::GroupsController < AdminController
         end
 
         def destroy
-                @group.status = Group.statuses[:disabled]
-                @group.shop.status = Shop.statuses[:disabled]
-                @group.save
+                Group.transaction do
+                        @group.status = Group.statuses[:disabled]
+                        if @group.shop.present?
+                                @group.shop.status = Shop.statuses[:disabled]
+                        end
+                        @group.save
+                end
                 redirect_to admin_groups_path, notice: "删除成功"
         end
 
