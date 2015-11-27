@@ -1,50 +1,37 @@
-<% @recommendProducts.each do |product| %>
-  <section class="recommand row">
-    <a href="/products/<%=product.id%>">
-      <div class="col-md-6 col-sm-12 col-xs-12">
-        <h2><%= product.name %></h2>
-        <p class="desc"><%= product.description%></p>
-        <button class="btn btn-lg">立即购买<i class="glyphicon glyphicon glyphicon-circle-arrow-right"></i></button>
-      </div>
-      <div class="col-md-6 col-sm-12 col-xs-12">
-        <%= image_tag product.cover_image %>
-      </div>
-    </a>
-  </section>
-<% end %>
-<div>
-
-  <div class="banner" style="height:72px;">
-    <h2 class="pull-left inherit-height table-center-wrap" style="font-size:24px;">
-      <span class="table-center"><%=title @category%></span>
-    </h2>
-    <a class="btn btn-lg pull-right highlight-link icon-link-right inherit-height table-center-wrap" href="/categories" style="margin-right:-15px;">
-      <span class="table-center">商品分类</span>
-    </a>
-  </div>
-
-  <div class="products-list">
-  </div>
-
-  <div class="products-spinner">
-    <div class="spinner"></div>
-  </div>
-
-  <div id="infinit_scroll_indicator">
-  </div>
-  
-  <script type="text/template" id="product_template">
-    <section class="card col-md-3 col-sm-4 col-xs-6">
-  <a href="/products/{{id}}">
-  <div class="image">
-  <img src="{{cover_image}}">
-  </div>
-  <div class="title">
-  <h3>{{name}}</h3>
-  <div class="price">&yen; {{price}}</div>
-  </div>
-  <div class="desc">{{description}}</div>
-  </a>
-  </section>
-  </script>
+<div class="products-list row">
 </div>
+
+<div class="products-spinner">
+  <div class="spinner"></div>
+</div>
+
+<div id="infinit_scroll_indicator">
+</div>
+
+<div class="fab">
+  <i class="glyphicon glyphicon-shopping-cart"></i>
+</div>
+
+<script type="text/template" id="product_template">
+  <div class="col-xs-12 col-sm-6 col-md-4">
+    <div class="product">
+    <div class="image">
+      <img src="{{cover_image}}">
+    </div>
+    <div class="title">
+      <h3>{{name}}</h3>
+      <span class="price">&yen; {{price}}</span>
+      <div class="desc-viewport">
+        <div class="desc">{{description}}</div>
+      </div>
+      <div class="control">
+        <div class="number-input-group">
+          <button onclick="carts.remove('{{id}}', '{{spec_id}}')"><i class="glyphicon glyphicon-minus"></i></button>
+          <input type="number" id="count_{{id}}_{{spec_id}}" value="{{count}}" onchange: "carts.updateCount(this, '{{id}}', '{{spec_id}}')" min=1>
+          <button onclick="carts.add('{{id}}', '{{spec_id}}')"><i class="glyphicon glyphicon-plus"></i></button>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</script>

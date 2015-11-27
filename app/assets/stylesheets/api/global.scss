@@ -104,19 +104,6 @@ a.navbar-brand {
     background:#f7f9eb;
 }
 
-.home-nav {
-    img {
-        height: 200px;
-    }
-    h3 {
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        font-size: 25px;
-        color: #fff;
-        letter-spacing: 8px;
-    }
-}
 
 div.simple_captcha {
     border: none !important;
@@ -217,4 +204,58 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+.header-action {
+    height: 56px;
+    padding: 0 8px;
+}
+.header-action-dark {
+    .glyphicon {
+        color: #555 !important;
+    }
+}
+.header-title {
+    height: 56px;
+    h1 {
+        padding: 16px 0 0 72px;
+        color: #fff;
+        font-size: 32px;
+        margin: 0;
+        display: block;
+    }
+}
+.header-description {
+    height: 56px;
+    padding: 12px 16px 0 72px;
+    color: #fff;
+    address {
+        font-size: 14px;
+        padding-bottom: 4px;
+        border-bottom: 1px solid $accent-color;
+    }
+}
+
+.fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: $accent-color;
+    box-shadow: $shadow;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    text-align: center;
+    display: table;
+    i {
+        display: table-cell;
+        font-size: 22px;
+        color: #666 !important;
+        vertical-align: middle;
+    }
+}
+.home-fab {
+    position: absolute;
+    top: 84px;
+    left: 12px;
 }

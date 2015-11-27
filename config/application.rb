@@ -31,8 +31,8 @@ module Webstore
 
                 # Define which owner this app belongs to.
                 config.owner = 1
-	        config.domain = "www.tenhs.com"
-	        config.name = "拾惠社"
+	        config.domain = "catering.tenhs.com"
+	        config.name = "拾惠社餐饮"
 
         end
 end

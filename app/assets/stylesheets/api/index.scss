@@ -5,8 +5,11 @@
     border: 0;
     background: $theme-color;
     margin: 0;
-    a, i {
+    a {
         color: #fff;
+    }
+    i {
+        color: #555;
     }
 }
 
@@ -23,9 +26,18 @@
     a {
         color: #fff;
     }
-
 }
 
+.navbar-submenu-slide {
+    margin-left: 56px;
+    position: relative;
+    overflow-x: scroll !important;
+    white-space: nowrap;
+}
+.navbar-submenu-slide::-webkit-scrollbar {
+    display: none;
+    height: 0 !important;
+}
 .navbar-submenu {
     height: 48px;
     position: relative;
@@ -34,19 +46,21 @@
         overflow: hidden;
         position: absolute;
         bottom: 0;
+        height: inherit;
     }
     li {
-        float: left;
+        display: inline-block;
     }
     a {
         display: inline-block;
-        padding: 8px 16px;
+        padding: 16px;
         color: $theme-color-light;
+        height: 48px;
     }
     .highlight-icon {
         border-left: 0;
         color: #fff;
-        border-bottom: 3px solid #fff;
+        border-bottom: 3px solid $accent_color;
     }
 }
 
@@ -161,4 +175,30 @@
 .block-layer.block-layer-light {
     background: #fff;
     opacity: .3;
+}
+
+.channel-card {
+    color: #555;
+    height: 180px;
+    display: block;
+    margin: 0 -15px;
+    overflow: hidden;
+    img {
+        height: 180px;
+        width: auto;
+    }
+    h3 {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        font-size: 22px;
+        letter-spacing: 8px;
+    }
+}
+
+.home-nav {
+
+    h3 {
+
+    }
 }
