@@ -5,7 +5,7 @@
                 var update = function(count, id, spec_id) {
                         $("#confirm_carts_btn").attr("disabled", "disabled");
                         if (count <= 0 || count > 1000) {
-                                alert("购买数量不正确");
+                                // alert("购买数量不正确");
                                 return;
                         }
                         spinner.show();
@@ -52,6 +52,7 @@
                         }, UPDATE_DELAY);
                 };
 
+
                 var updateView = function(id, spec_id, change) {
                         var input = $("#count_"+id+"_"+spec_id);
                         var count = Number(input.val()) + change;
@@ -59,8 +60,22 @@
                                 return input.val();
                         }
                         input.val(count);
-                        return count;
+	                updateTotalCount(change);
+	                return count;
                 };
+	        var totalCount = null;
+	        var updateTotalCount = function(change) {
+		        var initCount = $("#total_count");
+		        if (initCount[0] == null) {
+			        return;
+		        }
+		        if (totalCount == null) {// init total count
+			        totalCount = Number(initCount.val());
+		        }
+		        totalCount += Number(change);
+		        $("#cart_icon").hide();
+		        $("#cart_count").html(totalCount).show();
+	        };
 
                 self.updateCount = function(select, id, spec_id) {
                         update(select.value, id, spec_id);

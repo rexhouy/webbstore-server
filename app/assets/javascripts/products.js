@@ -62,10 +62,11 @@
                 infinitScroll("#infinit_scroll_indicator", // indicator selector
                               ".products-spinner", // spinner selector
                               "/products.json?category="+category, // url
-                              function(products) {
-                                      products.forEach(function(product) {
+                              function(result) {
+                                      result.data.forEach(function(product) {
                                               $(Mustache.render(template, product)).appendTo(container);
                                       });
                               });
         });
+
 })();

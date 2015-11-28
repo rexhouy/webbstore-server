@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Cart products are saved in session[:cart].
-# Data structure is [{:id => id, :count => num}]
+# Data structure is { id_spec_id: {:id => id, :count => num, :spec_id}}
 class CartsController < ApiController
 
         def show
@@ -25,17 +25,16 @@ class CartsController < ApiController
                         @message = "商品不存在"
                         @succeed = false
                 else
-                        change_product_count(product.id, params[:spec_id], params[:count])
+                        add_product_to_cart(product.id, params[:spec_id], params[:count])
                         @succeed = true
                         @cart = get_cart_products_detail(get_cart)
+                        @total_count = total_count
                 end
         end
 
         def delete
                 cart = get_cart
-                cart.delete_if do |product|
-                        same_product? product, params[:id], params[:spec_id]
-                end
+                cart.delete("#{params[:id]}_#{params[:spec_id]}")
                 redirect_to :carts
         end
 
@@ -45,27 +44,21 @@ class CartsController < ApiController
                 category = session[:category].present? ? session[:category]["id"] : 1
                 @back_url = "/products?category=#{category || 1}"
         end
-        def same_product?(product, id, spec_id)
-                product["id"].to_s.eql?(id.to_s) && product["spec_id"].to_s.eql?(spec_id.to_s)
-        end
-        def change_product_count(id, spec_id, count)
+        def add_product_to_cart(id, spec_id, count = 1)
                 cart = get_cart
-                matched_product_index = cart.find_index do |product|
-                        same_product? product, id, spec_id
-                end
-                cart[matched_product_index]["count"] = count unless matched_product_index.nil?
-        end
-        def add_product_to_cart(id, spec_id)
-                cart = get_cart
-                existProduct = cart.find_index do |product|
-                        same_product? product, id, spec_id
-                end
-                if existProduct.nil?
-                        cart << { "id" => id, "count" => 1, "spec_id" => spec_id }
+                sku = "#{id}_#{spec_id}"
+                if cart[sku].present?
+                        cart[sku]["count"] = count.to_i
                 else
-                        cart[existProduct]["count"] =  cart[existProduct]["count"].to_i + 1
+                        cart[sku] = { "id" => id, "count" => count, "spec_id" => spec_id }
                 end
                 session[:cart] = cart
+        end
+        def total_count()
+                cart = get_cart
+                cart.values.reduce(0) do |total, p|
+                        total  += p["count"].to_i
+                end
         end
 
 end

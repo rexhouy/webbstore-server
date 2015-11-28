@@ -26,11 +26,12 @@ class ProductsController < ApiController
                         format.html {
                                 @submenu = get_submenu(category_id)
                                 @recommendProducts = []#Product.owner(owner).category(@category).recommend.order(priority: :desc)
+                                @cart_count = cart_count(get_cart)
                                 render :index
                         }
                         format.json {
                                 @products = Product.owner(owner).category(@category).available.valid.order(priority: :desc).paginate(page: params[:page])
-                                render json: @products
+                                @cart = get_cart
                         }
                 end
         end

@@ -9,26 +9,33 @@
 </div>
 
 <div class="fab">
-  <i class="glyphicon glyphicon-shopping-cart"></i>
+  <% if @cart_count > 0 %>
+  <label id="cart_count"><%=@cart_count%></label>
+  <i id="cart_icon" class="glyphicon glyphicon-shopping-cart" style="display:none;"></i>
+  <% else %>
+  <label id="cart_count" style="display:none;"><%=@cart_count%></label>
+  <i id="cart_icon" class="glyphicon glyphicon-shopping-cart"></i>
+  <% end %>
+  <input type="hidden" id="total_count" value="<%=@cart_count%>"></input>
 </div>
 
 <script type="text/template" id="product_template">
   <div class="col-xs-12 col-sm-6 col-md-4">
     <div class="product">
     <div class="image">
-      <img src="{{cover_image}}">
+      <img src="{{product.cover_image}}">
     </div>
     <div class="title">
-      <h3>{{name}}</h3>
-      <span class="price">&yen; {{price}}</span>
+      <h3>{{product.name}}</h3>
+      <span class="price">&yen; {{product.price}}</span>
       <div class="desc-viewport">
-        <div class="desc">{{description}}</div>
+        <div class="desc">{{product.description}}</div>
       </div>
       <div class="control">
         <div class="number-input-group">
-          <button onclick="carts.remove('{{id}}', '{{spec_id}}')"><i class="glyphicon glyphicon-minus"></i></button>
-          <input type="number" id="count_{{id}}_{{spec_id}}" value="{{count}}" onchange: "carts.updateCount(this, '{{id}}', '{{spec_id}}')" min=1>
-          <button onclick="carts.add('{{id}}', '{{spec_id}}')"><i class="glyphicon glyphicon-plus"></i></button>
+          <button onclick="carts.remove('{{product.id}}', '{{product.spec_id}}')"><i class="glyphicon glyphicon-minus"></i></button>
+          <input type="number" id="count_{{product.id}}_{{product.spec_id}}" value="{{count}}" onchange: "carts.updateCount(this, '{{product.id}}', '{{product.spec_id}}')" min=1>
+          <button onclick="carts.add('{{product.id}}', '{{product.spec_id}}')"><i class="glyphicon glyphicon-plus"></i></button>
         </div>
       </div>
       </div>

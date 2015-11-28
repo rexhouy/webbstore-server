@@ -4,11 +4,11 @@ class ApiController < ApplicationController
         before_action :set_header
 
         def get_cart
-                session[:cart] || []
+                session[:cart] || {}
         end
 
         def clear_cart
-                session[:cart] = []
+                session[:cart] = {}
         end
 
         private
