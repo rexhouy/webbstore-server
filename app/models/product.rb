@@ -41,8 +41,8 @@ class Product < ActiveRecord::Base
         end
 
         def self.category(category)
-                return where(category_id: category) unless category.blank?
-                all
+                return where(recommend: true) if category.blank?
+                return where(category_id: category)
         end
 
         def self.search_by_owner(search_text, owner)
