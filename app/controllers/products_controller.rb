@@ -75,7 +75,7 @@ class ProductsController < ApiController
                         menus << {
                                 name: category.name,
                                 href: "/products?category=#{category.id}",
-                                class: category.id.eql?(selected_category) ? "highlight-icon" : ""
+                                class: category.id.eql?(selected_category.to_i) ? "highlight-icon" : ""
                         }
                 end
                 menus
