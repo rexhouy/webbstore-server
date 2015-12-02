@@ -31,8 +31,9 @@ Rails.application.routes.draw do
         # User address
         resources :addresses
         # Products
-        get "products/order" => "products#order"
+        get "products/reserve" => "products#reserve"
         get "products/takeout" => "products#takeout"
+        get "products/immediate/:dinning_table_id" => "products#immediate"
         get 'products' => 'products#index', as: :products
         get 'products/search' => 'products#search'
         get 'products/:id' => 'products#show', as: :products_detail
@@ -109,6 +110,9 @@ Rails.application.routes.draw do
                 get "orders/cards/:id" => "orders#card"
                 put "orders/cards/deliver/:id" => "orders#card_deliver"
                 resources :orders
+                get "takeout_orders" => "orders#takeout", as: :takeout_orders
+                get "reserve_orders" => "orders#reserve", as: :reserve_orders
+                get "immediate_orders" => "orders#immediate", as: :immediate_orders
                 put 'orders/cancel/:id' => 'orders#cancel', as: :orders_cancel
                 put 'orders/shipping/:id' => 'orders#shipping', as: :orders_shipping
                 put 'orders/deliver/:id' => 'orders#deliver', as: :orders_deliver

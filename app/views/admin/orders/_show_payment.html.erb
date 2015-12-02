@@ -1,0 +1,19 @@
+<div class="form-group">
+  <label class="col-sm-2 control-label">支付信息</label>
+  <div class="col-sm-9">
+    <table class="table table-bordered form-control-static">
+      <thead>
+        <tr><th>支付方式</th><th>订单总价</th><th>使用优惠券</th><th>使用账户余额</th><th>支付总价</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= order_payment @order %></td>
+          <td><%= number_to_currency @order.subtotal, locale: :'zh-CN', precision: 2 %></td>
+          <td><%= number_to_currency @order.coupon_amount, locale: :'zh-CN', precision: 2 %></td>
+          <td><%= number_to_currency @order.user_account_balance, locale: :'zh-CN', precision: 2 %></td>
+          <td><%= number_to_currency (@order.subtotal - @order.coupon_amount - @order.user_account_balance), locale: :'zh-CN', precision: 2 %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

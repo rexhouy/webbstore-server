@@ -1,0 +1,18 @@
+<div class="form-group">
+  <label class="col-sm-2 control-label">预订信息</label>
+  <div class="col-sm-9">
+    <table class="table table-bordered form-control-static">
+      <thead>
+        <tr><th>用餐时间</th><th>用餐人数</th><th>联系人</th><th>联系电话</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= display_datetime @order.reserve_time %></td>
+          <td><%= @order.reserve_seats %> 人</td>
+          <td><%= @order.contact_tel %></td>
+          <td><%=@order.contact_name%></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

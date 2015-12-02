@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151117013228) do
+ActiveRecord::Schema.define(version: 20151202013850) do
 
   create_table "account_balance_histories", force: :cascade do |t|
     t.decimal  "receipt",                 precision: 8, scale: 2
@@ -183,10 +183,14 @@ ActiveRecord::Schema.define(version: 20151117013228) do
     t.string   "type",                 limit: 255
     t.decimal  "coupon_amount",                      precision: 8,  scale: 2
     t.decimal  "user_account_balance",               precision: 8,  scale: 2
+    t.datetime "reserve_time"
+    t.integer  "reserve_seats",        limit: 4
+    t.integer  "dinning_table_id",     limit: 4
   end
 
   add_index "orders", ["customer_id"], name: "fk_rails_c2426400ce", using: :btree
   add_index "orders", ["seller_id"], name: "fk_rails_4498acc18a", using: :btree
+  add_index "orders", ["type"], name: "index_orders_on_type", using: :btree
 
   create_table "orders_products", force: :cascade do |t|
     t.integer  "count",            limit: 4

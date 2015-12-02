@@ -41,14 +41,17 @@ class CartsController < ApiController
         private
         def set_header
                 @title = "购物车"
-                category = session[:category].present? ? session[:category]["id"] : 1
-                @back_url = "/products?category=#{category || 1}"
+                @back_url = "/products?category=recommend"
         end
         def add_product_to_cart(id, spec_id, count = 1)
                 cart = get_cart
                 sku = "#{id}_#{spec_id}"
                 if cart[sku].present?
-                        cart[sku]["count"] = count.to_i
+                        if count.to_i.eql?(0)
+                                cart.delete(sku)
+                        else
+                                cart[sku]["count"] = count.to_i
+                        end
                 else
                         cart[sku] = { "id" => id, "count" => count, "spec_id" => spec_id }
                 end

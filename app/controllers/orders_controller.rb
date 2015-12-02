@@ -6,11 +6,17 @@ class OrdersController < ApiController
         before_action :authenticate_user!
 
         def index
-                @type = params[:type] || "all"
-                @orders = Order.where(customer: current_user).owner(Rails.application.config.owner).type(@type).order(id: :desc).paginate(page: params[:page])
-                @submenu = [{name: "所有订单", class: @type.eql?("all") ? "highlight-icon" : "", href: "/orders"},
-                            {name: "未完成订单", class: @type.eql?("unfinished") ? "highlight-icon" : "", href: "/orders?type=unfinished"},
-                            {name: "已取消订单", class: @type.eql?("canceled") ? "highlight-icon" : "", href: "/orders?type=canceled"}]
+                @type = params[:type] || "reserve"
+                if @type.eql? "reserve"
+                        @orders = ReserveOrder.where(customer: current_user).owner(Rails.application.config.owner).order(id: :desc).paginate(page: params[:page])
+                elsif @type.eql? "takeout"
+                        @orders = TakeoutOrder.where(customer: current_user).owner(Rails.application.config.owner).order(id: :desc).paginate(page: params[:page])
+                else
+                        @orders = ImmediateOrder.where(customer: current_user).owner(Rails.application.config.owner).order(id: :desc).paginate(page: params[:page])
+                end
+                @submenu = [{name: "预订订单", class: @type.eql?("reserve") ? "highlight-icon" : "", href: "/orders?type=reserve"},
+                            {name: "外卖订单", class: @type.eql?("takeout") ? "highlight-icon" : "", href: "/orders?type=takeout"},
+                            {name: "店内消费订单", class: @type.eql?("immediate") ? "highlight-icon" : "", href: "/orders?type=immediate"}]
         end
 
         def show
@@ -30,6 +36,7 @@ class OrdersController < ApiController
                         .where("coupons.end_date > now()")
                         .where("coupons.limit <= ?", cart_price(@cart))
                 @title = "购买"
+                render :confirm
         end
 
         def add
@@ -40,8 +47,34 @@ class OrdersController < ApiController
                         return
                 end
                 begin
-                        order = OrderService.new.create(get_cart, params[:paymentType], params[:memo],
-                                                params[:use_coupon], params[:use_account_balance].eql?("true"), params[:addressId], current_user)
+                        if reserve?
+                                date = DateTime.strptime(params[:date] + params[:time], "%Y-%m-%d%H:%M")
+                                order = ReserveOrderService.new.create(get_cart,
+                                                                       params[:paymentType],
+                                                                       params[:memo],
+                                                                       params[:use_coupon],
+                                                                       params[:use_account_balance].eql?("true"),
+                                                                       params[:count],
+                                                                       date,
+                                                                       params[:contact_tel],
+                                                                       params[:contact_name],
+                                                                       current_user)
+                        elsif takeout?
+                                order = TakeoutOrderService.new.create(get_cart,
+                                                                       params[:paymentType],
+                                                                       params[:memo],
+                                                                       params[:use_coupon],
+                                                                       params[:use_account_balance].eql?("true"),
+                                                                       params[:addressId],
+                                                                       current_user)
+                        elsif immediate?
+                                order = ImmediateOrderService.new.create(get_cart,
+                                                                       params[:paymentType],
+                                                                       params[:use_coupon],
+                                                                       params[:use_account_balance].eql?("true"),
+                                                                       session[:dinning_table_id],
+                                                                       current_user)
+                        end
                         clear_cart
                         redirect_to payment_redirect_url(order)
                 rescue => e

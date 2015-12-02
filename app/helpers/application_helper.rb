@@ -91,13 +91,25 @@ module ApplicationHelper
         end
 
         def cart_price(cart)
-                cart.reduce(0) do |memo, product|
+                cart.values.reduce(0) do |memo, product|
                         memo += product_price(product)
                 end
         end
 
         def admin_back_url(default)
                 session[:index_path] || default
+        end
+
+        def reserve?
+                session[:type].eql? "reserve"
+        end
+
+        def takeout?
+                session[:type].eql? "takeout"
+        end
+
+        def immediate?
+                session[:type].eql? "immediate"
         end
 
 end

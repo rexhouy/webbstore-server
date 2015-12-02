@@ -1,0 +1,10 @@
+<section>
+  <h3>配送信息</h3>
+  <address class="address" style="border:none;">
+    <div class="header">
+      <span class="pull-left name"><%= @order.contact_name %></span>
+      <span class="pull-right"><%= phone_number @order.contact_tel %></span>
+    </div>
+    <div><%= @order.contact_address %></div>
+  </address>
+</section>

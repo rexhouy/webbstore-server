@@ -19,18 +19,33 @@
                 var getSelectedPaymentType = function() {
                         return $("div[name='payment']").filter(".selected").attr("data");
                 };
+                var getOrderInfo = function() {
+                        return $("#contact").val();
+                };
                 self.confirm = function() {
                         var address = getSelectedAddress();
                         var paymentType = getSelectedPaymentType();
-                        if (address != null && paymentType != null) {
-                                $("#selected_address_id").val(address);
-                                $("#payment_type").val(paymentType);
-                                $("#orders_confirm_form").submit();
-                                return true;
-                        } else {
-                                alert("请选择配送地址与支付方式!");
+                        var orderInfo = getOrderInfo();
+                        var order_type = $("#order_type").val();
+                        var isReserve = order_type == "reserve";
+                        var isImmediate = order_type == "immediate";
+                        var isTakeout = order_type == "takeout";
+                        if (paymentType == null) {
+                                alert("请选择支付方式!");
                                 return false;
                         }
+                        if (isReserve && !orderInfo) {
+                                alert("请填写联系人信息!");
+                                return false;
+                        }
+                        if (isTakeout && address == null) {
+                                alert("请选择配送地址!");
+                                return false;
+                        }
+                        $("#selected_address_id").val(address);
+                        $("#payment_type").val(paymentType);
+                        $("#orders_confirm_form").submit();
+                        return true;
                 };
 
                 var orderAmount = 0;

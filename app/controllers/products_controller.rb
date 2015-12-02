@@ -1,15 +1,23 @@
 # -*- coding: utf-8 -*-
 class ProductsController < ApiController
 
-        def order
-                session[:type] = "order"
+        def reserve
+                order_type "reserve"
                 @title = "订桌订餐"
                 index
         end
 
         def takeout
-                session[:type]= "takeout"
+                order_type "takeout"
                 @title = "外卖点餐"
+                index
+        end
+
+        def immediate
+                order_type "immediate"
+                session[:dinning_table_id] = params[:dinning_table_id]
+                @title = "点餐"
+                @back_url = nil
                 index
         end
 
@@ -53,8 +61,8 @@ class ProductsController < ApiController
                 Rails.application.config.owner
         end
         def set_header
-                @title = "订桌订餐" if session[:type].eql?("order")
-                @title = "外卖点餐" if session[:type].eql?("takeout")
+                @title = "订桌订餐" if reserve?
+                @title = "外卖点餐" if takeout?
                 @back_url = "/"
         end
         def get_submenu(selected_category)

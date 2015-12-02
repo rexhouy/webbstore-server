@@ -3,27 +3,25 @@ class OrderService
 
         # create Order, OrderProduct, OrderHistory, Card
         # update Product sales, UserCoupon,User account balance
-        def create(cart, payment_type, memo, user_coupon, use_account_balance, address_id, current_user)
-                order = Order.new
-                order.customer_id = current_user.id
-                order.seller_id = Rails.application.config.owner
-                order.memo = memo
-                order.order_id = random_order_id
-                set_address(order, address_id)
-                order.payment_type = payment_type
+        def create(cart, payment_type, memo, user_coupon, use_account_balance, current_user)
+                @order.customer_id = current_user.id
+                @order.seller_id = Rails.application.config.owner
+                @order.memo = memo
+                @order.order_id = random_order_id
+                @order.payment_type = payment_type
                 Order.transaction do
-                        order.orders_products = get_orders_products(cart)
-                        order.subtotal = subtotal(order.orders_products)
-                        coupon_amount = set_coupon(order, current_user.id, user_coupon)
-                        set_user_account_balance(order, current_user, coupon_amount, use_account_balance)
-                        order.name = order_name order.orders_products
-                        order.status = need_payment?(order) ? Order.statuses[:placed] : Order.statuses[:paid]
-                        order.save!
-                        CardService.new.create(order, current_user.id)
-                        update_product_sales(order.orders_products, :+)
-                        create_order_history(order, current_user.id)
+                        @order.orders_products = get_orders_products(cart)
+                        @order.subtotal = subtotal(@order.orders_products)
+                        coupon_amount = set_coupon(@order, current_user.id, user_coupon)
+                        set_user_account_balance(@order, current_user, coupon_amount, use_account_balance)
+                        @order.name = order_name @order.orders_products
+                        @order.status = need_payment?(@order) ? Order.statuses[:placed] : Order.statuses[:paid]
+                        @order.save!
+                        CardService.new.create(@order, current_user.id)
+                        update_product_sales(@order.orders_products, :+)
+                        create_order_history(@order, current_user.id)
                 end
-                order
+                @order
         end
 
         def change_status(order, status, user_id)
@@ -120,20 +118,13 @@ class OrderService
                 order
         end
 
-        def set_address(order, address_id)
-                address = Address.find(address_id)
-                order.contact_name = address.name
-                order.contact_tel = address.tel
-                order.contact_address = address.state + address.city + address.street
-                order
-        end
 
         def get_orders_products(cart)
                 orders_products = []
                 errors = []
-                cart.each do |product|
+                cart.values.each do |product|
                         op = OrdersProducts.new
-                        op.count = product["count"]
+                        op.count = product["count"].to_i
                         p = Product.find(product["id"])
                         op.price = p.price
                         op.product = p

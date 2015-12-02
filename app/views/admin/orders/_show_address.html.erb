@@ -1,0 +1,12 @@
+<div class="form-group">
+  <label class="col-sm-2 control-label">配送地址</label>
+  <div class="col-sm-9">
+    <address class="form-control-static">
+      <div class="header">
+        <span class="pull-left name"><%= @order.contact_name %></span>
+        <span class="pull-right"><%= phone_number @order.contact_tel %></span>
+      </div>
+      <div><%= @order.contact_address %></div>
+    </address>
+  </div>
+</div>

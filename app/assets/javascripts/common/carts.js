@@ -2,9 +2,9 @@
         var carts = function() {
                 var self = {};
 
-                var update = function(count, id, spec_id) {
+                var update = function(count, id, spec_id, minValue) {
                         $("#confirm_carts_btn").attr("disabled", "disabled");
-                        if (count <= 0 || count > 1000) {
+                        if (count < minValue || count > 1000) {
                                 // alert("购买数量不正确");
                                 return;
                         }
@@ -34,32 +34,39 @@
 
                 var updateTimer = {};
                 var UPDATE_DELAY = 500;
-                self.add = function(id, spec_id) {
+                self.add = function(id, spec_id, minValue) {
                         var key = id+"_"+spec_id;
                         clearTimeout(updateTimer[key]);
-                        var count = updateView(id, spec_id, 1);
+                        var count = updateView(id, spec_id, 1, minValue);
                         updateTimer[key] = setTimeout(function() {
-                                update(count, id, spec_id);
+                                update(count, id, spec_id, minValue);
                         }, UPDATE_DELAY);
                 };
 
-                self.remove = function(id, spec_id) {
+                self.remove = function(id, spec_id, minValue) {
                         var key = id+"_"+spec_id;
                         clearTimeout(updateTimer[key]);
-                        var count = updateView(id, spec_id, -1);
+                        var count = updateView(id, spec_id, -1, minValue);
                         updateTimer[key] = setTimeout(function() {
-                                update(count, id, spec_id);
+                                update(count, id, spec_id, minValue);
                         }, UPDATE_DELAY);
                 };
 
 
-                var updateView = function(id, spec_id, change) {
+                var updateView = function(id, spec_id, change, minValue) {
                         var input = $("#count_"+id+"_"+spec_id);
                         var count = Number(input.val()) + change;
-                        if (count < 1 || count > 1000) {
+                        if (count < minValue || count > 1000) {
                                 return input.val();
                         }
                         input.val(count);
+	                if (count > 0) {
+		                $("#count_"+id + "_"+spec_id).css("visibility","visible");
+		                $("#btn_"+id + "_"+spec_id).css("visibility","visible");
+	                } else {
+		                $("#count_"+id + "_"+spec_id).css("visibility","hidden");
+		                $("#btn_"+id + "_"+spec_id).css("visibility","hidden");
+	                }
 	                updateTotalCount(change);
 	                return count;
                 };
@@ -77,8 +84,8 @@
 		        $("#cart_count").html(totalCount).show();
 	        };
 
-                self.updateCount = function(select, id, spec_id) {
-                        update(select.value, id, spec_id);
+                self.updateCount = function(select, id, spec_id, minValue) {
+                        update(select.value, id, spec_id, minValue);
                 };
 
                 return self;

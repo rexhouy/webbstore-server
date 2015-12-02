@@ -57,12 +57,14 @@ class ApplicationController < ActionController::Base
         end
 
         def get_cart_products_detail(cart)
-                cart.values.map do |product|
+                result = {}
+                cart.values.each do |product|
                         p = product.clone
                         p["detail"] = Product.find(product["id"])
                         p["spec"] = Specification.find(product["spec_id"]) unless product["spec_id"].blank?
-                        p
+                        result["#{product['id']}_#{product['spec_id']}"] = p
                 end
+                result
         end
 
         def cart_price(cart)

@@ -13,120 +13,24 @@
 
 <div class="main row">
   <%= form_tag :orders, id: "orders_confirm_form" do %>
-    <section>
-      <h3 class="col-md-2 col-sm-3 col-xs-12 icon-link-left"><span class="circle highlight">1</span>确认订单</h3>
-      <div class="col-md-8 col-sm-7 col-xs-12 main-body">
-        <div class="confirm-content">
-          <table class="table table-condensed">
-            <thead>
-              <tr>
-                <th>商品</th><th class="number-align" style="min-width: 45px;">数量</th><th class="number-align">单价</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @cart.each do |product| %>
-                <tr>
-                  <td><%= product["detail"].name %>
-                    <% unless product["spec"].nil? %>
-                      <em>(<%= product["spec"].value %>)</em>
-                    <% end %>
-                  </td>
-                  <td class="number-align"><%= product["count"] %></td>
-                  <td class="number-align"><%= number_to_currency product_price(product), locale: :'zh-CN', precision: 2 %></td>
-                </tr>
-              <% end %>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colspan="3" class="number-align">
-                  总价：<%= number_to_currency cart_price(@cart), locale: :'zh-CN', precision: 2 %>
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-      </div>
-    </section>
+    <% section_index = 0 %>
+    <%= render partial: "products", locals: {index: section_index+=1}%>
 
     <!-- 配送 -->
-    <section>
-      <h3 class="col-md-2 col-sm-3 col-xs-12 icon-link-left"><span class="circle highlight">2</span>配送地址</h3>
-      <div class="col-md-8 col-sm-7 col-xs-12 main-body">
-        <div class="confirm-content">
-          <div id="addresses">
-            <% @user.addresses.each do |address| %>
-              <%= render partial: "/addresses/item", object: address %>
-            <% end %>
-          </div>
-          <input type="hidden" name="addressId" id="selected_address_id">
-          <div class="create-address">
-            <a class="btn btn-default block"  onclick="address.create()">新建地址</a>
-          </div>
-        </div>
-      </div>
-    </section>
+    <% if reserve? %>
+      <%= render partial: "order_info", locals: {index: section_index+=1}%>
+    <% elsif takeout? %>
+      <%= render partial: "address", locals: {index: section_index+=1}%>
+    <% end %>
 
     <!-- 支付 -->
-    <section>
-      <h3 class="col-md-2 col-sm-3 col-xs-12 icon-link-left"><span class="circle highlight">3</span>支付方式</h3>
-      <div class="col-md-8 col-sm-7 col-xs-12 main-body">
-        <div class="confirm-content">
-          <div class="payment-type selectable" name="payment" data="wechat">
-            <%=image_tag "weixinpay.png"%>
-            <span>微信支付</span>
-            <i class="glyphicon glyphicon-ok-sign"></i>
-          </div>
-          <div class="payment-type selectable" name="payment" data="alipay">
-            <%=image_tag "alipay.png"%>
-            <span>支付宝</span>
-            <i class="glyphicon glyphicon-ok-sign"></i>
-          </div>
-          <input type="hidden" name="paymentType" id="payment_type">
-        </div>
-    </section>
+    <%= render partial: "payment", locals: {index: section_index+=1}%>
 
     <!-- 留言 -->
-    <section>
-      <h3 class="col-md-2 col-sm-3 col-xs-12 icon-link-left"><span class="circle highlight">4</span>留言</h3>
-      <div class="col-md-8 col-sm-7 col-xs-12 main-body">
-        <div class="confirm-content">
-          <textarea id="memo" class="form-control" name="memo"></textarea>
-        </div>
-      </div>
-    </section>
-
+    <%= render partial: "memo", locals: {index: section_index+=1} unless immediate? %>
 
     <!-- 结算 -->
-    <section>
-      <h3 class="col-md-2 col-sm-3 col-xs-12 icon-link-left"><span class="circle highlight">5</span>结算</h3>
-      <div class="col-md-8 col-sm-7 col-xs-12 main-body">
-        <div class="confirm-content">
-          <% unless @user_coupons.empty? %>
-          <div class="selectable selected-coupon" onclick="orders.selectCoupon(this)" id="selected_coupon">
-            <span>选择优惠券</span>
-            <i class="pull-right glyphicon glyphicon-chevron-right"></i>
-          </div>
-          <% end %>
-          <% if current_user.balance > 0 %>
-          <div class="selectable use-account-balance" onclick="orders.useAccountBalance(this, <%=usable_account_balance(@cart)%>)">
-            <i class="glyphicon glyphicon-ok-sign"></i>
-            <span>使用账户余额</span>
-            <span class="pull-right"><i class="glyphicon glyphicon-yen"></i> <%=usable_account_balance(@cart)%></span>
-          </div>
-          <% end %>
-          <input type="hidden" name="use_account_balance" id="use_account_balance" value="false">
-          <input type="hidden" name="use_coupon" id="use_coupon">
-          <ul class="order-total">
-            <li><label>订单总价：</label><span><%= number_to_currency cart_price(@cart), locale: :'zh-CN', precision: 2 %></span></li>
-            <li><label>使用优惠券：</label><span id="coupon_amount"><%= number_to_currency 0, locale: :'zh-CN', precision: 2 %></span></li>
-            <li><label>使用余额：</label><span id="account_balance_amount"><%= number_to_currency 0, locale: :'zh-CN', precision: 2 %></span></li>
-            <li><label>需支付总价：</label><span class="amount" id="total_amount"><%= number_to_currency cart_price(@cart), locale: :'zh-CN', precision: 2 %></span></li>
-          </ul>
-        </div>
-      </div>
-      <input type="hidden" id="order_total_amount" value="<%=cart_price(@cart)%>">
-    </section>
-
+    <%= render partial: "clearing", locals: {index: section_index+=1}%>
 
     <div>
       <div class="col-md-offset-2 col-sm-offset-3 col-md-8 col-sm-7 col-xs-12 vertical-btn-group btn-group-cart">
@@ -137,42 +41,5 @@
   <% end %>
 
   <%= render partial: "/addresses/modal" %>
+  <input type="hidden" id="order_type" value="<%=session[:type]%>">
 </div>
-
-
-    <!-- Coupon Selection -->
-    <% unless @user_coupons.empty? %>
-    <article class="specbar container" id="couponbar">
-      <header>
-        <div class="col-md-10 col-sm-10 col-xs-8 inherit-height table-center-wrap">
-          <h3 class="table-center" style="color:#fff;">选择优惠券</h3>
-        </div>
-        <div class="col-md-2 col-sm-2 col-xs-4 inherit-height">
-          <button type="button" class="icon btn btn-lg pull-right inherit-height" style="color:#fff;" onclick="orders.closeCouponbar();">
-            <i class="glyphicon glyphicon-remove"></i>
-          </button>
-        </div>
-      </header>
-      <section class="col-md-12 spec-section">
-        <% @user_coupons.each do |user_coupon| %>
-        <div class="coupon selectable" data="<%=user_coupon.id%>" onclick="orders.couponSelected(this)" data-amount="<%= user_coupon.coupon.amount %>">
-          <div class="header">
-            <span class="amount pull-left"><small>&#165;</small><%= user_coupon.coupon.amount %></span>
-            <span class="title pull-right"><%= user_coupon.coupon.title %></span>
-          </div>
-          <div>
-            使用条件：订单总金额满<%= user_coupon.coupon.limit %>元
-          </div>
-          <div>
-            有效期：<%= display_date user_coupon.coupon.start_date %> - <%= display_date user_coupon.coupon.end_date %>
-          </div>
-        </div>
-        <% end %>
-        <div>
-          <button class="btn btn-primary btn-block btn-lg" onclick="orders.confirmCoupon();" disabled="disabled" id="select_coupon_btn">
-            确定
-          </button>
-        </div>
-      </section>
-    </article>
-    <% end %>

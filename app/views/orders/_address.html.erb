@@ -1,0 +1,16 @@
+<section>
+  <h3 class="col-md-2 col-sm-3 col-xs-12 icon-link-left"><span class="circle highlight"><%=index%></span>配送地址</h3>
+  <div class="col-md-8 col-sm-7 col-xs-12 main-body">
+    <div class="confirm-content">
+      <div id="addresses">
+        <% @user.addresses.each do |address| %>
+        <%= render partial: "/addresses/item", object: address %>
+        <% end %>
+      </div>
+      <input type="hidden" name="addressId" id="selected_address_id">
+      <div class="create-address">
+        <a class="btn btn-default block"  onclick="address.create()">新建地址</a>
+      </div>
+    </div>
+  </div>
+</section>

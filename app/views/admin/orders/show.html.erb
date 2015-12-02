@@ -4,10 +4,10 @@
     <% if !@order.delivered? and !@order.canceled? %>
       <%= link_to "取消订单", admin_orders_cancel_url,  method: :put, style: "display:inline-block", class: "btn btn-danger", data: {confirm: %(确定要取消该订单吗？)} %>
     <% end %>
-    <% if @order.paid? || (@order.offline_pay? && @order.placed?) %>
+    <% if @order.type.eql?("TakeoutOrder") &&  (@order.paid? || (@order.offline_pay? && @order.placed?)) %>
       <%= link_to "确认发货", admin_orders_shipping_url, method: :put, style: "display:inline-block", class: "btn btn-primary" %>
     <% end %>
-    <% if @order.shipping? %>
+    <% if @order.shipping? || @order.type.eql?("ImmediateOrder") %>
       <%= link_to "确认完成", admin_orders_deliver_url, method: :put, style: "display:inline-block", class: "btn btn-primary" %>
     <% end %>
     <%= link_to admin_back_url(admin_orders_url), class: "btn btn-default" do %>
@@ -18,6 +18,7 @@
     </a>
   </div>
   <div class="form-horizontal" style="padding-top:10px;">
+    <%= render partial: "show_products" %>
     <div class="form-group">
       <label class="col-sm-2 control-label">订单编号</label>
       <div class="col-sm-9">
@@ -27,116 +28,19 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">状态</label>
       <div class="col-sm-9">
-        <p class="form-control-static"><%= order_status @order %></p>
+        <p class="form-control-static">
+          <%= order_status @order if @order.type.eql?("TakeoutOrder") %>
+          <%= reserve_order_status @order if @order.type.eql?("ReserveOrder") %>
+          <%= payment_status @order if @order.type.eql?("ImmediateOrder") %>
+        </p>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">支付方式</label>
-      <div class="col-sm-9">
-        <p class="form-control-static"><%= order_payment @order %></p>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">订单总价</label>
-      <div class="col-sm-9">
-        <p class="form-control-static"><%= number_to_currency @order.subtotal, locale: :'zh-CN', precision: 2 %></p>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">使用优惠券</label>
-      <div class="col-sm-9">
-        <p class="form-control-static"><%= number_to_currency @order.coupon_amount, locale: :'zh-CN', precision: 2 %></p>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">使用账户余额</label>
-      <div class="col-sm-9">
-        <p class="form-control-static"><%= number_to_currency @order.user_account_balance, locale: :'zh-CN', precision: 2 %></p>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">支付总价</label>
-      <div class="col-sm-9">
-        <p class="form-control-static"><%= number_to_currency (@order.subtotal - @order.coupon_amount - @order.user_account_balance), locale: :'zh-CN', precision: 2 %></p>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-sm-2 control-label">下订单时间</label>
-      <div class="col-sm-9">
-        <p class="form-control-static"><%= display_datetime @order.created_at %></p>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-sm-2 control-label">商品</label>
-      <div class="col-sm-9">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>#</th><th>品名</th><th>规格</th><th class="number-align">数量</th><th class="number-align">单价</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @order.orders_products.each_with_index do |orders_products, index| %>
-              <tr>
-                <td><%= index+1 %></td>
-                <td><%= orders_products.product.name %></td>
-                <td><%= orders_products.specification.value if orders_products.specification.present? %></td>
-                <td class="number-align"><%= orders_products.count %></td>
-                <td class="number-align"><%= number_to_currency orders_products.price, locale: :'zh-CN', precision: 2 %></td>
-              </tr>
-            <% end %>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colspan="5" class="number-align">
-                总价：<%= number_to_currency @order.subtotal, locale: :'zh-CN', precision: 2 %>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">配送地址</label>
-      <div class="col-sm-9">
-        <address class="form-control-static">
-          <div class="header">
-            <span class="pull-left name"><%= @order.contact_name %></span>
-            <span class="pull-right"><%= phone_number @order.contact_tel %></span>
-          </div>
-          <div><%= @order.contact_address %></div>
-        </address>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">留言</label>
-      <div class="col-sm-9">
-        <p class="form-control-static"><%=@order.memo%></p>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">历史</label>
-      <div class="col-sm-9">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>时间</th><th>状态</th><th>操作人</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @order.order_histories.each do |hist| %>
-            <tr>
-              <td><%= display_datetime hist.time %></td>
-              <td><%= order_history_status hist %></td>
-              <td><%= order_status_change_operator hist %></td>
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <%= render(partial: "show_reserve_info")  if @order.type.eql?("ReserveOrder") %>
+    <%= render partial: "show_payment" %>
+    <%= render partial: "show_time" %>
+    <%= render(partial: "show_address") if @order.type.eql?("TakeoutOrder") %>
+    <%= render partial: "show_memo" %>
+    <%= render partial: "show_history" %>
   </div>
 </div>
 <%= render partial: "print" %>

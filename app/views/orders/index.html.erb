@@ -6,8 +6,17 @@
           <i class="pull-right glyphicon glyphicon-info-sign"></i>
         </h3>
         <div>
-          <span class="pull-left"><%= order_status order %></span>
-          <span class="pull-right"><%= display_date order.created_at %></span>
+          <% if order.type.eql? "ReserveOrder" %>
+            <span class="pull-left"><%= order.reserve_seats %> 人</span>
+            <span class="pull-right"><%= display_datetime order.reserve_time %></span>
+          <% elsif order.type.eql? "TakeoutOrder" %>
+            <span class="pull-left"><%= order_status order %></span>
+            <span class="pull-right"><%= display_date order.created_at %></span>
+            <% else %>
+            <span class="pull-left"><%= payment_status order %></span>
+            <span class="pull-right"><%= display_date order.created_at %></span>
+          <% end %>
+
         </div>
       </li>
     <% end %>

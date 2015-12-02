@@ -2,9 +2,10 @@
 @import "variable.scss";
 
 .cart {
-    height: 128px;
-    margin: 20px 0;
+    height: 106px;
+    margin: 8px 0;
     background-color: #fff;
+    box-shadow: $shadow;
     .row {
         overflow: hidden;
     }
@@ -109,6 +110,6 @@
     }
 }
 .cart-product-info {
-    height:80px;
+    height:56px;
     overflow:hidden;
 }

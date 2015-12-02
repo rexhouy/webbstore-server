@@ -29,7 +29,6 @@
                         $("#spec_price_"+specId).show();
                         selectedSpec = specId;
                         $("#spec_add_to_cart_btn").removeAttr("disabled");
-
                 };
 
                 self.addToCart = function() {

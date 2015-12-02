@@ -1,0 +1,21 @@
+<div class="form-group">
+  <label class="col-sm-2 control-label">历史</label>
+  <div class="col-sm-9">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>时间</th><th>状态</th><th>操作人</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @order.order_histories.each do |hist| %>
+        <tr>
+          <td><%= display_datetime hist.time %></td>
+          <td><%= order_history_status hist %></td>
+          <td><%= order_status_change_operator hist %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

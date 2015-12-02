@@ -54,4 +54,21 @@ module OrdersHelper
                 total_price > account_balance ? account_balance : total_price
         end
 
+        def order_name(order)
+                case order.type
+                when "ImmediateOrder"
+                        "订单"
+                when "TakeoutOrder"
+                        "外卖订单"
+                when "ReserveOrder"
+                        "预订订单"
+                end
+        end
+
+        def payment_status(order)
+                return "已支付" if order.paid? || order.shipping? || order.delivered?
+                return "已取消" if order.canceled?
+                "未支付"
+        end
+
 end

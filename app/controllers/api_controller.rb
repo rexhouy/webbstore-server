@@ -11,6 +11,23 @@ class ApiController < ApplicationController
                 session[:cart] = {}
         end
 
+        def order_type(type)
+                session[:type] = type
+        end
+
+        def reserve?
+                session[:type].eql? "reserve"
+        end
+
+        def takeout?
+                session[:type].eql? "takeout"
+        end
+
+        def immediate?
+                session[:type].eql? "immediate"
+        end
+
+
         private
         def set_header
         end

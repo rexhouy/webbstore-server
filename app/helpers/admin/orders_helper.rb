@@ -9,6 +9,11 @@ module Admin::OrdersHelper
                 return "已取消" if order.canceled?
         end
 
+        def reserve_order_status(order)
+                return "已取消" if order.canceled?
+                return "正常"
+        end
+
         def order_history_status(history)
                 return "创建" if history.placed?
                 return "支付完成" if history.paid?
@@ -27,6 +32,12 @@ module Admin::OrdersHelper
                 return "微信支付" if order.wechat?
                 return "支付宝" if order.alipay?
                 return "货到付款" if order.offline_pay?
+        end
+
+        def payment_status(order)
+                return "已支付" if order.paid? || order.shipping? || order.delivered?
+                return "已取消" if order.canceled?
+                "未支付"
         end
 
 end

@@ -2,13 +2,11 @@
   <div class="order-detail" style="margin-bottom: 20px;">
     <section>
       <h2 class="pull-left inherit-height table-center-wrap" style="font-size: 20px;margin-top: 0;margin-bottom: 4px;">
-        <span class="table-center"><%=@order.name%></span>
+        <span class="table-center"><%= order_name @order %></span>
       </h2>
     </section>
-    <section>
-      <h3>状态</h3>
-      <div><%= order_status @order %></div>
-    </section>
+    <%= render partial: "show_order_info" if @order.type.eql?("ReserveOrder")  %>
+    <%= render partial: "show_order_status" if @order.type.eql?("TakeoutOrder") %>
     <section>
       <h3>商品</h3>
       <table class="table" style="max-width: 600px">
@@ -44,6 +42,10 @@
       <div><%= @order.order_id %></div>
     </section>
     <section>
+      <h3>状态</h3>
+      <div><%= payment_status @order %></div>
+    </section>
+    <section>
       <h3>付款方式</h3>
       <div><%= payment_name @order %></div>
     </section>
@@ -65,16 +67,7 @@
         </tbody>
       </table>
     </section>
-    <section>
-      <h3>配送信息</h3>
-      <address class="address" style="border:none;">
-        <div class="header">
-          <span class="pull-left name"><%= @order.contact_name %></span>
-          <span class="pull-right"><%= phone_number @order.contact_tel %></span>
-        </div>
-        <div><%= @order.contact_address %></div>
-      </address>
-    </section>
+    <%= render partial: "show_address" if @order.type.eql?("TakeoutOrder") %>
     <section>
       <h3>留言</h3>
       <p><%= @order.memo %></p>
@@ -100,16 +93,16 @@
     </section>
 
     <% if need_online_pay?(@order) || is_cancelable?(@order) %>
-    <section>
-      <% if need_online_pay? @order %>
-        <a class="btn btn-primary btn-block" target="_self" href="<%=@url%>">立即支付</a>
-      <% end %>
+      <section>
+        <% if need_online_pay? @order %>
+          <a class="btn btn-primary btn-block" target="_self" href="<%=@url%>">立即支付</a>
+        <% end %>
 
-      <% if is_cancelable? @order %>
-        <br>
-        <%= link_to "取消订单", :orders_cancel, method: "PUT", class: "btn btn-danger btn-block"%>
-      <% end %>
-    </section>
+        <% if is_cancelable? @order %>
+          <br>
+          <%= link_to "取消订单", :orders_cancel, method: "PUT", class: "btn btn-danger btn-block"%>
+        <% end %>
+      </section>
     <% end %>
   </div>
 

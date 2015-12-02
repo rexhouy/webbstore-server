@@ -1,0 +1,30 @@
+<div class="form-group">
+  <label class="col-sm-2 control-label">商品</label>
+  <div class="col-sm-9">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th><th>品名</th><th>规格</th><th class="number-align">数量</th><th class="number-align">单价</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @order.orders_products.each_with_index do |orders_products, index| %>
+        <tr>
+          <td><%= index+1 %></td>
+          <td><%= orders_products.product.name %></td>
+          <td><%= orders_products.specification.value if orders_products.specification.present? %></td>
+          <td class="number-align"><%= orders_products.count %></td>
+          <td class="number-align"><%= number_to_currency orders_products.price, locale: :'zh-CN', precision: 2 %></td>
+        </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="5" class="number-align">
+            总价：<%= number_to_currency @order.subtotal, locale: :'zh-CN', precision: 2 %>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

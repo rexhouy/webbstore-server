@@ -1,0 +1,12 @@
+<section>
+  <h3>就餐时间</h3>
+  <p><%= display_datetime @order.reserve_time %></p>
+</section>
+<section>
+  <h3>就餐人数</h3>
+  <p><%= @order.reserve_seats %> 人</p>
+</section>
+<section>
+  <h3>联系人信息</h3>
+  <p><%= @order.contact_name %>  tel:<%= @order.contact_tel %></p>
+</section>

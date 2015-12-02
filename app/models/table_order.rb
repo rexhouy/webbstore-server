@@ -1,0 +1,2 @@
+class ImmediateOrder < Order
+end
