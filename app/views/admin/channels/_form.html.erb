@@ -19,8 +19,13 @@
 
   <div class="form-group">
     <%= p.label :url, "链接", class: "col-sm-2 control-label"  %>
-    <div class="col-sm-8">
-      <%= p.text_field :url, class: "form-control" %>
+    <div class="col-sm-6">
+      <div class="input-group">
+        <%= p.text_field :url, class: "form-control" %>
+        <span class="input-group-btn">
+          <button type="button" class="form-control btn btn-default" data-toggle="modal" data-target="#selectModal">选择</button>
+        </span>
+      </div>
     </div>
   </div>
 
@@ -57,3 +62,35 @@
 <% end %>
 
 <%= render partial: "/admin/products/upload_form" %>
+
+<!-- Modal -->
+<div class="modal fade" id="selectModal" tabindex="-1" role="dialog" aria-labelledby="selectModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="selectModalLabel">选择URL</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">商品分类</label>
+            <div class="col-sm-4">
+              <%=select_tag "category_url", category_url_options, include_blank: true, class: "form-control", onchange: "channels.categoryChange();" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">文章</label>
+            <div class="col-sm-4">
+              <%=select_tag "article_url", article_url_options, include_blank: true, class: "form-control", onchange: "channels.articleChange()" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" onclick="channels.selectURL()">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
