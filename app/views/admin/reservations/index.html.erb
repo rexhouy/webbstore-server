@@ -1,0 +1,68 @@
+<h1 class="page-header">预订订单管理</h1>
+<div>
+  <ul class="link-group">
+    <li>
+      <a href="/admin/takeout_orders">外卖订单管理</a>
+    </li>
+    <li>
+      <a href="/admin/immediate_orders">店内点餐订单管理</a>
+    </li>
+    <li>
+      <a href="/admin/orders/notification/wechat">绑定微信提醒</a>
+    </li>
+  </ul>
+  <form action="<%= admin_reservations_path %>" method="get" class="form-inline">
+    <div class="form-group">
+      <%= text_field_tag :tel, @tel, class: "form-control", placeholder: "联系电话" %>
+    </div>
+    <%= submit_tag "搜索", class: "btn btn-default"%>
+    <button type="reset" class="btn btn-default" >重置</button>
+  </form>
+</div>
+<div>
+  <%= link_to "正常", "#{admin_reservations_path}?status=placed", class: "#{'highlight' if @status.eql?('placed')} filter-link" %>
+    <%= link_to "过期", "#{admin_reservations_path}?status=expired", class: "#{'highlight' if @status.eql?('expired')} filter-link" %>
+      <%= link_to "已确认", "#{admin_reservations_path}?status=confirmed", class: "#{'highlight' if @status.eql?('confirmed')} filter-link" %>
+      <%= link_to "已取消", "#{admin_reservations_path}?status=canceled", class: "#{'highlight' if @status.eql?('canceled')} filter-link" %>
+  </div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>用餐时间</th>
+      <th>用餐人数</th>
+      <th>联系人</th>
+      <th>联系电话</th>
+      <th>状态</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reservations.each_with_index do |reservation, index| %>
+    <tr>
+      <td><%= display_datetime reservation.time  %></td>
+      <td><%= reservation.seats %> 人</td>
+      <td><%= reservation.contact_name %></td>
+      <td><%= reservation.contact_tel %></td>
+      <td><%= reservation_status reservation %></td>
+      <td>
+        <% if reservation.placed? %>
+        <%= link_to admin_reservation_confirm_path(reservation), method: "post", data: {confirm: %(确认客人已经到店？)} do %>
+          <span class="glyphicon glyphicon-ok"></span>
+        <% end %>
+        <%= link_to admin_reservation_cancel_path(reservation), method: "post", data: {confirm: %(确定要取消该预订吗？)} do %>
+          <span class="glyphicon glyphicon-remove"></span>
+        <% end %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+  <tfooter>
+    <tr>
+      <td colspan="6">
+        <%= page_info @reservations %>
+        <%= will_paginate @reservations, page_links: false %>
+      </td>
+    </tr>
+  </tfooter>
+</table>

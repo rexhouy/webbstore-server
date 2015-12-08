@@ -1,0 +1,64 @@
+<% unless flash["info"].nil? %>
+<div class="alert alert-danger" role="alert">
+  <strong><%= flash["info"] %></strong>
+  <% unless flash["errors"].nil? %>
+  <ul>
+    <% flash["errors"].each do |error| %>
+    <li><%= error %></li>
+    <% end %>
+  </ul>
+  <% end %>
+</div>
+<% end %>
+
+<div class="row">
+  <%= form_for @reservation, method: "POST" do |r| %>
+  <div class="reserve-card">
+    <h2 class="card-title">预订信息</h2>
+    <div class="form-group">
+      <label for="count" class="control-label">就餐人数</label>
+      <div>
+        <%= r.select :seats, seats_options(30), {}, class: "form-control", autofocus: "true" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label">就餐时间</label>
+      <div>
+        <select id="" name="date" class="form-control">
+          <option value="<%=display_date Date.today %>">今天</option>
+          <option value="<%=display_date 1.day.from_now %>">明天</option>
+        </select>
+        <select id="" name="time" class="form-control" style="margin-top:8px;">
+          <option value="11:00">上午 11:00</option>
+          <option value="11:30">上午 11:30</option>
+          <option value="12:00">上午 12:00</option>
+          <option value="12:30">上午 12:30</option>
+          <option value="13:00">上午 13:00</option>
+          <option value="17:00">下午 5:00</option>
+          <option value="17:30">下午 5:30</option>
+          <option value="18:00">下午 6:00</option>
+          <option value="18:30">下午 6:30</option>
+          <option value="19:00">下午 7:00</option>
+          <option value="19:30">下午 7:30</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="contact" class="control-label">联系人</label>
+      <div>
+        <%=r.text_field :contact_name, class: "form-control", required: true%>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="contact" class="control-label">联系电话</label>
+      <div>
+        <%= r.telephone_field :contact_tel, class: "form-control", required: true%>
+      </div>
+    </div>
+
+    <div class="vertical-btn-group" style="margin-top:16px;">
+      <%= submit_tag "确认", class: "btn btn-lg btn-primary btn-block", data: { disable_with: "请稍后..."} %>
+    </div>
+  </div>
+  <% end %>
+</div>

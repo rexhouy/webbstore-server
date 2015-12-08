@@ -5,9 +5,9 @@
       <a href="/admin/orders/notification/wechat">绑定微信提醒</a>
     </li>
     <% if can? :manage, Card %>
-    <li>
-      <a href="/admin/orders/cards">年/季卡</a>
-    </li>
+      <li>
+        <a href="/admin/orders/cards">年/季卡</a>
+      </li>
     <% end %>
   </ul>
 
@@ -24,11 +24,11 @@
 </div>
 <div>
   <%= link_to "等待付款", "#{admin_orders_path}?type=unpaid", class: "#{'highlight' if @type.eql?('unpaid')} filter-link" %>
-  <%= link_to "等待发货", "#{admin_orders_path}?type=wait_shipping", class: "#{'highlight' if @type.eql?('wait_shipping')} filter-link" %>
-  <%= link_to "等待收货", "#{admin_orders_path}?type=wait_delivery", class: "#{'highlight' if @type.eql?('wait_delivery')} filter-link" %>
-  <%= link_to "已完成", "#{admin_orders_path}?type=finished", class: "#{'highlight' if @type.eql?('finished')} filter-link" %>
-  <%= link_to "已取消", "#{admin_orders_path}?type=canceled", class: "#{'highlight' if @type.eql?('canceled')} filter-link" %>
-</div>
+    <%= link_to "等待发货", "#{admin_orders_path}?type=wait_shipping", class: "#{'highlight' if @type.eql?('wait_shipping')} filter-link" %>
+      <%= link_to "等待收货", "#{admin_orders_path}?type=wait_delivery", class: "#{'highlight' if @type.eql?('wait_delivery')} filter-link" %>
+        <%= link_to "已完成", "#{admin_orders_path}?type=finished", class: "#{'highlight' if @type.eql?('finished')} filter-link" %>
+          <%= link_to "已取消", "#{admin_orders_path}?type=canceled", class: "#{'highlight' if @type.eql?('canceled')} filter-link" %>
+  </div>
 <table class="table">
   <thead>
     <tr>
@@ -53,7 +53,7 @@
         <td>
           <%= link_to admin_order_path(order) do %>
             <span class="glyphicon glyphicon-eye-open"></span></button>
-          <% end %>
+<% end %>
       </td>
     </tr>
     <% end %>

@@ -6,16 +6,15 @@ class OrdersController < ApiController
         before_action :authenticate_user!
 
         def index
-                @type = params[:type] || "reserve"
-                if @type.eql? "reserve"
-                        @orders = ReserveOrder.where(customer: current_user).owner(Rails.application.config.owner).order(id: :desc).paginate(page: params[:page])
-                elsif @type.eql? "takeout"
+                @type = params[:type] || "takeout"
+                if @type.eql? "takeout"
                         @orders = TakeoutOrder.where(customer: current_user).owner(Rails.application.config.owner).order(id: :desc).paginate(page: params[:page])
                 else
                         @orders = ImmediateOrder.where(customer: current_user).owner(Rails.application.config.owner).order(id: :desc).paginate(page: params[:page])
                 end
-                @submenu = [{name: "预订订单", class: @type.eql?("reserve") ? "highlight-icon" : "", href: "/orders?type=reserve"},
+                @submenu = [
                             {name: "外卖订单", class: @type.eql?("takeout") ? "highlight-icon" : "", href: "/orders?type=takeout"},
+                            {name: "预订订单", class: "", href: "/reservations"},
                             {name: "店内消费订单", class: @type.eql?("immediate") ? "highlight-icon" : "", href: "/orders?type=immediate"}]
         end
 

@@ -31,12 +31,14 @@ Rails.application.routes.draw do
         # User address
         resources :addresses
         # Products
-        get "products/reserve" => "products#reserve"
         get "products/takeout" => "products#takeout"
         get "products/immediate/:dinning_table_id" => "products#immediate"
         get 'products' => 'products#index', as: :products
         get 'products/search' => 'products#search'
         get 'products/:id' => 'products#show', as: :products_detail
+
+        # Reserve
+        resources :reservations
 
         # Categories
         get "categories" => "categories#index"
@@ -104,14 +106,12 @@ Rails.application.routes.draw do
                 put "users/:id/coupons" => "users#dispense"
                 put "users/:id/cancel_notification" => "users#cancel_notification"
                 put "users/:id/unlock" => "users#unlock"
-
                 # Orders
                 get "orders/cards" => "orders#cards", as: :orders_cards # cards
                 get "orders/cards/:id" => "orders#card"
                 put "orders/cards/deliver/:id" => "orders#card_deliver"
                 resources :orders
                 get "takeout_orders" => "orders#takeout", as: :takeout_orders
-                get "reserve_orders" => "orders#reserve", as: :reserve_orders
                 get "immediate_orders" => "orders#immediate", as: :immediate_orders
                 put 'orders/cancel/:id' => 'orders#cancel', as: :orders_cancel
                 put 'orders/shipping/:id' => 'orders#shipping', as: :orders_shipping
@@ -121,6 +121,10 @@ Rails.application.routes.draw do
                 get 'orders/notification_redirect/wechat' => 'orders#notification_redirect_page'
                 # Register wechat notification callback
                 get 'orders/wechat_register_notification/:uid' => 'orders#wechat_register_notification'
+                # Reservations
+                get "reservations" => "reservations#index", as: :reservations
+                post "reservations/confirm/:id" => "reservations#confirm", as: :reservation_confirm
+                post "reservations/cancel/:id" => "reservations#cancel", as: :reservation_cancel
 
                 #Products
                 resources :products do

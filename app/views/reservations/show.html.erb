@@ -1,0 +1,54 @@
+<% unless flash["info"].nil? %>
+  <div class="alert alert-danger" role="alert">
+    <strong><%= flash["info"] %></strong>
+    <% unless flash["errors"].nil? %>
+      <ul>
+        <% flash["errors"].each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="row">
+  <div class="reserve-card">
+    <%=alert_info%>
+    <h2 class="card-title">预订信息</h2>
+    <div class="form-group">
+      <label for="count" class="control-label">状态</label>
+      <p class="form-control-static">
+        <%= reservation_status @reservation %>
+      </p>
+    </div>
+    <div class="form-group">
+      <label for="count" class="control-label">就餐人数</label>
+      <p class="form-control-static">
+        <%= @reservation.seats %> 人
+      </p>
+    </div>
+    <div class="form-group">
+      <label class="control-label">就餐时间</label>
+      <p class="form-control-static">
+        <%= display_datetime @reservation.time%>
+      </p>
+    </div>
+    <div class="form-group">
+      <label for="contact" class="control-label">联系人</label>
+      <p class="form-control-static">
+        <%= @reservation.contact_name %>
+      </p>
+    </div>
+    <div class="form-group">
+      <label for="contact" class="control-label">联系电话</label>
+      <p class="form-control-static">
+        <%= @reservation.contact_tel %>
+      </p>
+    </div>
+    <% if @reservation.placed? %>
+    <div style="margin-top:16px;">
+      <%= link_to "取消预订", reservation_path(@reservation), method: "delete", class: "btn btn-danger btn-block", data: {confirm: %(确定要取消预订吗？)} %>
+    </div>
+    <% end %>
+  </div>
+</div>

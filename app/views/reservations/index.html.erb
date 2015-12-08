@@ -1,0 +1,18 @@
+<div class="row order-main">
+  <ul class="no-list-style order-list">
+    <% @reservations.each do |reservation| %>
+      <li class="order">
+        <%= link_to reservation do %>
+          <h3><%= display_datetime reservation.time %>
+            <i class="pull-right glyphicon glyphicon-info-sign"></i>
+          </h3>
+          <div>
+            <span class="pull-left"><%= reservation.seats %> 人</span>
+            <span class="pull-right"><%= reservation_status reservation%></span>
+          </div>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+  <%= paginate reservations_url, @reservations %>
+</div>

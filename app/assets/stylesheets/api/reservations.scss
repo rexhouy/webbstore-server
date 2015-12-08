@@ -1,0 +1,19 @@
+// Variable define
+@import "variable.scss";
+
+.reserve-card {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 16px;
+    background: #fff;
+    .card-title {
+        font-size: 22px;
+        border-bottom: 1px solid #ddd;
+        margin: 4px 0 12px 0;
+        padding: 8px 0;
+    }
+    .form-group {
+        padding: 0 4px;
+    }
+}
