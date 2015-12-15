@@ -63,8 +63,6 @@ class PaymentsController < ApiController
                                 create_payment(order, payment)
                                 update_card_status(order.id)
                         end
-                        send_notify_to_seller(order)
-                        send_notify_to_customer(order)
                 else
                         logger.error "Update order status to paid has failed. Order status incorrect. order id [#{order.order_id}], status [#{order.status}]"
                 end

@@ -47,13 +47,13 @@ class ProductsController < ApiController
         def get_submenu(selected_category)
                 menus = [{
                                  name: "推荐",
-                                 href: "/products?category=recommendation",
+                                 href: "/#{session[:shop_id]}?category=recommendation",
                                  class: "recommendation".eql?(selected_category) ? "highlight-icon" : ""
                          }]
                 Category.owner(owner).root.each do |category|
                         menus << {
                                 name: category.name,
-                                href: "/products?category=#{category.id}",
+                                href: "/#{session[:shop_id]}?category=#{category.id}",
                                 class: category.id.eql?(selected_category.to_i) ? "highlight-icon" : ""
                         }
                 end

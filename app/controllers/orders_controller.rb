@@ -86,12 +86,12 @@ class OrdersController < ApiController
         ## Redirect to a view and let the view handle the payment.
         def payment_redirect_url(order)
                 return "/orders/#{order.id}" if order.paid? || order.offline_pay?
-                return "https://#{Rails.application.config.domain}/payment/alipay/redirect?id=#{order.id}" if order.alipay?
+                return "http://#{Rails.application.config.domain}/payment/alipay/redirect?id=#{order.id}" if order.alipay?
                 if order.wechat?
                         if current_user.wechat_openid.present?
-                                return "https://#{Rails.application.config.domain}/payment/wechat/redirect?open_id=#{current_user.wechat_openid}&state=#{order.id}"
+                                return "http://#{Rails.application.config.domain}/payment/wechat/redirect?open_id=#{current_user.wechat_openid}&state=#{order.id}"
                         end
-                        return WechatService.new.auth_url("https://#{Rails.application.config.domain}/payment/wechat/redirect", order.id)
+                        return WechatService.new.auth_url("http://#{Rails.application.config.domain}/payment/wechat/redirect", order.id)
                 end
                 render_404
         end

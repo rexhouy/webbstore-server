@@ -49,6 +49,6 @@ test:
 #
 production:
   <<: *default
-  database: catering_production
+  database: jxy_production
   username: webstore
   password: <%= ENV['WEBSTORE_DATABASE_PASSWORD'] %>
