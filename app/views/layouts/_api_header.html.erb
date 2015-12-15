@@ -18,23 +18,24 @@
       </section>
 
       <section class="pull-right inherit-height table-center-wrap" id="menu_control_pannel">
-        <button type="button" class="icon btn btn-lg table-center inherit-height" onclick="window.location.href='/me'" style="outline:none;">
-          <i class="glyphicon glyphicon-user"></i>
+        <button type="button" class="icon btn btn-lg table-center inherit-height" onclick="window.location.href='/orders'" style="outline:none;">
+          <i class="glyphicon glyphicon-list-alt"></i>
         </button>
-        <button type="button" class="icon btn btn-lg table-center inherit-height" onclick="window.location.href='/'" style="outline:none;">
-          <i class="glyphicon glyphicon-home"></i>
+        <button type="button" class="icon btn btn-lg table-center inherit-height" onclick="window.location.href='/help'" style="outline:none;">
+          <i class="glyphicon glyphicon-question-sign"></i>
         </button>
       </section>
     </div>
 
     <% if @submenu.present? %>
-    <div class="navbar-submenu navbar-submenu-slide container">
-      <ul class="no-list-style row">
-        <% @submenu.each do |link| %>
-          <li><%= link_to link[:name], link[:href], class: link[:class] %></li>
-        <% end %>
-      </ul>
-    </div>
-  </div>
-  <% end %>
+      <div class="navbar-submenu container">
+        <!-- <div class="pull-left control-btn"><i class="glyphicon glyphicon-arrow-left"></i></div> -->
+        <!-- <div class="pull-right control-btn"><i class="glyphicon glyphicon-arrow-right"></i></div> -->
+        <ul class="no-list-style row">
+          <% @submenu.each do |link| %>
+            <li><%= link_to link[:name], link[:href], class: link[:class] %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 </header>

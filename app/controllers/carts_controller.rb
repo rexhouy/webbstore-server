@@ -41,7 +41,7 @@ class CartsController < ApiController
         private
         def set_header
                 @title = "购物车"
-                @back_url = "/products?category=recommend"
+                @back_url = "/#{session[:shop_id]}?category=recommend"
         end
         def add_product_to_cart(id, spec_id, count = 1)
                 cart = get_cart

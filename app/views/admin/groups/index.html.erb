@@ -18,9 +18,7 @@
       <td><%= group.name  %></td>
       <td><%= group.parent.name unless group.parent.nil? %></td>
       <td>
-        <% if group.shop.present? %>
-        http://<%=Rails.application.config.domain%>/shops/<%=group.shop.id%>
-        <% end %>
+        http://<%=Rails.application.config.domain%>/<%=group.id%>
       </td>
       <td>
         <%= link_to admin_group_path(group) do %>

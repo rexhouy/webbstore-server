@@ -1,12 +1,24 @@
 <article class="row main">
   <div class="order-detail" style="margin-bottom: 20px;">
+
+    <%= alert_info @order %>
+
     <section>
       <h2 class="pull-left inherit-height table-center-wrap" style="font-size: 20px;margin-top: 0;margin-bottom: 4px;">
-        <span class="table-center"><%= order_name @order %></span>
+        <span class="table-center"><%= @order.name %></span>
       </h2>
+      <% if need_online_pay? @order %>
+      <a class="btn btn-primary pull-right" target="_self" href="<%=@url%>">立即支付</a>
+      <% end %>
     </section>
-    <%= render partial: "show_order_info" if @order.type.eql?("ReserveOrder")  %>
-    <%= render partial: "show_order_status" if @order.type.eql?("TakeoutOrder") %>
+    <% if @order.paid? %>
+    <section>
+      <h3>二维码</h3>
+      <div class="qr-code qr-code-center">
+        <%= raw @qr_code.as_html %>
+      </div>
+    </section>
+    <% end %>
     <section>
       <h3>商品</h3>
       <table class="table" style="max-width: 600px">
@@ -45,33 +57,7 @@
       <h3>状态</h3>
       <div><%= payment_status @order %></div>
     </section>
-    <section>
-      <h3>付款方式</h3>
-      <div><%= payment_name @order %></div>
-    </section>
-    <section>
-      <h3>支付信息</h3>
-      <table class="table table-bordered" style="max-width: 600px">
-        <thead>
-          <tr>
-            <th>订单总价</th><th>优惠券</th><th>账户余额</th><th>需支付总价</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><%= number_to_currency @order.subtotal, locale: :'zh-CN', precision: 2 %></td>
-            <td><%= number_to_currency @order.coupon_amount, locale: :'zh-CN', precision: 2 %></td>
-            <td><%= number_to_currency @order.user_account_balance, locale: :'zh-CN', precision: 2 %></td>
-            <td><%= number_to_currency (@order.subtotal - @order.coupon_amount - @order.user_account_balance), locale: :'zh-CN', precision: 2 %></td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
     <%= render partial: "show_address" if @order.type.eql?("TakeoutOrder") %>
-    <section>
-      <h3>留言</h3>
-      <p><%= @order.memo %></p>
-    </section>
     <section>
       <h3>历史</h3>
       <table class="table" style="max-width: 600px">
@@ -91,7 +77,6 @@
         </tbody>
       </table>
     </section>
-
     <% if need_online_pay?(@order) || is_cancelable?(@order) %>
       <section>
         <% if need_online_pay? @order %>

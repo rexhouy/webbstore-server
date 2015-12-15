@@ -29,7 +29,11 @@
       <h3>{{product.name}}</h3>
       <span class="price">&yen; {{product.price}}</span>
       <div class="desc-viewport">
-        <div class="desc">{{product.description}}</div>
+        <div class="star">
+          {{#stars}}
+          {{product.description}}
+          {{/stars}}
+        </div>
       </div>
       <div class="control">
         <div class="number-input-group">

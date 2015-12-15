@@ -3,25 +3,22 @@ require "securerandom"
 
 class OrdersController < ApiController
 
-        before_action :authenticate_user!
-
         def index
-                @type = params[:type] || "takeout"
-                if @type.eql? "takeout"
-                        @orders = TakeoutOrder.where(customer: current_user).owner(Rails.application.config.owner).order(id: :desc).paginate(page: params[:page])
+                ids = session[:orders]
+                if ids.nil? || ids.empty?
+                        @orders = []
                 else
-                        @orders = ImmediateOrder.where(customer: current_user).owner(Rails.application.config.owner).order(id: :desc).paginate(page: params[:page])
+                        @orders = Order.where("id in (?)", ids).order(id: :desc)
                 end
-                @submenu = [
-                            {name: "外卖订单", class: @type.eql?("takeout") ? "highlight-icon" : "", href: "/orders?type=takeout"},
-                            {name: "预订订单", class: "", href: "/reservations"},
-                            {name: "店内消费订单", class: @type.eql?("immediate") ? "highlight-icon" : "", href: "/orders?type=immediate"}]
         end
 
         def show
                 @order = Order.find(params[:id])
-                return render_404 unless @order.customer_id.eql? current_user.id
                 @url = payment_redirect_url(@order)
+                if @order.paid?
+                        url = "http://#{Rails.application.config.domain}/order/#{@order.id}/print"
+                        @qr_code = RQRCode::QRCode.new(url, size: 12, level: :m )
+                end
                 @back_url = "/orders"
         end
 
@@ -46,35 +43,10 @@ class OrdersController < ApiController
                         return
                 end
                 begin
-                        if reserve?
-                                date = DateTime.strptime(params[:date] + params[:time], "%Y-%m-%d%H:%M")
-                                order = ReserveOrderService.new.create(get_cart,
-                                                                       params[:paymentType],
-                                                                       params[:memo],
-                                                                       params[:use_coupon],
-                                                                       params[:use_account_balance].eql?("true"),
-                                                                       params[:count],
-                                                                       date,
-                                                                       params[:contact_tel],
-                                                                       params[:contact_name],
-                                                                       current_user)
-                        elsif takeout?
-                                order = TakeoutOrderService.new.create(get_cart,
-                                                                       params[:paymentType],
-                                                                       params[:memo],
-                                                                       params[:use_coupon],
-                                                                       params[:use_account_balance].eql?("true"),
-                                                                       params[:addressId],
-                                                                       current_user)
-                        elsif immediate?
-                                order = ImmediateOrderService.new.create(get_cart,
-                                                                       params[:paymentType],
-                                                                       params[:use_coupon],
-                                                                       params[:use_account_balance].eql?("true"),
-                                                                       session[:dinning_table_id],
-                                                                       current_user)
-                        end
+                        order = OrderService.new.create_anonymous(get_cart, session[:shop_id])
                         clear_cart
+                        session[:orders] ||= []
+                        session[:orders] << order.id
                         redirect_to payment_redirect_url(order)
                 rescue => e
                         logger.error e
@@ -99,7 +71,7 @@ class OrdersController < ApiController
         private
         def set_header
                 @title = "订单"
-                @back_url = "/carts"
+                @back_url = "/#{session[:shop_id]}"
         end
 
         def validate

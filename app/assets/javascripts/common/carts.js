@@ -8,7 +8,6 @@
                                 // alert("购买数量不正确");
                                 return;
                         }
-                        spinner.show();
                         $.ajax("/carts.json", {
                                 method : "post",
                                 headers : {
@@ -27,7 +26,6 @@
                                 } else {
                                         alert(data.message);
                                 }
-                                spinner.hide();
                         });
 
                 };

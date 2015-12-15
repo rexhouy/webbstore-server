@@ -8,9 +8,4 @@
   <button type="reset" class="btn btn-default" >重置</button>
 </form>
 
-<div>
-  <%= link_to "管理员", "#{admin_users_path}?type=manager", class: "#{'highlight' if @type.eql?('manager')} filter-link" %>
-  <%= link_to "顾客", "#{admin_users_path}?type=customer", class: "#{'highlight' if @type.eql?('customer')} filter-link" %>
-</div>
-
-<%= render_user @tel, @type, @users %>
+<%= render partial: "admin"%>

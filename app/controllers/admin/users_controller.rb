@@ -10,12 +10,7 @@ class Admin::UsersController < AdminController
                 if @tel.present?
                         search(@tel)
                 else
-                        @type = params[:type] || "manager"
-                        if @type.eql? "manager"
-                                @users = User.owner(owner).manager.paginate(page: params[:page])
-                        else
-                                @users = User.where(role: User.roles[:customer]).paginate(page: params[:page])
-                        end
+                        @users = User.paginate(page: params[:page])
                 end
         end
 

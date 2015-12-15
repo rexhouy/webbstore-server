@@ -1,16 +1,9 @@
 <nav id="menu" class="navbar-side">
   <header>
-    <% if user_signed_in? %>
-    <a  class="inherit-height pull-left" href="/me">
-      <%= image_tag "user.png" %>
-      <p class="inherit-height nav-header-link-text"><span class="table-center inherit-height"><%= current_user.tel %></span></p>
-    </a>
-    <% else %>
-    <a href="/users/sign_in" target="_self" class="inherit-height pull-left">
-      <%= image_tag "user.png" %>
-      <p class="inherit-height nav-header-link-text"><span class="table-center inherit-height">登录</span></p>
-    </a>
-    <% end %>
+    <div  class="inherit-height pull-left">
+      <p class="inherit-height"><span class="table-center inherit-height" style="color: #fff;padding-left: 16px;"><%=Rails.application.config.name%></span></p>
+    </div>
+
     <button type="button" class="icon btn btn-lg pull-right inherit-height" onclick="menu.close();">
       <i class="glyphicon glyphicon-remove"></i>
     </button>
@@ -18,15 +11,9 @@
 
   <section class="nav-section">
     <ul class="nav">
-      <% if user_signed_in? %>
-      <li><a href="/me" class="icon-link-left"><i class="glyphicon glyphicon-home"></i>我的<%=Rails.application.config.name%></a></li>
-      <% end %>
       <li><a href="/orders" class="icon-link-left"><i class="glyphicon glyphicon-list-alt"></i>订单</a></li>
       <li><a href="/carts" class="icon-link-left"><i class="glyphicon glyphicon-shopping-cart"></i>购物车</a></li>
-      <% @channels.each do |c| %>
-      <li><a href="<%=c.url%>" class="icon-link-left"><i class="glyphicon glyphicon-grain"></i><%=c.name%></a></li>
-      <% end %>
-      <li><a href="/about" class="icon-link-left">关于</a></li>
+      <li><a href="/help" class="icon-link-left"><i class="glyphicon glyphicon-question-sign"></i>帮助</a></li>
     </ul>
   </section>
 </nav>

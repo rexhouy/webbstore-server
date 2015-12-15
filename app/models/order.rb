@@ -8,11 +8,12 @@ class Order < ActiveRecord::Base
         has_many :order_histories
         has_many :orders_products, class_name: "OrdersProducts", foreign_key: :order_id, autosave: true
 
-        enum status: [:placed, :paid, :shipping, :delivered, :canceled]
+        enum status: [:placed, :paid, :printed, :shipping, :delivered, :canceled]
         enum payment_type: [:wechat, :alipay, :offline_pay]
 
         def self.owner(owner)
-                where(seller_id: owner)
+                return where(seller_id: owner) unless owner.eql? Rails.application.config.owner
+                all
         end
 
         def self.search(order_id_or_tel, order_date)

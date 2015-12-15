@@ -22,8 +22,6 @@ class Admin::GroupsController < AdminController
 
         def create
                 @group = Group.new(group_params)
-                @group.shop = Shop.new
-                @group.shop.name = @group.name
                 if @group.save!
                         redirect_to admin_group_path(@group), notice: "创建成功"
                 else
@@ -38,9 +36,6 @@ class Admin::GroupsController < AdminController
         def destroy
                 Group.transaction do
                         @group.status = Group.statuses[:disabled]
-                        if @group.shop.present?
-                                @group.shop.status = Shop.statuses[:disabled]
-                        end
                         @group.save
                 end
                 redirect_to admin_groups_path, notice: "删除成功"

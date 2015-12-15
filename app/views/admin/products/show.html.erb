@@ -52,57 +52,25 @@
           <%=number_to_currency @product.price, locale: :'zh-CN', precision: 2%>
         </p>
       </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">销量</label>
+        <p class="form-control-static col-sm-8">
+          <%=@product.sales%>
+        </p>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">星级</label>
+        <p class="form-control-static col-sm-8">
+          <%@product.description.to_i.times do %>
+          <i class="glyphicon glyphicon-star"></i>
+          <% end %>
+        </p>
+      </div>
       <% end %>
     </div>
   </div>
 </div>
 
-<div>
-  <h2 class="sub-header">销售情况</h2>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>规格</th>
-        <th>上架数量</th>
-        <th>销量</th>
-        <th>库存</th>
-        <th>补货</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if @product.specifications.present? %>
-        <% @product.specifications.each do |spec| %>
-          <tr>
-            <td><%=spec.value%></td>
-            <td><%=spec.storage%></td>
-            <td><%=spec.sales%></td>
-            <td><%=spec.storage - spec.sales%></td>
-            <td>
-              <%=form_tag "/admin/products/#{@product.id}/spec/#{spec.id}/supplement", id: "supplement_#{spec.id}", method: "PUT", class: "well row input-well" do %>
-                <input name="count" type="number" min=1 required class="form-control pull-left">
-                <button type="submit" class="btn btn-primary col-sm-3">确定</button>
-                <button type="button" class="btn btn-default col-sm-3" onclick="product.hideSupplement(<%=spec.id%>)">取消</button>
-              <% end %>
-              <a href="##" onclick="product.supplement(<%=spec.id%>, this);"><i class="glyphicon glyphicon-plus-sign"></i></a>
-            </td>
-          </tr>
-          <% end %>
-      <% else %>
-        <tr>
-          <td><%=@product.name%></td>
-          <td><%=@product.storage%></td>
-          <td><%=@product.sales%></td>
-          <td><%=@product.storage - @product.sales%></td>
-          <td>
-            <%=form_tag "/admin/products/#{@product.id}/supplement", id: "supplement_#{@product.id}", method: "PUT", class: "well row input-well" do %>
-              <input name="count" type="number" min=1 required class="form-control pull-left">
-              <button type="submit" class="btn btn-primary col-sm-3">确定</button>
-              <button type="button" class="btn btn-default col-sm-3" onclick="product.hideSupplement(<%=@product.id%>)">取消</button>
-            <% end %>
-            <a href="##" onclick="product.supplement(<%=@product.id%>, this);"><i class="glyphicon glyphicon-plus-sign"></i></a>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+<!-- <div> -->
+<!--   <h2 class="sub-header">销售情况</h2> -->
+<!-- </div> -->

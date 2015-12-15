@@ -3,7 +3,7 @@ class Ability
 
 	def initialize(user)
 		if user.admin?
-			can :manage, [User, Product, Order, Article, Supplier, Channel, Category, Trade, Coupon, Group, Reservation]
+			can :manage, [User, Product, Order, Category, Trade, Group]
 		elsif user.seller?
 			can :manage, [Product, Order]
 		elsif user.shop_manager?

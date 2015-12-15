@@ -16,9 +16,6 @@
       <td><%= user.group.name unless user.group.nil? %></td>
       <td><%= user_status user %></td>
       <td>
-        <%= link_to admin_user_path(user) do %>
-        <span class="glyphicon glyphicon-eye-open icon"></span>
-        <% end %>
         <%= link_to edit_admin_user_path(user) do %>
         <span class="glyphicon glyphicon-pencil icon"></span>
         <% end %>

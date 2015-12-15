@@ -1,26 +1,6 @@
 # -*- coding: utf-8 -*-
 class ProductsController < ApiController
 
-        def reserve
-                order_type "reserve"
-                @title = "订桌订餐"
-                index
-        end
-
-        def takeout
-                order_type "takeout"
-                @title = "外卖点餐"
-                index
-        end
-
-        def immediate
-                order_type "immediate"
-                session[:dinning_table_id] = params[:dinning_table_id]
-                @title = "点餐"
-                @back_url = nil
-                index
-        end
-
         def index
                 category_id = params[:category]
                 @category = Category.find_by_id(category_id) unless category_id.eql? "recommendation"
@@ -32,6 +12,7 @@ class ProductsController < ApiController
                 end
                 respond_to do |format|
                         format.html {
+                                check_group
                                 @submenu = get_submenu(category_id)
                                 @recommendProducts = []#Product.owner(owner).category(@category).recommend.order(priority: :desc)
                                 @cart_count = cart_count(get_cart)
@@ -61,9 +42,7 @@ class ProductsController < ApiController
                 Rails.application.config.owner
         end
         def set_header
-                @title = "订桌订餐" if reserve?
-                @title = "外卖点餐" if takeout?
-                @back_url = "/"
+                @title = "点餐"
         end
         def get_submenu(selected_category)
                 menus = [{
@@ -79,6 +58,12 @@ class ProductsController < ApiController
                         }
                 end
                 menus
+        end
+
+        def check_group
+                group = Group.find_by_id(params[:id])
+                render_404 if group.nil? || group.disabled?
+                session[:shop_id] = params[:id]
         end
 
 end

@@ -29,10 +29,25 @@
 }
 
 .navbar-submenu-slide {
-    margin-left: 56px;
+    margin: 0 48px;
+    padding: 0;
     position: relative;
-    overflow-x: scroll !important;
+    overflow: visible;
     white-space: nowrap;
+    .control-btn {
+        margin: 0 -48px;
+        height: 48px;
+        width: 48px;
+        text-align: center;
+        display: table;
+        i {
+            display: table-cell;
+            vertical-align: middle;
+        }
+    }
+    ul {
+        width: 100%;
+    }
 }
 .navbar-submenu-slide::-webkit-scrollbar {
     display: none;

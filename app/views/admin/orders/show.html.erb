@@ -29,17 +29,11 @@
       <label class="col-sm-2 control-label">状态</label>
       <div class="col-sm-9">
         <p class="form-control-static">
-          <%= order_status @order if @order.type.eql?("TakeoutOrder") %>
-          <%= reserve_order_status @order if @order.type.eql?("ReserveOrder") %>
-          <%= payment_status @order if @order.type.eql?("ImmediateOrder") %>
+          <%= order_status @order %>
         </p>
       </div>
     </div>
-    <%= render(partial: "show_reserve_info")  if @order.type.eql?("ReserveOrder") %>
-    <%= render partial: "show_payment" %>
     <%= render partial: "show_time" %>
-    <%= render(partial: "show_address") if @order.type.eql?("TakeoutOrder") %>
-    <%= render partial: "show_memo" %>
     <%= render partial: "show_history" %>
   </div>
 </div>

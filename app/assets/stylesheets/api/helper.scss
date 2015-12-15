@@ -1,0 +1,51 @@
+// Place all the styles related to the helper controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.help-container {
+    width: 300%;
+    height: 100%;
+    overflow-x: auto;
+}
+
+.help-img {
+    width: 300%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    -webkit-transition: left .3s, -webkit-transform .3s;
+    transition: left .3s, transform .3s;
+}
+
+.btn-help {
+    position: fixed;
+    top: 8px;
+    right: 8px;
+    border: 1px solid #fff;
+    z-index: 999;
+    color: #fff;
+    i {
+        margin-right: 12px;
+    }
+}
+
+.btn-help-control {
+    position: fixed;
+    top: 49%;
+    background: transparent;
+    color: #fff;
+    font-size: 24px;
+    z-index: 999;
+    &:hover {
+        color: #fff;
+    }
+}
+
+.btn-help-control-right {
+    right: 4px;
+}
+
+.btn-help-control-left {
+    left: 4px;
+    display: none;
+}

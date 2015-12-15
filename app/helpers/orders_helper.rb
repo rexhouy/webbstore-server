@@ -71,4 +71,14 @@ module OrdersHelper
                 "未支付"
         end
 
+        def alert_info(order)
+                return "" if order.canceled? || order.delivered?
+                text = %Q(<div class="alert alert-info" role="alert">)
+                text << "操作提示：请点击立即支付按钮完成支付!" if order.placed?
+                text << "操作提示：请到小票打印机处扫描二维码打印小票!" if order.paid?
+                text << "操作提示：请将打印出来的小票交给服务员!" if order.printed?
+                text << %Q(</div>)
+                text.html_safe
+        end
+
 end

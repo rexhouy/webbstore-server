@@ -16,13 +16,12 @@
       <%= p.text_field :name, class: "form-control", required: true %>
     </div>
   </div>
-
   <div class="form-group">
     <%= p.label :description, class: "col-sm-2 control-label" do  %>
-      <span class="glyphicon glyphicon-info-sign icon" title="使用「|」分割的描述内容将会显示在不同行"></span> 描述
+      星级
     <% end %>
-    <div class="col-sm-8">
-      <%= p.text_field :description, class: "form-control" %>
+    <div class="col-sm-1">
+      <%= p.select :description, options_for_select([5, 4, 3, 2, 1]), {include_blank: false}, class: "form-control" %>
     </div>
   </div>
 
@@ -33,27 +32,6 @@
   <div class="col-sm-4">
     <%= p.number_field :price, class: "form-control", step: "0.01", min: 0 %>
   </div>
-  </div>
-
-  <div class="form-group">
-    <%= p.label :supplier_id, class: "col-sm-2 control-label" do  %>
-      供应商
-  <% end %>
-  <div class="col-sm-4">
-    <%= p.select :supplier_id, supplier_options(p.object.supplier), {include_blank: true}, class: "form-control" %>
-    </div>
-  <div class="col-sm-2">
-    <%=link_to "修改供应商", admin_suppliers_url, class: "btn btn-primary"%>
-  </div>
-  </div>
-
-  <div class="form-group">
-    <%= p.label :storage, class: "col-sm-2 control-label" do  %>
-      <span class="glyphicon glyphicon-info-sign icon" title="有规格的情况下不需要填写"></span> 上架数量
-    <% end %>
-    <div class="col-sm-4">
-      <%= p.number_field :storage, class: "form-control" %>
-    </div>
   </div>
 
   <div class="form-group">

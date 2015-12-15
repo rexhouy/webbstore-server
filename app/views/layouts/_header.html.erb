@@ -4,7 +4,7 @@
       <% if current_namespace.eql? "Admin" %>
       <a class="navbar-brand" href="/admin"><%=Rails.application.config.name%>管控台</a>
       <% else %>
-      <a class="navbar-brand" href="/"><%=Rails.application.config.name%></a>
+      <a class="navbar-brand" href="#"><%=Rails.application.config.name%></a>
       <% end %>
     </div>
     <% if current_namespace.eql? "Admin" %>

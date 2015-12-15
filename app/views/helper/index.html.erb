@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html class="no-js" style="height:100%;">
+  <head>
+    <meta charset="utf-8">
+    <title><%=Rails.application.config.name%></title>
+    <meta name="description" content="科技农业，绿色生活">
+    <meta name="Keywords" content="生态食品 绿色食品 拾惠社">
+    <meta name="viewport" content="width=device-width,user-scalable=no">
+    <link href="<%=image_url('favicon.ico')%>" rel="icon">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body class="no-touch" style="height: 100%;overflow: hidden;">
+    <a class="btn btn-help" href="/<%=session[:shop_id]%>"><i class="glyphicon glyphicon-arrow-left"></i> 返回</a>
+    <button class="btn btn-help-control btn-help-control-left" onclick="helper.left()"><i class="glyphicon glyphicon-chevron-left"></i></button>
+    <button class="btn btn-help-control btn-help-control-right" onclick="helper.right()"><i class="glyphicon glyphicon-chevron-right"></i></button>
+    <div class="help-container">
+      <%= image_tag "help.jpg", class: "help-img" %>
+    </div>
+    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "helper" %>
+  </body>
+</html>

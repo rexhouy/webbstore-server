@@ -14,12 +14,10 @@
             <span class="pull-right"><%= display_date order.created_at %></span>
             <% else %>
             <span class="pull-left"><%= payment_status order %></span>
-            <span class="pull-right"><%= display_date order.created_at %></span>
+            <span class="pull-right"><%= display_datetime order.created_at %></span>
           <% end %>
-
         </div>
       </li>
     <% end %>
   </ul>
-  <%= paginate "/orders/#{@type}", @orders %>
 </div>

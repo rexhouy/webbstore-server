@@ -24,6 +24,25 @@ class OrderService
                 @order
         end
 
+        def create_anonymous(cart, shop_id)
+                @order = Order.new
+                @order.seller_id = shop_id
+                @order.order_id = random_order_id
+                @order.payment_type = Order.payment_types[:alipay]
+                @order.coupon_amount = 0;
+                @order.user_account_balance = 0;
+                Order.transaction do
+                        @order.orders_products = get_orders_products(cart)
+                        @order.subtotal = subtotal(@order.orders_products)
+                        @order.name = order_name @order.orders_products
+                        @order.status = Order.statuses[:placed]
+                        @order.save!
+                        update_product_sales(@order.orders_products, :+)
+                        create_order_history(@order)
+                end
+                @order
+        end
+
         def change_status(order, status, user_id)
                 order.status = status
                 Order.transaction do
@@ -63,12 +82,12 @@ class OrderService
                 end
         end
 
-        def create_order_history(order, user_id)
+        def create_order_history(order, user_id = nil)
                 history = OrderHistory.new
                 history.order_id = order.id
                 history.status = order.status
                 history.time = Time.now
-                history.operator_id = user_id
+                history.operator_id = user_id if user_id
                 history.save!
         end
 
@@ -132,14 +151,14 @@ class OrderService
                                 op.specification = Specification.find(product["spec_id"])
                                 op.price = op.specification.price
                         end
-                        if has_enough_storage? op
-                                orders_products << op
-                        else
+                        if Rails.application.config.check_storage && !has_enough_storage?(op)
                                 if product["spec_id"].present?
                                         errors << "产品[#{p.name}]仅剩#{op.specification.storage-op.specification.sales}件"
                                 else
                                         errors << "产品[#{p.name}]仅剩#{p.storage-p.sales}件"
                                 end
+                        else
+                                orders_products << op
                         end
                 end
                 raise errors.join(";") unless errors.empty?

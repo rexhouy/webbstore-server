@@ -18,7 +18,10 @@ Rails.application.routes.draw do
         # See how all your routes lay out with "rake routes".
 
         # You can have the root of your site routed with "root"
-        root 'home#index'
+        root 'products#index'
+
+        # Help
+        get "help" => "helper#index"
 
         # Shop
         get "shops" => "shops#index"
@@ -31,11 +34,7 @@ Rails.application.routes.draw do
         # User address
         resources :addresses
         # Products
-        get "products/takeout" => "products#takeout"
-        get "products/immediate/:dinning_table_id" => "products#immediate"
         get 'products' => 'products#index', as: :products
-        get 'products/search' => 'products#search'
-        get 'products/:id' => 'products#show', as: :products_detail
 
         # Reserve
         resources :reservations
@@ -200,4 +199,6 @@ Rails.application.routes.draw do
         #     # (app/controllers/admin/products_controller.rb)
         #     resources :products
         #   end
+
+        get ":id" => "products#index"
 end

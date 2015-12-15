@@ -4,20 +4,14 @@ class Admin::OrdersController < AdminController
         authorize_resource
         before_action :set_order, only: [:show, :cancel, :shipping, :deliver]
 
-        def reserve
-                search_or_list(ReserveOrder)
-        end
-
-        def takeout
-                search_or_list(TakeoutOrder)
-        end
-
-        def immediate
-                search_or_list(ImmediateOrder)
-        end
-
         def index
-                takeout
+                @order_id_or_tel = params[:order_id] || ""
+                @order_date = params[:order_date] || ""
+                if @order_id.blank? && @order_date.blank?
+                        @orders = Order.owner(owner).order(id: :desc).paginate(page: params[:page])
+                else
+                        @orders = Order.search(@order_id, @order_date).owner(owner).order(id: :desc).paginate(page: params[:page])
+                end
         end
 
         def show
@@ -110,14 +104,6 @@ class Admin::OrdersController < AdminController
 
         private
         def search_or_list(clazz)
-                @order_id_or_tel = params[:order_id_or_tel] || ""
-                @order_date = params[:order_date] || ""
-                if @order_id_or_tel.blank? && @order_date.blank?
-                        @type = params[:type] || "wait_shipping"
-                        @orders = clazz.type(@type).owner(owner).paginate(page: params[:page])
-                else
-                        @orders = clazz.search(@order_id_or_tel, @order_date).owner(owner).paginate(page: params[:page])
-                end
         end
         def set_order
                 @order = Order.find(params[:id])

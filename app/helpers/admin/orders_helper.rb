@@ -2,9 +2,9 @@
 module Admin::OrdersHelper
 
         def order_status(order)
-                return "等待付款" if order.placed? && !order.offline_pay?
-                return "等待发货" if (order.placed? && order.offline_pay?) || order.paid?
-                return "等待收货" if order.shipping?
+                return "等待付款" if order.placed?
+                return "已付款" if order.paid?
+                return "已打印小票" if order.printed?
                 return "已完成" if order.delivered?
                 return "已取消" if order.canceled?
         end

@@ -63,6 +63,18 @@
                               "/products.json?category="+category, // url
                               function(result) {
                                       result.data.forEach(function(product) {
+                                              product.stars = function(description) {
+                                                      return function (text, render) {
+                                                              var ret = "";
+                                                              for (var i = 0; i < Number(product.product.description); i++) {
+                                                                      ret += "<i class='glyphicon glyphicon-star'></i> ";
+                                                              }
+                                                              for (var i = 0; i < 5 - Number(product.product.description); i++) {
+                                                                      ret += "<i class='glyphicon glyphicon-star-empty'></i> ";
+                                                              }
+                                                              return ret;
+                                                      };
+                                              };
                                               $(Mustache.render(template, product)).appendTo(container);
                                       });
                               });
