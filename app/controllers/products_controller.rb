@@ -11,6 +11,7 @@ class ProductsController < ApiController
                 end
                 respond_to do |format|
                         format.html {
+                                set_submenu(@category)
                                 @recommendProducts = []#Product.owner(owner).category(@category).recommend.order(priority: :desc)
                                 render :index
                         }
@@ -38,6 +39,13 @@ class ProductsController < ApiController
                 Rails.application.config.owner
         end
         def set_header
+        end
+        def set_submenu(active)
+                @submenu = []
+                Category.owner(Rails.application.config.owner).each do |category|
+                        class_name = (active && active.id.eql?(category.id)) ? "highlight-icon" : ""
+                        @submenu << {name: category.name, class: class_name, href: "/products?category=#{category.id}"}
+                end
         end
 
 end
