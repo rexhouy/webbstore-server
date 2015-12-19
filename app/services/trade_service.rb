@@ -36,7 +36,7 @@ class TradeService
 
         def order_to_trade(order, trade_time)
                 trade = Trade.new
-                trade.payer = order.customer.tel
+                # trade.payer = order.customer.tel
                 trade.order_no = order.order_id
                 trade.disbursement = 0
                 trade.group_id = order.seller_id

@@ -11,7 +11,7 @@ class WechatService
         def pay(order, client_ip, open_id, code, user)
                 Rails.logger.debug "Start handle wechat payment, client_ip: #{client_ip}, code: #{code}"
                 open_id ||= get_open_id(code)
-                user.update(wechat_openid: open_id)
+                # user.update(wechat_openid: open_id)
                 prepay_id = get_prepay_id(order, client_ip, open_id)
                 gen_result(prepay_id)
         end

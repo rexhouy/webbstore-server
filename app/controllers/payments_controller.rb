@@ -5,7 +5,7 @@ class PaymentsController < ApiController
                 code = params[:code]
                 open_id = params[:open_id]
                 @order_id = params[:state]
-                @wechat_params = WechatService.new.pay(Order.find(@order_id), request.remote_ip, open_id, code, current_user)
+                @wechat_params = WechatService.new.pay(Order.find(@order_id), request.remote_ip, open_id, code, nil)
                 render layout: false
         end
 
