@@ -58,7 +58,7 @@ class PaymentsController < ApiController
                 logger.error "Order not found #{order_id}" if order.nil?
                 if order.placed?
                         Order.transaction do
-                                order.update(status: Order.statuses[:paid])
+                                order.update(status: Order.statuses[:paid], simple_order_no: SerialNo.take)
                                 create_order_history(order)
                                 create_payment(order, payment)
                                 update_card_status(order.id)

@@ -39,7 +39,7 @@ class OrderService
                         @order.status = Order.statuses[:placed]
                         @order.save!
                         update_product_sales(@order.orders_products, :+)
-                        create_order_history(@order)
+                        create_order_history(@order, -1)
                 end
                 @order
         end

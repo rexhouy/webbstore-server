@@ -5,20 +5,18 @@
 
     <section>
       <h2 class="pull-left inherit-height table-center-wrap" style="font-size: 20px;margin-top: 0;margin-bottom: 4px;">
-        <span class="table-center"><%= @order.name %></span>
+        <span class="table-center">
+          <% if @order.paid? %>
+          单号：<%= @order.simple_order_no %>
+          <% else %>
+          <%= @order.name %>
+          <% end %>
+        </span>
       </h2>
       <% if need_online_pay? @order %>
       <a class="btn btn-primary pull-right" target="_self" href="<%=@url%>">立即支付</a>
       <% end %>
     </section>
-    <% if @order.paid? %>
-    <section>
-      <h3>二维码</h3>
-      <div class="qr-code qr-code-center">
-        <%= raw @qr_code.as_html %>
-      </div>
-    </section>
-    <% end %>
     <section>
       <h3>商品</h3>
       <table class="table" style="max-width: 600px">
