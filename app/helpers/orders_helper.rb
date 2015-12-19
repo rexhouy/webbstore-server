@@ -30,7 +30,7 @@ module OrdersHelper
 
         def order_status_change_operator(history)
                 return "系统" if history.operator_id.nil?
-                return "用户" if history.operator_id.eql? current_user.id
+                # return "用户" if history.operator_id.eql? current_user.id
                 return "用户" if history.operator_id.eql?(-1)
                 "管理员"
         end
