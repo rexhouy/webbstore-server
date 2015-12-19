@@ -33,6 +33,11 @@ class ApplicationController < ActionController::Base
                 session[:previous_url] || root_path
         end
 
+        def after_sign_out_path_for(resource_or_scope)
+                session[:previous_url] = "/admin"
+                "/users/sign_in"
+        end
+
         def skip_forgery_protection?
                 [
                  {controller: "payments", action: "wechat_notify"},

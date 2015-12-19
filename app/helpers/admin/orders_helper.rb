@@ -18,6 +18,7 @@ module Admin::OrdersHelper
                 return "创建" if history.placed?
                 return "支付完成" if history.paid?
                 return "发货" if history.shipping?
+                return "已打印小票" if history.printed?
                 return "订单完成" if history.delivered?
                 return "订单取消" if history.canceled?
                 "未知"

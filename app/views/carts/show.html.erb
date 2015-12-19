@@ -65,7 +65,10 @@
         </div>
         <div class="vertical-btn-group">
           <a class="btn btn-lg btn-default" href="<%=@back_url%>">继续点餐</a>
-          <%= link_to "确认订单", "/orders", method: "POST", class: "btn btn-lg btn-primary", id: "confirm_carts_btn"%>
+          <%= form_tag "/orders", method: "POST", id: "confirm_form" do%>
+          <input type="hidden" name="payment_type" id="payment_type">
+          <a class="btn btn-lg btn-primary" id="confirm_carts_btn" onclick="carts.submit()">确认订单</a>
+          <% end %>
         </div>
       </div>
     </div>

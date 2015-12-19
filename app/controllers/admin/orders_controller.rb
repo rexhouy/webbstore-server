@@ -107,7 +107,8 @@ class Admin::OrdersController < AdminController
         end
         def set_order
                 @order = Order.find(params[:id])
-                render_404 unless @order.seller_id.eql? owner
+                # configured group is the super group. super group members are authorized to access all records.
+                render_404 unless Rails.application.config.owner.eql?(owner) || @order.seller_id.eql?(owner)
         end
         def date_of_next(day)
                 date  = Date.parse(day)

@@ -4,6 +4,7 @@ class OrderService
         # create Order, OrderProduct, OrderHistory, Card
         # update Product sales, UserCoupon,User account balance
         def create(cart, payment_type, memo, user_coupon, use_account_balance, current_user)
+                @order = Order.new
                 @order.customer_id = current_user.id
                 @order.seller_id = Rails.application.config.owner
                 @order.memo = memo
@@ -24,11 +25,11 @@ class OrderService
                 @order
         end
 
-        def create_anonymous(cart, shop_id)
+        def create_anonymous(cart, shop_id, payment_type)
                 @order = Order.new
                 @order.seller_id = shop_id
                 @order.order_id = random_order_id
-                @order.payment_type = Order.payment_types[:alipay]
+                @order.payment_type = payment_type
                 @order.coupon_amount = 0;
                 @order.user_account_balance = 0;
                 Order.transaction do
@@ -68,6 +69,18 @@ class OrderService
                         destroy_card(order)
                 end
                 order
+        end
+
+        def cancel_automate
+                Order.transaction do
+                        # insert order history
+                        ActiveRecord::Base.connection.execute %Q(
+                              insert into order_histories(order_id, status, time)
+                             (select id, 5, now() from orders where addtime(created_at, '#{Rails.application.config.order_alive_duration}:0:0') < now() and status = 0))
+                        # update order status
+                        Order.where("addtime(created_at, '#{Rails.application.config.order_alive_duration}:0:0') < now()").where(status: Order.statuses[:placed])
+                                .update_all(status: Order.statuses[:canceled])
+                end
         end
 
         private

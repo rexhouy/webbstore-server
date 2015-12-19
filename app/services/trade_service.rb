@@ -8,23 +8,30 @@ class TradeService
                 supplier_balance = {}
 
                 # handle yesterday paid orders
-                get_orders_yesterday.each do |o|
-                        trades = order_to_trade(o[0], o[1])
 
-                        trades.each do |trade|
-                                # calculate balance
-                                balance += trade.receipt
-                                trade.balance = balance
+                offset = 0
+                limit = 1
+                begin
+                        orders = get_orders_yesterday(offset, limit)
+                        orders.each do |o|
+                                trades = order_to_trade(o[0], o[1])
 
-                                # calculate supplier balance
-                                supplier_balance[trade.supplier] ||= get_latest_supplier_balance(trade.supplier)
-                                supplier_balance[trade.supplier] += trade.receipt
-                                trade.supplier_balance = supplier_balance[trade.supplier]
+                                trades.each do |trade|
+                                        # calculate balance
+                                        balance += trade.receipt
+                                        trade.balance = balance
 
-                                # save trade info
-                                trade.save!
+                                        # calculate supplier balance
+                                        supplier_balance[trade.supplier] ||= get_latest_supplier_balance(trade.supplier)
+                                        supplier_balance[trade.supplier] += trade.receipt
+                                        trade.supplier_balance = supplier_balance[trade.supplier]
+
+                                        # save trade info
+                                        trade.save!
+                                end
                         end
-                end
+                        offset += limit
+                end until orders.empty?
         end
 
         def order_to_trade(order, trade_time)
@@ -81,10 +88,10 @@ class TradeService
         end
         ## Get yesterday paid online pay orders and finished offline pay orders.
         # TODO add offline pay orders support
-        def get_orders_yesterday
+        def get_orders_yesterday(offset, limit)
                 histories = OrderHistory.where(status: OrderHistory.statuses[:paid])
                         .where(time: Date.yesterday.beginning_of_day..Date.yesterday.end_of_day)
-                        .order(time: :asc)
+                        .order(time: :asc).limit(limit).offset(offset)
                 histories.map do |h|
                         [h.order, h.time]
                 end

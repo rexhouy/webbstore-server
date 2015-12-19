@@ -43,7 +43,7 @@ class OrdersController < ApiController
                         return
                 end
                 begin
-                        order = OrderService.new.create_anonymous(get_cart, session[:shop_id])
+                        order = OrderService.new.create_anonymous(get_cart, session[:shop_id], params[:payment_type])
                         clear_cart
                         session[:orders] ||= []
                         session[:orders] << order.id

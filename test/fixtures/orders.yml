@@ -17,3 +17,18 @@ one:
   contact_tel: "12345678901"
   contact_address: "测试地址"
   memo: "memo"
+
+two:
+  id: 2
+  status: 0
+  subtotal: 30.00
+  seller_id: 1
+  customer_id: 2
+  order_id: 1364180-2271804
+  payment_type: 1
+  name: "测试"
+  contact_name: "老侯"
+  contact_tel: "12345678901"
+  contact_address: "测试地址"
+  created_at: 2015-12-11 11:02:57
+  memo: "memo"

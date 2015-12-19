@@ -16,6 +16,7 @@ module Webstore
                 # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
                 # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
 	        config.time_zone = 'Chongqing'
+	        config.active_record.default_timezone = 'Chongqing'
 
                 # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
                 # config.i18n.load_path += Dir[Rails.root.join('webstore/config/', 'locales', '*.{rb,yml}').to_s]
@@ -34,6 +35,6 @@ module Webstore
 	        config.domain = "jxy.tenhs.com"
 	        config.name = "建新园"
 	        config.check_storage = false
-
+	        config.order_alive_duration = 2
         end
 end

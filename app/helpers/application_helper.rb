@@ -7,9 +7,7 @@ module ApplicationHelper
 
         def role_name(user)
                 return "管理员" if user.admin?
-                return "卖家" if user.seller?
-                return "顾客" if user.customer?
-                return "商户" if user.shop_manager?
+                return "分店用户" if user.seller?
                 ""
         end
 
