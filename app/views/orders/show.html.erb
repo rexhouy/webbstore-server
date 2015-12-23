@@ -10,14 +10,14 @@
       <li class="active">
         <hr>
       </li>
-      <li class="<%=@order.paid? ? 'active' : ''%>">
+      <li class="<%=(@order.paid? || @order.printed?) ? 'active' : ''%>">
         <i class="glyphicon glyphicon-yen"></i>
         <title>付款</title>
       </li>
-      <li class="<%=@order.paid? ? 'active' : ''%>">
+      <li class="<%=(@order.paid? || @order.printed?) ? 'active' : ''%>">
         <hr>
       </li>
-      <li class="<%=@order.paid? ? 'active' : ''%>">
+      <li class="<%=@order.printed? ? 'active' : ''%>">
         <i class="glyphicon glyphicon-fire"></i>
         <title>制作中</title>
       </li>

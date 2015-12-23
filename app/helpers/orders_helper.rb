@@ -10,6 +10,8 @@ module OrdersHelper
                         return "待发货"
                 elsif order.shipping?
                         return "已发货"
+                elsif order.printed?
+                        return "制作中"
                 elsif order.delivered?
                         return "完成"
                 elsif order.canceled?
@@ -23,6 +25,7 @@ module OrdersHelper
                 return "创建" if history.placed?
                 return "支付完成" if history.paid?
                 return "发货" if history.shipping?
+                return "制作中" if history.printed?
                 return "订单完成" if history.delivered?
                 return "订单取消" if history.canceled?
                 "未知"
