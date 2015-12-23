@@ -16,6 +16,21 @@
     <%= u.text_field :name, class: "form-control" %>
   </div>
 </div>
+
+<div class="form-group">
+  <%= u.label :printer_sn, "打印机编号", class: "col-sm-2 control-label"  %>
+  <div class="col-sm-6">
+    <%= u.text_field :printer_sn, class: "form-control" %>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= u.label :printer_key, "打印机密钥", class: "col-sm-2 control-label"  %>
+  <div class="col-sm-6">
+    <%= u.text_field :printer_key, class: "form-control" %>
+  </div>
+</div>
+
 <div class="form-group">
   <div class="col-sm-offset-2 col-sm-10">
     <%= submit_tag "确认",  data: { disable_with: "请稍后..."},  class: "btn btn-primary" %>

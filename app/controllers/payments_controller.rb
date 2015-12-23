@@ -59,6 +59,7 @@ class PaymentsController < ApiController
                 if order.placed?
                         Order.transaction do
                                 order.update(status: Order.statuses[:paid], simple_order_no: SerialNo.take)
+                                PrintService.new.print(order)
                                 create_order_history(order)
                                 create_payment(order, payment)
                                 update_card_status(order.id)

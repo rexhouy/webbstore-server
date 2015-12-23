@@ -46,7 +46,7 @@ class Admin::GroupsController < AdminController
                 @group = Group.find(params[:id])
         end
         def group_params
-                params.require(:group).permit(:id, :name)
+                params.require(:group).permit(:id, :name, :printer_sn, :printer_key)
         end
 
 end
