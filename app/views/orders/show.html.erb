@@ -27,11 +27,11 @@
     <section>
       <h2 class="pull-left inherit-height table-center-wrap" style="font-size: 20px;margin-top: 0;margin-bottom: 4px;">
         <span class="table-center">
-          <% if @order.paid? %>
-          单号：<%= @order.simple_order_no %>
-          <% else %>
+          <% if @order.printed? %>
+            单号：<%= @order.simple_order_no %>
+        <% else %>
           <%= @order.name %>
-          <% end %>
+        <% end %>
         </span>
       </h2>
       <% if need_online_pay? @order %>
