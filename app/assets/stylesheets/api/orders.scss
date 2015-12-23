@@ -130,7 +130,7 @@
         width: 100%;
         border-bottom: 1px solid #ddd;
     }
-    .glyphicon {
+    .glyphicon-info-sign {
         color: $link-color;
     }
     h3 {
@@ -138,6 +138,45 @@
     }
     span {
         font-size: 12px;
-        color: #999;
+    }
+}
+
+.order-progress {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+    display: table;
+    width: 100%;
+    hr {
+        border: 1px solid #777;
+        margin: 0 6px;
+        position: relative;
+        top: -10px;
+    }
+    li {
+        width: 20%;
+        font-size: 28px;
+        display: table-cell;
+        vertical-align: middle;
+    }
+    title {
+        display: block;
+        font-size: 10px;
+    }
+    .active {
+        color: $theme-color;
+        hr {
+            border: 1px solid $theme-color;
+        }
+    }
+    &.order-progress-small {
+        li {
+            padding: 0;
+            font-size: 12px;
+            border: 0;
+        }
+        hr {
+            top: 0;
+        }
     }
 }

@@ -6,16 +6,30 @@
           <i class="pull-right glyphicon glyphicon-info-sign"></i>
         </h3>
         <div>
-          <% if order.type.eql? "ReserveOrder" %>
-            <span class="pull-left"><%= order.reserve_seats %> 人</span>
-            <span class="pull-right"><%= display_datetime order.reserve_time %></span>
-          <% elsif order.type.eql? "TakeoutOrder" %>
-            <span class="pull-left"><%= order_status order %></span>
-            <span class="pull-right"><%= display_date order.created_at %></span>
-            <% else %>
-            <span class="pull-left"><%= payment_status order %></span>
-            <span class="pull-right"><%= display_datetime order.created_at %></span>
+          <% if order.canceled? %>
+          <span class="pull-left text-danger"><%= payment_status order %></span>
+          <% else %>
+          <span class="pull-left" style="width: 50%;">
+            <ul class="order-progress order-progress-small">
+              <li class="active">
+                <i class="glyphicon glyphicon-list-alt"></i>
+              </li>
+              <li class="active">
+                <hr>
+              </li>
+              <li class="<%=(order.paid? || order.printed?) ? 'active' : ''%>">
+                <i class="glyphicon glyphicon-yen"></i>
+              </li>
+              <li class="<%=(order.paid? || order.printed?) ? 'active' : ''%>">
+                <hr>
+              </li>
+              <li class="<%=order.printed? ? 'active' : ''%>">
+                <i class="glyphicon glyphicon-fire"></i>
+              </li>
+            </ul>
+          </span>
           <% end %>
+          <span class="pull-right"><%= display_datetime order.created_at %></span>
         </div>
       </li>
     <% end %>

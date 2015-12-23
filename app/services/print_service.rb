@@ -47,7 +47,7 @@ class PrintService
                 Rails.logger.info res.body
                 response = JSON.parse(res.body)
                 if response["responseCode"].eql? 0
-                        order.update(print_index: response["orderindex"])
+                        order.update(print_index: response["orderindex"], status: Order.statuses[:printed])
                         return true
                 end
                 false

@@ -1,7 +1,28 @@
 <article class="row main">
   <div class="order-detail" style="margin-bottom: 20px;">
 
-    <%= alert_info @order %>
+    <% unless @order.canceled? %>
+    <ul class="order-progress">
+      <li class="active">
+        <i class="glyphicon glyphicon-list-alt"></i>
+        <title>订单提交</title>
+      </li>
+      <li class="active">
+        <hr>
+      </li>
+      <li class="<%=@order.paid? ? 'active' : ''%>">
+        <i class="glyphicon glyphicon-yen"></i>
+        <title>付款</title>
+      </li>
+      <li class="<%=@order.paid? ? 'active' : ''%>">
+        <hr>
+      </li>
+      <li class="<%=@order.paid? ? 'active' : ''%>">
+        <i class="glyphicon glyphicon-fire"></i>
+        <title>制作中</title>
+      </li>
+    </ul>
+    <% end %>
 
     <section>
       <h2 class="pull-left inherit-height table-center-wrap" style="font-size: 20px;margin-top: 0;margin-bottom: 4px;">

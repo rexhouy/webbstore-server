@@ -59,17 +59,13 @@ class PaymentsController < ApiController
                 if order.placed?
                         Order.transaction do
                                 order.update(status: Order.statuses[:paid], simple_order_no: SerialNo.take)
-                                PrintService.new.print(order)
                                 create_order_history(order)
                                 create_payment(order, payment)
-                                update_card_status(order.id)
+                                create_order_history(order) if PrintService.new.print(order)
                         end
                 else
                         logger.error "Update order status to paid has failed. Order status incorrect. order id [#{order.order_id}], status [#{order.status}]"
                 end
-        end
-        def update_card_status(order_id)
-                Card.where(order_id: order_id).update_all(status: Card.statuses[:open], next: Date.today.next_week(:wednesday))
         end
 
         def valid?(valid_fields)
