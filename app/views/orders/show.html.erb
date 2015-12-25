@@ -72,7 +72,7 @@
     </section>
     <section>
       <h3>状态</h3>
-      <div><%= payment_status @order %></div>
+      <div><%= order_status @order %></div>
     </section>
     <%= render partial: "show_address" if @order.type.eql?("TakeoutOrder") %>
     <section>
