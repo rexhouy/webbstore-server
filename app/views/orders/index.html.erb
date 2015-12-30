@@ -3,7 +3,7 @@
     <% @orders.each do |order| %>
       <li class="order" onclick="orders.toDetail(<%=order.id%>)">
         <h3>
-          <% if order.printed? %>
+          <% if order.printed? || order.reviewed? %>
           单号：<%= order.simple_order_no %>
           <% else %>
           <%= order.name %>
