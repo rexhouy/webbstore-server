@@ -2,23 +2,15 @@
 module OrdersHelper
 
         def order_status(order)
-                if order.placed? && !order.offline_pay?
-                        return "等待付款"
-                elsif order.paid?
-                        return "已付款"
-                elsif (order.placed? && order.offline_pay?) || order.paid?
-                        return "待发货"
-                elsif order.shipping?
-                        return "已发货"
-                elsif order.printed?
-                        return "制作中"
-                elsif order.delivered?
-                        return "完成"
-                elsif order.canceled?
-                        return "已取消"
-                else
-                        return "未知"
-                end
+                return "等待付款" if order.placed? && !order.offline_pay?
+                return "已付款" if order.paid?
+                return "待发货" if (order.placed? && order.offline_pay?) || order.paid?
+                return "已发货" if order.shipping?
+                return "制作中" if order.printed?
+                return "完成" if order.delivered?
+                return "已取消" if order.canceled?
+                return "已评价" if order.reviewed?
+                "未知"
         end
 
         def order_history_status(history)
@@ -28,6 +20,7 @@ module OrdersHelper
                 return "制作中" if history.printed?
                 return "订单完成" if history.delivered?
                 return "订单取消" if history.canceled?
+                return "已评价" if history.reviewed?
                 "未知"
         end
 

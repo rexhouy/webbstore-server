@@ -1,0 +1,46 @@
+@import "variable.scss";
+
+.review-card {
+    background: #fff;
+    padding: 12px;
+    overflow: hidden;
+    box-shadow: $shadow;
+    height: 88px;
+    .image {
+        display: inline-block;
+        width: 80px;
+        height: 64px;
+        overflow: hidden;
+    }
+    img {
+        height: 64px;
+        width: auto;
+    }
+    .title {
+        margin: 0;
+        font-size: 20px;
+    }
+    .control {
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 20px;
+        .stars {
+            margin-left: -4px;
+        }
+        button {
+            height: 48px;
+            background: transparent;
+            border: none;
+            width: 32px;
+            font-size: 20px;
+            display: table;
+            text-align: center;
+            display: inline-block;
+            i {
+                display: table-cell;
+                vertical-align: middle;
+            }
+        }
+    }
+
+}

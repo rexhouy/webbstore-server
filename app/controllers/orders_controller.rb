@@ -3,13 +3,10 @@ require "securerandom"
 
 class OrdersController < ApiController
 
+        before_action :authenticate_user!
+
         def index
-                ids = session[:orders]
-                if ids.nil? || ids.empty?
-                        @orders = []
-                else
-                        @orders = Order.where("id in (?)", ids).order(id: :desc)
-                end
+                @orders = Order.where(customer: current_user).owner(session[:shop_id]).order(id: :desc).paginate(page: params[:page])
         end
 
         def show
@@ -43,10 +40,8 @@ class OrdersController < ApiController
                         return
                 end
                 begin
-                        order = OrderService.new.create_anonymous(get_cart, session[:shop_id], params[:payment_type])
+                        order = OrderService.new.create_anonymous(get_cart, session[:shop_id], params[:payment_type], current_user)
                         clear_cart
-                        session[:orders] ||= []
-                        session[:orders] << order.id
                         redirect_to payment_redirect_url(order)
                 rescue => e
                         logger.error e

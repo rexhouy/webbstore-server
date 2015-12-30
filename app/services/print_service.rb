@@ -36,23 +36,25 @@ class PrintService
                 content << "--------------------------------<BR>";
                 content << "合计：#{order.subtotal}元<BR>";
                 content << "订餐时间：#{order.updated_at.strftime('%Y-%m-%d %H:%M:%S')}<BR>";
+                content << "订餐用户：#{order.customer.tel}<BR>";
 
                 params = {}
-                params["sn"] = order.seller.printer_sn
-                params["key"] = order.seller.printer_key
-                params["printContent"] = content #打印内容
-                params["times"] = "1" #打印联数
-                uri = URI.parse(IP+HOST+"/printOrderAction")
-                res = Net::HTTP.post_form(uri, params)
-                Rails.logger.info res.body
-                response = JSON.parse(res.body)
-                if response["responseCode"].eql? 0
-                        order.update(print_index: response["orderindex"], status: Order.statuses[:printed])
-                        return true
+                printer_sns = order.seller.printer_sn.split(";")
+                printer_keys = order.seller.printer_key.split(";")
+                printer_sns.each_with_index do |sn, index|
+                        params["sn"] = sn
+                        params["key"] = printer_keys[index]
+                        params["printContent"] = content #打印内容
+                        params["times"] = "1" #打印联数
+                        uri = URI.parse(IP+HOST+"/printOrderAction")
+                        res = Net::HTTP.post_form(uri, params)
+                        Rails.logger.info res.body
+                        response = JSON.parse(res.body)
+                        if response["responseCode"].eql? 0
+                                order.update(print_index: response["orderindex"], status: Order.statuses[:printed])
+                        end
                 end
-                false
         end
-
 
         #方法2，根据订单索引,去查询订单是否打印成功,订单索引由方法1返回=================
         #{"responseCode":0,"msg":"已打印"};

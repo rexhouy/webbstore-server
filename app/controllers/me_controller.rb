@@ -29,7 +29,7 @@ class MeController < ApiController
         private
         def set_header
                 @title = "我的" + Rails.application.config.name
-                @back_url = "/"
+                @back_url = "/#{session[:shop_id]}"
         end
 
 

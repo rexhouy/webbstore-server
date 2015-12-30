@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151221014923) do
+ActiveRecord::Schema.define(version: 20151225024928) do
 
   create_table "account_balance_histories", force: :cascade do |t|
     t.decimal  "receipt",                 precision: 8, scale: 2
@@ -239,6 +239,7 @@ ActiveRecord::Schema.define(version: 20151221014923) do
     t.string   "barcode",      limit: 255
     t.decimal  "origin_price",               precision: 8, scale: 2
     t.string   "type",         limit: 255
+    t.integer  "favorite",     limit: 4
   end
 
   add_index "products", ["name", "description", "article"], name: "fulltext_index", type: :fulltext
@@ -253,6 +254,15 @@ ActiveRecord::Schema.define(version: 20151221014923) do
     t.integer  "customer_id",  limit: 4
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer  "order_id",   limit: 4
+    t.integer  "product_id", limit: 4
+    t.integer  "score",      limit: 4
+    t.string   "memo",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "serial_nos", force: :cascade do |t|

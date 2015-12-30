@@ -62,6 +62,11 @@ Rails.application.routes.draw do
         get 'orders/:id' => 'orders#show'
         put 'orders/:id' => 'orders#cancel', as: :orders_cancel
 
+        # Reviews
+        get "orders/:id/reviews" => "reviews#orders"
+        get "products/:id/reviews" => "reviews#products"
+        post "orders/:id/reviews" => "reviews#update"
+
         # Payment
         get 'payment/wechat/redirect' => 'payments#wechat_redirect'
         get 'payment/alipay/redirect' => 'payments#alipay_redirect'
@@ -92,6 +97,8 @@ Rails.application.routes.draw do
                 get "unauthorized_access" => "home#unauthorized_access", as: :unauthorized_access
 
                 resources :groups
+                get "groups/:id/qrcode" => "groups#qrcode"
+
                 resources :articles
                 resources :suppliers
                 resources :channels

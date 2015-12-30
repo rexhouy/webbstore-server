@@ -10,14 +10,14 @@
       <li class="active">
         <hr>
       </li>
-      <li class="<%=(@order.paid? || @order.printed?) ? 'active' : ''%>">
+      <li class="<%=(@order.paid? || @order.printed? || @order.reviewed?) ? 'active' : ''%>">
         <i class="glyphicon glyphicon-yen"></i>
         <title>付款</title>
       </li>
-      <li class="<%=(@order.paid? || @order.printed?) ? 'active' : ''%>">
+      <li class="<%=(@order.paid? || @order.printed? || @order.reviewed?) ? 'active' : ''%>">
         <hr>
       </li>
-      <li class="<%=@order.printed? ? 'active' : ''%>">
+      <li class="<%=(@order.printed? || @order.reviewed?) ? 'active' : ''%>">
         <i class="glyphicon glyphicon-fire"></i>
         <title>制作中</title>
       </li>
@@ -35,7 +35,10 @@
         </span>
       </h2>
       <% if need_online_pay? @order %>
-      <a class="btn btn-primary pull-right" target="_self" href="<%=@url%>">立即支付</a>
+        <a class="btn btn-primary pull-right" target="_self" href="<%=@url%>">立即支付</a>
+      <% end %>
+      <% if @order.printed? %>
+      <a class="btn btn-primary pull-right" target="_self" href="/orders/<%=@order.id%>/reviews">评价</a>
       <% end %>
     </section>
     <section>

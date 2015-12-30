@@ -18,9 +18,17 @@
       </section>
 
       <section class="pull-right inherit-height table-center-wrap" id="menu_control_pannel">
+        <% if @header_ctrs.present? %>
+        <% @header_ctrs.each do |ctr| %>
+        <button type="button" class="confirm-btn btn btn-lg inherit-height" style="height:48px !important;" onclick="<%=ctr[:onclick]%>" style="outline:none;">
+          <%=ctr[:text]%>
+        </button>
+        <% end %>
+        <% else %>
         <button type="button" class="icon btn btn-lg table-center inherit-height" onclick="window.location.href='/orders'" style="outline:none;">
           <i class="glyphicon glyphicon-list-alt"></i>
         </button>
+        <% end %>
       </section>
     </div>
 

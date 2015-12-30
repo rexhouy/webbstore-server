@@ -28,6 +28,11 @@
         <%= link_to edit_admin_group_path(group) do %>
           <span class="glyphicon glyphicon-pencil icon"></span>
         <% end %>
+
+        <a onclick="group.showQRcode('<%=group.id%>', '<%=group.name%>')" href="#" title="店铺二维码">
+          <span class="glyphicon glyphicon-qrcode"></span>
+        </a>
+
         <% if group.parent_id.present? %>
         <%= link_to admin_group_path(group), method: :delete, data: {confirm: %(确定要删除"#{group.name}"吗？)} do %>
           <span class="glyphicon glyphicon-trash icon"></span>
@@ -46,3 +51,19 @@
     </tr>
     </tfoot>
 </table>
+
+<div class="modal fade" id="qrcodeModal" tabindex="-1" role="dialog" aria-labelledby="qrcodeModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="qrcodeModalLabel"></h4>
+      </div>
+      <div class="modal-body" id="qrcodeBody">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -8,7 +8,7 @@ class Order < ActiveRecord::Base
         has_many :order_histories
         has_many :orders_products, class_name: "OrdersProducts", foreign_key: :order_id, autosave: true
 
-        enum status: [:placed, :paid, :printed, :shipping, :delivered, :canceled]
+        enum status: [:placed, :paid, :printed, :shipping, :delivered, :canceled, :reviewed]
         enum payment_type: [:wechat, :alipay, :offline_pay]
 
         def self.owner(owner)

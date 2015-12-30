@@ -2,7 +2,12 @@
   <ul class="no-list-style order-list">
     <% @orders.each do |order| %>
       <li class="order" onclick="orders.toDetail(<%=order.id%>)">
-        <h3><%= order.name %>
+        <h3>
+          <% if order.printed? %>
+          单号：<%= order.simple_order_no %>
+          <% else %>
+          <%= order.name %>
+          <% end %>
           <i class="pull-right glyphicon glyphicon-info-sign"></i>
         </h3>
         <div>
@@ -17,13 +22,13 @@
               <li class="active">
                 <hr>
               </li>
-              <li class="<%=(order.paid? || order.printed?) ? 'active' : ''%>">
+              <li class="<%=(order.paid? || order.printed? || order.reviewed?) ? 'active' : ''%>">
                 <i class="glyphicon glyphicon-yen"></i>
               </li>
-              <li class="<%=(order.paid? || order.printed?) ? 'active' : ''%>">
+              <li class="<%=(order.paid? || order.printed? || order.reviewed?) ? 'active' : ''%>">
                 <hr>
               </li>
-              <li class="<%=order.printed? ? 'active' : ''%>">
+              <li class="<%=(order.printed? || order.reviewed?) ? 'active' : ''%>">
                 <i class="glyphicon glyphicon-fire"></i>
               </li>
             </ul>
