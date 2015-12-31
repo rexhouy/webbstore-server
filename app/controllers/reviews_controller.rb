@@ -38,7 +38,7 @@ class ReviewsController < ApiController
         end
         def set_header
                 @title = "订单评价"
-                @back_url = "/orders"
+                @back_url = "/orders/#{params[:id]}"
         end
 
 end
