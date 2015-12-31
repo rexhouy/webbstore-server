@@ -1,7 +1,7 @@
 <div class="hidden-print">
   <h1 class="page-header">订单详情</h1>
   <div>
-    <% if !@order.delivered? and !@order.canceled? %>
+    <% if !@order.paid? && !@order.reviewed? && !@order.printed? && !@order.canceled? %>
       <%= link_to "取消订单", admin_orders_cancel_url,  method: :put, style: "display:inline-block", class: "btn btn-danger", data: {confirm: %(确定要取消该订单吗？)} %>
     <% end %>
     <% if @order.type.eql?("TakeoutOrder") &&  (@order.paid? || (@order.offline_pay? && @order.placed?)) %>

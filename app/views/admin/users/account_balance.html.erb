@@ -39,9 +39,9 @@
   </tbody>
   <tfoot>
     <tr>
-      <td colspan="6">
+      <td colspan="6" class="table-footer">
         <%= page_info @account_balance_histories %>
-        <%= will_paginate @account_balance_histories, page_links: false %>
+        <%= will_paginate @account_balance_histories, class: "apple_pagination" %>
       </td>
     </tr>
   </tfoot>

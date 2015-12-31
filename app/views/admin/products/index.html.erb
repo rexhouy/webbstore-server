@@ -75,9 +75,9 @@
   <% unless @search_text.present? %>
   <tfoot>
     <tr>
-      <td colspan="6">
+      <td colspan="6" class="table-footer">
         <%= page_info @products %>
-        <%= will_paginate @products, page_links: false %>
+        <%= will_paginate @products, class: "apple_pagination" %>
       </td>
     </tr>
   </tfoot>

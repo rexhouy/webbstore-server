@@ -47,6 +47,14 @@ class Admin::GroupsController < AdminController
                 render layout: false
         end
 
+        def print_qrcode
+                url = Rails.application.config.domain + "/" + params[:id]
+                sn = current_user.group.printer_sn.split(";")[0]
+                key = current_user.group.printer_key.split(";")[0]
+                PrintService.new.print_qrcode(url, sn, key)
+                render json: {success: true}
+        end
+
         private
         def set_group
                 @group = Group.find(params[:id])

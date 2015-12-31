@@ -40,9 +40,9 @@
   </tbody>
   <tfooter>
     <tr>
-      <td colspan="6">
+      <td colspan="6" class="table-footer">
         <%= page_info @orders %>
-        <%= will_paginate @orders, page_links: false %>
+        <%= will_paginate @orders, class: "apple_pagination" %>
       </td>
     </tr>
   </tfooter>

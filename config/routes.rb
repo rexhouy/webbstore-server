@@ -98,6 +98,7 @@ Rails.application.routes.draw do
 
                 resources :groups
                 get "groups/:id/qrcode" => "groups#qrcode"
+                get "groups/:id/print_qrcode" => "groups#print_qrcode"
 
                 resources :articles
                 resources :suppliers

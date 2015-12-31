@@ -6,6 +6,19 @@ class PrintService
         IP = "http://dzp.feieyun.com"
         HOST = "/FeieServer"
 
+        def print_qrcode(url, sn, key)
+                params = {}
+                params["sn"] = sn
+                params["key"] = key
+                params["printContent"] = "<QR>#{url}</QR>" #打印内容
+                params["times"] = "1" #打印联数
+                uri = URI.parse(IP+HOST+"/printOrderAction")
+                res = Net::HTTP.post_form(uri, params)
+                Rails.logger.info res.body
+                response = JSON.parse(res.body)
+                p response
+        end
+
 
         #方法1，打印订单(内容)============================
         #***方法1返回值有如下几种***

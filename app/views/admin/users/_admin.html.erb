@@ -26,9 +26,9 @@
   <% unless @tel.present? %>
   <tfoot>
     <tr>
-      <td colspan="6">
+      <td colspan="6" class="table-footer">
         <%= page_info @users %>
-        <%= will_paginate @users, page_links: false %>
+        <%= will_paginate @users, class: "apple_pagination" %>
       </td>
     </tr>
   </tfoot>

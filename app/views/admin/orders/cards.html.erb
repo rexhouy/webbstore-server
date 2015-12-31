@@ -54,9 +54,9 @@
     </tbody>
     <tfooter>
       <tr>
-        <td colspan="7">
+        <td colspan="7" class="table-footer">
           <%= page_info @cards %>
-          <%= will_paginate @cards, page_links: false %>
+          <%= will_paginate @cards, class: "apple_pagination" %>
         </td>
       </tr>
     </tfooter>

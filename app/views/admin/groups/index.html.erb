@@ -44,9 +44,9 @@
   </tbody>
   <tfoot>
     <tr>
-      <td colspan="6">
+      <td colspan="6" class="table-footer">
         <%= page_info @groups %>
-        <%= will_paginate @groups, page_links: false %>
+        <%= will_paginate @groups, class: "apple_pagination" %>
       </td>
     </tr>
     </tfoot>
@@ -62,7 +62,8 @@
       <div class="modal-body" id="qrcodeBody">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" onclick="group.printQRcode()"><i class="glyphicon glyphicon-print"></i> 打印</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
       </div>
     </div>
   </div>

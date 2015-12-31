@@ -59,9 +59,9 @@
   </tbody>
   <tfooter>
     <tr>
-      <td colspan="6">
+      <td colspan="6" class="table-footer">
         <%= page_info @reservations %>
-        <%= will_paginate @reservations, page_links: false %>
+        <%= will_paginate @reservations, class: "apple_pagination" %>
       </td>
     </tr>
   </tfooter>
