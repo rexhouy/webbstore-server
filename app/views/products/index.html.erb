@@ -32,21 +32,58 @@
         <div class="desc">{{product.description}}</div>
       </div>
       <div class="control">
-        <div class="number-input-group">
-          <button id="btn_{{product.id}}_{{product.spec_id}}"
-  {{^count}}
-  style="visibility: hidden"
-  {{/count}}
-  onclick="carts.remove('{{product.id}}', '{{product.spec_id}}', 0)"><i class="glyphicon glyphicon-minus"></i></button>
-          <input type="number" id="count_{{product.id}}_{{product.spec_id}}" value="{{count}}"
-  {{^count}}
-  style="visibility: hidden"
-  {{/count}}
-  onchange="carts.updateCount(this, '{{product.id}}', '{{product.spec_id}}', 0)" min=1>
-          <button onclick="carts.add('{{product.id}}', '{{product.spec_id}}', 0)"><i class="glyphicon glyphicon-plus"></i></button>
-        </div>
       </div>
       </div>
+    </div>
+  </div>
+</script>
+<script type="text/template" id="product_spec_control_template">
+  {{#specifications}}
+  <div class="number-input-group">
+    <div>
+      <label>{{spec.value}}：</label>
+    </div>
+    <div>
+      <button id="btn_{{product.id}}_{{spec.id}}"
+              {{^count}}
+              style="visibility: hidden"
+              {{/count}}
+              onclick="carts.remove('{{product.id}}', '{{spec.id}}', 0)"><i class="glyphicon glyphicon-minus"></i></button>
+    </div>
+    <div>
+      <input type="number" id="count_{{product.id}}_{{spec.id}}" value="{{count}}"
+             {{^count}}
+             style="visibility: hidden"
+             {{/count}}
+             onchange="carts.updateCount(this, '{{product.id}}', '{{spec.id}}', 0)" min=1>
+    </div>
+    <div>
+      <button onclick="carts.add('{{product.id}}', '{{spec.id}}', 0)"><i class="glyphicon glyphicon-plus"></i></button>
+    </div>
+  </div>
+  {{/specifications}}
+</script>
+<script type="text/template" id="product_control_template">
+  <div class="number-input-group">
+    <div>
+      <label></label>
+    </div>
+    <div>
+      <button id="btn_{{product.id}}_"
+              {{^count}}
+              style="visibility: hidden"
+              {{/count}}
+              onclick="carts.remove('{{product.id}}', '', 0)"><i class="glyphicon glyphicon-minus"></i></button>
+    </div>
+    <div>
+      <input type="number" id="count_{{product.id}}_" value="{{count}}"
+             {{^count}}
+             style="visibility: hidden"
+             {{/count}}
+             onchange="carts.updateCount(this, '{{product.id}}', '', 0)" min=1>
+    </div>
+    <div>
+      <button onclick="carts.add('{{product.id}}', '', 0)"><i class="glyphicon glyphicon-plus"></i></button>
     </div>
   </div>
 </script>

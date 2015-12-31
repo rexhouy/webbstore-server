@@ -46,6 +46,12 @@ class Admin::GroupsController < AdminController
                 redirect_to admin_groups_path, notice: "删除成功"
         end
 
+        def qrcode
+                url = Rails.application.config.domain + "/" + params[:id]
+                @qr_code = RQRCode::QRCode.new(url, size: 12, level: :m )
+                render layout: false
+        end
+
         private
         def set_group
                 @group = Group.find(params[:id])

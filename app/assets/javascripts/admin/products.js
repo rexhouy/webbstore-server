@@ -57,7 +57,7 @@
 
                 self.setFormParams = function() {
                         var container = $("#specifications");
-                        var names = ["id", "name", "value", "price", "storage", "count"];
+                        var names = ["id", "name", "value", "price", "storage"];
                         var storage = 0;
                         $("#specification_tbody").find("tr").each(function(spec_index) {
                                 $(this).find("input").each(function(index, element) {

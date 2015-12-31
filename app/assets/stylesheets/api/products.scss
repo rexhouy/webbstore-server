@@ -58,6 +58,19 @@
             padding: 0 4px 0 8px;
             .number-input-group {
                 float: right;
+                display:table;
+                width: 100%;
+                &> div {
+                    display: table-cell;
+                    vertical-align: middle;
+                }
+                label {
+                    display: table-cell;
+                    vertical-align: middle;
+                }
+                button, input {
+                    float: right;
+                }
             }
         }
     }

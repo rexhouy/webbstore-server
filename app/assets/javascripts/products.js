@@ -53,6 +53,8 @@
         $(function(){
                 // Products infinit scroll
                 var template = $("#product_template").html();
+                var control_template = $("#product_control_template").html();
+                var spec_control_template = $("#product_spec_control_template").html();
                 if (!template) {
                         return;
                 }
@@ -63,7 +65,13 @@
                               "/products.json?category="+category, // url
                               function(result) {
                                       result.data.forEach(function(product) {
-                                              $(Mustache.render(template, product)).appendTo(container);
+                                              var html = $(Mustache.render(template, product));
+                                              if (product.specifications.length > 0) { // Has specifications
+                                                      html.find(".control").html(Mustache.render(spec_control_template, product));
+                                              } else { //
+                                                      html.find(".control").html(Mustache.render(control_template, product));
+                                              }
+                                              html.appendTo(container);
                                       });
                               });
         });

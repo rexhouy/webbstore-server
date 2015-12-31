@@ -93,6 +93,8 @@ Rails.application.routes.draw do
                 get "unauthorized_access" => "home#unauthorized_access", as: :unauthorized_access
 
                 resources :groups
+                get "groups/:id/qrcode" => "groups#qrcode"
+
                 resources :articles
                 resources :suppliers
                 resources :channels
