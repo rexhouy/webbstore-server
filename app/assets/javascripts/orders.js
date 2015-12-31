@@ -122,6 +122,7 @@
                         $(".order-progress").children().each(function() {
                                 $(this).addClass("active");
                         });
+                        $("#status-text").html("制作中");
                 };
 
                 return self;

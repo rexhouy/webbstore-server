@@ -85,7 +85,13 @@
     </section>
     <section>
       <h3>状态</h3>
-      <div><%= order_status @order %></div>
+      <div id="status-text">
+        <% if @order.printed? && !params[:type].nil? %>
+        已付款
+        <% else %>
+        <%= order_status @order %>
+        <% end %>
+      </div>
     </section>
     <%= render partial: "show_address" if @order.type.eql?("TakeoutOrder") %>
     <section>
