@@ -8,9 +8,9 @@
         <h2 class="title"><%=op.product.name%></h2>
         <div class="stars" id="stars_<%=op.product.id%>">
           <% 5.times do |i| %>
-          <button onclick="review.chooseStar(<%=i%>, <%=op.product.id%>)" ontouch="review.chooseStar(<%=i%>, <%=op.product.id%>)">
-            <i class="glyphicon glyphicon-star-empty"></i>
-          </button>
+            <button onclick="review.chooseStar(<%=i%>, <%=op.product.id%>)" ontouch="review.chooseStar(<%=i%>, <%=op.product.id%>)">
+              <i class="glyphicon glyphicon-star-empty"></i>
+            </button>
           <% end %>
         </div>
       </div>
@@ -18,6 +18,6 @@
   <% end %>
   <input type="hidden" id="order_id" value="<%=@order.id%>">
   <%= form_tag "/orders/#{@order.id}/reviews", method: "post", id: "confirm_form" do %>
-  <input id="review_result" name="reviews" type="hidden">
+    <input id="review_result" name="reviews" type="hidden">
   <% end %>
 </div>

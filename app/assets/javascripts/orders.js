@@ -1,5 +1,9 @@
 (function(){
 
+        $(function() {
+
+        });
+
         var orders = function() {
                 var self = {};
 
@@ -107,6 +111,19 @@
                         $("#total_amount").html("¥ " + format(paymentAmount));
                 };
 
+                var playNotice = function() {
+                        $("#player")[0].pause();
+                        $("#player")[0].play();
+                };
+
+                self.cooking = function() {
+                        playNotice();
+                        $("#progress-bar").hide();
+                        $(".order-progress").children().each(function() {
+                                $(this).addClass("active");
+                        });
+                };
+
                 return self;
         };
 
@@ -127,6 +144,11 @@
         $(function() {
                 address.init(false, true);
                 registerPaymentSelection();
+                setTimeout(function() {
+                        if (utility.getUrlParam("type") == "paid") {
+                                window.orders.cooking();
+                        }
+                }, 5000);
         });
 
 })();
