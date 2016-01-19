@@ -26,6 +26,12 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="col-sm-2 control-label">客户手机号</label>
+      <div class="col-sm-9">
+        <p class="form-control-static"><%= @order.customer.tel if @order.customer.present? %></p>
+      </div>
+    </div>
+    <div class="form-group">
       <label class="col-sm-2 control-label">状态</label>
       <div class="col-sm-9">
         <p class="form-control-static">
