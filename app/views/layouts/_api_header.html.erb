@@ -28,13 +28,17 @@
     </div>
 
     <% if @submenu.present? %>
-    <div class="navbar-submenu navbar-submenu-slide container">
-      <ul class="no-list-style row">
-        <% @submenu.each do |link| %>
-          <li><%= link_to link[:name], link[:href], class: link[:class] %></li>
-        <% end %>
-      </ul>
-    </div>
+      <div class="nav-bottom">
+        <div class="left scroll-indicator" onclick="nav.scrollLeft()"><i class="glyphicon glyphicon-menu-left"></i></div>
+        <div class="scroll-container" onscroll="nav.setScrollIndicator()">
+          <ul>
+            <% @submenu.each do |link| %>
+            <li class="<%=link[:class]%>"><h2><%= link_to link[:name], link[:href] %></h2></li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="right scroll-indicator" onclick="nav.scrollRight()"><i class="glyphicon glyphicon-menu-right"></i></div>
+      </div>
   </div>
   <% end %>
 </header>

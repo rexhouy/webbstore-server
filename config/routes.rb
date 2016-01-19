@@ -31,8 +31,9 @@ Rails.application.routes.draw do
         # User address
         resources :addresses
         # Products
-        get "products/takeout" => "products#takeout"
-        get "products/immediate/:dinning_table_id" => "products#immediate"
+        get "menus/:sid" => "menus#index"
+        get "menus/:sid/tables/:tid" => "menus#index"
+        get "takeout" => "takeout#index"
         get 'products' => 'products#index', as: :products
         get 'products/search' => 'products#search'
         get 'products/:id' => 'products#show', as: :products_detail

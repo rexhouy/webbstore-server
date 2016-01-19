@@ -28,39 +28,78 @@
     }
 }
 
-.navbar-submenu-slide {
-    margin-left: 56px;
+.scroll-container {
     position: relative;
-    overflow-x: scroll !important;
-    white-space: nowrap;
-}
-.navbar-submenu-slide::-webkit-scrollbar {
-    display: none;
-    height: 0 !important;
-}
-.navbar-submenu {
-    height: 48px;
-    position: relative;
+    height: inherit;
+    overflow: scroll;
+    width: 100%;
+    &::-webkit-scrollbar {
+        display: none;
+        height: 0 !important;
+    }
     ul {
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        list-style: none;
         font-size: 16px;
         overflow: hidden;
-        position: absolute;
         bottom: 0;
-        height: inherit;
+        white-space: nowrap;
     }
     li {
         display: inline-block;
     }
     a {
+        color: #eee;
         display: inline-block;
-        padding: 16px;
-        color: $theme-color-light;
-        height: 48px;
-        border-bottom: 3px solid $theme_color;
+        padding: 8px 16px;
+        text-decoration: none;
+        &:visited {
+            color: #eee;
+        }
+        &:focus {
+            text-decoration: none;
+        }
     }
-    .highlight-icon {
-        color: #fff;
-        border-bottom: 3px solid $accent_color;
+    .active {
+        border-left: 0;
+        color: $accent-color;
+        border-bottom: 2px solid $accent-color;
+        a {
+            color: $accent-color;
+        }
+    }
+}
+.scroll-indicator {
+    position: absolute;
+    top: 0;
+    height: 36px;
+    color: #f1f1f1;
+    display: table;
+    z-index: 999;
+    width: 32px;
+    text-align: center;
+    visibility: hidden;
+    i {
+        font-size: 10px;
+        display: table-cell;
+        vertical-align: middle;
+    }
+    &.left {
+        left: 0;
+    }
+    &.right {
+        right: 0;
+    }
+}
+.nav-bottom {
+    position: relative;
+    height: 40px;
+    padding: 0 32px;
+    h2 {
+        margin: 0;
+        font-size: 1em;
     }
 }
 
@@ -193,12 +232,5 @@
         top: 10px;
         font-size: 22px;
         letter-spacing: 8px;
-    }
-}
-
-.home-nav {
-
-    h3 {
-
     }
 }

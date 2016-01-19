@@ -12,7 +12,7 @@
 .product {
     overflow: hidden;
     border-radius: 2px;
-    box-shadow: 0px 3px 4px -1px rgba(0, 0, 0, 0.12), 0px 2px 6px 2px rgba(0, 0, 0, 0.12), 0px 2px 8px 2px rgba(0, 0, 0, 0.12);
+    box-shadow: $shadow;
     height: 108px;
     padding: 0;
     margin: 0 0 12px 0;
@@ -38,13 +38,14 @@
             margin: 0;
             padding: 8px 0 0 12px;
             color: #333;
-            font-size: 20px;
+            font-size: 16px;
         }
         .price {
             position: absolute;
-            right: 12px;
+            right: 8px;
             top: 8px;
             color: #080;
+            font-size: 12px;
         }
         .desc {
             line-height: 24px;

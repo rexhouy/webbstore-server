@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151203021002) do
+ActiveRecord::Schema.define(version: 20160119024544) do
 
   create_table "account_balance_histories", force: :cascade do |t|
     t.decimal  "receipt",                 precision: 8, scale: 2
@@ -140,11 +140,13 @@ ActiveRecord::Schema.define(version: 20151203021002) do
   end
 
   create_table "groups", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.integer  "status",     limit: 4
-    t.integer  "parent_id",  limit: 4
+    t.string   "name",        limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "status",      limit: 4
+    t.integer  "parent_id",   limit: 4
+    t.string   "printer_sn",  limit: 255
+    t.string   "printer_key", limit: 255
   end
 
   create_table "householders", force: :cascade do |t|
@@ -186,6 +188,8 @@ ActiveRecord::Schema.define(version: 20151203021002) do
     t.datetime "reserve_time"
     t.integer  "reserve_seats",        limit: 4
     t.integer  "dinning_table_id",     limit: 4
+    t.integer  "simple_order_no",      limit: 4
+    t.string   "print_index",          limit: 255
   end
 
   add_index "orders", ["customer_id"], name: "fk_rails_c2426400ce", using: :btree
@@ -245,10 +249,23 @@ ActiveRecord::Schema.define(version: 20151203021002) do
     t.datetime "time"
     t.string   "contact_name", limit: 255
     t.string   "contact_tel",  limit: 255
-    t.string   "status",       limit: 255
+    t.integer  "status",       limit: 4
     t.integer  "customer_id",  limit: 4
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer  "order_id",   limit: 4
+    t.integer  "product_id", limit: 4
+    t.integer  "score",      limit: 4
+    t.string   "memo",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "serial_nos", force: :cascade do |t|
+    t.datetime "time"
   end
 
   create_table "shops", force: :cascade do |t|
@@ -306,6 +323,16 @@ ActiveRecord::Schema.define(version: 20151203021002) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "group_id",   limit: 4
+  end
+
+  create_table "tables", force: :cascade do |t|
+    t.integer  "size",          limit: 4, null: false
+    t.boolean  "reserved",      limit: 1, null: false
+    t.datetime "reserve_start"
+    t.datetime "reserve_end"
+    t.integer  "user_id",       limit: 4
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "trades", force: :cascade do |t|

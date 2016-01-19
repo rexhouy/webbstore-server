@@ -1,27 +1,9 @@
 # -*- coding: utf-8 -*-
 class ProductsController < ApiController
 
-        def reserve
-                order_type "reserve"
-                @title = "订桌订餐"
-                index
-        end
-
-        def takeout
-                order_type "takeout"
-                @title = "外卖点餐"
-                index
-        end
-
-        def immediate
-                order_type "immediate"
-                session[:dinning_table_id] = params[:dinning_table_id]
-                @title = "点餐"
-                @back_url = nil
-                index
-        end
-
         def index
+                @title = takeout? ? "外卖点餐" : "店内点餐"
+                @back_url = root_url
                 category_id = params[:category]
                 @category = Category.find_by_id(category_id) unless category_id.eql? "recommendation"
                 if @category.present? && @category.group_id.eql?(owner)
@@ -69,13 +51,13 @@ class ProductsController < ApiController
                 menus = [{
                                  name: "推荐",
                                  href: "/products?category=recommendation",
-                                 class: "recommendation".eql?(selected_category) ? "highlight-icon" : ""
+                                 class: "recommendation".eql?(selected_category) ? "active" : ""
                          }]
                 Category.owner(owner).root.each do |category|
                         menus << {
                                 name: category.name,
                                 href: "/products?category=#{category.id}",
-                                class: category.id.eql?(selected_category.to_i) ? "highlight-icon" : ""
+                                class: category.id.eql?(selected_category.to_i) ? "active" : ""
                         }
                 end
                 menus
