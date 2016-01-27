@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151225024928) do
+ActiveRecord::Schema.define(version: 20160120011438) do
 
   create_table "account_balance_histories", force: :cascade do |t|
     t.decimal  "receipt",                 precision: 8, scale: 2
@@ -139,6 +139,14 @@ ActiveRecord::Schema.define(version: 20151225024928) do
     t.datetime "updated_at",                                     null: false
   end
 
+  create_table "dinning_tables", force: :cascade do |t|
+    t.integer  "groups_id",  limit: 4, null: false
+    t.integer  "size",       limit: 4, null: false
+    t.integer  "table_no",   limit: 4, null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
   create_table "groups", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.datetime "created_at",              null: false
@@ -187,9 +195,10 @@ ActiveRecord::Schema.define(version: 20151225024928) do
     t.decimal  "user_account_balance",               precision: 8,  scale: 2
     t.datetime "reserve_time"
     t.integer  "reserve_seats",        limit: 4
-    t.integer  "dinning_table_id",     limit: 4
     t.integer  "simple_order_no",      limit: 4
     t.string   "print_index",          limit: 255
+    t.integer  "table_id",             limit: 4
+    t.integer  "dinning_table_id",     limit: 4
   end
 
   add_index "orders", ["customer_id"], name: "fk_rails_c2426400ce", using: :btree
@@ -239,7 +248,6 @@ ActiveRecord::Schema.define(version: 20151225024928) do
     t.string   "barcode",      limit: 255
     t.decimal  "origin_price",               precision: 8, scale: 2
     t.string   "type",         limit: 255
-    t.integer  "favorite",     limit: 4
   end
 
   add_index "products", ["name", "description", "article"], name: "fulltext_index", type: :fulltext

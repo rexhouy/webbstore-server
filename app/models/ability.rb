@@ -3,9 +3,9 @@ class Ability
 
 	def initialize(user)
 		if user.admin?
-			can :manage, [User, Product, Order, Category, Trade, Group]
+			can :manage, [User, Product, Order, Category, Trade, Group, DinningTable]
 		elsif user.seller?
-			can :manage, [Order, Trade]
+			can :manage, [Order, Trade, DinningTable]
 		end
 	end
 

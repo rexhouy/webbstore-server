@@ -3,6 +3,7 @@ class Group < ActiveRecord::Base
         belongs_to :parent, class_name: "Group"
         has_many :children, class_name: "Group", foreign_key: "parent_id"
         has_many :users
+        has_many :dinning_tables
         has_one :shop, dependent: :destroy, autosave: :true
 
         before_create :set_default_value

@@ -1,0 +1,41 @@
+<h1 class="page-header">桌台管理</h1>
+
+<div>
+  <%= link_to new_admin_dinning_table_path,  class: "btn btn-default pull-right" do %>
+  <span class="glyphicon glyphicon-plus"></span> 新建
+  <% end %>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>桌号</th>
+      <th>大小</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tables.each_with_index do |table, index| %>
+      <tr>
+        <td><%= table.table_no  %></td>
+        <td><%= table.size  %></td>
+        <td>
+          <%= link_to edit_admin_dinning_table_path(table) do %>
+            <span class="glyphicon glyphicon-pencil"></span></button>
+          <% end %>
+          <%= link_to admin_dinning_table_path(table), method: "delete", data: {confirm: "确定要删除这个桌子吗？"} do %>
+              <span class="glyphicon glyphicon-trash"></span></button>
+          <% end %>
+</td>
+</tr>
+<% end %>
+</tbody>
+<tfooter>
+  <tr>
+    <td colspan="6" class="table-footer">
+      <%= page_info @tables %>
+      <%= will_paginate @tables, class: "apple_pagination" %>
+    </td>
+  </tr>
+</tfooter>
+</table>

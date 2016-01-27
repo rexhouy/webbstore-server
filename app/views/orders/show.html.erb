@@ -85,6 +85,12 @@
       <h3>订单编号</h3>
       <div><%= @order.order_id %></div>
     </section>
+    <% if @order.dinning_table_no.present? %>
+    <section>
+      <h3>桌号</h3>
+      <div><%= @order.dinning_table_no %></div>
+    </section>
+    <% end %>
     <section>
       <h3>状态</h3>
       <div id="status-text">

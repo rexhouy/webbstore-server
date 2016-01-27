@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
         # You can have the root of your site routed with "root"
         root 'products#index'
+        get ":id/tables/:tid" => "products#index"
 
         # Help
         get "help" => "helper#index"
@@ -92,9 +93,12 @@ Rails.application.routes.draw do
 
         # Administration
         namespace :admin do
+
                 root "home#index"
                 get "sign_in" => "home#sign_in"
                 get "unauthorized_access" => "home#unauthorized_access", as: :unauthorized_access
+
+                resources :dinning_tables
 
                 resources :groups
                 get "groups/:id/qrcode" => "groups#qrcode"

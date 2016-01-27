@@ -64,6 +64,11 @@ class ProductsController < ApiController
                 group = Group.find_by_id(params[:id])
                 render_404 if group.nil? || group.disabled?
                 session[:shop_id] = params[:id]
+                if params[:tid]
+                        table = DinningTable.find_by_id(params[:tid])
+                        render_404 if table.nil?
+                        session[:table_id] = table.table_no
+                end
         end
 
 end

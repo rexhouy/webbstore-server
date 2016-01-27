@@ -5,6 +5,7 @@ class Admin::UsersController < AdminController
         load_and_authorize_resource
         before_action :set_user, only: [:edit, :update, :coupon, :account_balance, :show, :deposit, :dispense, :cancel_notification, :unlock]
 
+        # TODO 分店管理员可以看到总店用户
         def index
                 @tel = params[:tel]
                 if @tel.present?

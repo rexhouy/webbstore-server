@@ -25,9 +25,10 @@ class OrderService
                 @order
         end
 
-        def create_anonymous(cart, shop_id, payment_type, user)
+        def create_anonymous(cart, shop_id, table_id, payment_type, user)
                 @order = Order.new
                 @order.seller_id = shop_id
+                @order.dinning_table_no = table_id
                 @order.customer_id = user.id
                 @order.order_id = random_order_id
                 @order.payment_type = payment_type

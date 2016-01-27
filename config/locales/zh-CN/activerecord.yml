@@ -1,8 +1,12 @@
 zh-CN:
   activerecord:
-    errors:
-      models:
-        product:
-          attributes:
-            article:
-              blank: "产品详情不能为空"
+    models:
+      user: "用户"
+      dinning_table: "桌台"
+    attributes:
+      user:
+        name: "用户名"
+        tel: "手机号"
+      dinning_table:
+        table_no: "桌号"
+        size: "大小"

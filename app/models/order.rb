@@ -2,6 +2,7 @@
 class Order < ActiveRecord::Base
         belongs_to :seller, class_name: "Group", foreign_key: :seller_id
         belongs_to :customer, class_name: "User", foreign_key: :customer_id
+        belongs_to :dinning_table
         has_one :payment
         has_one :user_coupon
         has_many :cards
