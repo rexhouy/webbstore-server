@@ -20,9 +20,10 @@
             <tr>
               <td><%= orders_products.count %></td>
               <td>
-                <a href="/products/<%= orders_products.product.id %>">
-                  <%= orders_products.product.name %> <%= orders_products.specification.value if orders_products.specification.present?%>
-                </a>
+                <%= orders_products.product.name %>
+                <% if orders_products.specification.present? %>
+                （<%= orders_products.specification.value %>）
+                <% end %>
               </td>
               <td class="number-align"><%= number_to_currency orders_products.count*orders_products.price, locale: :'zh-CN', precision: 2 %></td>
             </tr>
@@ -90,6 +91,12 @@
           <% end %>
         </tbody>
       </table>
+    </section>
+
+    <section>
+      <% if @order.immediate_order? && @order.placed? && @order.offline_pay? && current_user.waiter? %>
+      <%= link_to "确认支付完成", "/orders/#{@order.id}/confirm_payment", method: "POST", class: "btn btn-primary btn-block", data: {confirm: "确定已经完成收款？"} %>
+      <% end %>
     </section>
 
     <% if need_online_pay?(@order) || is_cancelable?(@order) %>

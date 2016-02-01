@@ -10,6 +10,7 @@ module ApplicationHelper
                 return "卖家" if user.seller?
                 return "顾客" if user.customer?
                 return "商户" if user.shop_manager?
+                return "服务员" if user.waiter?
                 ""
         end
 

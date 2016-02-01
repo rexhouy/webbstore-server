@@ -1,39 +1,29 @@
-<h1 class="page-header">店内点餐订单管理</h1>
-<div>
-  <ul class="link-group">
-    <li>
-      <a href="/admin/takeout_orders">外卖订单管理</a>
-    </li>
-    <li>
-      <a href="/admin/reservations">预订订单管理</a>
-    </li>
-    <li>
-      <a href="/admin/orders/notification/wechat">绑定微信提醒</a>
-    </li>
-  </ul>
-</div>
-<div>
-  <%= link_to "正常", "#{admin_reserve_orders_path}?type=wait_shipping", class: "#{'highlight' if @type.eql?('wait_shipping')} filter-link" %>
-  <%= link_to "已取消", "#{admin_reserve_orders_path}?type=canceled", class: "#{'highlight' if @type.eql?('canceled')} filter-link" %>
-</div>
-<table class="table">
-  <thead>
-    <tr>
-      <th>桌号</th>
-      <th>支付状态</th>
-      <th>日期时间</th>
-      <th>操作</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @orders.each_with_index do |order, index| %>
+<h1 class="page-header">订单管理</h1>
+<ul class="nav nav-tabs">
+  <li role="presentation" class="active"><a href="/admin/immediate_orders" role="tab">店内点餐</a></li>
+<li role="presentation"><a href="/admin/takeout_orders" role="tab">外卖订单</a></li>
+<li role="presentation"><a href="/admin/reservations" role="tab">预订订单</a></li>
+</ul>
+
+<div class="tab-content">
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= order.dinning_table_id  %></td>
-        <td><%= payment_status order %></td>
-        <td><%= display_datetime order.created_at %></td>
-        <td>
-          <%= link_to admin_order_path(order) do %>
-            <span class="glyphicon glyphicon-eye-open"></span></button>
+        <th>桌号</th>
+        <th>支付状态</th>
+        <th>日期时间</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each_with_index do |order, index| %>
+        <tr>
+          <td><%= order.dinning_table.table_no if order.dinning_table.present?  %></td>
+          <td><%= payment_status order %></td>
+          <td><%= display_datetime order.created_at %></td>
+          <td>
+            <%= link_to admin_order_path(order) do %>
+              <span class="glyphicon glyphicon-eye-open"></span></button>
 <% end %>
 </td>
 </tr>
@@ -48,3 +38,4 @@
   </tr>
 </tfooter>
 </table>
+</div>

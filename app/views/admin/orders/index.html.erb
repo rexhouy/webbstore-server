@@ -1,15 +1,4 @@
 <h1 class="page-header">订单管理</h1>
-<div>
-  <ul class="link-group">
-    <li>
-      <a href="/admin/orders/notification/wechat">绑定微信提醒</a>
-    </li>
-    <% if can? :manage, Card %>
-      <li>
-        <a href="/admin/orders/cards">年/季卡</a>
-      </li>
-    <% end %>
-  </ul>
 
   <form action="<%= admin_orders_path %>" method="get" class="form-inline">
     <div class="form-group">

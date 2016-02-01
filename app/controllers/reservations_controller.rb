@@ -8,7 +8,7 @@ class ReservationsController < ApiController
                 @reservations = Reservation.owner(current_user.id).order(id: :desc).paginate(page: params[:page])
                 @submenu = [
                             {name: "外卖订单", class:  "", href: "/orders?type=takeout"},
-                            {name: "预订订单", class: "highlight-icon", href: "/reservations"},
+                            {name: "预订订单", class: "active", href: "/reservations"},
                             {name: "店内消费订单", class: "", href: "/orders?type=immediate"}]
         end
 

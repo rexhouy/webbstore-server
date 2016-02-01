@@ -31,9 +31,9 @@ Rails.application.routes.draw do
         # User address
         resources :addresses
         # Products
-        get "menus/:sid" => "menus#index"
-        get "menus/:sid/tables/:tid" => "menus#index"
-        get "takeout" => "takeout#index"
+        get "menu/:sid" => "menus#index"
+        get "menu/:sid/tables/:tid" => "menus#index"
+        get "takeout_menu" => "takeout#index"
         get 'products' => 'products#index', as: :products
         get 'products/search' => 'products#search'
         get 'products/:id' => 'products#show', as: :products_detail
@@ -63,6 +63,7 @@ Rails.application.routes.draw do
         get 'orders/confirm' => 'orders#confirm', as: :orders_confirm
         get 'orders/:id' => 'orders#show'
         put 'orders/:id' => 'orders#cancel', as: :orders_cancel
+        post "orders/:id/confirm_payment" => "orders#confirm_payment"
 
         # Payment
         get 'payment/wechat/redirect' => 'payments#wechat_redirect'

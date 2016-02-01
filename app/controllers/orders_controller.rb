@@ -4,6 +4,7 @@ require "securerandom"
 class OrdersController < ApiController
 
         before_action :authenticate_user!
+        before_action :set_order, only: [:show, :confirm_payment, :cancel]
 
         def index
                 @type = params[:type] || "takeout"
@@ -13,14 +14,18 @@ class OrdersController < ApiController
                         @orders = ImmediateOrder.where(customer: current_user).owner(Rails.application.config.owner).order(id: :desc).paginate(page: params[:page])
                 end
                 @submenu = [
-                            {name: "外卖订单", class: @type.eql?("takeout") ? "highlight-icon" : "", href: "/orders?type=takeout"},
+                            {name: "外卖订单", class: @type.eql?("takeout") ? "active" : "", href: "/orders?type=takeout"},
                             {name: "预订订单", class: "", href: "/reservations"},
-                            {name: "店内消费订单", class: @type.eql?("immediate") ? "highlight-icon" : "", href: "/orders?type=immediate"}]
+                            {name: "店内消费订单", class: @type.eql?("immediate") ? "active" : "", href: "/orders?type=immediate"}]
+        end
+
+        def confirm_payment
+                render_404 unless current_user.waiter?
+                OrderService.new.payment_succeed(@order.order_id, "")
+                redirect_to "/orders/#{@order.id}"
         end
 
         def show
-                @order = Order.find(params[:id])
-                return render_404 unless @order.customer_id.eql? current_user.id
                 @url = payment_redirect_url(@order)
                 @back_url = "/orders"
         end
@@ -46,19 +51,7 @@ class OrdersController < ApiController
                         return
                 end
                 begin
-                        if reserve?
-                                date = DateTime.strptime(params[:date] + params[:time], "%Y-%m-%d%H:%M")
-                                order = ReserveOrderService.new.create(get_cart,
-                                                                       params[:paymentType],
-                                                                       params[:memo],
-                                                                       params[:use_coupon],
-                                                                       params[:use_account_balance].eql?("true"),
-                                                                       params[:count],
-                                                                       date,
-                                                                       params[:contact_tel],
-                                                                       params[:contact_name],
-                                                                       current_user)
-                        elsif takeout?
+                        if takeout?
                                 order = TakeoutOrderService.new.create(get_cart,
                                                                        params[:paymentType],
                                                                        params[:memo],
@@ -66,7 +59,7 @@ class OrdersController < ApiController
                                                                        params[:use_account_balance].eql?("true"),
                                                                        params[:addressId],
                                                                        current_user)
-                        elsif immediate?
+                        elsif menu?
                                 order = ImmediateOrderService.new.create(get_cart,
                                                                        params[:paymentType],
                                                                        params[:use_coupon],
@@ -87,13 +80,12 @@ class OrdersController < ApiController
 
         def cancel
                 begin
-                        order = Order.find(params[:id])
-                        OrderService.new.cancel(order, current_user)
+                        OrderService.new.cancel(@order, current_user)
                 rescue => error
                         Rails.logger.error error
                         flash[error] = [@errors]
                 end
-                redirect_to action: "show", id: order.id
+                redirect_to action: "show", id: @order.id
         end
 
         private
@@ -122,6 +114,11 @@ class OrdersController < ApiController
                         return WechatService.new.auth_url("https://#{Rails.application.config.domain}/payment/wechat/redirect", order.id)
                 end
                 render_404
+        end
+
+        def set_order
+                @order = Order.find(params[:id])
+                render_404 unless @order.customer_id.eql? current_user.id
         end
 
 end

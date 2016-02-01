@@ -14,7 +14,7 @@ module Admin::UsersHelper
         end
 
         def role_options(selected)
-                options_for_select({"顾客" => "customer", "卖家" => "seller", "管理员" => "admin", "商户" => "shop_manager"}, selected)
+                options_for_select({"顾客" => "customer", "卖家" => "seller", "管理员" => "admin", "商户" => "shop_manager", "服务员" => "waiter"}, selected)
         end
 
         def group_options(selected)

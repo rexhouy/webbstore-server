@@ -43,8 +43,8 @@ class ProductsController < ApiController
                 Rails.application.config.owner
         end
         def set_header
-                @title = "订桌订餐" if reserve?
                 @title = "外卖点餐" if takeout?
+                @title = "点餐" if menu?
                 @back_url = "/"
         end
         def get_submenu(selected_category)

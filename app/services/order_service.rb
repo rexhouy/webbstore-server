@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class OrderService
 
-        # create Order, OrderProduct, OrderHistory, Card
+        # create Order, OrderProduct, OrderHistory
         # update Product sales, UserCoupon,User account balance
         def create(cart, payment_type, memo, user_coupon, use_account_balance, current_user)
                 @order.customer_id = current_user.id
@@ -17,7 +17,6 @@ class OrderService
                         @order.name = order_name @order.orders_products
                         @order.status = need_payment?(@order) ? Order.statuses[:placed] : Order.statuses[:paid]
                         @order.save!
-                        CardService.new.create(@order, current_user.id)
                         update_product_sales(@order.orders_products, :+)
                         create_order_history(@order, current_user.id)
                 end
@@ -46,10 +45,31 @@ class OrderService
                         create_order_history(order, current_user.id)
                         return_coupon(order)
                         return_account_balance(order, current_user)
-                        destroy_card(order)
                 end
                 order
         end
+
+        def payment_succeed(order_id, payment)
+                order = Order.find_by_order_id(order_id)
+                if order.nil?
+                        Rails.logger.error "Order not found #{order_id}"
+                        return false
+                end
+                if order.placed?
+                        Order.transaction do
+                                order.update(status: Order.statuses[:paid])
+                                create_order_history(order, nil)
+                                create_payment(order, payment)
+                        end
+                        # send_notify_to_seller(order)
+                        # send_notify_to_customer(order)
+                else
+                        Rails.logger.error "Update order status to paid has failed. Order status incorrect. order id [#{order.order_id}], status [#{order.status}]"
+                        return false
+                end
+                return true
+        end
+
 
         private
         def update_product_sales(orders_products, func)
@@ -187,10 +207,29 @@ class OrderService
                 order.subtotal - order.coupon_amount - order.user_account_balance > 0
         end
 
-        def destroy_card(order)
-                order.cards.each do |card|
-                        card.update(status: Card.statuses[:canceled])
+        def create_payment(order, info)
+                payment = Payment.new
+                payment.payment_type = order.payment_type
+                payment.order_id = order.id
+                payment.trade_info = info
+                payment.save!
+        end
+
+        def send_notify_to_seller(order)
+                sellers = find_notify_sellers(order.seller.id)
+                sellers.each do |seller|
+                        NotificationService.new.send_order_notify(order, seller)
                 end
+        end
+
+        def send_notify_to_customer(order)
+                if order.customer.wechat_openid.present?
+                        NotificationService.new.send_order_notify_to_customer(order, order.customer)
+                end
+        end
+
+        def find_notify_sellers(group_id)
+                User.where(order_notification: true, group_id: group_id).all
         end
 
 end

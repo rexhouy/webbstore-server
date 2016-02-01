@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
 
         before_create :set_default_value
 
-        enum role: [:customer, :seller, :admin, :shop_manager, :supplier]
+        enum role: [:customer, :seller, :admin, :shop_manager, :supplier, :waiter]
         enum status: [:active, :disabled]
 
         # Devise use tel instead of email

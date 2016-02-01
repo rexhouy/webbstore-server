@@ -7,6 +7,7 @@ class Order < ActiveRecord::Base
         has_many :cards
         has_many :order_histories
         has_many :orders_products, class_name: "OrdersProducts", foreign_key: :order_id, autosave: true
+        belongs_to :dinning_table
 
         enum status: [:placed, :paid, :shipping, :delivered, :canceled]
         enum payment_type: [:wechat, :alipay, :offline_pay]
@@ -40,6 +41,14 @@ class Order < ActiveRecord::Base
                 orders_products.reduce("") do |detail, orders_product|
                         detail << "#{orders_product.product.name},#{orders_product.count}件;"
                 end
+        end
+
+        def immediate_order?
+                type.eql? ("ImmediateOrder")
+        end
+
+        def takeout_order?
+                type.eql?("TakeoutOrder")
         end
 
 end
