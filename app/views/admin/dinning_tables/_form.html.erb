@@ -1,0 +1,33 @@
+<%= form_for [:admin, @table], html: {class: "form-horizontal"} do |t| %>
+  <% if @table.errors.any? %>
+  <div class="alert alert-danger" role="alert">
+    <strong>保存失败</strong>
+    <ul>
+      <% @table.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= t.label :table_no, "桌号", class: "col-sm-2 control-label"  %>
+    <div class="col-sm-3">
+      <%= t.number_field :table_no, class: "form-control", required: true, min: 1, step: 1 %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= t.label :size, "大小", class: "col-sm-2 control-label"  %>
+    <div class="col-sm-3">
+      <%= t.number_field :size, class: "form-control", required: true, min:1, step: 1 %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= t.submit "确认",  data: { disable_with: "请稍后..."},  class: "btn btn-primary" %>
+      <%= link_to "取消", admin_dinning_tables_path, class: "btn btn-default" %>
+    </div>
+  </div>
+<% end %>

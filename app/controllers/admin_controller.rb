@@ -32,6 +32,7 @@ class AdminController < ApplicationController
                           {url: admin_takeout_orders_url, text: "订单", class: "", resource: Order },
                           {url: admin_trades_url, text: "交易", class: "", resource: Trade },
                           {url: admin_channels_url, text: "CMS", class: "", resource: Channel },
+                          {url: admin_dinning_tables_url, text: "桌台", class: "", resource: DinningTable },
                           {url: admin_users_url, text: "用户", class: "", resource: User }]
                 @menus.select! do |menu|
                         menu[:class] = "active" if menu[:url].end_with? controller_name
@@ -47,6 +48,5 @@ class AdminController < ApplicationController
         def owner
                 current_user.group_id
         end
-
 
 end

@@ -141,6 +141,9 @@ Rails.application.routes.draw do
                 # Trade
                 get "trades" => "trades#index", as: :trades
 
+                # Table
+                resources :dinning_tables
+
                 # Coupon
                 get "coupons/list_available" => "coupons#list_available"
                 post "coupons/dispense/:id" => "coupons#dispense"
