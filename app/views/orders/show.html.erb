@@ -46,6 +46,12 @@
       <h3>状态</h3>
       <div><%= payment_status @order %></div>
     </section>
+    <% if @order.dinning_table_id.present? %>
+    <section>
+      <h3>桌号</h3>
+      <div><%= @order.dinning_table.table_no %></div>
+    </section>
+    <% end %>
     <section>
       <h3>付款方式</h3>
       <div><%= payment_name @order %></div>

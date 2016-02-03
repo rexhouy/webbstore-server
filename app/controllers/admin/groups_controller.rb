@@ -47,7 +47,7 @@ class Admin::GroupsController < AdminController
         end
 
         def qrcode
-                url = Rails.application.config.domain + "/" + params[:id]
+                url = Rails.application.config.domain + "/menu/" + params[:id]
                 @qr_code = RQRCode::QRCode.new(url, size: 12, level: :m )
                 render layout: false
         end

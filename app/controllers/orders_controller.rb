@@ -61,11 +61,12 @@ class OrdersController < ApiController
                                                                        current_user)
                         elsif menu?
                                 order = ImmediateOrderService.new.create(get_cart,
-                                                                       params[:paymentType],
-                                                                       params[:use_coupon],
-                                                                       params[:use_account_balance].eql?("true"),
-                                                                       session[:dinning_table_id],
-                                                                       current_user)
+                                                                         params[:paymentType],
+                                                                         params[:use_coupon],
+                                                                         params[:use_account_balance].eql?("true"),
+                                                                         session[:dinning_table_id],
+                                                                         session[:shop_id],
+                                                                         current_user)
                         end
                         clear_cart
                         redirect_to payment_redirect_url(order)

@@ -5,7 +5,6 @@ class OrderService
         # update Product sales, UserCoupon,User account balance
         def create(cart, payment_type, memo, user_coupon, use_account_balance, current_user)
                 @order.customer_id = current_user.id
-                @order.seller_id = Rails.application.config.owner
                 @order.memo = memo
                 @order.order_id = random_order_id
                 @order.payment_type = payment_type

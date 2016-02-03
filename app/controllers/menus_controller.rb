@@ -2,9 +2,9 @@ class MenusController < ApiController
 
         def index
                 menu_type
-                render_404 if params[:sid].nil? || !Shop.availble?(params[:sid])
+                render_404 if params[:sid].nil? || !Group.availble?(params[:sid])
                 session[:shop_id] = params[:sid]
-                session[:table_id] = params[:tid] if params[:tid].nil? || !Table
+                session[:dinning_table_id] = params[:tid] if params[:tid].present? && DinningTable.availble(params[:sid], params[:tid])
                 redirect_to products_url
         end
 

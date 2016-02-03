@@ -2,6 +2,10 @@
 class DinningTable < ActiveRecord::Base
 	belongs_to :group
 
+        def self.availble(group_id, table_id)
+                where(id: table_id, group_id: group_id).present?
+        end
+	
 	validate :table_no_uniqueness
 	private
 	def table_no_uniqueness

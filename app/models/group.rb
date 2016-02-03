@@ -13,6 +13,10 @@ class Group < ActiveRecord::Base
                 where(status: statuses[:active])
         end
 
+        def self.availble?(id)
+                where(id: id, status: Group.statuses[:active]).present?
+        end
+
         def self.owner(owner)
                 where("parent_id = :owner or id = :owner", {owner: owner})
         end

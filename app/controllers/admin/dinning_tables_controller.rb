@@ -65,6 +65,13 @@ class Admin::DinningTablesController < AdminController
                 end
         end
 
+        def qrcode
+	        url = "#{Rails.application.config.domain}/menu/#{current_user.group_id}/tables/#{params[:id]}"
+	        @qr_code = RQRCode::QRCode.new(url, size: 12, level: :m )
+	        render layout: false
+        end
+
+
         private
         # Use callbacks to share common setup or constraints between actions.
         def set_table

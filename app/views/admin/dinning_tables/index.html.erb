@@ -26,6 +26,9 @@
           <%= link_to admin_dinning_table_path(table), method: "delete", data: {confirm: "确定要删除这个桌子吗？"} do %>
               <span class="glyphicon glyphicon-trash"></span></button>
           <% end %>
+          <a href="#" onclick="dinningTable.showQRcode(<%=table.id%>, '<%=table.table_no%>')">
+            <span class="glyphicon glyphicon-qrcode"></span>
+          </a>
 </td>
 </tr>
 <% end %>
@@ -39,3 +42,18 @@
   </tr>
 </tfooter>
 </table>
+<div class="modal fade" id="qrcodeModal" tabindex="-1" role="dialog" aria-labelledby="qrcodeModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="qrcodeModalLabel"></h4>
+      </div>
+      <div class="modal-body" id="qrcodeBody">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

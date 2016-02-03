@@ -143,6 +143,7 @@ Rails.application.routes.draw do
 
                 # Table
                 resources :dinning_tables
+                get "dinning_tables/:id/qrcode" => "dinning_tables#qrcode"
 
                 # Coupon
                 get "coupons/list_available" => "coupons#list_available"

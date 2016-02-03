@@ -18,7 +18,7 @@
     <tbody>
       <% @orders.each_with_index do |order, index| %>
         <tr>
-          <td><%= order.dinning_table.table_no if order.dinning_table.present?  %></td>
+          <td><%= order.dinning_table.table_no if order.dinning_table_id.present?  %></td>
           <td><%= payment_status order %></td>
           <td><%= display_datetime order.created_at %></td>
           <td>
