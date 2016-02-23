@@ -188,13 +188,13 @@
     <div class="form-group">
       <%= c.label :price_km, "昆明价格", class: "col-sm-2 control-label" %>
       <div class="col-sm-3">
-        <%= c.number_field :price_km, class: "form-control" %>
+        <%= c.number_field :price_km, class: "form-control", step: 0.01 %>
       </div>
     </div>
     <div class="form-group">
       <%= c.label :price_bj, "北京价格", class: "col-sm-2 control-label" %>
       <div class="col-sm-3">
-        <%= c.number_field :price_bj, class: "form-control" %>
+        <%= c.number_field :price_bj, class: "form-control", step: 0.01 %>
       </div>
     </div>
     <div class="form-group">

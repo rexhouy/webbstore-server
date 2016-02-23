@@ -56,8 +56,9 @@ class PaymentsController < ApiController
         private
         def fee(order)
                 return order.subtotal unless order.is_crowdfunding
-                return order.subtotal * order.crowdfunding.prepayment / 100 if order.placed?
-                order.subtotal - (order.subtotal * order.crowdfunding.prepayment / 100)
+                crowdfunding = order.orders_products[0].product.crowdfunding
+                return order.subtotal * crowdfunding.prepayment / 100 if order.placed?
+                order.subtotal - (order.subtotal * crowdfunding.prepayment / 100)
         end
         def update_order_status(order_id, payment)
                 order = Order.find_by_order_id(order_id)

@@ -142,7 +142,6 @@ ActiveRecord::Schema.define(version: 20160222032828) do
   create_table "crowdfundings", force: :cascade do |t|
     t.integer  "product_id",          limit: 4
     t.decimal  "threshold",                     precision: 8, scale: 2
-    t.decimal  "decimal",                       precision: 8, scale: 2
     t.datetime "start_date"
     t.datetime "end_date"
     t.datetime "delivery_date"

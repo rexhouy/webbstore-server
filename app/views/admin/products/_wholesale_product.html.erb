@@ -48,6 +48,13 @@
   <h2 class="sub-header">销售情况</h2>
   <div class="form-inline">
     <div class="form-group">
+      <label>众筹期间</label>
+      <p class="form-control-static">
+        <%= display_date_zh @product.crowdfunding.start_date %> ~ <%= display_date_zh @product.crowdfunding.end_date %>
+      </p>
+    </div>
+    <br>
+    <div class="form-group">
       <label>成立数量</label>
       <p class="form-control-static">
         <%= @product.crowdfunding.threshold %>
