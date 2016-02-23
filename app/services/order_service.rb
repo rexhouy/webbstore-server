@@ -44,7 +44,7 @@ class OrderService
                 order.status = Order.statuses[:canceled]
                 Order.transaction do
                         order.save!
-                        update_product_sales(order.orders_products, :-)
+                        update_product_sales(order.orders_products, :-) unless order.is_crowdfunding
                         create_order_history(order, current_user.id)
                         return_coupon(order)
                         return_account_balance(order, current_user)

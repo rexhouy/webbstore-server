@@ -68,7 +68,7 @@ class PaymentsController < ApiController
                         Order.transaction do
                                 if order.is_crowdfunding
                                         sales = order.orders_products[0].product.sales + order.orders_products[0].count
-                                        order.orders_products.product.update(sales: sales)
+                                        order.orders_products[0].product.update(sales: sales)
                                         order.update(status: order.paid? ? Order.statuses[:crowdfunding_paid] : Order.statuses[:paid])
                                 else
                                         order.update(status: Order.statuses[:paid])
