@@ -23,12 +23,21 @@
           <p>如有疑问，请联系客服人员！</p>
         </div>
       <% end %>
+      <% if @order.is_crowdfunding %>
       <div class="col-md-6 col-lg-6 col-sm-6">
-        <a href="/orders/<%=@order_id%>" class="btn btn-default btn-block">查看订单</a>
+        <a href="/crowdfundings/orders/<%=@order.id%>" class="btn btn-default btn-block">查看订单</a>
+      </div>
+      <div class="col-md-6 col-lg-6 col-sm-6">
+        <a href="/crowdfundings" class="btn btn-primary btn-block">返回商店首页</a>
+      </div>
+      <% else %>
+      <div class="col-md-6 col-lg-6 col-sm-6">
+        <a href="/orders/<%=@order.id%>" class="btn btn-default btn-block">查看订单</a>
       </div>
       <div class="col-md-6 col-lg-6 col-sm-6">
         <a href="/" class="btn btn-primary btn-block">返回商店首页</a>
       </div>
+      <% end %>
 
     </div>
   </body>

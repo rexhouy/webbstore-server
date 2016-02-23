@@ -32,4 +32,10 @@ module Admin::ProductsHelper
                 100 * product.sales / product.crowdfunding.threshold
         end
 
+        def crowdfunding_type(crowdfunding)
+                return "<span class='text-info'>进行中</span>".html_safe if crowdfunding.unknown?
+                return "<span class='text-success'>成功</span>".html_safe if crowdfunding.succeed?
+                return "<span class='text-danger'>失败</span>".html_safe if crowdfunding.failed?
+        end
+
 end

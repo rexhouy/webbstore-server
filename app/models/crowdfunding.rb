@@ -5,6 +5,10 @@ class Crowdfunding < ActiveRecord::Base
 
         enum status: [:unknown, :succeed, :failed]
 
+        before_create do
+                self.status = Crowdfunding.statuses[:unknown]
+        end
+
         before_save do
                 self.end_date = self.end_date.end_of_day
         end

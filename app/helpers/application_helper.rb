@@ -112,4 +112,9 @@ module ApplicationHelper
                 price
         end
 
+        def corwdfunding_progress(product)
+                p = product.sales * 100 / product.crowdfunding.threshold
+                p > 100 ? 100 : p
+        end
+
 end

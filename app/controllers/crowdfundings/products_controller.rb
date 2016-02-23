@@ -16,8 +16,15 @@ class Crowdfundings::ProductsController < CrowdfundingsController
 
         def show
                 @product = Product.find(params[:id])
-                @title = "商品详情"
-                @back_url = "/crowdfundings/products"
+                respond_to do |format|
+                        format.html {
+                                @title = "商品详情"
+                                @back_url = "/crowdfundings/products"
+                        }
+                        format.json {
+                        }
+                end
+
         end
 
         def buy

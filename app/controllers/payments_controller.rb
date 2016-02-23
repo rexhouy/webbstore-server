@@ -33,7 +33,7 @@ class PaymentsController < ApiController
         end
 
         def wechat_front_notify
-                @order_id = params[:id]
+                @order = Order.find(params[:id])
                 @success = params[:success].eql? "true"
                 render "result", layout: false
         end
@@ -47,8 +47,7 @@ class PaymentsController < ApiController
         end
 
         def alipay_front_notify
-                order = Order.find_by_order_id(params[:out_trade_no])
-                @order_id = order.id
+                @order = Order.find_by_order_id(params[:out_trade_no])
                 @success = ["TRADE_FINISHED", "TRADE_SUCCESS"].include?(params[:trade_status])
                 render "result", layout: false
         end
@@ -57,8 +56,8 @@ class PaymentsController < ApiController
         def fee(order)
                 return order.subtotal unless order.is_crowdfunding
                 crowdfunding = order.orders_products[0].product.crowdfunding
-                return order.subtotal * crowdfunding.prepayment / 100 if order.placed?
-                order.subtotal - (order.subtotal * crowdfunding.prepayment / 100)
+                return (order.subtotal * crowdfunding.prepayment / 100).round(2) if order.placed?
+                order.subtotal - ((order.subtotal * crowdfunding.prepayment / 100).round(2))
         end
         def update_order_status(order_id, payment)
                 order = Order.find_by_order_id(order_id)

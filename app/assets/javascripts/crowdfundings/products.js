@@ -68,6 +68,33 @@
                         });
                 };
 
+                var getPrice = function(callback) {
+                        var price = $("#price").val();
+                        if (price.endsWith("起")) {
+                                $.ajax("/crowdfundings/products/"+$("#productId").val()+".json", {
+                                        method : "get",
+                                        headers : {
+                                                'X-CSRF-Token' : $( 'meta[name="csrf-token"]' ).attr( 'content' )
+                                        }
+                                }).done(function(data) {
+                                        callback(data.price);
+                                });
+                        } else {
+                                callback(price);
+                        }
+                };
+
+                self.showPaymentInfo = function(count) {
+                        if (!count) {
+                                $("#paymentInfo").html("");
+                                return;
+                        }
+                        getPrice(function(price) {
+                                var prepayment = $("#prepayment").val();
+                                $("#paymentInfo").html("总价：￥"+count * price+"，需预支付：￥"+ Math.round(prepayment * count * price) / 100);
+                        });
+                };
+
                 return self;
         };
         window.product = product();

@@ -8,6 +8,13 @@
     <section>
       <h3>状态</h3>
       <div><%= crowdfunding_status @crowdfunding  %>, <%= payment_status @order%></div>
+      <% if @crowdfunding.unknown? %>
+      <% progress = corwdfunding_progress(@order.orders_products[0].product)%>
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="<%=progress%>" aria-valuemin="0" aria-valuemax="100" style="width: <%=progress%>%;">
+          <%=progress%>%
+        </div>
+        <% end %>
     </section>
     <section>
       <h3>商品</h3>
@@ -102,7 +109,7 @@
       <a class="btn btn-primary btn-block" target="_self" href="<%=@url%>">支付剩余金额</a>
       <% end %>
 
-      <% if @order.placed? %>
+      <% if @order.placed? && @crowdfunding.unknown? %>
       <a class="btn btn-primary btn-block" target="_self" href="<%=@url%>">支付定金</a>
       <br>
       <%= link_to "取消订单", "/crowdfundings/orders/#{@order.id}/cancel", method: "PUT", class: "btn btn-danger btn-block"%>

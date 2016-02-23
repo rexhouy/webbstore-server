@@ -3,8 +3,8 @@ module Crowdfundings::OrdersHelper
 
 
         def crowdfunding_status(crowdfunding)
-                return "众筹成功" if crowdfunding.succeed?
-                return "众筹失败" if crowdfunding.failed?
+                return "<span class='text-success'>众筹成功</span>".html_safe if crowdfunding.succeed?
+                return "<span class='text-danger'>众筹失败</span>".html_safe if crowdfunding.failed?
                 "众筹将于#{display_date_zh crowdfunding.end_date}结束"
         end
 

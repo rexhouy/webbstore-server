@@ -32,10 +32,13 @@
     </div>
   </div>
   <%= form_tag :crowdfundings_create_order, class: "form col-sm-6 col-xs-12", method: "POST" do%>
-  <input type="hidden" name="id" value="<%=@product.id%>">
+  <input type="hidden" name="id" id="productId" value="<%=@product.id%>">
+  <input type="hidden" id="price" value="<%=crowdfunding_product_price @product%>">
+  <input type="hidden" id="prepayment" value="<%=@product.crowdfunding.prepayment%>">
   <div class="form-group">
     <label class="control-label">购买数量：</label>
-    <input type="number" name="count" min="<%=@product.crowdfunding.threshold_per_trade%>" step="1" required class="form-control" >
+    <input type="number" name="count" min="<%=@product.crowdfunding.threshold_per_trade%>" step="1" required
+           class="form-control" onchange="product.showPaymentInfo(this.value)" >
   </div>
   <div class="form-group">
     <label class="control-label">联系人姓名：</label>
@@ -54,8 +57,12 @@
   </div>
   <input type="hidden" name="payment_type" id="paymentType">
   <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-    <button type="confirm" class="btn btn-primary">确认购买</button>
+    <div id="paymentInfo" style="padding-bottom:12px;">
+    </div>
+    <div>
+      <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+      <button type="confirm" class="btn btn-primary">确认购买</button>
+    </div>
   </div>
   <% end %>
 </div>
