@@ -28,7 +28,7 @@ class AlipayService
 
         private
         def out_trade_no(order)
-                return order.order_id + "x" if order.is_crowdfundings && order.paid?
+                return order.order_id + "x" if order.is_crowdfunding && order.paid?
                 order.order_id
         end
         def sign(params)

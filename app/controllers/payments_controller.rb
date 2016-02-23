@@ -40,7 +40,8 @@ class PaymentsController < ApiController
 
         def alipay_notify
                 if ["TRADE_FINISHED", "TRADE_SUCCESS"].include?(params[:trade_status])
-                        update_order_status(params[:out_trade_no], params.to_json)
+                        out_trade_no = params[:out_trade_no].end_with?("x") ? params[:out_trade_no][0...-1] : params[:out_trade_no]
+                        update_order_status(out_trade_no, params.to_json)
                         logger.info "Payment succeed [#{params[:out_trade_no]}]."
                 end
                 render plain: "success"
@@ -66,6 +67,8 @@ class PaymentsController < ApiController
                 if order.placed? || (order.is_crowdfunding && order.paid?)
                         Order.transaction do
                                 if order.is_crowdfunding
+                                        sales = order.orders_products[0].product.sales + order.orders_products[0].count
+                                        order.orders_products.product.update(sales: sales)
                                         order.update(status: order.paid? ? Order.statuses[:crowdfunding_paid] : Order.statuses[:paid])
                                 else
                                         order.update(status: Order.statuses[:paid])

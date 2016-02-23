@@ -29,7 +29,6 @@ class CrowdfundingOrderService < OrderService
 
                 Order.transaction do
                         order.save!
-                        update_product_sales(order.orders_products, :+)
                 end
 
                 order
