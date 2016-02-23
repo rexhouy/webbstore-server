@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title><%=Rails.application.config.name%></title>
+    <meta name="description" content="科技农业，绿色生活">
+    <meta name="Keywords" content="生态食品 绿色食品 拾惠社">
+    <meta name="viewport" content="width=device-width,user-scalable=no">
+    <link href="<%=image_url('favicon.ico')%>" rel="icon">
+    <%= stylesheet_link_tag    'crowdfundings', media: 'all', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body class="no-touch">
+
+    <header id="applicationHeader">
+      <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header" style="height:56px">
+          <section class="inherit-height pull-left">
+            <% if @back_url.present? %>
+            <a class="btn btn-lg pull-left icon table-center inherit-height" href="<%=@back_url%>">
+              <i class="glyphicon glyphicon-arrow-left" style="position:relative;top:7px;"></i>
+            </a>
+            <% else %>
+            <!-- <button class="btn pull-left icon table-center inherit-height" onclick="menu.open();"> -->
+            <!--   <i class="glyphicon glyphicon-menu-hamburger"></i> -->
+            <!-- </button> -->
+            <% end %>
+          </section>
+
+          <section class="navbar-brand pull-left inherit-height">
+            <a href="#"><%=@title || (Rails.application.config.name + "众筹")%></a>
+          </section>
+
+          <section class="inherit-height search-container" id="search">
+            <form class="inherit-height table-center-wrap" action="/products/search">
+              <button class="btn icon inherit-height highlight-icon" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+              <button class="btn icon inherit-height" style="right:0" onclick="return search.close();"><i class="glyphicon glyphicon-remove"></i></button>
+              <input  type="search" name="search_text" class="search table-center inherit-height pull-left" placeholder="搜索拾惠社" id="search_input">
+            </form>
+          </section>
+
+          <section class="pull-right inherit-height table-center-wrap" id="menu_control_pannel">
+            <% unless @back_url.present? %>
+            <!-- <button type="button" class="icon btn btn-lg table-center inherit-height" onclick="search.open();"> -->
+            <!--   <i class="glyphicon glyphicon-search"></i> -->
+            <!-- </button> -->
+            <button type="button" class="icon btn btn-lg table-center inherit-height" onclick="window.location='/crowdfundings/orders'" title="订单">
+              <i class="glyphicon glyphicon-list-alt"></i>
+            </button>
+            <% end %>
+          </section>
+
+        </div>
+
+        <% if @submenu.present? %>
+        <div class="navbar-submenu container">
+          <ul class="no-list-style" style="margin:0 -15px;">
+            <% @submenu.each do |link| %>
+            <li><%= link_to link[:name], link[:href], class: link[:class] %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      <% end %>
+    </header>
+
+    <nav id="menu" class="navbar-side">
+      <header>
+        <% if user_signed_in? %>
+        <a  class="inherit-height pull-left" href="/me">
+          <%= image_tag "user.png" %>
+          <p class="inherit-height nav-header-link-text"><span class="table-center inherit-height"><%= current_user.tel %></span></p>
+        </a>
+        <% else %>
+        <a href="/users/sign_in" target="_self" class="inherit-height pull-left">
+          <%= image_tag "user.png" %>
+          <p class="inherit-height nav-header-link-text"><span class="table-center inherit-height">登录</span></p>
+        </a>
+        <% end %>
+        <button type="button" class="icon btn btn-lg pull-right inherit-height" onclick="menu.close();">
+          <i class="glyphicon glyphicon-remove"></i>
+        </button>
+      </header>
+
+      <section class="nav-section">
+        <ul class="nav">
+          <% if user_signed_in? %>
+          <li><a href="/me" class="icon-link-left"><i class="glyphicon glyphicon-home"></i>我的<%=Rails.application.config.name%></a></li>
+          <% end %>
+          <li><a href="/orders" class="icon-link-left"><i class="glyphicon glyphicon-list-alt"></i>订单</a></li>
+          <li><a href="/carts" class="icon-link-left"><i class="glyphicon glyphicon-shopping-cart"></i>购物车</a></li>
+          <li><a href="/about" class="icon-link-left">关于</a></li>
+        </ul>
+      </section>
+    </nav>
+
+    <div class="container" style="background-color: #fff;min-height:200px;padding-top:5px;">
+      <%= yield %>
+    </div>
+
+    <%= image_tag "spinner.gif", style: "position:fixed;left:-100000px;"%>
+    <div><!-- Loading animation  -->
+      <div class="block-layer block-layer-light" onclick="menu.close()"></div>
+      <div class="spinner-container img-circle">
+        <div class="spinner"></div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <p class="copyright">Copyright © 2015 北京拾惠社农业科技有限公司</p>
+        <ul>
+          <li><span class="glyphicon glyphicon-map-marker"></span> 北京市中关村科技园平谷分园</li>
+          <li>京ICP备15036211号</li>
+        </ul>
+      </div>
+    </footer>
+
+    <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag params[:controller] %>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!-- Banner -->
+<div class="banner row">
+  <div class="col-md-8 col-sm-8 col-xs-7 inherit-height">
+    <h2 class="inherit-height table-center-wrap">
+      <div class="table-center">
+        <span><%= @product.name%></span>
+        <p class="desc" style="padding: 4px 0;margin:0;"><%= @product.description %></p>
+      </div>
+    </h2>
+  </div>
+  <div class="col-md-4 col-sm-4 col-xs-5 inherit-height pull-right table-center-wrap">
+    <div class="table-center">
+      <%= link_to "/crowdfundings/products/#{@product.id}/buy", class: "btn btn-primary pull-right" do %>
+        ￥ <%= crowdfunding_product_price @product %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- Article -->
+<article class="row">
+  <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 col-sm-10 col-sm-1 article">
+    <%=raw @product.article %>
+  </div>
+</article>

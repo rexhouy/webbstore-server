@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="col-sm-3">
+    <%=image_tag @product.cover_image, style: "width:100%;"%>
+  </div>
+  <div class="col-sm-9">
+    <div class="form-horizontal">
+      <div class="form-group">
+        <label class="control-label col-sm-2">名称</label>
+        <p class="form-control-static col-sm-8">
+          <%=@product.name%>
+        </p>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">类型</label>
+        <p class="form-control-static col-sm-8">
+          <%= product_type @product %>
+        </p>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">北京价格</label>
+        <p class="form-control-static col-sm-8">
+          <%=number_to_currency @product.crowdfunding.price_bj, locale: :'zh-CN', precision: 2%>
+        </p>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">昆明价格</label>
+        <p class="form-control-static col-sm-8">
+          <%=number_to_currency @product.crowdfunding.price_km, locale: :'zh-CN', precision: 2%>
+        </p>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">最低购买数量</label>
+        <p class="form-control-static col-sm-8">
+          <%=@product.crowdfunding.threshold_per_trade%>
+        </p>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">预付金比例</label>
+        <p class="form-control-static col-sm-8">
+          <%=@product.crowdfunding.threshold_per_trade%> %
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <h2 class="sub-header">销售情况</h2>
+  <div class="form-inline">
+    <div class="form-group">
+      <label>成立数量</label>
+      <p class="form-control-static">
+        <%= @product.crowdfunding.threshold %>
+      </p>
+    </div>
+    <div class="form-group" style="padding-left:12px;">
+      <label>已销售</label>
+      <p class="form-control-static">
+        <%= @product.sales %>
+      </p>
+    </div>
+  </div>
+  <div class="progress">
+    <% status = crowdfunding_status(@product) %>
+    <div class="progress-bar" role="progressbar" aria-valuenow="<%=status%>" aria-valuemin="0" aria-valuemax="100" style="width: <%=status%>%;">
+      <%=status%>%
+    </div>
+  </div>
+</div>

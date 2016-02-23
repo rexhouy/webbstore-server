@@ -38,9 +38,9 @@
   </tbody>
   <tfoot>
     <tr>
-      <td colspan="6">
+      <td colspan="6" class="table-footer">
         <%= page_info @suppliers %>
-        <%= will_paginate @suppliers, page_links: false %>
+        <%= will_paginate @suppliers, class: "apple_pagination" %>
       </td>
     </tr>
   </tfoot>

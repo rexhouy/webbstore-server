@@ -5,7 +5,8 @@ class PaymentsController < ApiController
                 code = params[:code]
                 open_id = params[:open_id]
                 @order_id = params[:state]
-                @wechat_params = WechatService.new.pay(Order.find(@order_id), request.remote_ip, open_id, code, current_user)
+                order = Order.find(@order_id)
+                @wechat_params = WechatService.new.pay(order, request.remote_ip, open_id, code, current_user, fee(order))
                 render layout: false
         end
 
@@ -13,7 +14,7 @@ class PaymentsController < ApiController
                 order = Order.find(params[:id])
                 @order_id = params[:id]
                 @url = Config::PAYMENT["alipay"]["mobile_pay"]["url"].clone
-                @url << "?" << AlipayService.new.pay(order).to_query
+                @url << "?" << AlipayService.new.pay(order, fee(order)).to_query
                 render layout: false
         end
 
@@ -53,12 +54,21 @@ class PaymentsController < ApiController
         end
 
         private
+        def fee(order)
+                return order.subtotal unless order.is_crowdfunding
+                return order.subtotal * order.crowdfunding.prepayment / 100 if order.placed?
+                order.subtotal - (order.subtotal * order.crowdfunding.prepayment / 100)
+        end
         def update_order_status(order_id, payment)
                 order = Order.find_by_order_id(order_id)
                 logger.error "Order not found #{order_id}" if order.nil?
-                if order.placed?
+                if order.placed? || (order.is_crowdfunding && order.paid?)
                         Order.transaction do
-                                order.update(status: Order.statuses[:paid])
+                                if order.is_crowdfunding
+                                        order.update(status: order.paid? ? Order.statuses[:crowdfunding_paid] : Order.statuses[:paid])
+                                else
+                                        order.update(status: Order.statuses[:paid])
+                                end
                                 create_order_history(order)
                                 create_payment(order, payment)
                                 update_card_status(order.id)

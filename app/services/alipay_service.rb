@@ -7,7 +7,7 @@ class AlipayService
         ALIPAY = Config::PAYMENT["alipay"]
         MOBILE_PAY = ALIPAY["mobile_pay"]
 
-        def pay(order)
+        def pay(order, fee)
                 params = {
                         service: MOBILE_PAY["service"],
                         partner: ALIPAY["pid"],
@@ -16,7 +16,7 @@ class AlipayService
                         return_url: MOBILE_PAY["return_url"],
                         out_trade_no: order.order_id,
                         subject: order.name,
-                        total_fee: sprintf("%0.2f", order.subtotal - order.coupon_amount - order.user_account_balance),
+                        total_fee: fee || sprintf("%0.2f", order.subtotal - order.coupon_amount - order.user_account_balance),
                         seller_id: ALIPAY["seller_id"],
                         payment_type: MOBILE_PAY["payment_type"],
                         body: order.detail

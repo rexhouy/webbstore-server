@@ -1,0 +1,40 @@
+<div>
+
+  <div class="products-list row">
+  </div>
+
+  <div class="products-spinner">
+    <div class="spinner"></div>
+  </div>
+
+  <div id="infinit_scroll_indicator">
+  </div>
+
+  <script type="text/template" id="product_template">
+    <section class="crowdfunding-card col-md-4 col-sm-6 col-xs-12">
+  <div class="card-container">
+  <div class="top">
+  <div class="title">
+  <h3>{{name}}</h3>
+  <div class="desc">{{description}}</div>
+  <div class="price">&yen; {{price}}</div>
+  </div>
+  <div class="image">
+  <img src="{{cover_image}}">
+  </div>
+  </div>
+  <div class="middle">
+  <div class="progress-desc">{{progress}}<small>%</small> <span>（已筹集）<span></div>
+  <div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progress}}%;">
+  <span class="sr-only">{{progress}}% Complete</span>
+  </div>
+  </div>
+  <div class="action-bar">
+  <a href="/crowdfundings/products/{{id}}" class="btn">查看</a>
+  </div>
+  </div>
+  </div>
+  </section>
+  </script>
+</div>

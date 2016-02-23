@@ -4,11 +4,11 @@ require 'test_helper'
 class OrderServiceTest < ActiveSupport::TestCase
 
         test "it create order" do
-                cart = [
-                        {"id" => 1, "spec_id" => "", "count" => 1},
-                        {"id" => 2, "spec_id" => 1, "count" => 1}
-                       ]
-                order = OrderService.new.create(cart, "alipay", "test", 1, true, 1, User.find(1))
+                cart = {
+                        "1_": {"id" => 1, "spec_id" => "", "count" => 1},
+                        "2_1": {"id" => 2, "spec_id" => 1, "count" => 1}
+                }
+                order = OrderService.new.create(cart, "alipay", "test", 1, true, User.find(1))
 
                 # should create order
                 assert order.id.present?
@@ -45,10 +45,10 @@ class OrderServiceTest < ActiveSupport::TestCase
         end
 
         test "it create cards" do
-                cart = [
-                        {"id" => 2, "spec_id" => 2, "count" => 1}
-                       ]
-                order = OrderService.new.create(cart, "alipay", "test", nil, false, 1, User.find(1))
+                cart = {
+                        "2_2": {"id" => 2, "spec_id" => 2, "count" => 1}
+                       }
+                order = OrderService.new.create(cart, "alipay", "test", nil, false, User.find(1))
 
                 card = Card.find_by_user_id(1)
                 assert card.present?
@@ -65,19 +65,19 @@ class OrderServiceTest < ActiveSupport::TestCase
         end
 
         test "it raise exceptions when there are no storage left" do
-                cart = [
-                        {"id" => 1, "spec_id" => "", "count" => 100}
-                       ]
+                cart = {
+                        "1_": {"id" => 1, "spec_id" => "", "count" => 100}
+                       }
                 assert_raise do
-                        OrderService.new.create(cart, "alipay", "test", nil, false, 1, User.find(1))
+                        OrderService.new.create(cart, "alipay", "test", nil, false, User.find(1))
                 end
         end
 
         test "it returns coupon and user account balance when canceled" do
-                cart = [
-                        {"id" => 1, "spec_id" => "", "count" => 3}
-                       ]
-                order = OrderService.new.create(cart, "alipay", "test", 1, true, 1, User.find(1))
+                cart = {
+                        "1_": {"id" => 1, "spec_id" => "", "count" => 3}
+                       }
+                order = OrderService.new.create(cart, "alipay", "test", 1, true, User.find(1))
                 assert_equal 98, User.find(1).balance
                 assert UserCoupon.find(1).used?
 
@@ -90,10 +90,10 @@ class OrderServiceTest < ActiveSupport::TestCase
         end
 
         test "it update order status and record history" do
-                cart = [
-                        {"id" => 1, "spec_id" => "", "count" => 3}
-                       ]
-                order = OrderService.new.create(cart, "alipay", "test", 1, true, 1, User.find(1))
+                cart = {
+                        "1_": {"id" => 1, "spec_id" => "", "count" => 3}
+                       }
+                order = OrderService.new.create(cart, "alipay", "test", 1, true, User.find(1))
                 order = OrderService.new.change_status(order, Order.statuses[:shipping], 1)
 
                 #should update order status
@@ -103,5 +103,16 @@ class OrderServiceTest < ActiveSupport::TestCase
                 assert_equal 2, order.order_histories.size
         end
 
+        test "it update order status after order_alive_duration" do
+                OrderService.new.cancel_automate
+                order = Order.find(2)
+
+                #should be canceled
+                assert order.canceled?
+
+                history = OrderHistory.find_by_order_id(2)
+                #should record history
+                assert history.present?
+        end
 
 end

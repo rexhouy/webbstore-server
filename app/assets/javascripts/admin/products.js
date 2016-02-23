@@ -88,8 +88,15 @@
                         $("#supplement_"+id).hide();
                 };
 
+                self.checkWholesale = function(checked) {
+                        if (checked) {
+                                $("#wholesaleProperties").show("slow");
+                        } else {
+                                $("#wholesaleProperties").hide("slow");
+                        }
+                };
+
                 return self;
         }();
-
 
 })(jQuery);

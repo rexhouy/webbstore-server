@@ -16,7 +16,7 @@ class ProductsController < ApiController
                                 render :index
                         }
                         format.json {
-                                @products = Product.owner(owner).category(@category).available.valid.order(priority: :desc).paginate(page: params[:page])
+                                @products = Product.retail.owner(owner).category(@category).available.valid.order(priority: :desc).paginate(page: params[:page])
                                 render json: @products
                         }
                 end
@@ -31,7 +31,7 @@ class ProductsController < ApiController
 
         def search
                 @search_text = params[:search_text]
-                @products = Product.search_by_owner(@search_text, owner)
+                @products = Product.search_by_owner(@search_text, owner, false)
         end
 
         private

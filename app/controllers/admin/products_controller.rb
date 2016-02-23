@@ -32,18 +32,20 @@ class Admin::ProductsController < AdminController
 
         def new
                 @product = Product.new
-
+                @product.build_crowdfunding
         end
 
         def show
         end
 
         def create
+                @is_wholesale = params[:is_wholesale]
                 @product = Product.new(product_params)
                 @product.owner_id = owner
                 if @product.save
                         redirect_to admin_product_path(@product), notice: "创建成功"
                 else
+                        @product.build_crowdfunding if @product.crowdfunding.nil?
                         render "new"
                 end
         end
@@ -90,8 +92,10 @@ class Admin::ProductsController < AdminController
         end
 
         def product_params
-                params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale, :cover_image, :category_id, :priority, :supplier_id,
-                                                specifications_attributes: [:id, :name, :value, :price, :storage, :count])
+                params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale,
+                                                :cover_image, :category_id, :priority, :supplier_id, :is_crowdfunding,
+                                                specifications_attributes: [:id, :name, :value, :price, :storage, :count],
+                                                crowdfunding_attributes: [:id, :threshold, :start_date, :end_date, :delivery_date, :price_km, :price_bj, :threshold_per_trade, :prepayment])
         end
 
         def preview_params

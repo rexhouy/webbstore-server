@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151117013228) do
+ActiveRecord::Schema.define(version: 20160222032828) do
 
   create_table "account_balance_histories", force: :cascade do |t|
     t.decimal  "receipt",                 precision: 8, scale: 2
@@ -139,6 +139,22 @@ ActiveRecord::Schema.define(version: 20151117013228) do
     t.datetime "updated_at",                                     null: false
   end
 
+  create_table "crowdfundings", force: :cascade do |t|
+    t.integer  "product_id",          limit: 4
+    t.decimal  "threshold",                     precision: 8, scale: 2
+    t.decimal  "decimal",                       precision: 8, scale: 2
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "delivery_date"
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
+    t.decimal  "price_km",                      precision: 8, scale: 2
+    t.decimal  "price_bj",                      precision: 8, scale: 2
+    t.decimal  "threshold_per_trade",           precision: 8, scale: 2
+    t.integer  "prepayment",          limit: 4
+    t.integer  "status",              limit: 4
+  end
+
   create_table "groups", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
@@ -183,6 +199,7 @@ ActiveRecord::Schema.define(version: 20151117013228) do
     t.string   "type",                 limit: 255
     t.decimal  "coupon_amount",                      precision: 8,  scale: 2
     t.decimal  "user_account_balance",               precision: 8,  scale: 2
+    t.boolean  "is_crowdfunding",      limit: 1
   end
 
   add_index "orders", ["customer_id"], name: "fk_rails_c2426400ce", using: :btree
@@ -212,25 +229,26 @@ ActiveRecord::Schema.define(version: 20151117013228) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.string   "name",         limit: 255
-    t.string   "description",  limit: 255
-    t.text     "article",      limit: 65535
-    t.string   "cover_image",  limit: 255
-    t.integer  "owner_id",     limit: 4
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
-    t.boolean  "recommend",    limit: 1
-    t.boolean  "on_sale",      limit: 1
-    t.decimal  "price",                      precision: 8, scale: 2
-    t.integer  "storage",      limit: 4
-    t.integer  "sales",        limit: 4
-    t.integer  "status",       limit: 4
-    t.integer  "priority",     limit: 4
-    t.integer  "supplier_id",  limit: 4
-    t.integer  "category_id",  limit: 4
-    t.string   "barcode",      limit: 255
-    t.decimal  "origin_price",               precision: 8, scale: 2
-    t.string   "type",         limit: 255
+    t.string   "name",            limit: 255
+    t.string   "description",     limit: 255
+    t.text     "article",         limit: 65535
+    t.string   "cover_image",     limit: 255
+    t.integer  "owner_id",        limit: 4
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
+    t.boolean  "recommend",       limit: 1
+    t.boolean  "on_sale",         limit: 1
+    t.decimal  "price",                         precision: 8, scale: 2
+    t.integer  "storage",         limit: 4
+    t.integer  "sales",           limit: 4
+    t.integer  "status",          limit: 4
+    t.integer  "priority",        limit: 4
+    t.integer  "supplier_id",     limit: 4
+    t.integer  "category_id",     limit: 4
+    t.string   "barcode",         limit: 255
+    t.decimal  "origin_price",                  precision: 8, scale: 2
+    t.string   "type",            limit: 255
+    t.boolean  "is_crowdfunding", limit: 1
   end
 
   add_index "products", ["name", "description", "article"], name: "fulltext_index", type: :fulltext
@@ -343,6 +361,7 @@ ActiveRecord::Schema.define(version: 20151117013228) do
     t.string   "introducer_token",       limit: 255
     t.integer  "supplier_id",            limit: 4
     t.decimal  "balance",                            precision: 8, scale: 2
+    t.string   "location",               limit: 255
   end
 
   add_index "users", ["group_id"], name: "index_users_on_group_id", using: :btree

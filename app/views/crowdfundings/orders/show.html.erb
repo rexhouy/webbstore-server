@@ -1,0 +1,113 @@
+<article class="row main">
+  <div class="order-detail" style="margin-bottom: 20px;">
+    <section>
+      <h2 class="pull-left inherit-height table-center-wrap" style="font-size: 20px;margin-top: 0;margin-bottom: 4px;">
+        <span class="table-center"><%=@order.name%></span>
+      </h2>
+    </section>
+    <section>
+      <h3>状态</h3>
+      <div><%= crowdfunding_status @crowdfunding  %>, <%= payment_status @order%></div>
+    </section>
+    <section>
+      <h3>商品</h3>
+      <table class="table" style="max-width: 600px">
+        <thead>
+          <tr>
+            <th>数量</th><th>项目</th><th class="number-align">单价</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @order.orders_products.each do |orders_products| %>
+            <tr>
+              <td><%= orders_products.count %></td>
+              <td>
+                <a href="/products/<%= orders_products.product.id %>">
+                  <%= orders_products.product.name %> <%= orders_products.specification.value if orders_products.specification.present?%>
+                </a>
+              </td>
+              <td class="number-align"><%= number_to_currency orders_products.price, locale: :'zh-CN', precision: 2 %></td>
+            </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3" class="number-align">
+              总价：<%= number_to_currency @order.subtotal, locale: :'zh-CN', precision: 2 %>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </section>
+    <section>
+      <h3>订单编号</h3>
+      <div><%= @order.order_id %></div>
+    </section>
+    <section>
+      <h3>付款方式</h3>
+      <div><%= payment_name @order %></div>
+    </section>
+    <section>
+      <h3>支付信息</h3>
+      <table class="table table-bordered" style="max-width: 600px">
+        <thead>
+          <tr>
+            <th>订单总价</th><th>定金</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= number_to_currency @order.subtotal, locale: :'zh-CN', precision: 2 %></td>
+            <td><%= number_to_currency @order.subtotal * @crowdfunding.prepayment / 100, locale: :'zh-CN', precision: 2 %></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <h3>配送信息</h3>
+      <address class="address" style="border:none;">
+        <div class="header">
+          <span class="pull-left name"><%= @order.contact_name %></span>
+          <span class="pull-right"><%= phone_number @order.contact_tel %></span>
+        </div>
+        <div><%= @order.contact_address %></div>
+      </address>
+    </section>
+    <section>
+      <h3>留言</h3>
+      <p><%= @order.memo %></p>
+    </section>
+    <section>
+      <h3>历史</h3>
+      <table class="table" style="max-width: 600px">
+        <thead>
+          <tr>
+            <th>时间</th><th>状态</th><th>操作人</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @order.order_histories.each do |hist| %>
+            <tr>
+              <td><%= display_datetime hist.time %></td>
+              <td><%= order_history_status hist %></td>
+              <td><%= order_status_change_operator hist %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <% if @order.paid? && @crowdfunding.succeed? %>
+      <a class="btn btn-primary btn-block" target="_self" href="<%=@url%>">支付剩余金额</a>
+      <% end %>
+
+      <% if @order.placed? %>
+      <a class="btn btn-primary btn-block" target="_self" href="<%=@url%>">支付定金</a>
+      <br>
+      <%= link_to "取消订单", "/crowdfundings/orders/#{@order.id}/cancel", method: "PUT", class: "btn btn-danger btn-block"%>
+      <% end %>
+    </section>
+  </div>
+
+</article>

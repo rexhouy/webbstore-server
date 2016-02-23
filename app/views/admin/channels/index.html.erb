@@ -43,9 +43,9 @@
   </tbody>
   <tfoot>
     <tr>
-      <td colspan="6">
+      <td colspan="6" class="table-footer">
         <%= page_info @channels %>
-        <%= will_paginate @channels, page_links: false %>
+        <%= will_paginate @channels, class: "apple_pagination" %>
       </td>
     </tr>
     </tfoot>

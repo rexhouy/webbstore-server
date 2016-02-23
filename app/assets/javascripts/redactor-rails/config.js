@@ -10,6 +10,14 @@
                         "imageUpload":"/admin/image?" + params,
                         "lang":"zh_cn"
                 });
+                $('#retail_product_article').redactor({
+                        "imageUpload":"/admin/image?" + params,
+                        "lang":"zh_cn"
+                });
+                $('#wholesale_product_article').redactor({
+                        "imageUpload":"/admin/image?" + params,
+                        "lang":"zh_cn"
+                });
                 $('#article_content').redactor({
                         "imageUpload":"/admin/image?" + params,
                         "lang":"zh_cn"

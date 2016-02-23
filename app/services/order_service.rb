@@ -53,6 +53,18 @@ class OrderService
                 order
         end
 
+        def cancel_automate
+                Order.transaction do
+                        # insert order history
+                        ActiveRecord::Base.connection.execute %Q(
+                              insert into order_histories(order_id, status, time)
+                             (select id, 5, now() from orders where addtime(created_at, '#{Rails.application.config.order_alive_duration}:0:0') < now() and status = 0))
+                        # update order status
+                        Order.where("addtime(created_at, '#{Rails.application.config.order_alive_duration}:0:0') < now()").where(status: Order.statuses[:placed])
+                                .update_all(status: Order.statuses[:canceled])
+                end
+        end
+
         private
         def update_product_sales(orders_products, func)
                 orders_products.each do |order_product|

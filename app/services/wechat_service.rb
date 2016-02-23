@@ -8,11 +8,11 @@ class WechatService
         WECHAT = Config::PAYMENT["weixin"]
         WECHAT_NOTIFY = WECHAT["notify"]
 
-        def pay(order, client_ip, open_id, code, user)
+        def pay(order, client_ip, open_id, code, user, fee)
                 Rails.logger.debug "Start handle wechat payment, client_ip: #{client_ip}, code: #{code}"
                 open_id ||= get_open_id(code)
                 user.update(wechat_openid: open_id)
-                prepay_id = get_prepay_id(order, client_ip, open_id)
+                prepay_id = get_prepay_id(order, client_ip, open_id, fee)
                 gen_result(prepay_id)
         end
 
@@ -61,12 +61,12 @@ class WechatService
                 }.join("&")
         end
 
-        def get_prepay_id(order, client_ip, open_id)
+        def get_prepay_id(order, client_ip, open_id, fee)
                 http = Net::HTTP.new(WECHAT["prepay"]["host"], WECHAT["prepay"]["port"])
                 http.use_ssl = true
                 http.set_debug_output(Rails.logger)
                 req = Net::HTTP::Post.new(WECHAT["prepay"]["path"])
-                req.body = prepay_id_request_param(order, client_ip, open_id)
+                req.body = prepay_id_request_param(order, client_ip, open_id, fee)
                 resp = http.request(req)
                 Rails.logger.debug "Get prepay id response: #{resp.body}"
                 resp_xml = Hash.from_xml(resp.body.gsub("\n", ""))
@@ -74,7 +74,7 @@ class WechatService
                 nil
         end
 
-        def prepay_id_request_param(order, client_ip, open_id)
+        def prepay_id_request_param(order, client_ip, open_id, fee)
                 params = {
                         appid: WECHAT["appid"].to_s,
                         mch_id: WECHAT["mch_id"].to_s,
@@ -82,7 +82,7 @@ class WechatService
                         body: order.name[0..30],
                         detail: order.detail,
                         out_trade_no: order.order_id,
-                        total_fee: ((order.subtotal - order.coupon_amount - order.user_account_balance) * 100).to_i.to_s,
+                        total_fee: fee || ((order.subtotal - order.coupon_amount - order.user_account_balance) * 100).to_i.to_s,
                         spbill_create_ip: client_ip,
                         notify_url: WECHAT["notify_url"],
                         trade_type: "JSAPI",

@@ -34,9 +34,9 @@
   </tbody>
   <tfoot>
     <tr>
-      <td colspan="5">
+      <td colspan="5" class="table-footer">
         <%= page_info @user_coupons %>
-        <%= will_paginate @user_coupons, page_links: false %>
+        <%= will_paginate @user_coupons, class: "apple_pagination" %>
       </td>
     </tr>
   </tfoot>

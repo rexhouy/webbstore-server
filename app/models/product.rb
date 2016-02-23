@@ -5,6 +5,12 @@ class Product < ActiveRecord::Base
         belongs_to :category
         has_many :specifications, -> { where(status: Specification.statuses[:available]) }
         accepts_nested_attributes_for :specifications
+        has_one :crowdfunding, autosave: true
+        accepts_nested_attributes_for :crowdfunding, allow_destroy: true, reject_if: :not_crowdfunding?
+
+        def not_crowdfunding?(attr)
+                !self.is_crowdfunding
+        end
 
         # full text index
         include Elasticsearch::Model
@@ -24,6 +30,14 @@ class Product < ActiveRecord::Base
         validates :price, presence: true, numericality: true
         validates :article, presence: true
         validate :check_specifications
+
+        def self.retail
+                where(is_crowdfunding: false)
+        end
+
+        def self.wholesale
+                where(is_crowdfunding: true)
+        end
 
         def self.recommend
                 where(recommend: true, on_sale: true, status: Product.statuses[:available])
@@ -46,7 +60,7 @@ class Product < ActiveRecord::Base
                 all
         end
 
-        def self.search_by_owner(search_text, owner)
+        def self.search_by_owner(search_text, owner, is_crowdfunding)
                 search_params = {
                         query: {
                                 match: { name: search_text }
@@ -57,7 +71,8 @@ class Product < ActiveRecord::Base
                                 bool: {
                                         must: [
                                                { term: {owner_id: owner} },
-                                               { term: { status: "available"} }
+                                               { term: { status: "available"} },
+                                               { term: { is_crowdfunding: is_crowdfunding} }
                                               ]
                                 }
                         }

@@ -41,9 +41,9 @@
   </tbody>
   <tfoot>
     <tr>
-      <td colspan="6">
+      <td colspan="6" class="table-footer">
         <%= page_info @groups %>
-        <%= will_paginate @groups, page_links: false %>
+        <%= will_paginate @groups, class: "apple_pagination" %>
       </td>
     </tr>
     </tfoot>

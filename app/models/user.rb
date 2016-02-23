@@ -60,7 +60,6 @@ class User < ActiveRecord::Base
         private
         def set_default_value
                 self.role ||= User.roles[:customer]
-                p "++++++++++++++++++++++++++++++++"
                 self.status = User.statuses[:active]
                 self.introducer_token = SecureRandom.hex(8)
                 self.balance = 0

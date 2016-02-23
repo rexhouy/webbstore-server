@@ -36,6 +36,7 @@
       <th>用户</th>
       <th class="number">总价</th>
       <th>状态</th>
+      <th>类型</th>
       <th>支付方式</th>
       <th>创建时间</th>
       <th>操作</th>
@@ -48,6 +49,7 @@
         <td><%= order.customer.tel  %></td>
         <td class="number"><%= number_to_currency order.subtotal, locale: :'zh-CN', precision: 2  %></td>
         <td><%= order_status order %></td>
+        <td><%= order.is_crowdfunding ? "众筹订单" : "普通订单" %></td>
         <td><%= order_payment order %></td>
         <td><%= display_datetime order.created_at %></td>
         <td>
@@ -60,9 +62,9 @@
   </tbody>
   <tfooter>
     <tr>
-      <td colspan="6">
+      <td colspan="6" class="table-footer">
         <%= page_info @orders %>
-        <%= will_paginate @orders, page_links: false %>
+        <%= will_paginate @orders, class: "apple_pagination" %>
       </td>
     </tr>
   </tfooter>

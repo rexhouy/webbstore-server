@@ -1,0 +1,87 @@
+<% unless flash["info"].nil? %>
+<div class="alert alert-danger" role="alert">
+  <strong><%= flash["info"] %></strong>
+</div>
+<% end %>
+
+<div class="row">
+  <p class="col-sm-12">本商品<%=@product.crowdfunding.threshold_per_trade%>KG起卖，在<%=display_date_zh @product.crowdfunding.start_date%>至<%=display_date_zh @product.crowdfunding.end_date%>期间筹集满<%=@product.crowdfunding.threshold%>KG后于<%=display_date_zh @product.crowdfunding.delivery_date%>发货。</p>
+  <p class="col-sm-12">确认购买后我们向您收取购买总价<%=@product.crowdfunding.prepayment%>%的定金，订单成立后在发货前我们将向您收取剩余费用。如果众筹失败，我们会将定金退还给您。</p>
+  <div class="col-sm-6 no-small-screen">
+    <div class="crowdfunding-card">
+      <div class="card-container">
+        <div class="top">
+          <div class="title">
+            <h3><%=@product.name%></h3>
+            <div class="desc"><%=@product.description%></div>
+            <div class="price">&yen; <%=crowdfunding_product_price @product%></div>
+          </div>
+          <div class="image">
+            <%=image_tag @product.cover_image%>
+          </div>
+        </div>
+        <div class="middle">
+          <div class="progress-desc"><%=corwdfunding_progress @product%><small>%</small> <span>（已筹集）<span></div>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="<%=corwdfunding_progress @product%>" aria-valuemin="0" aria-valuemax="100" style="width: <%=corwdfunding_progress @product%>%;">
+              <span class="sr-only"><%=corwdfunding_progress @product%>% Complete</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= form_tag :crowdfundings_create_order, class: "form col-sm-6 col-xs-12", method: "POST" do%>
+  <input type="hidden" name="id" value="<%=@product.id%>">
+  <div class="form-group">
+    <label class="control-label">购买数量：</label>
+    <input type="number" name="count" min="<%=@product.crowdfunding.threshold_per_trade%>" step="1" required class="form-control" >
+  </div>
+  <div class="form-group">
+    <label class="control-label">联系人姓名：</label>
+    <input type="text" name="contact_name" class="form-control" required>
+  </div>
+  <div class="form-group">
+    <label class="control-label">联系人电话：</label>
+    <input type="tel" name="contact_tel" required class="form-control" required>
+  </div>
+  <div class="form-group">
+    <label class="control-label">送货地址：</label>
+    <div class="input-group">
+      <span class="input-group-addon" id="userLocation"><%=current_user.location%></span>
+      <input type="text" name="contact_address" required class="form-control" required>
+    </div>
+  </div>
+  <input type="hidden" name="payment_type" id="paymentType">
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+    <button type="confirm" class="btn btn-primary">确认购买</button>
+  </div>
+  <% end %>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="positionSelector">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">请选择送货地址</h4>
+      </div>
+      <div class="modal-body">
+        <div class="confirm-content">
+          <div class="selectable" data="北京市">
+            <span>北京</span>
+            <i class="glyphicon glyphicon-ok-sign pull-right"></i>
+          </div>
+          <div class="selectable" data="昆明市">
+            <span>昆明</span>
+            <i class="glyphicon glyphicon-ok-sign pull-right"></i>
+          </div>
+        </div>
+        <p>* 该地址选择后无法更改，请慎重选择！</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="product.locationSelected()">确定</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

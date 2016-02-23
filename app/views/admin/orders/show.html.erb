@@ -31,6 +31,12 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="col-sm-2 control-label">类型</label>
+      <div class="col-sm-9">
+        <p class="form-control-static"><%= @order.is_crowdfunding ? "众筹订单" : "普通订单" %></p>
+      </div>
+    </div>
+    <div class="form-group">
       <label class="col-sm-2 control-label">支付方式</label>
       <div class="col-sm-9">
         <p class="form-control-static"><%= order_payment @order %></p>

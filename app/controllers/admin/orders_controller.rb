@@ -16,6 +16,10 @@ class Admin::OrdersController < AdminController
         end
 
         def show
+                if @order.is_crowdfunding
+                        @crowdfunding = @order.orders_products[0].product.crowdfunding
+                        render :crowdfunding_order
+                end
         end
 
         def cancel

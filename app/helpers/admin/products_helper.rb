@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module Admin::ProductsHelper
 
         def supplier_options(selected)
@@ -21,4 +22,14 @@ module Admin::ProductsHelper
                 end
                 options.html_safe
         end
+
+        def product_type(product)
+                return "普通商品" unless product.is_crowdfunding
+                "众筹商品"
+        end
+
+        def crowdfunding_status(product)
+                100 * product.sales / product.crowdfunding.threshold
+        end
+
 end

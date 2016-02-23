@@ -1,0 +1,17 @@
+<div class="row order-main">
+  <ul class="no-list-style order-list">
+    <% @orders.each do |order| %>
+      <li class="order">
+        <h3>
+          <%= order.name %>
+          <%=link_to "查看", crowdfundings_order_url(order), class: "pull-right btn", style: "position:relative;top:-8px;"%>
+        </h3>
+        <div style="overflow: hidden; width: 100%;">
+          <span class="pull-left"><%= crowdfunding_status order.orders_products[0].product.crowdfunding  %>, <%= payment_status order%></span>
+          <span class="pull-right"><%= display_date order.created_at %></span>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+  <%= paginate "/orders/#{@type}", @orders %>
+</div>

@@ -35,7 +35,7 @@ class TradeService
                 trade.group_id = order.seller_id
                 trade.time = trade_time
                 trade.type = trade_type(order)
-                trade.trade_no = trade_no(order.payment)
+                trade.trade_no = trade_no(order.payments[0])
                 split_trade_by_supplier(trade, order)
         end
         private

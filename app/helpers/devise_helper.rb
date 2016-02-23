@@ -22,7 +22,7 @@ module DeviseHelper
                 errors = resource.errors.empty? ? flash_alerts : resource.errors.full_messages
 
                 messages = errors.map { |msg|
-                        content_tag(:li, msg).gsub(/Password/, "密码").gsub(/Tel/, "手机号")
+                        content_tag(:li, msg)
                 }.join
 
                 html = <<-HTML

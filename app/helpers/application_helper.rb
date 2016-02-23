@@ -100,4 +100,16 @@ module ApplicationHelper
                 session[:index_path] || default
         end
 
+        def crowdfunding_product_price(product)
+                price = "#{product.crowdfunding.price_km}起"
+                if current_user
+                        if current_user.location.eql?("北京市")
+                                price = product.crowdfunding.price_bj
+                        elsif current_user.location.eql?("昆明市")
+                                price = product.crowdfunding.price_km
+                        end
+                end
+                price
+        end
+
 end

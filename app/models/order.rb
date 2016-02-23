@@ -2,13 +2,13 @@
 class Order < ActiveRecord::Base
         belongs_to :seller, class_name: "Group", foreign_key: :seller_id
         belongs_to :customer, class_name: "User", foreign_key: :customer_id
-        has_one :payment
+        has_many :payments
         has_one :user_coupon
         has_many :cards
         has_many :order_histories
         has_many :orders_products, class_name: "OrdersProducts", foreign_key: :order_id, autosave: true
 
-        enum status: [:placed, :paid, :shipping, :delivered, :canceled]
+        enum status: [:placed, :paid, :shipping, :delivered, :canceled, :crowdfunding_paid]
         enum payment_type: [:wechat, :alipay, :offline_pay]
 
         def self.owner(owner)
@@ -32,6 +32,10 @@ class Order < ActiveRecord::Base
                 when "finished"
                         return where(status: statuses[:delivered])
                 end
+        end
+
+        def self.crowdfunding
+                where(is_crowdfunding: true)
         end
 
         def self.search(order_id_or_tel, order_date)

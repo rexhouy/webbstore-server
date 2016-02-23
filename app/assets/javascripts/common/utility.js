@@ -31,6 +31,14 @@
                                 params[kvPair[0]] = kvPair[1];
                         });
                         return params[name];
+                },
+                isWechat: function() {
+                        var ua = window.navigator.userAgent.toLowerCase();
+                        if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+                                return true;
+                        }else{
+                                return false;
+                        }
                 }
         };
 })();
