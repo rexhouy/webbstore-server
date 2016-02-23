@@ -45,7 +45,6 @@ class Crowdfundings::OrdersController < CrowdfundingsController
         private
         ## Redirect to a view and let the view handle the payment.
         def payment_redirect_url(order)
-                return "/crowdfundings/orders/#{order.id}" if order.paid?
                 return "https://#{Rails.application.config.domain}/payment/alipay/redirect?id=#{order.id}" if order.alipay?
                 if order.wechat?
                         if current_user.wechat_openid.present?

@@ -81,7 +81,7 @@ class WechatService
                         nonce_str: Random::DEFAULT.rand(10 ** 16).to_s,
                         body: order.name[0..30],
                         detail: order.detail,
-                        out_trade_no: order.order_id,
+                        out_trade_no: out_trade_no(order),
                         total_fee: fee || ((order.subtotal - order.coupon_amount - order.user_account_balance) * 100).to_i.to_s,
                         spbill_create_ip: client_ip,
                         notify_url: WECHAT["notify_url"],
@@ -139,6 +139,11 @@ class WechatService
                 resp = http.request(req)
                 Rails.logger.debug "Get access_token response: #{resp.body}"
                 JSON.parse(resp.body)["token"]
+        end
+
+        def out_trade_no(order)
+                return order.order_id + "x" if order.is_crowdfundings && order.paid?
+                order.order_id
         end
 
 end

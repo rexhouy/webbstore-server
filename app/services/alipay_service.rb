@@ -14,7 +14,7 @@ class AlipayService
                         _input_charset: "utf-8",
                         notify_url: MOBILE_PAY["notify_url"],
                         return_url: MOBILE_PAY["return_url"],
-                        out_trade_no: order.order_id,
+                        out_trade_no: out_trade_no(order),
                         subject: order.name,
                         total_fee: fee || sprintf("%0.2f", order.subtotal - order.coupon_amount - order.user_account_balance),
                         seller_id: ALIPAY["seller_id"],
@@ -27,6 +27,10 @@ class AlipayService
         end
 
         private
+        def out_trade_no(order)
+                return order.order_id + "x" if order.is_crowdfundings && order.paid?
+                order.order_id
+        end
         def sign(params)
                 sign_param = params.keys.sort.reduce("") do |param_string, key|
                         value = params[key]
