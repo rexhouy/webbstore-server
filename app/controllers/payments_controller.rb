@@ -47,7 +47,8 @@ class PaymentsController < ApiController
         end
 
         def alipay_front_notify
-                @order = Order.find_by_order_id(params[:out_trade_no])
+                out_trade_no = params[:out_trade_no].end_with?("x") ? params[:out_trade_no][0...-1] : params[:out_trade_no]
+                @order = Order.find_by_order_id(out_trade_no)
                 @success = ["TRADE_FINISHED", "TRADE_SUCCESS"].include?(params[:trade_status])
                 render "result", layout: false
         end
