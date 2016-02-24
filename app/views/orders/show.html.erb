@@ -101,7 +101,7 @@
 
     <section>
       <% if @order.immediate_order? && @order.placed? && @order.offline_pay? && current_user.waiter? %>
-      <%= link_to "确认支付完成", "/orders/#{@order.id}/confirm_payment", method: "POST", class: "btn btn-primary btn-block", data: {confirm: "确定已经完成收款？"} %>
+        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#receiveModal">确认支付完成</button>
       <% end %>
     </section>
 
@@ -120,3 +120,36 @@
   </div>
 
 </article>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="receiveModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <%= form_tag "/orders/#{@order.id}/confirm_payment", method: "POST" do%>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">支付确认</h4>
+      </div>
+      <div class="modal-body form">
+
+        <div class="form-group">
+          <label for="receive">实收金额</label>
+          <div class="input-group">
+            <span class="input-group-addon">￥</span>
+            <input type="number" id="receive" class="form-control" name="receive">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="memo">备注</label>
+          <textarea name="memo" class="form-control"></textarea>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" class="btn btn-primary">确定</button>
+      </div>
+      <% end %>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

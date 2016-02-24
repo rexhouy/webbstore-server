@@ -30,6 +30,11 @@
                         var isReserve = order_type == "reserve";
                         var isImmediate = order_type == "immediate";
                         var isTakeout = order_type == "takeout";
+                        var hasTableNo = $("#tableNo")[0];
+                        if (hasTableNo && !$("#tableNo").val()) {
+                                alert("请输入桌号！");
+                                return false;
+                        }
                         if (paymentType == null) {
                                 alert("请选择支付方式!");
                                 return false;

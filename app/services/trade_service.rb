@@ -36,7 +36,9 @@ class TradeService
                 trade.time = trade_time
                 trade.type = trade_type(order)
                 trade.trade_no = trade_no(order.payment)
-                split_trade_by_supplier(trade, order)
+                # split_trade_by_supplier(trade, order)
+                trade.receipt = order.receive || order.subtotal
+                [trade]
         end
         private
         ## An order may contain many products from different suppliers. Split order into multiple trades grouped by supplier.

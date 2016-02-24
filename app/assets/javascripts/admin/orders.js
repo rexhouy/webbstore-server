@@ -19,6 +19,17 @@
         };
         window.cards = cards();
 
+        var orders = function() {
+                var self = {};
+
+                self.confirmPayment = function() {
+
+                };
+
+                return self;
+        };
+        window.orders = orders();
+
         $(function () {
                 $('[data-toggle="popover"]').popover();
         });

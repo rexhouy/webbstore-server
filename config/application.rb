@@ -33,6 +33,9 @@ module Webstore
                 config.owner = 1
 	        config.domain = "catering.tenhs.com"
 	        config.name = "拾惠社餐饮"
+	        config.location = "北京市中关村科技园平谷分园"
+	        config.tel = 12345678901
+	        config.payment = {alipay: true, wechat: false, offline_pay: true}
 
         end
 end

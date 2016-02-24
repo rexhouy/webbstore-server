@@ -3,8 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title><%=Rails.application.config.name%></title>
-    <meta name="description" content="科技农业，绿色生活">
-    <meta name="Keywords" content="生态食品 绿色食品 拾惠社">
     <meta name="viewport" content="width=device-width,user-scalable=no">
     <link href="<%=image_url('favicon.ico')%>" rel="icon">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
@@ -42,9 +40,9 @@
           </div>
           <!-- Description area -->
           <div class="header-description row">
-            <address><span class="glyphicon glyphicon-map-marker"></span> 北京市中关村科技园平谷分园</address>
+            <address><span class="glyphicon glyphicon-map-marker"></span> <%=Rails.application.config.location%></address>
           </div>
-          <a href="tel:+8612345678901" class="fab home-fab"><i class="glyphicon glyphicon-earphone"></i></a>
+          <a href="tel:+<%=Rails.application.config.tel%>" class="fab home-fab"><i class="glyphicon glyphicon-earphone"></i></a>
         </div>
       </div>
     </header>

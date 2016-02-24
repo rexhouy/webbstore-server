@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160201012907) do
+ActiveRecord::Schema.define(version: 20160224052717) do
 
   create_table "account_balance_histories", force: :cascade do |t|
     t.decimal  "receipt",                 precision: 8, scale: 2
@@ -198,6 +198,8 @@ ActiveRecord::Schema.define(version: 20160201012907) do
     t.integer  "simple_order_no",      limit: 4
     t.string   "print_index",          limit: 255
     t.integer  "dinning_table_id",     limit: 4
+    t.decimal  "receive",                            precision: 8,  scale: 2
+    t.text     "payment_memo",         limit: 65535
   end
 
   add_index "orders", ["customer_id"], name: "fk_rails_c2426400ce", using: :btree

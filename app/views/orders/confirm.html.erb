@@ -16,6 +16,11 @@
     <% section_index = 0 %>
     <%= render partial: "products", locals: {index: section_index+=1}%>
 
+    <!-- 桌台号 -->
+    <% if current_user.waiter? %>
+    <%= render partial: "table_no", locals: {index: section_index+=1}%>
+    <% end %>
+
     <!-- 配送 -->
     <% if reserve? %>
       <%= render partial: "order_info", locals: {index: section_index+=1}%>

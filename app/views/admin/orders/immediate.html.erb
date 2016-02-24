@@ -5,7 +5,11 @@
 <li role="presentation"><a href="/admin/reservations" role="tab">预订订单</a></li>
 </ul>
 
+
+
 <div class="tab-content">
+  <%= link_to "今天", "/admin/immediate_orders", class: "filter-link" %>
+  <%= link_to "查看所有历史订单", "/admin/immediate_orders?all=true", class: "filter-link" %>
   <table class="table">
     <thead>
       <tr>
@@ -18,7 +22,7 @@
     <tbody>
       <% @orders.each_with_index do |order, index| %>
         <tr>
-          <td><%= order.dinning_table.table_no if order.dinning_table_id.present?  %></td>
+          <td><%= order.dinning_table.table_no if order.dinning_table.present?  %></td>
           <td><%= payment_status order %></td>
           <td><%= display_datetime order.created_at %></td>
           <td>
@@ -31,7 +35,7 @@
 </tbody>
 <tfooter>
   <tr>
-    <td colspan="6">
+    <td colspan="5">
       <%= page_info @orders %>
       <%= will_paginate @orders, page_links: false %>
     </td>

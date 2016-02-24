@@ -13,6 +13,9 @@ class Admin::OrdersController < AdminController
         end
 
         def immediate
+                unless params[:all] #
+                        params[:order_date] = Time.now.strftime("%Y-%m-%d")
+                end
                 search_or_list(ImmediateOrder)
         end
 
@@ -114,9 +117,9 @@ class Admin::OrdersController < AdminController
                 @order_date = params[:order_date] || ""
                 if @order_id_or_tel.blank? && @order_date.blank?
                         @type = params[:type] || "wait_shipping"
-                        @orders = clazz.type(@type).owner(owner).paginate(page: params[:page])
+                        @orders = clazz.type(@type).owner(owner).order(id: :desc).paginate(page: params[:page])
                 else
-                        @orders = clazz.search(@order_id_or_tel, @order_date).owner(owner).paginate(page: params[:page])
+                        @orders = clazz.search(@order_id_or_tel, @order_date).owner(owner).order(id: :desc).paginate(page: params[:page])
                 end
         end
         def set_order

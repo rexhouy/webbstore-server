@@ -21,7 +21,7 @@ class OrdersController < ApiController
 
         def confirm_payment
                 render_404 unless current_user.waiter?
-                OrderService.new.payment_succeed(@order.order_id, "")
+                OrderService.new.payment_succeed(@order.order_id, "", params[:receive], params[:memo])
                 redirect_to "/orders/#{@order.id}"
         end
 
@@ -64,8 +64,8 @@ class OrdersController < ApiController
                                                                          params[:paymentType],
                                                                          params[:use_coupon],
                                                                          params[:use_account_balance].eql?("true"),
-                                                                         session[:dinning_table_id],
-                                                                         session[:shop_id],
+                                                                         session[:dinning_table_id] || params[:dinning_table_id],
+                                                                         session[:shop_id] || Rails.application.config.owner,
                                                                          current_user)
                         end
                         clear_cart

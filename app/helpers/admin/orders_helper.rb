@@ -40,4 +40,11 @@ module Admin::OrdersHelper
                 "未支付"
         end
 
+        def receive_amount(order)
+                return "" unless order.paid? || order.shipping? || order.delivered?
+                amount = order.subtotal
+                amount = order.receive if order.receive.present?
+                number_to_currency amount, locale: :'zh-CN', precision: 2
+        end
+
 end
