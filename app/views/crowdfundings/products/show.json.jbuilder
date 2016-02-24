@@ -1,1 +1,1 @@
-json.price crowdfunding_product_price(product)
+json.price crowdfunding_product_price(@product)

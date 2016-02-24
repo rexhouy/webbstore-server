@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 class Crowdfundings::OrdersController < CrowdfundingsController
 
+        before_action :authenticate_user!
+
         def create
                 begin
-                        order = CrowdfundingOrderService.new.create(params[:id], params[:count], params[:contact_address],
+                        order = CrowdfundingOrderService.new.create(params[:id], params[:count], current_user.location+params[:contact_address],
                                                                     params[:contact_name], params[:contact_tel], params[:payment_type], current_user)
                         redirect_to payment_redirect_url(order)
                 rescue => e
