@@ -75,6 +75,7 @@ class WechatService
         end
 
         def prepay_id_request_param(order, client_ip, open_id, fee)
+                fee = fee * 100 if fee
                 params = {
                         appid: WECHAT["appid"].to_s,
                         mch_id: WECHAT["mch_id"].to_s,
