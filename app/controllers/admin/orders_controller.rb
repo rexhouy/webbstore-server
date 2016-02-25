@@ -111,6 +111,12 @@ class Admin::OrdersController < AdminController
                 redirect_to :admin_orders_cards, notice: "确认发货成功！"
         end
 
+        def confirm_payment
+                @order = Order.find(params[:id])
+                OrderService.new.payment_succeed(@order.order_id, "", params[:receive], params[:memo])
+                redirect_to admin_order_url(@order)
+        end
+
         private
         def search_or_list(clazz)
                 @order_id_or_tel = params[:order_id_or_tel] || ""

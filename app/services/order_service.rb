@@ -57,9 +57,9 @@ class OrderService
                 if order.placed?
                         Order.transaction do
                                 if  receive.nil?
-                                        order.update(status: Order.statuses[:paid])
+                                        order.update(status: Order.statuses[:delivered])
                                 else
-                                        order.update(status: Order.statuses[:paid], receive: receive, payment_memo: memo)
+                                        order.update(status: Order.statuses[:delivered], receive: receive, payment_memo: memo)
                                 end
                                 create_order_history(order, nil)
                                 create_payment(order, payment)

@@ -9,7 +9,7 @@ class ProductsController < ApiController
                 if @category.present? && @category.group_id.eql?(owner)
                         session[:category] = @category
                 else
-                        @category = nil
+                        @category = ""
                         category_id = "recommendation"
                 end
                 respond_to do |format|

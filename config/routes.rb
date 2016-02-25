@@ -114,6 +114,7 @@ Rails.application.routes.draw do
                 get "orders/cards" => "orders#cards", as: :orders_cards # cards
                 get "orders/cards/:id" => "orders#card"
                 put "orders/cards/deliver/:id" => "orders#card_deliver"
+                post "orders/:id/confirm_payment" => "orders#confirm_payment"
                 resources :orders
                 get "takeout_orders" => "orders#takeout", as: :takeout_orders
                 get "immediate_orders" => "orders#immediate", as: :immediate_orders
