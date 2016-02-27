@@ -9,4 +9,4 @@ test:
 
 production:
   base_url: http://uploads.tenhs.com/
-  storage_path: /home/admin/uploads/
+  storage_path: /home/app/uploads/
