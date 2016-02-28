@@ -31,10 +31,10 @@ module Webstore
 
                 # Define which owner this app belongs to.
                 config.owner = 1
-	        config.domain = "catering.tenhs.com"
-	        config.name = "拾惠社餐饮"
-	        config.location = "北京市中关村科技园平谷分园"
-	        config.tel = 12345678901
+	        config.domain = ENV["WEBSITE_URL"] || "catering.tenhs.com"
+	        config.name = ENV["WEBSITE_NAME"] || "拾惠社餐饮"
+	        config.location = ENV["WEBSITE_ADDR"] || "北京市中关村科技园平谷分园"
+	        config.tel = ENV["WEBSITE_TEL"] || "12345678901"
 	        config.payment = {alipay: true, wechat: false, offline_pay: true}
 
         end

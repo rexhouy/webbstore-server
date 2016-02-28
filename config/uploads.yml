@@ -8,5 +8,5 @@ test:
   storage_path: /home/rexhouy/tmp/uploads/
 
 production:
-  base_url: http://uploads.tenhs.com/
-  storage_path: /home/admin/uploads/
+  base_url: <%=ENV['FILE_URL']%>
+  storage_path: <%=env['FILE_PATH']%>

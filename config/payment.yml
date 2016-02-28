@@ -6,8 +6,8 @@ ipaynow:
     appId: <%= ENV['WEBSTORE_IPAYNOW_APPID'] %>
     mhtOrderType: '01'
     mhtCurrencyType: 156
-    notifyUrl: https://www.tenhs.com/payment/notify
-    frontNotifyUrl: https://www.tenhs.com/payment/front_notify
+    notifyUrl: http://<%=ENV['WEBSITE_HOST']%>/payment/notify
+    frontNotifyUrl: http://<%=ENV['WEBSITE_HOST']%>/payment/front_notify
     mhtCharset: UTF-8
     deviceType: '06'
     mhtSignType: MD5
@@ -16,7 +16,7 @@ weixin:
   appid: <%= ENV['WECHAT_APP_ID'] %>
   appsecret: <%= ENV['WECHAT_APP_SECRET'] %>
   mch_id: <%= ENV['WECHAT_MCHID'] %>
-  notify_url: https://www.tenhs.com/payment/wechat/notify
+  notify_url: http://<%=ENV['WEBSITE_HOST']%>/payment/wechat/notify
   access_token_url: http://wechat.tenhs.com/access_token
   prepay:
     host: api.mch.weixin.qq.com
@@ -49,5 +49,5 @@ alipay:
     url: https://mapi.alipay.com/gateway.do
     service: alipay.wap.create.direct.pay.by.user
     payment_type: 1
-    notify_url: https://www.tenhs.com/payment/alipay/notify
-    return_url: https://www.tenhs.com/payment/alipay/front_notify
+    notify_url: http://<%=ENV['WEBSITE_HOST']%>/payment/alipay/notify
+    return_url: http://<%=ENV['WEBSITE_HOST']%>/payment/alipay/front_notify
