@@ -1,1 +1,1 @@
-host: http://<%= ENV['ELASTICSEARCH_HOST'] %>:9200/
+host: <%= ENV['ELASTICSEARCH_URL'] %>

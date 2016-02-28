@@ -17,6 +17,7 @@ RUN rm /etc/nginx/sites-enabled/default
 
 # Add the nginx site and config
 ADD nginx.conf /etc/nginx/sites-enabled/webapp.conf
+ADD env.conf /etc/nginx/main.d/env.conf
 
 # Install bundle of gems
 WORKDIR /tmp

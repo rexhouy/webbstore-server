@@ -32,7 +32,7 @@ module Webstore
 
                 # Define which owner this app belongs to.
                 config.owner = 1
-	        config.domain = "www.tenhs.com"
+	        config.domain = ENV['WEBSITE_HOST']
 	        config.name = "拾惠社"
 	        config.order_alive_duration = 2
 
