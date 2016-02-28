@@ -9,4 +9,4 @@ test:
 
 production:
   base_url: <%=ENV['FILE_URL']%>
-  storage_path: <%=env['FILE_PATH']%>
+  storage_path: <%=ENV['FILE_PATH']%>
