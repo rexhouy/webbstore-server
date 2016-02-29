@@ -4,7 +4,7 @@ require "securerandom"
 class OrdersController < ApiController
 
         before_action :authenticate_user!
-        before_action :set_order, only: [:show, :confirm_payment, :cancel]
+        before_action :set_order, only: [:show, :confirm_payment, :cancel, :received]
 
         def index
                 @type = params[:type] || "takeout"
@@ -86,6 +86,11 @@ class OrdersController < ApiController
                         Rails.logger.error error
                         flash[error] = [@errors]
                 end
+                redirect_to action: "show", id: @order.id
+        end
+
+        def received
+                OrderService.new.change_status(@order, Order.statuses[:delivered], current_user.id)
                 redirect_to action: "show", id: @order.id
         end
 

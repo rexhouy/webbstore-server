@@ -2,7 +2,7 @@
 class Admin::DinningTablesController < AdminController
         # Checks authorization for all actions using cancan
         load_and_authorize_resource except: :create
-        before_action :set_table, only: [:show, :edit, :update, :destroy]
+        before_action :set_table, only: [:show, :edit, :update, :destroy, :qrcode]
 
         # GET /admin/tables
         # GET /admin/tables.json

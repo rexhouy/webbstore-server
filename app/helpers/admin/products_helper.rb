@@ -21,4 +21,9 @@ module Admin::ProductsHelper
                 end
                 options.html_safe
         end
+
+        def channel_check_boxes
+                collection_check_boxes(:product, :channel_ids, Channel.owner(current_user.id).where(id: [2, 3]), :id, :name)
+        end
+
 end

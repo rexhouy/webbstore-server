@@ -20,7 +20,7 @@ class ProductsController < ApiController
                                 render :index
                         }
                         format.json {
-                                @products = Product.owner(owner).category(@category).available.valid.order(priority: :desc).paginate(page: params[:page])
+                                @products = Product.owner(owner).category(@category).channel(session[:channel_id]).available.valid.order(priority: :desc).paginate(page: params[:page])
                                 @cart = get_cart
                         }
                 end
@@ -53,7 +53,7 @@ class ProductsController < ApiController
                                  href: "/products?category=recommendation",
                                  class: "recommendation".eql?(selected_category) ? "active" : ""
                          }]
-                Category.owner(owner).root.each do |category|
+                Channel.find(session["channel_id"]).categories.each do |category|
                         menus << {
                                 name: category.name,
                                 href: "/products?category=#{category.id}",

@@ -35,9 +35,9 @@ module Admin::OrdersHelper
         end
 
         def payment_status(order)
-                return "已支付" if order.paid? || order.shipping? || order.delivered?
+                return "已支付".html_safe if order.paid? || order.shipping? || order.delivered?
                 return "已取消" if order.canceled?
-                "未支付"
+                "<span class='text-danger'>未支付</span>".html_safe
         end
 
         def receive_amount(order)

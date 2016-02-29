@@ -57,7 +57,7 @@
     </div>
 
     <div class="vertical-btn-group" style="margin-top:16px;">
-      <%= submit_tag "确认", class: "btn btn-lg btn-primary btn-block", data: { disable_with: "请稍后..."} %>
+      <%= submit_tag "确认", class: "btn btn-lg btn-primary btn-block", onclick: "return reservations.check()" %>
     </div>
   </div>
   <% end %>

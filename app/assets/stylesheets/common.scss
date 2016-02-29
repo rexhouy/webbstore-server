@@ -16,7 +16,22 @@
 
     td.black { border-color: #000; }
     td.white { border-color: #fff; }
+    img {
+        width: 48px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 }
 .qr-code-center table {
     margin: 0 auto;
+}
+
+.checkbox-group {
+    padding: 8px 15px;
+    label {
+        padding: 0 4px;
+        margin-right: 20px;
+    }
 }

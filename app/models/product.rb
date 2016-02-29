@@ -3,6 +3,7 @@ class Product < ActiveRecord::Base
         belongs_to :owner, class_name: "Group", foreign_key: :owner_id
         belongs_to :supplier
         belongs_to :category
+        has_and_belongs_to_many :channels
         has_many :specifications, -> { where(status: Specification.statuses[:available]) }
         accepts_nested_attributes_for :specifications
 
@@ -43,6 +44,10 @@ class Product < ActiveRecord::Base
         def self.category(category)
                 return where(recommend: true) if category.blank?
                 return where(category_id: category)
+        end
+
+        def self.channel(channel_id)
+                joins(:channels).where("channels.id=?", channel_id)
         end
 
         def self.search_by_owner(search_text, owner)

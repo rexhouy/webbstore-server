@@ -13,10 +13,12 @@ class ApiController < ApplicationController
 
         def menu_type
                 session[:type] = "menu"
+                session[:channel_id] = 3
         end
 
         def takeout_type
                 session[:type] = "takeout"
+                session[:channel_id] = 2
         end
 
         def takeout?

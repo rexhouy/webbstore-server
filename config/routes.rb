@@ -64,6 +64,7 @@ Rails.application.routes.draw do
         get 'orders/:id' => 'orders#show'
         put 'orders/:id' => 'orders#cancel', as: :orders_cancel
         post "orders/:id/confirm_payment" => "orders#confirm_payment"
+        put "orders/:id/received" => "orders#received", as: :order_received
 
         # Payment
         get 'payment/wechat/redirect' => 'payments#wechat_redirect'

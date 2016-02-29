@@ -31,7 +31,6 @@ class AdminController < ApplicationController
                 @menus = [{url: admin_products_url, text: "商品", class: "", resource: Product },
                           {url: admin_immediate_orders_url, text: "订单", class: "", resource: Order },
                           {url: admin_trades_url, text: "交易", class: "", resource: Trade },
-                          {url: admin_channels_url, text: "CMS", class: "", resource: Channel },
                           {url: admin_dinning_tables_url, text: "桌台", class: "", resource: DinningTable },
                           {url: admin_groups_url, text: "店铺", class: "", resource: Group },
                           {url: admin_shops_url, text: "店铺", class: "", resource: Shop },

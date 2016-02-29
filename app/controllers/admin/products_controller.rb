@@ -91,7 +91,8 @@ class Admin::ProductsController < AdminController
 
         def product_params
                 params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale, :cover_image, :category_id, :priority, :supplier_id,
-                                                specifications_attributes: [:id, :name, :value, :price, :storage, :count])
+                                                specifications_attributes: [:id, :name, :value, :price, :storage, :count],
+                                                channel_ids: [])
         end
 
         def preview_params

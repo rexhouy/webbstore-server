@@ -38,7 +38,7 @@ class Admin::OrdersController < AdminController
         end
 
         def shipping
-                OrderService.new.change_status(@order, Order.statuses[:shipping], current_user.id)
+                OrderService.new.change_status(@order, Order.statuses[:shipping], current_user.id, params[:memo])
                 NotificationService.new.send_order_delivery_notify(@order, @order.customer)
                 redirect_to admin_order_path(@order), notice: "修改成功"
         end

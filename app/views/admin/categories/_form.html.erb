@@ -18,12 +18,11 @@
   </div>
 
   <div class="form-group">
-    <%= p.label :category_id, "所属类目", class: "col-sm-2 control-label"  %>
-    <div class="col-sm-4">
-      <%= p.select :category_id, category_options(p.object.category_id), {include_blank: true}, class: "form-control"%>
+    <%= p.label :channel_ids, "所属频道", class: "col-sm-2 control-label"  %>
+    <div class="col-sm-4 checkbox-group">
+      <%= channel_check_boxes %>
     </div>
   </div>
-
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">

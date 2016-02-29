@@ -103,6 +103,9 @@
       <% if @order.immediate_order? && @order.placed? && @order.offline_pay? && current_user.waiter? %>
         <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#receiveModal">确认支付完成</button>
       <% end %>
+      <% if @order.shipping? %>
+      <%=link_to "确认收货", order_received_url(@order), method: "PUT", class: "btn btn-primary btn-block" %>
+      <% end %>
     </section>
 
     <% if need_online_pay?(@order) || is_cancelable?(@order) %>

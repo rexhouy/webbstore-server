@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160224052717) do
+ActiveRecord::Schema.define(version: 20160229071909) do
 
   create_table "account_balance_histories", force: :cascade do |t|
     t.decimal  "receipt",                 precision: 8, scale: 2
@@ -91,6 +91,11 @@ ActiveRecord::Schema.define(version: 20160224052717) do
     t.integer  "priority",    limit: 4
   end
 
+  create_table "categories_channels", force: :cascade do |t|
+    t.integer "category_id", limit: 4
+    t.integer "channel_id",  limit: 4
+  end
+
   create_table "channels", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false
     t.datetime "created_at",             null: false
@@ -103,6 +108,11 @@ ActiveRecord::Schema.define(version: 20160224052717) do
   end
 
   add_index "channels", ["group_id"], name: "fk_rails_8011c05949", using: :btree
+
+  create_table "channels_products", force: :cascade do |t|
+    t.integer "product_id", limit: 4
+    t.integer "channel_id", limit: 4
+  end
 
   create_table "complain_histories", force: :cascade do |t|
     t.datetime "time"
@@ -200,6 +210,7 @@ ActiveRecord::Schema.define(version: 20160224052717) do
     t.integer  "dinning_table_id",     limit: 4
     t.decimal  "receive",                            precision: 8,  scale: 2
     t.text     "payment_memo",         limit: 65535
+    t.text     "shipping_memo",        limit: 65535
   end
 
   add_index "orders", ["customer_id"], name: "fk_rails_c2426400ce", using: :btree

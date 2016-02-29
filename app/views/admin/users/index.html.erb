@@ -5,7 +5,7 @@
     <%= text_field_tag :tel, @tel, class: "form-control", placeholder: "手机号" %>
   </div>
   <%= submit_tag "搜索", class: "btn btn-default" %>
-  <button type="reset" class="btn btn-default" >重置</button>
+  <button type="button" onclick="utility.resetForm(this)" class="btn btn-default" >重置</button>
 </form>
 
 <div>

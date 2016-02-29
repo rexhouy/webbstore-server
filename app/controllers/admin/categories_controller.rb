@@ -25,7 +25,7 @@ class Admin::CategoriesController < AdminController
                 authorize! :create, @category
                 @category.group_id = owner
                 if @category.save
-                        redirect_to action: "show", id: @category.id
+                        redirect_to admin_categories_path, notice: "创建成功"
                 else
                         render :new
                 end
@@ -33,7 +33,7 @@ class Admin::CategoriesController < AdminController
 
         def update
                 if @category.update(category_param)
-                        redirect_to action: "show", id: @category.id
+                        redirect_to admin_categories_path, notice: "修改成功"
                 else
                         render :edit
                 end
@@ -49,7 +49,7 @@ class Admin::CategoriesController < AdminController
         end
 
         def category_param
-                params.require(:category).permit(:name, :category_id, :priority)
+                params.require(:category).permit(:name, channel_ids: [])
         end
 
 end

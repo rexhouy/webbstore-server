@@ -10,7 +10,7 @@
                         $.ajax("/admin/dinning_tables/"+id+"/qrcode", {
                                 method : "get"
                         }).done(function(data) {
-                                $("#qrcodeBody").html(data);
+                                $("#qrcodeBody").html(data + "<img src=>");
                         });
                 };
 

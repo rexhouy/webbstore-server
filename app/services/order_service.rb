@@ -22,8 +22,9 @@ class OrderService
                 @order
         end
 
-        def change_status(order, status, user_id)
+        def change_status(order, status, user_id, memo = nil)
                 order.status = status
+                order.shipping_memo = memo if status.eql?(Order.statuses[:shipping]) && memo.present?
                 Order.transaction do
                         order.save!
                         create_order_history(order, user_id)
