@@ -10,7 +10,7 @@ module Admin::CategoriesHelper
         end
 
         def channel_check_boxes
-                collection_check_boxes(:category, :channel_ids, Channel.owner(current_user.id).where(id: [2, 3]), :id, :name)
+                collection_check_boxes(:category, :channel_ids, Channel.owner(current_user.group_id).where(id: [2, 3]), :id, :name)
         end
 
 end
