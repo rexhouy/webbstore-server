@@ -13,6 +13,7 @@
                         $.each(files, function(index, file) {
                                 data.append("file", file, file.name);
                         });
+                        $(".upload-progress").show();
                         $.ajax({
                                 url: '/admin/image',
                                 type: 'POST',
@@ -24,6 +25,7 @@
                                 success: function(data, textStatus, jqXHR) {
                                         $("#product_cover_image").val(data.filelink);
                                         $("#cover_image").attr("src", data.filelink);
+                                        $(".upload-progress").hide();
                                 }
                         });
                 };

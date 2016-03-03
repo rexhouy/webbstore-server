@@ -162,3 +162,12 @@
     background: #fff;
     opacity: .3;
 }
+
+a.contact-us {
+    display: inline-block;
+    margin: 8px auto;
+    color: #ddd;
+    &:hover {
+        color: #fff;
+    }
+}

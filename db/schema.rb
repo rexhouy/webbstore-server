@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160222032828) do
+ActiveRecord::Schema.define(version: 20160302142334) do
 
   create_table "account_balance_histories", force: :cascade do |t|
     t.decimal  "receipt",                 precision: 8, scale: 2
@@ -142,6 +142,7 @@ ActiveRecord::Schema.define(version: 20160222032828) do
   create_table "crowdfundings", force: :cascade do |t|
     t.integer  "product_id",          limit: 4
     t.decimal  "threshold",                     precision: 8, scale: 2
+    t.decimal  "decimal",                       precision: 8, scale: 2
     t.datetime "start_date"
     t.datetime "end_date"
     t.datetime "delivery_date"
@@ -171,6 +172,12 @@ ActiveRecord::Schema.define(version: 20160222032828) do
     t.integer  "user_id",    limit: 4
     t.datetime "created_at",                                     null: false
     t.datetime "updated_at",                                     null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text     "content",    limit: 65535, null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "order_histories", force: :cascade do |t|

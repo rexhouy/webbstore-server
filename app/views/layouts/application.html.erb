@@ -122,8 +122,28 @@
           <li><span class="glyphicon glyphicon-map-marker"></span> 北京市中关村科技园平谷分园</li>
           <li>京ICP备15036211号</li>
         </ul>
+        <a class="contact-us" data-toggle="modal" data-target="#contactUsModal">联系我们 <i class="glyphicon glyphicon-comment"></i></a>
       </div>
     </footer>
+
+    <!-- Modal -->
+    <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">留言</h4>
+          </div>
+          <div class="modal-body">
+            <textarea id="messageContent" class="form-control" style="min-height: 140px;" required></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary" onclick="messages.submit()">提交</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <%= javascript_include_tag 'application' %>
     <%= javascript_include_tag params[:controller] %>

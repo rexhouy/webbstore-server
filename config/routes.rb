@@ -26,7 +26,12 @@ Rails.application.routes.draw do
         get "shops/:id/products" => "shops#products"
 
         # 宣传文章
+        get 'articles/catering_cm' => 'articles#catering_cm'
+        get 'articles/game' => 'articles#game'
         get 'articles/:id' => 'articles#index'
+
+        # 留言
+        post "messages" => "messages#create"
 
         # User address
         resources :addresses
@@ -140,6 +145,9 @@ Rails.application.routes.draw do
 
                 # Image
                 post 'image' => 'images#create'
+
+                # Message board
+                get "messages" => "messages#index"
         end
 
         # Crowdfundings

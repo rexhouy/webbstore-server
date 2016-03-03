@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title><%=Rails.application.config.name%></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,user-scalable=no">
+    <link href="<%=image_url('favicon.ico')%>" rel="icon">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <style>
+      html, body, p {
+      margin:0;
+      padding: 0;
+      background: #f1f1f1;
+      }
+      html, body {
+      width: 100%;
+      }
+      .btn-custom {
+      margin: 0 auto 40px auto;
+      display: block;
+      width: 50%;
+      font-size: 1.5em;
+      background: #0097a7;
+      color: #fff;
+      border: 0;
+      box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);
+      }
+      .btn {
+      background: #0097a7;
+      color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" style="padding:0;margin:0 auto;">
+      <img src="http://uploads.tenhs.com/images/20160303/dc492119-3b90-44f2-a57b-4ed450b886cd.jpg" />
+      <button class="btn-custom" data-toggle="modal" data-target="#contactUsModal" id="leaveMessage">留言</button>
+      <img src="http://uploads.tenhs.com/images/20160302/d30f4d8b-29a1-4b36-a9d6-17d5040e8cfc.jpg">
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="contactUsModalLabel">留言</h4>
+          </div>
+          <div class="modal-body">
+            <textarea id="messageContent" class="form-control" style="min-height: 140px;" required></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary" onclick="messages.submit()">提交</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag params[:controller] %>
+  </body>
+</html>
