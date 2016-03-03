@@ -1,0 +1,28 @@
+<h1 class="page-header">客户留言管理</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>内容</th>
+      <th>日期</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @messages.each_with_index do |message, index| %>
+    <tr>
+      <td><%= index+1 %></td>
+      <td><%= message.content  %></td>
+      <td><%= display_date message.created_at  %></td>
+    </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="6" class="table-footer">
+        <%= page_info @messages %>
+        <%= will_paginate @messages, class: "apple_pagination" %>
+      </td>
+    </tr>
+  </tfoot>
+</table>
