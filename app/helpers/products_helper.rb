@@ -12,4 +12,5 @@ module ProductsHelper
                 return "所有产品" if category.nil?
                 category.name
         end
+
 end

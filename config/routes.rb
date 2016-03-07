@@ -144,8 +144,8 @@ Rails.application.routes.draw do
                 get "trades" => "trades#index", as: :trades
 
                 # Table
+                get "dinning_tables/print_qrcodes" => "dinning_tables#print_qrcodes"
                 resources :dinning_tables
-                get "dinning_tables/:id/qrcode" => "dinning_tables#qrcode"
 
                 # Coupon
                 get "coupons/list_available" => "coupons#list_available"

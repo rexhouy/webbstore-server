@@ -65,9 +65,11 @@ class Admin::DinningTablesController < AdminController
                 end
         end
 
-        def qrcode
-	        url = "#{Rails.application.config.domain}/menu/#{current_user.group_id}/tables/#{params[:id]}"
-	        @qr_code = RQRCode::QRCode.new(url, size: 12, level: :m )
+        def print_qrcodes
+	        @qrcodes = DinningTable.owner(current_user.group_id).select(:table_no).distinct.order(table_no: :asc).map do |dinning_table|
+		        url = "http://#{Rails.application.config.domain}/menu/#{current_user.group_id}/tables/#{dinning_table.table_no}"
+		        {qrcode: RQRCode::QRCode.new(url, size: 12, level: :m ), id: dinning_table.table_no}
+	        end
 	        render layout: false
         end
 

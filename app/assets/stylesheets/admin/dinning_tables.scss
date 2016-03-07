@@ -1,0 +1,22 @@
+.qrcode-print {
+    list-style: none;
+    li {
+        display: inline-block;
+        margin: 24px;
+    }
+    .qr-code {
+        position: relative;
+    }
+}
+
+@media screen {
+    .print-btn {
+        margin-right: 48px !important;
+    }
+}
+
+@media print {
+    .print-btn {
+        display: none;
+    }
+}

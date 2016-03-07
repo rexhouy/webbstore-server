@@ -41,7 +41,7 @@
     <tr>
       <td colspan="6">
         <%= page_info @account_balance_histories %>
-        <%= will_paginate @account_balance_histories, page_links: false %>
+        <%= will_paginate @account_balance_histories, class: "apple_pagination" %>
       </td>
     </tr>
   </tfoot>

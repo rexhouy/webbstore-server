@@ -2,6 +2,10 @@
 class DinningTable < ActiveRecord::Base
 	belongs_to :group
 
+	def self.owner(owner)
+		where(group_id: owner)
+	end
+
         def self.availble(group_id, table_id)
                 where(id: table_id, group_id: group_id).present?
         end

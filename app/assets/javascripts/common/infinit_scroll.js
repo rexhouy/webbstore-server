@@ -28,7 +28,7 @@
                         processing = true;
                         $(spinnerId).show();
                         $.getJSON(addPageParam(url), function(data) {
-                                if (data.length == 0) {
+                                if (data.data.length == 0) {
                                         $(spinnerId).hide();
                                         $(window).off("scroll");
                                         return false;

@@ -1,0 +1,12 @@
+<%= stylesheet_link_tag    'admin', media: 'all', 'data-turbolinks-track' => true %>
+<button onclick="window.print()" class="print-btn btn btn-primary pull-right">打印</button>
+<ul class="qrcode-print">
+  <% @qrcodes.each do |qrcode| %>
+  <li>
+    <div class="qr-code">
+      <%= image_tag "#{qrcode[:id]}.png"%>
+      <%= raw qrcode[:qrcode].as_html %>
+    </div>
+  </li>
+  <% end %>
+</ul>

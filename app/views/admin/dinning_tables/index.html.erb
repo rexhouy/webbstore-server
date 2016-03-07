@@ -1,6 +1,9 @@
 <h1 class="page-header">桌台管理</h1>
 
 <div>
+  <%= link_to "/admin/dinning_tables/print_qrcodes",  class: "btn btn-default pull-right", style: "margin-left:12px;", target: "_blank" do %>
+  <span class="glyphicon glyphicon-print"></span> 打印二维码
+  <% end %>
   <%= link_to new_admin_dinning_table_path,  class: "btn btn-default pull-right" do %>
   <span class="glyphicon glyphicon-plus"></span> 新建
   <% end %>
@@ -26,9 +29,6 @@
           <%= link_to admin_dinning_table_path(table), method: "delete", data: {confirm: "确定要删除这个桌子吗？"} do %>
               <span class="glyphicon glyphicon-trash"></span></button>
           <% end %>
-          <a href="#" onclick="dinningTable.showQRcode(<%=table.id%>, '<%=table.table_no%>')">
-            <span class="glyphicon glyphicon-qrcode"></span>
-          </a>
 </td>
 </tr>
 <% end %>
@@ -42,18 +42,3 @@
   </tr>
 </tfooter>
 </table>
-<div class="modal fade" id="qrcodeModal" tabindex="-1" role="dialog" aria-labelledby="qrcodeModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="qrcodeModalLabel"></h4>
-      </div>
-      <div class="modal-body" id="qrcodeBody">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>

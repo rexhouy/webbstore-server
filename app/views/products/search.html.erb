@@ -2,18 +2,70 @@
 <div class="search-result">
   <div class="products-list">
     <% @products.each do |product| %>
-      <section class="card col-md-3 col-sm-4 col-xs-6">
-        <a href="/products/<%=product.id%>">
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <div class="product">
           <div class="image">
-            <%= image_tag product.cover_image %>
+            <img src="<%=product[:product].cover_image%>">
           </div>
           <div class="title">
-            <h3><%=product.name%></h3>
-            <div class="price">&yen; <%=product.price%></div>
+            <h3><%=product[:product].name%></h3>
+            <span class="price">&yen; <%=product[:product].price%></span>
+            <div class="desc-viewport">
+              <div class="desc"><%=product[:product].description%></div>
+            </div>
+            <div class="control">
+              <% if product[:specs].empty? %>
+              <div class="number-input-group">
+                <div>
+                  <label></label>
+                </div>
+                <div>
+                  <button id="btn_<%=product[:product].id%>_"
+                          <% if product[:count].eql? 0%>
+                          style="visibility: hidden"
+                          <% end %>
+                          onclick="carts.remove('<%=product[:product].id%>', '', 0)"><i class="glyphicon glyphicon-minus"></i></button>
+                </div>
+                <div>
+                  <input type="number" id="count_<%=product[:product].id%>_" value="<%=product[:count]%>"
+                         <% if product[:count] == 0%>
+                         style="visibility: hidden"
+                         <% end %>
+                         onchange="carts.updateCount(this, '<%=product[:product].id%>', '', 0)" min=1>
+                </div>
+                <div>
+                  <button onclick="carts.add('<%=product[:product].id%>', '', 0)"><i class="glyphicon glyphicon-plus"></i></button>
+                </div>
+              </div>
+              <% end %>
+              <% product[:specs].each do |spec| %>
+              <div class="number-input-group">
+                <div>
+                  <label></label>
+                </div>
+                <div>
+                  <button id="btn_<%=product[:product].id%>_<%=spec[:spec].id%>"
+                          <% if spec[:count].eql? 0%>
+                          style="visibility: hidden"
+                          <% end %>
+                          onclick="carts.remove('<%=product[:product].id%>', '<%=spec[:spec].id%>', 0)"><i class="glyphicon glyphicon-minus"></i></button>
+                </div>
+                <div>
+                  <input type="number" id="count_<%=product[:product].id%>_<%=spec[:spec].id%>" value="<%=spec[:count]%>"
+                         <% if spec[:count] == 0%>
+                         style="visibility: hidden"
+                         <% end %>
+                         onchange="carts.updateCount(this, '<%=product[:product].id%>', '<%=spec[:spec].id%>', 0)" min=1>
+                </div>
+                <div>
+                  <button onclick="carts.add('<%=product[:product].id%>', '<%=spec[:spec].id%>', 0)"><i class="glyphicon glyphicon-plus"></i></button>
+                </div>
+              </div>
+              <% end %>
+            </div>
           </div>
-          <div class="desc"><%=product.description%></div>
-        </a>
-      </section>
+        </div>
+      </div>
     <% end %>
   </div>
   <% if @products.empty? %>
@@ -22,3 +74,14 @@
     </div>
   <% end %>
 </div>
+
+<a class="fab" href="/carts">
+  <% if @cart_count > 0 %>
+  <label id="cart_count"><%=@cart_count%></label>
+  <i id="cart_icon" class="glyphicon glyphicon-shopping-cart" style="display:none;"></i>
+  <% else %>
+  <label id="cart_count" style="display:none;"><%=@cart_count%></label>
+  <i id="cart_icon" class="glyphicon glyphicon-shopping-cart"></i>
+  <% end %>
+  <input type="hidden" id="total_count" value="<%=@cart_count%>"></input>
+</a>
