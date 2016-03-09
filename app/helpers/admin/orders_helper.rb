@@ -31,7 +31,7 @@ module Admin::OrdersHelper
         def order_payment(order)
                 return "微信支付" if order.wechat?
                 return "支付宝" if order.alipay?
-                return "货到付款" if order.offline_pay?
+                return "现金支付" if order.offline_pay?
         end
 
         def payment_status(order)

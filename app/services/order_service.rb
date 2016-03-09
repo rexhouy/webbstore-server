@@ -58,8 +58,10 @@ class OrderService
                 if order.placed?
                         Order.transaction do
                                 if  receive.nil?
-                                        order.update(status: Order.statuses[:delivered])
+                                        order.update(status: Order.statuses[:paid])
                                 else
+                                        order.status = Order.statuses[:paid]
+                                        create_order_history(order, nil)
                                         order.update(status: Order.statuses[:delivered], receive: receive, payment_memo: memo)
                                 end
                                 create_order_history(order, nil)
@@ -74,25 +76,47 @@ class OrderService
                 return true
         end
 
-
-        private
-        def update_product_sales(orders_products, func)
-                orders_products.each do |order_product|
-                        unless order_product.specification.nil?
-                                sales = order_product.specification.sales.send(func, order_product.count)
-                                order_product.specification.update(sales: sales)
-                        end
-                        sales = order_product.product.sales.send(func, order_product.count)
-                        order_product.product.update(sales: sales)
+        def add_dishes(order, cart, current_user)
+                orders_products = get_orders_products(cart)
+                order.orders_products += orders_products
+                order.subtotal = subtotal(order.orders_products)
+                Order.transaction do
+                        order.save!
+                        update_product_sales(orders_products, :+)
+                        create_order_history(order, current_user.id, "加菜")
                 end
         end
 
-        def create_order_history(order, user_id)
+        private
+        def update_product_sales(orders_products, func)
+                # update specification sales
+                orders_products.each do |order_product|
+                        if order_product.specification.present?
+                                sales = order_product.specification.sales.send(func, order_product.count)
+                                order_product.specification.update(sales: sales)
+                        end
+                end
+                ## update product sales
+                product_sales = {}
+                # group count by product
+                orders_products.each do |order_product|
+                        count =  product_sales[order_product.product] || order_product.product.sales
+                        count = count.send(func, order_product.count)
+                        product_sales[order_product.product] = count
+                end
+                # update sales
+                product_sales.each do |product, sales|
+                        product.update(sales: sales)
+                end
+        end
+
+        def create_order_history(order, user_id, memo=nil)
                 history = OrderHistory.new
                 history.order_id = order.id
                 history.status = order.status
                 history.time = Time.now
                 history.operator_id = user_id
+                history.memo = memo
                 history.save!
         end
 
@@ -156,15 +180,7 @@ class OrderService
                                 op.specification = Specification.find(product["spec_id"])
                                 op.price = op.specification.price
                         end
-                        if has_enough_storage? op
-                                orders_products << op
-                        else
-                                if product["spec_id"].present?
-                                        errors << "产品[#{p.name}]仅剩#{op.specification.storage-op.specification.sales}件"
-                                else
-                                        errors << "产品[#{p.name}]仅剩#{p.storage-p.sales}件"
-                                end
-                        end
+                        orders_products << op
                 end
                 raise errors.join(";") unless errors.empty?
                 orders_products

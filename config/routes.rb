@@ -58,6 +58,8 @@ Rails.application.routes.draw do
         delete 'carts' => 'carts#delete', as: :carts_del_product
 
         # Orders
+        get "orders/:id/add_dishes" => "orders#add_dishes"
+        get "orders/cancel_add_dishes" => "orders#cancel_add_dishes"
         post 'orders' => 'orders#add'
         get 'orders' => 'orders#index'
         get 'orders/confirm' => 'orders#confirm', as: :orders_confirm

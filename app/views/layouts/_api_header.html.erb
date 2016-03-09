@@ -14,7 +14,11 @@
       </section>
 
       <section class="navbar-brand pull-left inherit-height">
+        <% if add_dishes? %>
+        <a href="#">加菜</a>
+        <% else %>
         <a href="#"><%=@title || Rails.application.config.name%></a>
+        <% end %>
       </section>
 
       <section class="inherit-height search-container" id="search">
@@ -31,12 +35,19 @@
           <i class="glyphicon glyphicon-search"></i>
         </button>
         <% end %>
+
+        <% if add_dishes? %>
+        <button type="button" class="btn btn-lg btn-warning table-center inherit-height" onclick="window.location.href='orders/cancel_add_dishes'" style="outline:none;border:0;">
+          取消
+        </button>
+        <% else %>
         <button type="button" class="icon btn btn-lg table-center inherit-height" onclick="window.location.href='/me'" style="outline:none;">
           <i class="glyphicon glyphicon-user"></i>
         </button>
         <button type="button" class="icon btn btn-lg table-center inherit-height" onclick="window.location.href='/'" style="outline:none;">
           <i class="glyphicon glyphicon-home"></i>
         </button>
+        <% end %>
       </section>
     </div>
 

@@ -2,6 +2,7 @@
 class ProductsController < ApiController
 
         def index
+                return redirect_to root_url if !takeout? && !menu?
                 @title = takeout? ? "外卖点餐" : "店内点餐"
                 @back_url = root_url
                 category_id = params[:category]

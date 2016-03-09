@@ -4,7 +4,7 @@ require "securerandom"
 class OrdersController < ApiController
 
         before_action :authenticate_user!
-        before_action :set_order, only: [:show, :confirm_payment, :cancel, :received]
+        before_action :set_order, only: [:show, :confirm_payment, :cancel, :received, :add_dishes]
 
         def index
                 @type = params[:type] || "takeout"
@@ -50,6 +50,14 @@ class OrdersController < ApiController
                         confirm
                         return
                 end
+
+                unless (session[:add_dishes].nil?) # 处理加菜
+                        order = Order.find(session[:add_dishes]["order_id"])
+                        OrderService.new.add_dishes(order,  get_cart, current_user)
+                        clear_cart
+                        return cancel_add_dishes
+                end
+
                 begin
                         if takeout?
                                 order = TakeoutOrderService.new.create(get_cart,
@@ -77,6 +85,20 @@ class OrdersController < ApiController
                         flash.now["errors"] = [ e ]
                         confirm
                 end
+        end
+
+        def cancel_add_dishes
+                order_id = session[:add_dishes]["order_id"]
+                session[:add_dishes] = nil
+                redirect_to "/orders/#{order_id}"
+        end
+
+        def add_dishes
+                session[:add_dishes] = {
+                        order_id: @order.id,
+                        time: Time.now
+                }
+                redirect_to products_url
         end
 
         def cancel

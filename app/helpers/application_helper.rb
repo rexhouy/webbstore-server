@@ -113,4 +113,8 @@ module ApplicationHelper
                 session[:type].eql? "immediate"
         end
 
+        def add_dishes?
+                session[:add_dishes].present?
+        end
+
 end

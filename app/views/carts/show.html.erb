@@ -65,7 +65,11 @@
         </div>
         <div class="vertical-btn-group">
           <a class="btn btn-lg btn-default" href="<%=@back_url%>">继续点餐</a>
+          <% if add_dishes? %>
+          <%=link_to "确认加菜", "orders", method: "POST", class: "btn btn-lg btn-primary"%>
+          <% else %>
           <a id="confirm_carts_btn" class="btn btn-lg btn-primary" href="/orders/confirm">确认订单</a>
+          <% end %>
         </div>
       </div>
     </div>
