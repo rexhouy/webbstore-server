@@ -40,6 +40,7 @@
         <button type="button" class="btn btn-lg btn-warning table-center inherit-height" onclick="window.location.href='orders/cancel_add_dishes'" style="outline:none;border:0;">
           取消
         </button>
+        <% elsif params[:controller].eql? "products" %>
         <% else %>
         <button type="button" class="icon btn btn-lg table-center inherit-height" onclick="window.location.href='/me'" style="outline:none;">
           <i class="glyphicon glyphicon-user"></i>

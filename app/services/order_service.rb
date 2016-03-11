@@ -67,7 +67,7 @@ class OrderService
                                 create_order_history(order, nil)
                                 create_payment(order, payment)
                         end
-                        # send_notify_to_seller(order)
+                        send_notify_to_seller(order)
                         # send_notify_to_customer(order)
                 else
                         Rails.logger.error "Update order status to paid has failed. Order status incorrect. order id [#{order.order_id}], status [#{order.status}]"

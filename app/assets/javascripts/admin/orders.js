@@ -22,8 +22,8 @@
         var orders = function() {
                 var self = {};
 
-                self.confirmPayment = function() {
-
+                self.receiveChange = function(received, subtotal) {
+                        $("#receiveDetail").html("￥ " + Math.round((subtotal - received) * 100) / 100);
                 };
 
                 return self;

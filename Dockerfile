@@ -33,6 +33,8 @@ RUN bundle install
 ADD . /home/app/webapp
 RUN chown -R app:app /home/app/webapp
 
+RUN apt-get update && apt-get install -y gsfonts --no-install-recommends
+
 # Clean up APT and bundler when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 

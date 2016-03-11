@@ -68,9 +68,6 @@ Rails.application.routes.draw do
         post "orders/:id/confirm_payment" => "orders#confirm_payment"
         put "orders/:id/received" => "orders#received", as: :order_received
 
-        # Payment
-        get 'payment/wechat/redirect' => 'payments#wechat_redirect'
-        get 'payment/alipay/redirect' => 'payments#alipay_redirect'
 
         # User home
         get 'me' => 'me#index'
@@ -78,18 +75,21 @@ Rails.application.routes.draw do
         get "me/coupons" => "me#coupons"
         get "me/wallet" => "me#wallet"
 
-        # Payment callback
-        get 'payment/wechat/front_notify' => 'payments#wechat_front_notify'
-        post 'payment/wechat/notify' => 'payments#wechat_notify'
-        get 'payment/alipay/front_notify' => 'payments#alipay_front_notify'
-        post 'payment/alipay/notify' => 'payments#alipay_notify'
-
         # About
         get 'about' => 'about#index'
 
         # Tmp
         get "gift" => "gift#index"
         post "gift/lottery" => "gift#lottery"
+
+        # Payment
+        get 'payment/wechat/redirect' => 'payments#wechat_redirect'
+        get 'payment/alipay/redirect' => 'payments#alipay_redirect'
+        # Payment callback
+        get 'payment/wechat/front_notify' => 'payments#wechat_front_notify'
+        post 'payment/wechat/notify' => 'payments#wechat_notify'
+        get 'payment/alipay/front_notify' => 'payments#alipay_front_notify'
+        post 'payment/alipay/notify' => 'payments#alipay_notify'
 
         # Administration
         namespace :admin do

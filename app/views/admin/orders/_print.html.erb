@@ -9,12 +9,14 @@
         <p class="form-control-static"><%= @order.order_id %></p>
       </div>
     </div>
+    <% unless @order.type.eql?("ImmediateOrder") %>
     <div class="form-group">
       <label class="col-sm-2 control-label">支付方式</label>
       <div class="col-sm-9">
         <p class="form-control-static"><%= order_payment @order %></p>
       </div>
     </div>
+    <% end %>
     <div class="form-group">
       <label class="col-sm-2 control-label">下单时间</label>
       <div class="col-sm-9">
@@ -51,6 +53,7 @@
         </table>
       </div>
     </div>
+    <% unless @order.type.eql?("ImmediateOrder") %>
     <div class="form-group">
       <label class="col-sm-2 control-label">配送地址</label>
       <div class="col-sm-9">
@@ -69,5 +72,6 @@
         <p class="form-control-static"><%=@order.memo%></p>
       </div>
     </div>
+    <% end %>
   </div>
 </article>
