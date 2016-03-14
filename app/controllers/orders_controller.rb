@@ -20,6 +20,28 @@ class OrdersController < ApiController
                 @back_url = "/orders"
         end
 
+        def confirm_bulk
+                @product = Product.find(params[:id])
+                @back_url = "/products/#{params[:id]}"
+                @order = @order || Order.new
+                render :confirm_bulk
+        end
+
+        def add_bulk
+                begin
+                        @order = Order.new(bulk_order_params)
+                        @order.contact_address += current_user.location
+                        @order = BulkOrderService.new.create(params[:id], @order, params[:count],
+                                                             Order.payment_types[:alipay], current_user)
+                        redirect_to payment_redirect_url(@order)
+                rescue => e
+                        logger.error e
+                        logger.error e.backtrace.join("\n")
+                        flash.now["info"] = e
+                        confirm_bulk
+                end
+        end
+
         def confirm
                 return redirect_to :carts if get_cart.empty?
                 @cart = get_cart_products_detail(get_cart)
@@ -77,6 +99,10 @@ class OrdersController < ApiController
                         return false
                 end
                 true
+        end
+
+        def bulk_order_params
+                params.require(:order).permit(:contact_name, :contact_tel, :contact_address, :memo)
         end
 
         ## Redirect to a view and let the view handle the payment.

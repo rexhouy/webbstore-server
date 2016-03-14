@@ -16,14 +16,14 @@ class ProductsController < ApiController
                                 render :index
                         }
                         format.json {
-                                @products = Product.retail.owner(owner).category(@category).available.valid.order(priority: :desc).paginate(page: params[:page])
-                                render json: @products
+                                @products = Product.owner(owner).category(@category).available.valid.order(priority: :desc).paginate(page: params[:page])
                         }
                 end
         end
 
         def show
                 @product = Product.find(params[:id])
+                authenticate_user! if @product.is_bulk
                 @title = "商品详情"
                 category = session[:category].present? ? session[:category]["id"] : 1
                 @back_url = "/products?category=#{category || 1}"
@@ -32,6 +32,16 @@ class ProductsController < ApiController
         def search
                 @search_text = params[:search_text]
                 @products = Product.search_by_owner(@search_text, owner, false)
+        end
+
+        def price_hist
+                respond_to do |format|
+                        format.html {
+                        }
+                        format.json {
+                                @hists = ProductPriceHistory.where(product_id: params[:id]).order(id: :asc)
+                        }
+                end
         end
 
         private

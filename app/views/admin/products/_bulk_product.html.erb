@@ -1,0 +1,86 @@
+<div class="pull-right" style="    position: relative;top: -48px;">
+  <%=form_tag "/admin/products/#{@product.id}/supplement", id: "supplement_#{@product.id}", method: "PUT", class: "well row input-well" do %>
+  <input name="count" type="number" min=1 required class="form-control pull-left">
+  <button type="submit" class="btn btn-primary col-sm-3">确定</button>
+  <button type="button" class="btn btn-default col-sm-3" onclick="product.hideSupplement(<%=@product.id%>)">取消</button>
+  <% end %>
+  <a href="##" onclick="product.supplement(<%=@product.id%>, this);" class="btn btn-primary"><i class="glyphicon glyphicon-plus-sign"></i> 补货</a>
+</div>
+<div class="row">
+  <div class="col-sm-3">
+    <%=image_tag @product.cover_image, style: "width:100%;"%>
+  </div>
+  <div class="col-sm-9">
+    <div class="form-horizontal">
+      <div class="form-group">
+        <label class="control-label col-sm-2">名称</label>
+        <p class="form-control-static col-sm-8">
+          <%=@product.name%>
+        </p>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">类型</label>
+        <p class="form-control-static col-sm-8">
+          <%= product_type @product %>
+        </p>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">库存</label>
+        <p class="form-control-static col-sm-8">
+          <%=product_storage @product%>
+        </p>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">每份数量</label>
+        <p class="form-control-static col-sm-8">
+          <%= @product.batch_size %>
+        </p>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">可购买份数</label>
+        <p class="form-control-static col-sm-8">
+          <%=(product_storage(@product) / @product.batch_size).to_i%>
+        </p>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">昆明价格</label>
+        <p class="form-control-static col-sm-8">
+          <%=number_to_currency @product.price_km, locale: :'zh-CN', precision: 2%>
+        </p>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">北京价格</label>
+        <p class="form-control-static col-sm-8">
+          <%=number_to_currency @product.price_bj, locale: :'zh-CN', precision: 2%>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <h2 class="sub-header">销售历史</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>昆明价格</th>
+        <th>北京价格</th>
+        <th>每份数量</th>
+        <th>昆明销量</th>
+        <th>北京销量</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @product.product_price_histories.each do |hist| %>
+      <tr>
+        <td><%=hist.price_km %></td>
+        <td><%=hist.price_bj %></td>
+        <td><%=hist.batch_size%></td>
+        <td><%=hist.sales_km%></td>
+        <td><%=hist.sales_bj%></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>

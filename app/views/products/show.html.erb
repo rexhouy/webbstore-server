@@ -13,9 +13,13 @@
     <%= hidden_field_tag :id, @product.id %>
     <%= hidden_field_tag :spec_id %>
     <div class="table-center">
-      <button class="btn btn-primary pull-right" type="submit" onclick="return product.selectSpec();">
-        <%= number_to_currency @product.price, locale: :'zh-CN', precision: 2 %> <%= "起" unless @product.specifications.empty?%>
+      <% if @product.is_bulk %>
+      <%= link_to user_price(@product), "/orders/confirm_bulk/#{@product.id}", class: "btn btn-primary pull-right"%>
+      <% else %>
+      <button class="btn btn-primary pull-right" type="submit" onclick="return product.selectSpec();" disabled="disabled">
+        <%= user_price @product %> <%= "起" unless @product.specifications.empty?%>
       </button>
+      <% end %>
     </div>
   <% end %>
   </div>
@@ -23,6 +27,12 @@
 
 <!-- Article -->
 <article class="row">
+  <div>
+    <div class="col-md-12">
+    <label>价格走势</label>
+    </div>
+    <canvas id="price_hist_graph" style="width:0;height:0;margin: 4px 12px 24px 12px;"></canvas>
+  </div>
   <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 col-sm-10 col-sm-1 article">
     <%=raw @product.article %>
   </div>
@@ -65,3 +75,32 @@
   </section>
 </article>
 <% end %>
+
+<input type="hidden" id="user_location" value="<%=current_user.location%>">
+<input type="hidden" id="price_km" value="<%=@product.price_km%>">
+<input type="hidden" id="price_bj" value="<%=@product.price_bj%>">
+<div class="modal fade" tabindex="-1" role="dialog" id="positionSelector">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">请选择送货地址</h4>
+      </div>
+      <div class="modal-body">
+        <div class="confirm-content">
+          <div class="selectable" data="北京市">
+            <span>北京</span>
+            <i class="glyphicon glyphicon-ok-sign pull-right"></i>
+          </div>
+          <div class="selectable" data="昆明市">
+            <span>昆明</span>
+            <i class="glyphicon glyphicon-ok-sign pull-right"></i>
+          </div>
+        </div>
+        <p>* 该地址选择后无法更改，请慎重选择！</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="product.locationSelected()">确定</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>

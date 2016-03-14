@@ -54,4 +54,14 @@ module OrdersHelper
                 total_price > account_balance ? account_balance : total_price
         end
 
+        def user_price(product)
+                price = nil
+                if current_user.location.eql?("昆明市")
+                        price = product.price_km
+                elsif current_user.location.eql?("北京市")
+                        price = product.price_bj
+                end
+                number_to_currency(price, locale: :'zh-CN', precision: 2)
+        end
+
 end

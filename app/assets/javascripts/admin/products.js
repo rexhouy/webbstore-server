@@ -1,4 +1,4 @@
-(function($){
+(function($) {
 
         var previewFrame = $("#preview");
         var spinner = $("#spinner");
@@ -55,7 +55,7 @@
                         $(btn).parent().parent().remove();
                 };
 
-                self.setFormParams = function() {
+                self.setFormParams = function(e) {
                         var container = $("#specifications");
                         var names = ["id", "name", "value", "price", "storage", "count"];
                         var storage = 0;
@@ -95,6 +95,39 @@
                                 $("#wholesaleProperties").hide("slow");
                         }
                 };
+
+                self.checkBulk = function(checked) {
+                        if (checked) {
+                                $("#bulkProperties").show("slow");
+                        } else {
+                                $("#bulkProperties").hide("slow");
+                        }
+                };
+
+                self.storageChange = function() {
+                        var batchSize = $("#product_batch_size").val();
+                        var storage = $("#product_storage").val();
+                        var sales = $("#productSales").val();
+                        $("#storage").html(storage - sales);
+                        if (batchSize && batchSize > 0) {
+                                $("#avaiableCount").html(Math.floor((storage - sales) / batchSize));
+                        }
+                };
+
+                self.check = function(e) {
+                        if ($("#product_is_bulk")[0].checked) {
+                                var batchSize = $("#product_batch_size").val();
+                                var priceKM = $("#product_price_km").val();
+                                var priceBJ = $("#product_price_bj").val();
+                                if (batchSize && priceKM && priceBJ) {
+                                } else {
+                                        alert("请将大宗商品信息填写完整！");
+                                        return false;
+                                }
+                        }
+                        return true;
+                };
+
 
                 return self;
         }();

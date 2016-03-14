@@ -141,3 +141,36 @@
         color: #999;
     }
 }
+
+.bulk-card {
+    img {
+        display: inline-block;
+        width: 48px;
+    }
+    .top {
+        display: table;
+        width: 100%;
+        & > div {
+            display: table-cell;
+            vertical-align: top;
+        }
+    }
+    .image {
+        width: 64px;
+        max-height: 64px;
+        padding: 12px 4px;
+        overflow: hidden;
+    }
+    .title {
+        padding: 12px;
+        h3 {
+            margin: 0;
+        }
+        .desc {
+            font-size: 12px;
+        }
+    }
+    .price {
+        color: #090;
+    }
+}

@@ -24,8 +24,9 @@ module Admin::ProductsHelper
         end
 
         def product_type(product)
-                return "普通商品" unless product.is_crowdfunding
-                "众筹商品"
+                return "大宗商品" if product.is_bulk
+                return "众筹商品" if product.is_crowdfunding
+                "普通商品"
         end
 
         def crowdfunding_status(product)
@@ -36,6 +37,11 @@ module Admin::ProductsHelper
                 return "<span class='text-info'>进行中</span>".html_safe if crowdfunding.unknown?
                 return "<span class='text-success'>成功</span>".html_safe if crowdfunding.succeed?
                 return "<span class='text-danger'>失败</span>".html_safe if crowdfunding.failed?
+        end
+
+        def product_storage(product)
+                return 0 if product.storage.nil?
+                product.storage - product.sales
         end
 
 end

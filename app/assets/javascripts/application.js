@@ -15,6 +15,7 @@
 //= require bootstrap-sprockets
 //= require mustache.min.js
 //= require fastclick.js
+//= require Chart.min.js
 //= require_self
 //= require_tree ./common
 (function(){

@@ -7,6 +7,7 @@ class Product < ActiveRecord::Base
         accepts_nested_attributes_for :specifications
         has_one :crowdfunding, autosave: true
         accepts_nested_attributes_for :crowdfunding, allow_destroy: true, reject_if: :not_crowdfunding?
+        has_many :product_price_histories
 
         def not_crowdfunding?(attr)
                 !self.is_crowdfunding

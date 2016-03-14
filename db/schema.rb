@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160302142334) do
+ActiveRecord::Schema.define(version: 20160314082716) do
 
   create_table "account_balance_histories", force: :cascade do |t|
     t.decimal  "receipt",                 precision: 8, scale: 2
@@ -206,6 +206,7 @@ ActiveRecord::Schema.define(version: 20160302142334) do
     t.decimal  "coupon_amount",                      precision: 8,  scale: 2
     t.decimal  "user_account_balance",               precision: 8,  scale: 2
     t.boolean  "is_crowdfunding",      limit: 1
+    t.boolean  "is_bulk",              limit: 1
   end
 
   add_index "orders", ["customer_id"], name: "fk_rails_c2426400ce", using: :btree
@@ -234,6 +235,17 @@ ActiveRecord::Schema.define(version: 20160302142334) do
     t.integer "order_id",     limit: 4
   end
 
+  create_table "product_price_histories", force: :cascade do |t|
+    t.integer  "batch_size", limit: 4
+    t.decimal  "price_km",             precision: 8, scale: 2
+    t.decimal  "price_bj",             precision: 8, scale: 2
+    t.integer  "product_id", limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "sales_km",   limit: 4
+    t.integer  "sales_bj",   limit: 4
+  end
+
   create_table "products", force: :cascade do |t|
     t.string   "name",            limit: 255
     t.string   "description",     limit: 255
@@ -251,10 +263,12 @@ ActiveRecord::Schema.define(version: 20160302142334) do
     t.integer  "priority",        limit: 4
     t.integer  "supplier_id",     limit: 4
     t.integer  "category_id",     limit: 4
-    t.string   "barcode",         limit: 255
-    t.decimal  "origin_price",                  precision: 8, scale: 2
     t.string   "type",            limit: 255
     t.boolean  "is_crowdfunding", limit: 1
+    t.integer  "batch_size",      limit: 4
+    t.boolean  "is_bulk",         limit: 1
+    t.decimal  "price_km",                      precision: 8, scale: 2
+    t.decimal  "price_bj",                      precision: 8, scale: 2
   end
 
   add_index "products", ["name", "description", "article"], name: "fulltext_index", type: :fulltext

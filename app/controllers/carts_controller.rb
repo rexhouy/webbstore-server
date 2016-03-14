@@ -5,6 +5,7 @@ class CartsController < ApiController
 
         def show
                 @cart = get_cart_products_detail(get_cart)
+                check_product_expire(@cart)
         end
 
         def add
@@ -14,7 +15,7 @@ class CartsController < ApiController
                         @message = "商品不存在"
                         render "/error"
                 else
-                        add_product_to_cart(params[:id].to_s, params[:spec_id] || "")
+                        add_product_to_cart(params[:id].to_s, params[:spec_id] || "", product.updated_at)
                         redirect_to :carts
                 end
         end
@@ -55,17 +56,26 @@ class CartsController < ApiController
                 end
                 cart[matched_product_index]["count"] = count unless matched_product_index.nil?
         end
-        def add_product_to_cart(id, spec_id)
+        def add_product_to_cart(id, spec_id, updated_at)
                 cart = get_cart
                 existProduct = cart.find_index do |product|
                         same_product? product, id, spec_id
                 end
                 if existProduct.nil?
-                        cart << { "id" => id, "count" => 1, "spec_id" => spec_id }
+                        cart << { "id" => id, "count" => 1, "spec_id" => spec_id, "updated_at" => updated_at.to_time.to_i }
                 else
                         cart[existProduct]["count"] =  cart[existProduct]["count"].to_i + 1
                 end
                 session[:cart] = cart
+        end
+
+        def check_product_expire(cart_detail)
+                cart_detail.each do |product|
+                        unless product["updated_at"].eql? product["detail"].updated_at.to_time.to_i
+                                product["expired"] = true
+                                @has_expired_product = true
+                        end
+                end
         end
 
 end

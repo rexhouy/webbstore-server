@@ -42,4 +42,10 @@ module Admin::OrdersHelper
                 return "货到付款" if order.offline_pay?
         end
 
+        def order_type(order)
+                return "众筹订单" if @order.is_crowdfunding
+                return "大宗订单" if @order.is_bulk
+                "普通订单"
+        end
+
 end

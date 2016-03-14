@@ -20,7 +20,7 @@
         <%= image_tag "seals.png", class: "seals"%>
         <p class="cm">拾惠社给您送红包啦</p>
         <% @game_start = Time.now < DateTime.new(2015, 11, 5, 0, 0, 0, "+8" ) %>
-        <% @game_end = Time.now > DateTime.new(2016, 11, 16, 0, 0, 0, "+8" ) %>
+        <% @game_end = Time.now > DateTime.new(2015, 11, 16, 0, 0, 0, "+8" ) %>
         <% if @game_start %>
           <h1>活动尚未开始</h1>
         <% elsif @game_end %>

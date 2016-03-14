@@ -39,6 +39,7 @@ Rails.application.routes.draw do
         get 'products' => 'products#index', as: :products
         get 'products/search' => 'products#search'
         get 'products/:id' => 'products#show', as: :products_detail
+        get "products/:id/price_hist" => "products#price_hist"
 
         # Categories
         get "categories" => "categories#index"
@@ -62,6 +63,8 @@ Rails.application.routes.draw do
         get 'orders/confirm' => 'orders#confirm', as: :orders_confirm
         get 'orders/:id' => 'orders#show'
         put 'orders/:id' => 'orders#cancel', as: :orders_cancel
+        get 'orders/confirm_bulk/:id' => 'orders#confirm_bulk'
+        post "orders/bulk" => "orders#add_bulk"
 
         # Payment
         get 'payment/wechat/redirect' => 'payments#wechat_redirect'

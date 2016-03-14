@@ -1,0 +1,30 @@
+<div class="form-group">
+  <div class="col-sm-5 col-sm-offset-2">
+    <%= p.check_box :is_bulk, onchange: "product.checkBulk(this.checked)" %>
+    <%= p.label :is_bulk, class: "control-label" do %>
+    大宗商品  <span class="glyphicon glyphicon-info-sign icon" title="是否是大宗商品"></span>
+    <% end %>
+  </div>
+</div>
+
+<div id="bulkProperties" class="form-group" <% unless p.object.is_bulk%>style="display:none;"<% end %>>
+  <div class="col-sm-10 col-sm-offset-2">
+    <input type="hidden" id="productSales" value="<%=p.object.sales%>">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <td>库存</td><td>每份数量</td><td>可购买份数</td><td>昆明价格</td><td>北京价格</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="storage"><%= product_storage(p.object)%></td>
+          <td><%= p.number_field :batch_size, class: "form-control", min: 1, step: 1, onchange: "product.storageChange()" %></td>
+          <td id="avaiableCount"><%= (product_storage(p.object) / p.object.batch_size).to_i if (p.object.batch_size && p.object.batch_size > 0) %></td>
+          <td><%= p.number_field :price_km, class: "form-control", min: 0, step: 0.01%></td>
+          <td><%= p.number_field :price_bj, class: "form-control", min: 0, step: 0.01%></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

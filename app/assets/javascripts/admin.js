@@ -14,6 +14,7 @@
 //= require bootstrap-sprockets
 //= require jquery_ujs
 //= require_tree ./admin-common
+//= require Chart.min.js
 //= require redactor-rails
 //= require_tree ./redactor-rails
 //= require redactor-rails/langs/zh_cn
