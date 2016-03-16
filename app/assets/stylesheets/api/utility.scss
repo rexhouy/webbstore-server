@@ -131,7 +131,7 @@
         h3 {
             margin: 0;
             overflow: hidden;
-            width: 70%;
+            width: 65%;
             height: 20px;
             text-align: left;
             line-height: 18px;
@@ -144,11 +144,12 @@
         }
         .price {
             float: right;
-            width: 30%;
+            width: 35%;
             text-align: right;
             font-size: 12px;
             font-weight: bold;
             color: $accent-color;
+            white-space: nowrap;
         }
     }
     .desc {

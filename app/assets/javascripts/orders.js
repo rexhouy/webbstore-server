@@ -92,6 +92,12 @@
                         $("#total_amount").html("¥ " + format(paymentAmount));
                 };
 
+                self.calBulkTotal = function(count, batch_size, price) {
+                        price = Number(price.slice(2));
+                        var total = Math.floor(count * batch_size * price * 100) / 100;
+                        $("#subtotal").html("￥ " + total.toFixed(2));
+                };
+
                 return self;
         };
 

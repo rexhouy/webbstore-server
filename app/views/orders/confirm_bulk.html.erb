@@ -26,7 +26,7 @@
   <div class="form-group">
     <label class="control-label">购买数量：</label>
     <div class="input-group">
-      <input type="number" name="count" min="1" step="1" required class="form-control" >
+      <input type="number" name="count" min="1" step="1" required class="form-control" onchange="orders.calBulkTotal(this.value, <%=@product.batch_size%>, '<%=user_price @product%>')">
       <div class="input-group-addon">* <%=@product.batch_size%></div>
     </div>
 
@@ -46,10 +46,12 @@
       <input type="text" name="order[contact_address]" required class="form-control" required>
     </div>
   </div>
+  <div style="padding-bottom:12px;overflow: hidden;">
+    <div class="pull-left">订单总价：</div>
+    <div class="pull-right" id="subtotal" class="price"></div>
+  </div>
   <input type="hidden" name="payment_type" id="paymentType">
   <div class="modal-footer">
-    <div id="paymentInfo" style="padding-bottom:12px;">
-    </div>
     <div>
       <button type="confirm" class="btn btn-primary">确认购买</button>
     </div>
