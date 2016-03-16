@@ -14,9 +14,9 @@
     <%= hidden_field_tag :spec_id %>
     <div class="table-center">
       <% if @product.is_bulk %>
-      <%= link_to user_price(@product), "/orders/confirm_bulk/#{@product.id}", class: "btn btn-primary pull-right"%>
+      <%= link_to user_price(@product), "/orders/confirm_bulk/#{@product.id}", class: "btn btn-primary pull-right", disabled: true, id: "buy_btn"%>
       <% else %>
-      <button class="btn btn-primary pull-right" type="submit" onclick="return product.selectSpec();" disabled="disabled">
+      <button class="btn btn-primary pull-right" type="submit" onclick="return product.selectSpec();">
         <%= user_price @product %> <%= "起" unless @product.specifications.empty?%>
       </button>
       <% end %>
@@ -27,12 +27,14 @@
 
 <!-- Article -->
 <article class="row">
+  <% if @product.is_bulk %>
   <div>
     <div class="col-md-12">
-    <label>价格走势</label>
+      <label>价格走势</label>
     </div>
     <canvas id="price_hist_graph" style="width:0;height:0;margin: 4px 12px 24px 12px;"></canvas>
   </div>
+  <% end %>
   <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 col-sm-10 col-sm-1 article">
     <%=raw @product.article %>
   </div>
