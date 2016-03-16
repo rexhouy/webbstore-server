@@ -15,9 +15,9 @@ module ProductsHelper
 
         def user_price(product)
                 price = nil
-                if product.is_bulk && current_user.location.eql?("昆明市")
+                if product.is_bulk && current_user && current_user.location.eql?("昆明市")
                         price = product.price_km
-                elsif product.is_bulk && current_user.location.eql?("北京市")
+                elsif product.is_bulk && current_user && current_user.location.eql?("北京市")
                         price = product.price_bj
                 elsif product.is_bulk
                         return "￥#{product.price_km}起"
