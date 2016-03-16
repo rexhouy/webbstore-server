@@ -83,6 +83,9 @@
                 };
 
                 self.showSalesGraph = function() {
+                        if (!document.getElementById("price_hist_graph")) {
+                                return;
+                        }
                         var ctx = document.getElementById("price_hist_graph").getContext("2d");
                         $.get("/products/" + $("#id").val() + "/price_hist.json", function(data) {
                                 document.getElementById("price_hist_graph").style.width = window.screen.width - 24 + "px";
