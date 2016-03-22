@@ -39,7 +39,20 @@ class ProductsController < ApiController
                         format.html {
                         }
                         format.json {
-                                @hists = ProductPriceHistory.where(product_id: params[:id]).order(id: :asc)
+                                @product = Product.find(params[:id])
+                                @hists = ProductPriceHistory.where(product_id: params[:id], start_date: @product.start_date).order(id: :asc)
+                                @hists = @hists.map do |hist|
+                                        {
+                                                time: hist.created_at,
+                                                price_km: hist.price_km,
+                                                price_bj: hist.price_bj
+                                        }
+                                end
+                                @hists << {
+                                        time: Time.now,
+                                        price_km: @hists[-1][:price_km],
+                                        price_bj: @hists[-1][:price_bj]
+                                } if @hists.any?
                         }
                 end
         end

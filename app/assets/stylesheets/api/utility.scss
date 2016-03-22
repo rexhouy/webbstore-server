@@ -185,6 +185,21 @@
     }
 }
 
+@media (max-width: 800px) {
+    .card.bulk {
+        height: 190px;
+        .price, h3 {
+            float: none;
+            width: 100%;
+            text-align: left;
+        }
+        .title {
+            height: 36px;
+        }
+    }
+}
+
+
 .btn {
     height: auto;
     border-radius: 2px;

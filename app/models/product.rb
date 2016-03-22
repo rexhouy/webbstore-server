@@ -85,6 +85,10 @@ class Product < ActiveRecord::Base
                 where("sales >= storage - 2")
         end
 
+        def started?
+                start_date <= Time.now
+        end
+
         private
         def check_specifications
                 unless specifications.present? or storage.present?

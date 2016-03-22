@@ -49,6 +49,9 @@
                 };
 
                 self.checkUserLocation = function() {
+                        if (new Date($("#start_date").val()) > new Date()) {
+                                return;
+                        }
                         if (!$("#user_location")[0]) {
                                 return;
                         }
@@ -88,9 +91,14 @@
                         }
                         var ctx = document.getElementById("price_hist_graph").getContext("2d");
                         $.get("/products/" + $("#id").val() + "/price_hist.json", function(data) {
-                                document.getElementById("price_hist_graph").style.width = window.screen.width - 24 + "px";
+                                if (data.labels.length == 0) {
+                                        $("#price_hist").hide();
+                                        return;
+                                }
+                                var width = $(".banner").width();
+                                document.getElementById("price_hist_graph").style.width = width - 24 + "px";
                                 document.getElementById("price_hist_graph").style.height = "180px";
-                                new Chart(ctx).Line(data);
+                                new Chart(ctx).LineAlt(data);
                         });
                 };
 

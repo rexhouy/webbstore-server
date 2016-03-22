@@ -97,6 +97,7 @@ class Admin::ProductsController < AdminController
                 params.require(:product).permit(:id, :name, :price, :storage, :description, :article, :recommend, :on_sale,
                                                 :cover_image, :category_id, :priority, :supplier_id,
                                                 :is_bulk, :batch_size, :price_km, :price_bj,
+                                                :min_price, :max_price, :start_date,
                                                 specifications_attributes: [:id, :name, :value, :price, :storage, :count])
                 # :is_crowdfunding,
                 # crowdfunding_attributes: [:id, :threshold, :start_date, :end_date, :delivery_date, :price_km, :price_bj, :threshold_per_trade, :prepayment])
@@ -112,6 +113,7 @@ class Admin::ProductsController < AdminController
                 hist.price_km = product.price_km
                 hist.price_bj = product.price_bj
                 hist.product_id = product.id
+                hist.start_date = product.start_date
                 hist.save!
         end
 

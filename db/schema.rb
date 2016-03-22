@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160314082716) do
+ActiveRecord::Schema.define(version: 20160322030040) do
 
   create_table "account_balance_histories", force: :cascade do |t|
     t.decimal  "receipt",                 precision: 8, scale: 2
@@ -244,6 +244,7 @@ ActiveRecord::Schema.define(version: 20160314082716) do
     t.datetime "updated_at"
     t.integer  "sales_km",   limit: 4
     t.integer  "sales_bj",   limit: 4
+    t.datetime "start_date"
   end
 
   create_table "products", force: :cascade do |t|
@@ -269,6 +270,9 @@ ActiveRecord::Schema.define(version: 20160314082716) do
     t.boolean  "is_bulk",         limit: 1
     t.decimal  "price_km",                      precision: 8, scale: 2
     t.decimal  "price_bj",                      precision: 8, scale: 2
+    t.decimal  "min_price",                     precision: 8, scale: 2
+    t.decimal  "max_price",                     precision: 8, scale: 2
+    t.datetime "start_date"
   end
 
   add_index "products", ["name", "description", "article"], name: "fulltext_index", type: :fulltext

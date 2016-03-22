@@ -27,12 +27,18 @@
 
 <!-- Article -->
 <article class="row">
-  <% if @product.is_bulk %>
-  <div>
+  <% if @product.is_bulk && @product.started? %>
+  <div id="price_hist">
     <div class="col-md-12">
       <label>价格走势</label>
     </div>
     <canvas id="price_hist_graph" style="width:0;height:0;margin: 4px 12px 24px 12px;"></canvas>
+  </div>
+  <% end %>
+  <% if @product.is_bulk && !@product.started?%>
+  <div class="col-md-12">
+    <label>活动尚未开始</label><br>
+    <label>开始时间：<%=display_datetime @product.start_date%></label>
   </div>
   <% end %>
   <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 col-sm-10 col-sm-1 article">
@@ -79,6 +85,7 @@
 <% end %>
 
 <input type="hidden" id="user_location" value="<%=current_user.location%>">
+<input type="hidden" id="start_date" value="<%=display_datetime @product.start_date%>">
 <input type="hidden" id="price_km" value="<%=@product.price_km%>">
 <input type="hidden" id="price_bj" value="<%=@product.price_bj%>">
 <div class="modal fade" tabindex="-1" role="dialog" id="positionSelector">
