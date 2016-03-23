@@ -9,7 +9,7 @@ module Admin::UsersHelper
 
         def coupon_status(user_coupon)
                 return "已使用" if user_coupon.used?
-                return "已过期" if user_coupon.coupon.end_date < Time.now
+                return "已过期" if user_coupon.coupon.end_date < Time.current
                 "未使用"
         end
 

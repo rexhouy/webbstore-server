@@ -30,7 +30,7 @@ class SmsService
         private
 
         def time_stamp
-                DateTime.now.strftime("%Y%m%d%H%M%S")
+                DateTime.current.strftime("%Y%m%d%H%M%S")
         end
 
         def sig_parameter(timestamp)

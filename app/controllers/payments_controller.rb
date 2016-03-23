@@ -131,7 +131,7 @@ class PaymentsController < ApiController
                 history = OrderHistory.new
                 history.order_id = order.id
                 history.status = order.status
-                history.time = Time.now
+                history.time = Time.current
                 history.save!
         end
 

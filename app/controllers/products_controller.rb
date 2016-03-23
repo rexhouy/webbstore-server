@@ -49,7 +49,7 @@ class ProductsController < ApiController
                                         }
                                 end
                                 @hists << {
-                                        time: Time.now,
+                                        time: Time.current,
                                         price_km: @hists[-1][:price_km],
                                         price_bj: @hists[-1][:price_bj]
                                 } if @hists.any?

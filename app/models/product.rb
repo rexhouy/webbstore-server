@@ -37,7 +37,7 @@ class Product < ActiveRecord::Base
         end
 
         def self.wholesale
-                where(is_crowdfunding: true).joins(:crowdfunding).where("crowdfundings.start_date <= ? and crowdfundings.end_date >= ?", Time.now, Time.now)
+                where(is_crowdfunding: true).joins(:crowdfunding).where("crowdfundings.start_date <= ? and crowdfundings.end_date >= ?", Time.current, Time.current)
         end
 
         def self.recommend
@@ -86,7 +86,7 @@ class Product < ActiveRecord::Base
         end
 
         def started?
-                start_date <= Time.now
+                start_date <= Time.current
         end
 
         private

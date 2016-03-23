@@ -17,7 +17,7 @@ module ProductsHelper
                 unless product.is_bulk?
                         return number_to_currency(product.price, locale: :'zh-CN', precision: 2)
                 end
-                started = product.start_date <= Time.now
+                started = product.start_date <= Time.current
                 return price_range(product) unless started
                 if current_user.location.eql?("昆明市")
                         return number_to_currency(product.price_km, locale: :'zh-CN', precision: 2)
