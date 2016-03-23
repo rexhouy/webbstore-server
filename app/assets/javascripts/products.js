@@ -49,7 +49,7 @@
                 };
 
                 self.checkUserLocation = function() {
-                        if (!(!!$("#is_bulk_product").val())) {
+                        if ($("#is_bulk_product").val() == 0) {
                                 return;
                         }
                         if (new Date($("#start_date").val()) > new Date()) {
