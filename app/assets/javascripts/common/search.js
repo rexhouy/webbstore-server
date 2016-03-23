@@ -3,12 +3,15 @@
                 var self = {};
 
                 self.open = function() {
-                        $("#search").css("width", "100%");
+                        $("#block-layer").show();
+                        $("#search").show();
                         $("#search_input").focus();
+                        $("#searchText").focus();
                 };
 
                 self.close = function() {
-                        $("#search").css("width", 0);
+                        $("#search").hide();
+                        $("#block-layer").hide();
                         return false;
                 };
 

@@ -31,14 +31,6 @@
             <a href="#"><%=@title || Rails.application.config.name%></a>
           </section>
 
-          <section class="inherit-height search-container" id="search">
-            <form class="inherit-height table-center-wrap" action="/products/search">
-              <button class="btn icon inherit-height highlight-icon" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-              <button class="btn icon inherit-height" style="right:0" onclick="return search.close();"><i class="glyphicon glyphicon-remove"></i></button>
-              <input  type="search" name="search_text" class="search table-center inherit-height pull-left" placeholder="搜索拾惠社" id="search_input">
-            </form>
-          </section>
-
           <section class="pull-right inherit-height table-center-wrap" id="menu_control_pannel">
             <% unless @back_url.present? %>
             <button type="button" class="icon btn btn-lg table-center inherit-height" onclick="search.open();">
@@ -69,6 +61,17 @@
       </div>
       <% end %>
     </header>
+
+    <div class="search" id="search">
+      <form action="/products/search" class="flex-container">
+        <button type="button" onclick="search.close()"><i class="glyphicon glyphicon-arrow-left"></i></button>
+        <div class="flex-item">
+          <input type="search" name="search_text" id="searchText" required="true" placeholder="搜索<%=Rails.application.config.name%>" autocomplete="off"></input>
+        </div>
+        <button type="submit"><i class="glyphicon glyphicon-search"></i></button>
+      </form>
+    </div>
+
 
     <nav id="menu" class="navbar-side">
       <header>
@@ -113,6 +116,9 @@
       <div class="spinner-container img-circle">
         <div class="spinner"></div>
       </div>
+    </div>
+
+    <div id="block-layer" class="block-layer">
     </div>
 
     <footer>
