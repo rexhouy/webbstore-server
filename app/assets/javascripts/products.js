@@ -49,6 +49,9 @@
                 };
 
                 self.checkUserLocation = function() {
+                        if (!(!!$("#is_bulk_product").val())) {
+                                return;
+                        }
                         if (new Date($("#start_date").val()) > new Date()) {
                                 return;
                         }

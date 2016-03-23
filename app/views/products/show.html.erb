@@ -84,7 +84,8 @@
 </article>
 <% end %>
 
-<input type="hidden" id="user_location" value="<%=current_user.location%>">
+<input type="hidden" id="is_bulk_product" value="<%=@product.is_bulk%>">
+<input type="hidden" id="user_location" value="<%=current_user.location if current_user.present?%>">
 <input type="hidden" id="start_date" value="<%=display_datetime @product.start_date%>">
 <input type="hidden" id="price_km" value="<%=@product.price_km%>">
 <input type="hidden" id="price_bj" value="<%=@product.price_bj%>">
