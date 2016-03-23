@@ -14,5 +14,6 @@
  *= require admin/bootstrap_custom
  *= require_tree ./admin
  *= require ./common
+ *= require jquery.datetimepicker.css
  *= require redactor-rails
  */

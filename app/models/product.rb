@@ -61,7 +61,7 @@ class Product < ActiveRecord::Base
                 all
         end
 
-        def self.search_by_owner(search_text, owner, is_crowdfunding)
+        def self.search_by_owner(search_text, owner, is_bulk)
                 search_params = {
                         query: {
                                 match: { name: search_text }
@@ -73,7 +73,7 @@ class Product < ActiveRecord::Base
                                         must: [
                                                { term: {owner_id: owner} },
                                                { term: { status: "available"} },
-                                               { term: { is_crowdfunding: is_crowdfunding} }
+                                               { term: { is_bulk: is_bulk} }
                                               ]
                                 }
                         }
@@ -87,6 +87,10 @@ class Product < ActiveRecord::Base
 
         def started?
                 start_date <= Time.current
+        end
+
+        def self.is_bulk(is_bulk)
+                where(is_bulk: is_bulk)
         end
 
         private

@@ -37,6 +37,7 @@ Rails.application.routes.draw do
         resources :addresses
         # Products
         get 'products' => 'products#index', as: :products
+        get 'bulk' => 'products#bulk'
         get 'products/search' => 'products#search'
         get 'products/:id' => 'products#show', as: :products_detail
         get "products/:id/price_hist" => "products#price_hist"

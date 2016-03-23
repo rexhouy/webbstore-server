@@ -16,5 +16,22 @@
 //= require_tree ./admin-common
 //= require Chart.min.js
 //= require redactor-rails
+//= require jquery.datetimepicker.min.js
 //= require_tree ./redactor-rails
 //= require redactor-rails/langs/zh_cn
+
+Date.parseDate = function( input, format ){
+        return Date.parse(input);
+};
+Date.prototype.dateFormat = function( format ){
+        switch( format ){
+        case "YYYY-MM-DD HH:mm:ss":
+                return this.getFullYear() + "-" + (this.getMonth()+ 1) + "-" + this.getDate()+ " " + this.getHours() + ":00:00";
+        case "HH":
+                return this.getHours();
+        case "YYYY-MM-DD":
+                return this.getFullYear() + "-" + (this.getMonth()+ 1) + "-" + this.getDate();
+        }
+        // or default format
+        return this.getDate()+'.'+(this.getMonth()+ 1)+'.'+this.getFullYear();
+};

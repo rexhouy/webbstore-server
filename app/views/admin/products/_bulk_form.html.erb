@@ -17,7 +17,9 @@
       </thead>
       <tbody>
         <tr>
-          <td><%=p.datetime_local_field :start_date, class: "form-control"%></td>
+          <td>
+              <%=p.text_field :start_date, class:"form-control", value: p.object.start_date.blank? ? "" : display_datetime(p.object.start_date)%>
+          </td>
           <td><%=p.number_field :min_price, class: "form-control", step:0.01%></td>
           <td>~</td>
           <td><%=p.number_field :max_price, class: "form-control", step:0.01%></td>
@@ -30,7 +32,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>库存</th><th>每份数量</th><th>可购买份数</th><th>昆明价格</th><th>北京价格</th>
+          <th>库存</th><th>每份数量(500g)</th><th>可购买份数</th><th>昆明价格</th><th>北京价格</th>
         </tr>
       </thead>
       <tbody>

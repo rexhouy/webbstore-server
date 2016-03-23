@@ -2,21 +2,31 @@
 class ProductsController < ApiController
 
         def index
+                @title = "生态食品"
+                session[:is_bulk] = false
+                list(false)
+        end
+
+        def bulk
+                @title = "大宗采购"
+                session[:is_bulk] = true
+                list(true)
+        end
+
+        def list(is_bulk)
                 category_id = params[:category]
                 @category = Category.find_by_id(category_id)
-                if @category.present? && @category.group_id.eql?(owner)
-                        session[:category] = @category
-                else
-                        @category = nil
-                end
+                @category = nil unless @category.present? && @category.group_id.eql?(owner)
+                session[:category] = @category.present? ? @category.id : nil
                 respond_to do |format|
                         format.html {
                                 set_submenu(@category)
-                                @recommendProducts = []#Product.owner(owner).category(@category).recommend.order(priority: :desc)
+                                @recommendProducts = []
                                 render :index
                         }
                         format.json {
-                                @products = Product.owner(owner).category(@category).available.valid.order(priority: :desc).paginate(page: params[:page])
+                                @products = Product.owner(owner).category(@category).is_bulk(is_bulk).available.valid.order(priority: :desc).paginate(page: params[:page])
+                                render :index
                         }
                 end
         end
@@ -25,13 +35,17 @@ class ProductsController < ApiController
                 @product = Product.find(params[:id])
                 authenticate_user! if @product.is_bulk
                 @title = "商品详情"
-                category = session[:category].present? ? session[:category]["id"] : 1
-                @back_url = "/products?category=#{category || 1}"
+                if @product.is_bulk
+                        @back_url = "/bulk?category=#{session[:category]}"
+                else
+                        @back_url = "/products?category=#{session[:category]}"
+                end
         end
 
         def search
                 @search_text = params[:search_text]
-                @products = Product.search_by_owner(@search_text, owner, false)
+                @products = Product.search_by_owner(@search_text, owner, session[:is_bulk])
+                @back_url =session[:is_bulk] ? "/bulk?category=#{session[:category]}" : "/products?category=#{session[:category]}"
         end
 
         def price_hist

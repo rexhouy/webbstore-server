@@ -91,6 +91,7 @@
                 self.checkWholesale = function(checked) {
                         if (checked) {
                                 $("#wholesaleProperties").show("slow");
+
                         } else {
                                 $("#wholesaleProperties").hide("slow");
                         }
@@ -119,7 +120,10 @@
                                 var batchSize = $("#product_batch_size").val();
                                 var priceKM = $("#product_price_km").val();
                                 var priceBJ = $("#product_price_bj").val();
-                                if (batchSize && priceKM && priceBJ) {
+                                var startDate = $("#product_start_date").val();
+                                var minPrice = $("#product_min_price").val();
+                                var maxPrice = $("#product_max_price").val();
+                                if (batchSize && priceKM && priceBJ && startDate, minPrice, maxPrice) {
                                 } else {
                                         alert("请将大宗商品信息填写完整！");
                                         return false;
@@ -128,8 +132,17 @@
                         return true;
                 };
 
-
                 return self;
         }();
+
+        $(function() {
+                $.datetimepicker.setLocale("zh");
+                $("#product_start_date").datetimepicker({
+                        format:'YYYY-MM-DD HH:mm:ss',
+                        formatTime:'HH',
+                        formatDate:'YYYY-MM-DD',
+                        lang:'zh'
+                });
+        });
 
 })(jQuery);

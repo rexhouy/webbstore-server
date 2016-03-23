@@ -134,9 +134,10 @@
                 }
                 var category = utility.getUrlParam("category") || "";
                 var container = $(".products-list");
+                var url = window.location.pathname == "/bulk" ? "/bulk" : "/products";
                 infinitScroll("#infinit_scroll_indicator", // indicator selector
                               ".products-spinner", // spinner selector
-                              "/products.json?category="+category, // url
+                              url  + ".json?category="+category, // url
                               function(products) {
                                       products.data.forEach(function(product) {
                                               $(Mustache.render(template, product)).appendTo(container);

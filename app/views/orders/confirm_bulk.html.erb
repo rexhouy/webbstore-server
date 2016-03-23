@@ -27,7 +27,7 @@
     <label class="control-label">购买数量：</label>
     <div class="input-group">
       <input type="number" name="count" min="1" step="1" required class="form-control" onchange="orders.calBulkTotal(this.value, <%=@product.batch_size%>, '<%=user_price @product%>')">
-      <div class="input-group-addon">* <%=@product.batch_size%></div>
+      <div class="input-group-addon">* <%=@product.batch_size %> 斤</div>
     </div>
 
   </div>

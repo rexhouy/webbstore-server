@@ -14,7 +14,8 @@
     <%= hidden_field_tag :spec_id %>
     <div class="table-center">
       <% if @product.is_bulk %>
-      <%= link_to user_price(@product), "/orders/confirm_bulk/#{@product.id}", class: "btn btn-primary pull-right", disabled: true, id: "buy_btn"%>
+        <input type="button" disabled="disabled" id="buy_btn" class="btn btn-primary"
+               onclick="window.location.href='/orders/confirm_bulk/<%=@product.id%>'" value="<%=user_price(@product)%>"></input>
       <% else %>
       <button class="btn btn-primary pull-right" type="submit" onclick="return product.selectSpec();">
         <%= user_price @product %> <%= "起" unless @product.specifications.empty?%>
