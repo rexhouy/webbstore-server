@@ -103,7 +103,7 @@ class WechatService
                 # "paySign" : "70EA570631E4BB79628FBCA90534C63FF7FADD89" //微信签名
                 params = {
                         appId: WECHAT["appid"],
-                        timeStamp: Time.now.to_i,
+                        timeStamp: Time.current.to_i,
                         nonceStr: Random::DEFAULT.rand(10 ** 16),
                         package: "prepay_id=#{prepay_id}",
                         signType: "MD5",

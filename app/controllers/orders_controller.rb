@@ -21,7 +21,7 @@ class OrdersController < ApiController
 
         def confirm_payment
                 render_404 unless current_user.waiter?
-                OrderService.new.payment_succeed(@order.order_id, "", params[:receive], params[:memo])
+                OrderService.new.payment_succeed(@order.order_id, "", params[:receive], params[:memo], current_user)
                 redirect_to "/orders/#{@order.id}"
         end
 
@@ -96,7 +96,7 @@ class OrdersController < ApiController
         def add_dishes
                 session[:add_dishes] = {
                         order_id: @order.id,
-                        time: Time.now
+                        time: Time.current
                 }
                 redirect_to products_url
         end

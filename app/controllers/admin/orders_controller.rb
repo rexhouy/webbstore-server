@@ -14,7 +14,7 @@ class Admin::OrdersController < AdminController
 
         def immediate
                 unless params[:all] #
-                        params[:order_date] = Time.now.strftime("%Y-%m-%d")
+                        params[:order_date] = Time.current.strftime("%Y-%m-%d")
                 end
                 search_or_list(ImmediateOrder)
         end

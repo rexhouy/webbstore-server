@@ -49,7 +49,7 @@ class OrderService
                 order
         end
 
-        def payment_succeed(order_id, payment, receive = nil, memo = nil)
+        def payment_succeed(order_id, payment, receive = nil, memo = nil, current_user = nil)
                 order = Order.find_by_order_id(order_id)
                 if order.nil?
                         Rails.logger.error "Order not found #{order_id}"
@@ -61,10 +61,10 @@ class OrderService
                                         order.update(status: Order.statuses[:paid])
                                 else
                                         order.status = Order.statuses[:paid]
-                                        create_order_history(order, nil)
+                                        create_order_history(order, current_user && current_user.id)
                                         order.update(status: Order.statuses[:delivered], receive: receive, payment_memo: memo)
                                 end
-                                create_order_history(order, nil)
+                                create_order_history(order, current_user && current_user.id)
                                 create_payment(order, payment)
                         end
                         send_notify_to_seller(order)
@@ -114,7 +114,7 @@ class OrderService
                 history = OrderHistory.new
                 history.order_id = order.id
                 history.status = order.status
-                history.time = Time.now
+                history.time = Time.current
                 history.operator_id = user_id
                 history.memo = memo
                 history.save!
