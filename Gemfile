@@ -63,6 +63,9 @@ gem 'rqrcode'
 # CAPTCHA
 gem 'simple_captcha2', require: 'simple_captcha'
 
+# Job
+# gem 'sidekiq'
+
 # Scheduled jobs
 gem 'whenever', require: false
 
