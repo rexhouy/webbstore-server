@@ -1,2 +1,6 @@
 <h1 class="page-header">修改商品</h1>
+<% if @product.is_bulk %>
+<%= render partial: "bulk_form"%>
+<% else %>
 <%= render partial: "form" %>
+<% end %>

@@ -23,7 +23,7 @@ class Admin::ProductsController < AdminController
                                 spec.update(status: Specification.statuses[:disabled])
                         end
                         if @product.update(product_params)
-                                create_price_history(@product) if bulk_price_changed?(@product.previous_changes)
+                                create_price_history(@product)
                                 redirect_to admin_product_path(@product), notice: "更新成功"
                         else
                                 render "edit"
@@ -36,19 +36,25 @@ class Admin::ProductsController < AdminController
                 @product.build_crowdfunding
         end
 
+        def new_bulk
+                @product = Product.new
+        end
+
         def show
         end
 
         def create
-                @is_wholesale = params[:is_wholesale]
                 @product = Product.new(product_params)
                 @product.owner_id = owner
                 if @product.save
                         create_price_history(@product)
                         redirect_to admin_product_path(@product), notice: "创建成功"
                 else
-                        @product.build_crowdfunding if @product.crowdfunding.nil?
-                        render "new"
+                        if @product.is_bulk
+                                render "new_bulk"
+                        else
+                                render "new"
+                        end
                 end
         end
 
@@ -98,7 +104,7 @@ class Admin::ProductsController < AdminController
                                                 :cover_image, :category_id, :priority, :supplier_id,
                                                 :is_bulk, :batch_size, :price_km, :price_bj,
                                                 :min_price, :max_price, :start_date,
-                                                specifications_attributes: [:id, :name, :value, :price, :storage, :count])
+                                                specifications_attributes: [:id, :name, :value, :price, :storage, :count, :price_km, :price_bj, :batch_size])
                 # :is_crowdfunding,
                 # crowdfunding_attributes: [:id, :threshold, :start_date, :end_date, :delivery_date, :price_km, :price_bj, :threshold_per_trade, :prepayment])
         end
@@ -108,17 +114,17 @@ class Admin::ProductsController < AdminController
         end
 
         def create_price_history(product)
-                hist = ProductPriceHistory.new
-                hist.batch_size = product.batch_size
-                hist.price_km = product.price_km
-                hist.price_bj = product.price_bj
-                hist.product_id = product.id
-                hist.start_date = product.start_date
-                hist.save!
-        end
-
-        def bulk_price_changed?(changed_attrs)
-                changed_attrs["price_km"].present? || changed_attrs["batch_size"].present? || changed_attrs["price_bj"].present?
+                product.specifications.each do |spec|
+                        hist = ProductPriceHistory.new
+                        hist.batch_size = spec.batch_size
+                        hist.price_km = spec.price_km
+                        hist.price_bj = spec.price_bj
+                        hist.product_id = product.id
+                        hist.start_date = product.start_date
+                        hist.spec_id = spec.id
+                        hist.spec_name = spec.value
+                        hist.save!
+                end
         end
 
 end

@@ -38,7 +38,7 @@
                 spinner.show();
         });
 
-        window.product = function(){
+        var product = function(){
                 var self = {};
 
                 var template = $("#specification_template").html();
@@ -97,43 +97,52 @@
                         }
                 };
 
-                self.checkBulk = function(checked) {
-                        if (checked) {
-                                $("#bulkProperties").show("slow");
-                        } else {
-                                $("#bulkProperties").hide("slow");
-                        }
-                };
-
-                self.storageChange = function() {
-                        var batchSize = $("#product_batch_size").val();
-                        var storage = $("#product_storage").val();
-                        var sales = $("#productSales").val();
-                        $("#storage").html(storage - sales);
-                        if (batchSize && batchSize > 0) {
-                                $("#avaiableCount").html(Math.floor((storage - sales) / batchSize));
-                        }
-                };
-
                 self.check = function(e) {
-                        if ($("#product_is_bulk")[0].checked) {
-                                var batchSize = $("#product_batch_size").val();
-                                var priceKM = $("#product_price_km").val();
-                                var priceBJ = $("#product_price_bj").val();
-                                var startDate = $("#product_start_date").val();
-                                var minPrice = $("#product_min_price").val();
-                                var maxPrice = $("#product_max_price").val();
-                                if (batchSize && priceKM && priceBJ && startDate, minPrice, maxPrice) {
-                                } else {
-                                        alert("请将大宗商品信息填写完整！");
-                                        return false;
-                                }
+                        return true;
+                };
+
+                return self;
+        };
+
+        var bulkProduct = function() {
+                var self = product();
+                var template = $("#specification_template").html();
+                var name = "product[specifications_attributes][:index][:name]";
+
+                var hasSpec = false;
+                self.setFormParams = function(e) {
+                        var container = $("#specifications");
+                        var names = ["id", "name", "value", "storage", "batch_size", "price_km", "price_bj"];
+                        var storage = 0;
+                        $("#specification_tbody").find("tr").each(function(spec_index) {
+                                $(this).find("input").each(function(index, element) {
+                                        var html_name = name.replace(/:index/, spec_index).replace(/:name/, names[index]);
+                                        container.append($("<input type=hidden name="+html_name+" value='"+element.value+"'>"));
+                                        if (names[index] == "storage" && element.value) {
+                                                storage += Number(element.value);
+                                        }
+                                });
+                        });
+                        if (storage > 0) {
+                                $("#product_storage").val(storage);
+                        }
+                        hasSpec = storage > 0;
+                        return false;
+                };
+
+                self.check = function() {
+                        if (!hasSpec) {
+                                alert("请添加规格信息!");
+                                return false;
                         }
                         return true;
                 };
 
                 return self;
-        }();
+        };
+
+        window.product = product();
+        window.bulkProduct = bulkProduct();
 
         $(function() {
                 $.datetimepicker.setLocale("zh");

@@ -15,7 +15,8 @@
           <div class="title">
             <h3><%=@product.name%></h3>
             <div class="desc"><%=@product.description%></div>
-            <div class="price">单价： <%=user_price @product%></div>
+            <div class="price">单价： <%=user_price @specification%></div>
+            <div class="spec">规格： <%=@specification.value%></div>
           </div>
         </div>
       </div>
@@ -23,11 +24,12 @@
   </div>
   <%= form_tag "/orders/bulk", class: "form col-sm-6 col-xs-12", method: "POST" do%>
   <input type="hidden" name="id" id="productId" value="<%=@product.id%>">
+  <input type="hidden" name="spec_id" id="productSpecId" value="<%=@specification.id%>">
   <div class="form-group">
     <label class="control-label">购买数量：</label>
     <div class="input-group">
-      <input type="number" name="count" min="1" step="1" required class="form-control" onchange="orders.calBulkTotal(this.value, <%=@product.batch_size%>, '<%=user_price @product%>')">
-      <div class="input-group-addon">* <%=@product.batch_size %> 斤</div>
+      <input type="number" name="count" min="1" step="1" required class="form-control" onchange="orders.calBulkTotal(this.value, <%=@specification.batch_size%>, '<%=user_price @specification%>')">
+      <div class="input-group-addon">* <%=@specification.batch_size %> 斤</div>
     </div>
 
   </div>

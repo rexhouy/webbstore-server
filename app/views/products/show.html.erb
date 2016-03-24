@@ -9,20 +9,11 @@
     </h2>
   </div>
   <div class="col-md-4 col-sm-4 col-xs-5 inherit-height pull-right">
-    <%= form_tag carts_add_product_url, class: 'inherit-height table-center-wrap pull-right', id: 'add_to_cart_form'  do%>
-    <%= hidden_field_tag :id, @product.id %>
-    <%= hidden_field_tag :spec_id %>
-    <div class="table-center">
-      <% if @product.is_bulk %>
-        <input type="button" disabled="disabled" id="buy_btn" class="btn btn-primary"
-               onclick="window.location.href='/orders/confirm_bulk/<%=@product.id%>'" value="<%=user_price(@product)%>"></input>
-      <% else %>
-      <button class="btn btn-primary pull-right" type="submit" onclick="return product.selectSpec();">
-        <%= user_price @product %> <%= "起" unless @product.specifications.empty?%>
-      </button>
-      <% end %>
-    </div>
-  <% end %>
+    <% if @product.is_bulk %>
+    <%= render partial: "bulk_show"%>
+    <% else %>
+    <%= render partial: "retail_show"%>
+    <% end %>
   </div>
 </div>
 
@@ -33,7 +24,9 @@
     <div class="col-md-12">
       <label>价格走势</label>
     </div>
-    <canvas id="price_hist_graph" style="width:0;height:0;margin: 4px 12px 24px 12px;"></canvas>
+    <canvas id="price_hist_graph" style="width:0;height:0;margin: 4px 12px 0 12px;"></canvas>
+    <div id="chart_legend" class="chart-legend">
+    </div>
   </div>
   <% end %>
   <% if @product.is_bulk && !@product.started?%>
@@ -72,14 +65,20 @@
     <div style="padding-left:40px;margin:10px 0;">
       <% specification_group(@product.specifications).each do |group_name, specs| %>
       <% specs.each do |spec| %>
-      <div id="spec_price_<%=spec.id%>" style="display:none;"><strong>单价： <%=number_to_currency spec.price, precision: 2%></strong></div>
+      <div id="spec_price_<%=spec.id%>" style="display:none;"><strong>单价： <%=user_price spec%></strong></div>
       <% end %>
       <% end %>
     </div>
     <div style="padding-left:40px;">
+      <% if @product.is_bulk %>
+      <button class="btn btn-primary btn-block btn-lg" onclick="bulkProduct.buy()" disabled="disabled" id="spec_add_to_cart_btn">
+        <span class="glyphicon glyphicon-shopping-cart"></span> 购买
+      </button>
+      <% else %>
       <button class="btn btn-primary btn-block btn-lg" onclick="product.addToCart()" disabled="disabled" id="spec_add_to_cart_btn">
         <span class="glyphicon glyphicon-shopping-cart"></span> 加入购物车
       </button>
+      <% end %>
     </div>
   </section>
 </article>

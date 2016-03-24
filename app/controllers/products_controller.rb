@@ -55,23 +55,43 @@ class ProductsController < ApiController
                         format.json {
                                 @product = Product.find(params[:id])
                                 @hists = ProductPriceHistory.where(product_id: params[:id], start_date: @product.start_date).order(id: :asc)
-                                @hists = @hists.map do |hist|
-                                        {
-                                                time: hist.created_at,
-                                                price_km: hist.price_km,
-                                                price_bj: hist.price_bj
-                                        }
-                                end
-                                @hists << {
-                                        time: Time.current,
-                                        price_km: @hists[-1][:price_km],
-                                        price_bj: @hists[-1][:price_bj]
-                                } if @hists.any?
+                                @hists_by_spec = group_histories_by_specifications(@hists)
+                                add_current_data(@hists_by_spec)
+                                @labels = get_labels(@hists_by_spec)
                         }
                 end
         end
 
         private
+        def get_labels(hists)
+                labels = []
+                hists[hists.keys[0]].each do |hist|
+                        labels << hist[:time].strftime("%m月%d日%H时")
+                end
+                labels
+        end
+        def add_current_data(hists)
+                hists.each do |k, v|
+                        v << {
+                                time: Time.current,
+                                price_km: v[-1][:price_km],
+                                price_bj: v[-1][:price_bj]
+                        }
+                end
+                hists
+        end
+        def group_histories_by_specifications(hists)
+                hists_by_spec = {}
+                hists.each do |hist|
+                        hists_by_spec[hist.spec_name] ||= []
+                        hists_by_spec[hist.spec_name] << {
+                                time: hist.created_at,
+                                price_km: hist.price_km,
+                                price_bj: hist.price_bj
+                        }
+                end
+                hists_by_spec
+        end
         def owner
                 Rails.application.config.owner
         end

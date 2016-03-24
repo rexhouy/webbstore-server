@@ -1,16 +1,19 @@
 # -*- coding: utf-8 -*-
 class BulkOrderService < OrderService
 
-        def create(product_id, order, count, payment_type, current_user)
-                product = Product.find(product_id)
-                raise "商品不存在" if product.nil? || !product.is_bulk
+        def create(spec_id, order, count, payment_type, current_user)
+                specification = Specification.find(spec_id)
+                raise "商品不存在" if specification.nil?
+                product = specification.product
+                raise "商品不存在" if !product.is_bulk
 
-                count = count.to_i * product.batch_size
+                count = count.to_i * specification.batch_size
 
                 orders_products = OrdersProducts.new
                 orders_products.count = count
-                orders_products.price = price(product, current_user)
+                orders_products.price = price(specification, current_user)
                 orders_products.product_id = product.id
+                orders_products.specification_id = specification.id
                 orders_products.seller_id = Rails.application.config.owner
 
                 order.is_bulk = true
@@ -43,8 +46,10 @@ class BulkOrderService < OrderService
 
 
         def update_product_sales(orders_products, func)
-                sales = orders_products.product.sales.send(func, orders_products.count)
-                raise "库存不足，只剩#{orders_products.product.storage - orders_products.product.sales}件产品！" if (sales > orders_products.product.storage)
-                orders_products.product.update(sales: sales)
+                sales = orders_products.specification.sales.send(func, orders_products.count)
+                raise "库存不足，只剩#{orders_products.specification.storage - orders_products.specification.sales}件产品！" if (sales > orders_products.specification.storage)
+                orders_products.specification.update(sales: sales)
+                product_sales = orders_products.product.sales.send(func, orders_products.count)
+                orders_products.product.update(sales: product_sales)
         end
 end

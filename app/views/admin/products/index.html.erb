@@ -17,6 +17,9 @@
   <%= link_to new_admin_product_path,  class: "btn btn-default pull-right" do %>
     <span class="glyphicon glyphicon-plus"></span> 新建
   <% end %>
+  <%= link_to "/admin/products/new_bulk",  class: "btn btn-default pull-right", style:"margin-right:12px;" do %>
+  <span class="glyphicon glyphicon-plus"></span> 新建大宗
+  <% end %>
   <form action="<%= admin_products_path %>" method="get" class="form-inline">
     <div class="form-group">
       <%= text_field_tag :search_text, @search_text, class: "form-control", placeholder: "商品名称" %>

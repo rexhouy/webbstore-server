@@ -21,7 +21,8 @@ class OrdersController < ApiController
         end
 
         def confirm_bulk
-                @product = Product.find(params[:id])
+                @specification = Specification.find(params[:spec_id])
+                @product = @specification.product
                 @back_url = "/products/#{params[:id]}"
                 @order = @order || Order.new
                 render :confirm_bulk
@@ -30,8 +31,8 @@ class OrdersController < ApiController
         def add_bulk
                 begin
                         @order = Order.new(bulk_order_params)
-                        @order.contact_address += current_user.location
-                        @order = BulkOrderService.new.create(params[:id], @order, params[:count],
+                        @order.contact_address = current_user.location + @order.contact_address
+                        @order = BulkOrderService.new.create(params[:spec_id], @order, params[:count],
                                                              Order.payment_types[:alipay], current_user)
                         redirect_to payment_redirect_url(@order)
                 rescue => e

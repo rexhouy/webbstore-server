@@ -5,6 +5,10 @@
                 var specbar = $("#specbar");
                 var selectedSpec = null;
 
+                self.getSelectedSpec = function() {
+                        return selectedSpec;
+                };
+
                 var specExist = function() {
                         return specbar[0];
                 };
@@ -101,13 +105,30 @@
                                 var width = $(".banner").width();
                                 document.getElementById("price_hist_graph").style.width = width - 24 + "px";
                                 document.getElementById("price_hist_graph").style.height = "180px";
-                                new Chart(ctx).LineAlt(data);
+                                var chart = new Chart(ctx).LineAlt(data, {
+                                        legendTemplate: "<ul><% for (var i = 2; i < datasets.length; i++) {%><li style=\"color:<%=datasets[i].strokeColor%>\"><span><%if(datasets[i].label) {%><%=datasets[i].label%> <%}%></span></li><%}%></ul>"
+                                });
+                                $("#chart_legend").html(chart.generateLegend());
                         });
                 };
 
                 return self;
         };
         window.product = product();
+
+        var bulkProduct = function() {
+                var self = product();
+
+                self.buy = function() {
+                        if (window.product.getSelectedSpec()) {
+                                $("#spec_id").val(window.product.getSelectedSpec());
+                                $("#buy_form").submit();
+                        }
+                };
+
+                return self;
+        };
+        window.bulkProduct = bulkProduct();
 
         function registLocationSelector() {
                 function clearSelect() {

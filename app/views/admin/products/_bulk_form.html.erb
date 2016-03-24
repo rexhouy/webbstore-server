@@ -1,13 +1,89 @@
-<div class="form-group">
-  <div class="col-sm-5 col-sm-offset-2">
-    <%= p.check_box :is_bulk, onchange: "product.checkBulk(this.checked)" %>
-    <%= p.label :is_bulk, class: "control-label" do %>
-    大宗商品  <span class="glyphicon glyphicon-info-sign icon" title="是否是大宗商品"></span>
+<%= form_for [:admin, @product],  html: {class: "form-horizontal", onsubmit: "return bulkProduct.check();"} do |p| %>
+<% if @product.errors.any? %>
+<div class="alert alert-danger" role="alert">
+  <strong>保存失败</strong>
+  <ul>
+    <% @product.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
     <% end %>
+  </ul>
+</div>
+<% end %>
+
+<div class="form-group">
+  <%= p.label :name, "名字", class: "col-sm-2 control-label"  %>
+  <div class="col-sm-6">
+    <%= p.text_field :name, class: "form-control", required: true %>
   </div>
 </div>
 
-<div id="bulkProperties" class="form-group" <% unless p.object.is_bulk%>style="display:none;"<% end %>>
+<%= p.hidden_field :storage %>
+
+<div class="form-group">
+  <%= p.label :description, class: "col-sm-2 control-label" do  %>
+  <span class="glyphicon glyphicon-info-sign icon" title="使用「|」分割的描述内容将会显示在不同行"></span> 描述
+  <% end %>
+  <div class="col-sm-8">
+    <%= p.text_field :description, class: "form-control" %>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= p.label :supplier_id, class: "col-sm-2 control-label" do  %>
+  供应商
+  <% end %>
+  <div class="col-sm-4">
+    <%= p.select :supplier_id, supplier_options(p.object.supplier), {include_blank: true}, class: "form-control" %>
+  </div>
+  <div class="col-sm-2">
+    <%=link_to "修改供应商", admin_suppliers_url, class: "btn btn-primary"%>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= p.label :category_id, class: "col-sm-2 control-label" do  %>
+  类目
+  <% end %>
+  <div class="col-sm-4">
+    <%= p.select :category_id, category_options(p.object.category_id), {include_blank: true}, class: "form-control" %>
+  </div>
+  <div class="col-sm-2">
+    <%=link_to "修改类目", admin_categories_url, class: "btn btn-primary"%>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= p.label :priority, class: "col-sm-2 control-label" do  %>
+  <span class="glyphicon glyphicon-info-sign icon" title="数值越大，显示越靠前"></span> 显示顺
+  <% end %>
+  <div class="col-sm-4">
+    <%= p.number_field :priority, class: "form-control" %>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= p.label :cover_image, class: "col-sm-2 control-label" do %>
+  <span class="glyphicon glyphicon-info-sign icon" title="该图片将作为商品封面，为了保证显示效果，请使用256*256的图片并使用透明背景"></span> 封面图片
+  <% end %>
+  <div class="col-sm-5">
+    <% if p.object.cover_image.nil? %>
+    <%= image_tag "empty-img.png", class: "img-thumbnail", onclick: "uploader.open()", id: "cover_image", style: "width:180px" %>
+    <% else %>
+    <%= image_tag p.object.cover_image, class: "img-thumbnail", onclick: "uploader.open()", id: "cover_image", style: "width:180px" %>
+    <% end %>
+    <div class="progress upload-progress">
+      <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+        <span class="sr-only">100% Complete</span>
+      </div>
+    </div>
+    <%= p.hidden_field :cover_image %>
+  </div>
+</div>
+<%= render partial: "upload_form" %>
+
+<input type="hidden" name="product[is_bulk]" value="1">
+
+<div id="bulkProperties" class="form-group">
   <div class="col-sm-10 col-sm-offset-2">
     <table class="table table-bordered">
       <thead>
@@ -18,7 +94,7 @@
       <tbody>
         <tr>
           <td>
-              <%=p.text_field :start_date, class:"form-control", value: p.object.start_date.blank? ? "" : display_datetime(p.object.start_date)%>
+            <%=p.text_field :start_date, class:"form-control", value: p.object.start_date.blank? ? "" : display_datetime(p.object.start_date)%>
           </td>
           <td><%=p.number_field :min_price, class: "form-control", step:0.01%></td>
           <td>~</td>
@@ -27,23 +103,94 @@
       </tbody>
     </table>
   </div>
-  <div class="col-sm-10 col-sm-offset-2">
-    <input type="hidden" id="productSales" value="<%=p.object.sales%>">
+  <div class="col-sm-10 col-sm-offset-2" id="specifications">
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>库存</th><th>每份数量(500g)</th><th>可购买份数</th><th>昆明价格</th><th>北京价格</th>
+          <th style="display:none"></th>
+          <th style="display:none"></th>
+          <th>规格</th><th>上架数量</th><th>每份数量(500g)</th><th>昆明价格</th><th>北京价格</th><th>删除</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="specification_tbody">
+        <% p.object.specifications.each do |spec| %>
         <tr>
-          <td id="storage"><%= product_storage(p.object)%></td>
-          <td><%= p.number_field :batch_size, class: "form-control", min: 1, step: 1, onchange: "product.storageChange()" %></td>
-          <td id="avaiableCount"><%= (product_storage(p.object) / p.object.batch_size).to_i if (p.object.batch_size && p.object.batch_size > 0) %></td>
-          <td><%= p.number_field :price_km, class: "form-control", min: 0, step: 0.01%></td>
-          <td><%= p.number_field :price_bj, class: "form-control", min: 0, step: 0.01%></td>
+          <td style="display:none"><input type="hidden" value="<%= spec.id%>"></td>
+          <td style="display:none"><input type="hidden" value="规格"></td>
+          <td><input type="text" class="form-control" value="<%=spec.value%>"></td>
+          <td><input type="number" class="form-control" min="1" step="1" value="<%=spec.storage%>"></td>
+          <td><input type="number" class="form-control" min="1" step="1" value="<%=spec.batch_size%>"></td>
+          <td><input type="number" class="form-control" min="1" step="0.01" value="<%=spec.price_km%>"></td>
+          <td><input type="number" class="form-control" min="1" step="0.01" value="<%=spec.price_bj%>"></td>
+          <td>
+            <button type="button" class="btn btn-danger" onclick="bulkProduct.removeSpec(this)" title="删除">
+              <span class='glyphicon glyphicon-trash' style='color:#fff;'></span>
+            </button>
+          </td>
         </tr>
+        <% end %>
       </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="9">
+            <a href="javascript:bulkProduct.addSpec()" class="btn btn-default" id="add_spec">
+              <span class='glyphicon glyphicon-plus'></span> 增加规格
+            </a>
+          </td>
+        </tr>
+      </tfoot>
     </table>
   </div>
 </div>
+
+<div class="form-group">
+  <div class="col-sm-5 col-sm-offset-2">
+    <%= p.check_box :recommend %>
+    <%= p.label :recommend, class: "control-label" do %>
+    主推商品  <span class="glyphicon glyphicon-info-sign icon" title="是否显示在主页的显著位置"></span>
+    <% end %>
+  </div>
+</div>
+<div class="form-group">
+  <div class="col-sm-5 col-sm-offset-2">
+    <%= p.check_box :on_sale %>
+    <%= p.label :on_sale, class: "control-label" do %>
+    上架  <span class="glyphicon glyphicon-info-sign icon" title="是否上架销售"></span>
+    <% end %>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= p.label :article, "详情", class: "col-sm-2 control-label"  %>
+  <div class="col-sm-10">
+    <%= p.text_area :article %>
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <%= submit_tag "确认", class: "btn btn-primary", onclick: "bulkProduct.setFormParams()" %>
+    <%= link_to "取消", admin_products_path, class: "btn btn-default" %>
+  </div>
+</div>
+
+<% end %>
+
+
+<!-- Template -->
+<script type="text/template" id="specification_template">
+  <tr>
+    <td style="display:none"><input type="hidden"></td>
+    <td style="display:none"><input type="hidden" value="规格"></td>
+    <td><input type="text" class="form-control"></td>
+    <td><input type="number" class="form-control" min="1" step="1"></td>
+    <td><input type="number" class="form-control" min="1" step="1"></td>
+    <td><input type="number" class="form-control" min="1" step="0.01"></td>
+    <td><input type="number" class="form-control" min="1" step="0.01"></td>
+    <td>
+      <button type="button" class="btn btn-danger" onclick="bulkProduct.removeSpec(this)" title="删除">
+        <span class='glyphicon glyphicon-trash' style='color:#fff;'></span>
+      </button>
+    </td>
+  </tr>
+</script>

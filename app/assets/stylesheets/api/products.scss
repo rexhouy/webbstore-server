@@ -78,3 +78,24 @@ section.recommand {
         position: inherit;
     }
 }
+
+.chart-legend {
+    text-align:right;
+    margin-bottom: 24px;
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    li {
+        margin-left: 24px;
+        display: inline-block;
+        &:before {
+            content: "a";
+            padding: 0 5px;
+        }
+    }
+    span {
+        color: #555;
+    }
+}

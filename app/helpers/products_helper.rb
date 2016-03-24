@@ -13,16 +13,14 @@ module ProductsHelper
                 category.name
         end
 
-        def user_price(product)
-                unless product.is_bulk?
-                        return number_to_currency(product.price, locale: :'zh-CN', precision: 2)
+        def user_price(spec)
+                if spec.price.present?
+                        return number_to_currency(spec.price, locale: :'zh-CN', precision: 2)
                 end
-                started = product.start_date <= Time.current
-                return price_range(product) unless started
                 if current_user.location.eql?("昆明市")
-                        return number_to_currency(product.price_km, locale: :'zh-CN', precision: 2)
+                        return number_to_currency(spec.price_km, locale: :'zh-CN', precision: 2)
                 else
-                        return number_to_currency(product.price_bj, locale: :'zh-CN', precision: 2)
+                        return number_to_currency(spec.price_bj, locale: :'zh-CN', precision: 2)
                 end
         end
 

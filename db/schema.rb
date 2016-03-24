@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160322030040) do
+ActiveRecord::Schema.define(version: 20160324032617) do
 
   create_table "account_balance_histories", force: :cascade do |t|
     t.decimal  "receipt",                 precision: 8, scale: 2
@@ -237,14 +237,16 @@ ActiveRecord::Schema.define(version: 20160322030040) do
 
   create_table "product_price_histories", force: :cascade do |t|
     t.integer  "batch_size", limit: 4
-    t.decimal  "price_km",             precision: 8, scale: 2
-    t.decimal  "price_bj",             precision: 8, scale: 2
+    t.decimal  "price_km",               precision: 8, scale: 2
+    t.decimal  "price_bj",               precision: 8, scale: 2
     t.integer  "product_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "sales_km",   limit: 4
     t.integer  "sales_bj",   limit: 4
     t.datetime "start_date"
+    t.integer  "spec_id",    limit: 4
+    t.string   "spec_name",  limit: 255
   end
 
   create_table "products", force: :cascade do |t|
@@ -312,6 +314,10 @@ ActiveRecord::Schema.define(version: 20160322030040) do
     t.integer  "count",        limit: 4
     t.decimal  "origin_price",             precision: 8, scale: 2
     t.string   "barcode",      limit: 255
+    t.integer  "batch_size",   limit: 4
+    t.boolean  "is_bulk",      limit: 1
+    t.decimal  "price_km",                 precision: 8, scale: 2
+    t.decimal  "price_bj",                 precision: 8, scale: 2
   end
 
   add_index "specifications", ["product_id"], name: "fk_rails_9b321d46dc", using: :btree

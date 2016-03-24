@@ -2,10 +2,14 @@ zh-CN:
   activerecord:
     models:
       user: "用户"
+      product: "商品"
+      specification: "规格"
     attributes:
       user:
         name: "用户名"
         tel: "手机号"
+      product:
+        price: "价格"
     errors:
       models:
         product:

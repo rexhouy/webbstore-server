@@ -1,0 +1,9 @@
+<%= form_tag carts_add_product_url, class: 'inherit-height table-center-wrap pull-right', id: 'add_to_cart_form'  do%>
+<%= hidden_field_tag :id, @product.id %>
+<%= hidden_field_tag :spec_id %>
+<div class="table-center">
+  <button class="btn btn-primary pull-right" type="submit" onclick="return product.selectSpec();">
+    <%= user_price @product %> <%= "起" unless @product.specifications.empty?%>
+  </button>
+</div>
+<% end %>

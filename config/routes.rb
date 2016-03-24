@@ -64,7 +64,7 @@ Rails.application.routes.draw do
         get 'orders/confirm' => 'orders#confirm', as: :orders_confirm
         get 'orders/:id' => 'orders#show'
         put 'orders/:id' => 'orders#cancel', as: :orders_cancel
-        get 'orders/confirm_bulk/:id' => 'orders#confirm_bulk'
+        post 'orders/confirm_bulk' => 'orders#confirm_bulk'
         post "orders/bulk" => "orders#add_bulk"
 
         # Payment
@@ -126,6 +126,7 @@ Rails.application.routes.draw do
                 get 'orders/wechat_register_notification/:uid' => 'orders#wechat_register_notification'
 
                 #Products
+                get "products/new_bulk" => "products#new_bulk"
                 resources :products do
                         resources :specifications
                 end

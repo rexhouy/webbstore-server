@@ -30,6 +30,10 @@ module Webstore
 	        # Do not include all helpers for all views
 	        config.action_controller.include_all_helpers = false
 
+	        # Job settings
+	        config.active_job.queue_name_prefix = ENV['WEBSITE_HOST']
+	        config.active_job.queue_adapter = :sidekiq
+
                 # Define which owner this app belongs to.
                 config.owner = 1
 	        config.domain = ENV['WEBSITE_HOST']

@@ -28,7 +28,6 @@ class Product < ActiveRecord::Base
         #validations
         validates :name, presence: true
         validates :description, presence: true
-        validates :price, presence: true, numericality: true
         validates :article, presence: true
         validate :check_specifications
 
@@ -95,6 +94,9 @@ class Product < ActiveRecord::Base
 
         private
         def check_specifications
+                unless specifications.present? or price.present?
+                        errors.add(:base, "必须设置商品价格")
+                end
                 unless specifications.present? or storage.present?
                         errors.add(:base, "必须设置商品上架数量")
                 end

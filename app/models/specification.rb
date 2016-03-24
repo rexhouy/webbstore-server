@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Specification < ActiveRecord::Base
 
         belongs_to :product
@@ -5,8 +6,16 @@ class Specification < ActiveRecord::Base
         #validations
         validates :name, presence: true
         validates :value, presence: true
-        validates :price, presence: true, numericality: true
         validates :storage, presence: true, numericality: { only_integer: true }
+
+        validate :price_exist
+
+        def price_exist
+                if price.present? || (price_bj.present? && price_km.present?)
+                else
+                        errors.add(:price, "请输入价格信息")
+                end
+        end
 
         enum status: [:available, :disabled]
 
