@@ -184,7 +184,7 @@ a.contact-us {
     .navbar-brand {
         height: 72px;
         padding: 24px 0 0 0;
-        font-size: 25px;
+        font-size: 26px;
         font-weight: normal;
     }
     @media (min-width: 992px) {
@@ -195,22 +195,22 @@ a.contact-us {
 }
 
 .cover {
-    height: 280px;
+    height: 200px;
     overflow: hidden;
     img {
-        height: 280px;
+        height: 200px;
         float: right;
         width: auto;
     }
 }
 
 .home-nav {
-    height: 192px;
+    height: 168px;
     background: #989e4b;
     opacity: .8;
-    padding: 36px 12px;
+    padding: 36px 24px;
     a {
-        height: 48px;
+        height: 36px;
         display: table;
         width: 100%;
         background: #fff;
@@ -221,9 +221,9 @@ a.contact-us {
         vertical-align: middle;
         display: table-cell;
         text-align: center;
-        font-size: 22px;
+        font-size: 18px;
         color: #397338;
-        letter-spacing: 8px;
+        letter-spacing: 4px;
         margin: 0;
     }
 }
