@@ -1,19 +1,142 @@
-<div>
-  <% if @channels.any? %>
-  <div class="row">
-    <a href="<%=@channels.first.url%>">
-      <%= image_tag @channels.first.image, alt: @channels.first.name%>
-    </a>
-  </div>
-  <div class="row home-nav" style="background:#fff;">
-    <% @channels[1..@channels.size].each do |c| %>
-      <section class="col-sm-6 col-md-6 col-xs-12 col-lg-4" style="padding: 0; margin: 2px 0;">
-        <a href="<%=c.url%>" style="" class="products">
-          <%= image_tag c.image, alt: c.name%>
-          <h3><%=c.name%></h3>
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title><%=Rails.application.config.name%>--科技农业，绿色生活</title>
+    <meta name="description" content="科技农业，绿色生活">
+    <meta name="Keywords" content="生态食品 大宗食材 智慧餐饮 游戏营销">
+    <meta name="viewport" content="width=device-width,user-scalable=no">
+    <link href="<%=image_url('favicon.ico')%>" rel="icon">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body class="no-touch">
+
+    <header id="homeHeader">
+      <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+          <section class="inherit-height pull-left">
+            <button class="btn icon" onclick="menu.open();">
+              <i class="glyphicon glyphicon-menu-hamburger"></i>
+            </button>
+          </section>
+          <section class="inherit-height pull-right">
+            <% if user_signed_in? %>
+            <button type="button" class="icon btn" onclick="window.location.href='/me'" style="outline:none;">
+              <i class="glyphicon glyphicon-user"></i>
+            </button>
+            <% else %>
+            <a href="/users/sign_in" target="_self" class="btn" style="font-size: 18px;margin: 12px;">
+              <p class="inherit-height nav-header-link-text">登录</p>
+            </a>
+            <% end %>
+          </section>
+        </div>
+        <div class="container">
+          <div class="navbar-brand">
+            <a href="/about"><%=@title || Rails.application.config.name%><small>科技农业&nbsp;&nbsp;绿色生活</small></a>
+          </div>
+        </div>
+    </header>
+
+    <nav id="menu" class="navbar-side">
+      <header>
+        <% if user_signed_in? %>
+        <a  class="inherit-height pull-left" href="/me">
+          <%= image_tag "user.png" %>
+          <p class="inherit-height nav-header-link-text"><span class="table-center inherit-height"><%= current_user.tel %></span></p>
         </a>
+        <% else %>
+        <a href="/users/sign_in" target="_self" class="inherit-height pull-left">
+          <%= image_tag "user.png" %>
+          <p class="inherit-height nav-header-link-text"><span class="table-center inherit-height">登录</span></p>
+        </a>
+        <% end %>
+        <button type="button" class="icon btn btn-lg pull-right inherit-height" onclick="menu.close();">
+          <i class="glyphicon glyphicon-remove"></i>
+        </button>
+      </header>
+
+      <section class="nav-section">
+        <ul class="nav">
+          <% if user_signed_in? %>
+          <li><a href="/me" class="icon-link-left"><i class="glyphicon glyphicon-home"></i>我的<%=Rails.application.config.name%></a></li>
+          <% end %>
+          <li><a href="/orders" class="icon-link-left"><i class="glyphicon glyphicon-list-alt"></i>订单</a></li>
+          <li><a href="/carts" class="icon-link-left"><i class="glyphicon glyphicon-shopping-cart"></i>购物车</a></li>
+          <% @channels[1..@channels.size].each do |c| %>
+          <li><a href="<%=c.url%>" class="icon-link-left"><i class="glyphicon glyphicon-grain"></i><%=c.name%></a></li>
+          <% end %>
+          <li><a href="/about" class="icon-link-left">关于</a></li>
+        </ul>
       </section>
-    <% end %>
-  </div>
-  <% end %>
-</div>
+    </nav>
+
+    <div class="container" style="background-color: #f7f9eb;">
+      <div class="row cover">
+        <%=image_tag "cover.jpg"%>
+      </div>
+      <div class="row">
+        <% if @channels.any? %>
+        <div class="home-nav">
+          <% @channels.each do |c| %>
+          <section class="col-sm-6 col-md-6 col-xs-6 col-lg-3" style="padding: 8px; margin:0;">
+            <a href="<%=c.url%>">
+              <h3><%=c.name%></h3>
+            </a>
+          </section>
+          <% end %>
+        </div>
+        <% end %>
+      </div>
+      <div class="row cm-txt">
+        <p>科技农业&nbsp;&nbsp;&nbsp;&nbsp;绿色生活</p>
+      </div>
+    </div>
+
+    <%= image_tag "spinner.gif", style: "position:fixed;left:-100000px;"%>
+    <div><!-- Loading animation  -->
+      <div class="block-layer block-layer-light" onclick="menu.close()"></div>
+      <div class="spinner-container img-circle">
+        <div class="spinner"></div>
+      </div>
+    </div>
+
+    <div id="block-layer" class="block-layer">
+    </div>
+
+    <footer>
+      <div class="container">
+        <p class="copyright">Copyright © 2015 北京拾惠社农业科技有限公司</p>
+        <ul>
+          <li><span class="glyphicon glyphicon-map-marker"></span> 北京市中关村科技园平谷分园</li>
+          <li>京ICP备15036211号</li>
+        </ul>
+        <a class="contact-us" data-toggle="modal" data-target="#contactUsModal">联系我们 <i class="glyphicon glyphicon-comment"></i></a>
+      </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">留言</h4>
+          </div>
+          <div class="modal-body">
+            <textarea id="messageContent" class="form-control" style="min-height: 140px;" required></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary" onclick="messages.submit()">提交</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag params[:controller] %>
+
+</body>
+</html>

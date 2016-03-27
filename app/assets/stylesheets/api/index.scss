@@ -23,7 +23,10 @@
     a {
         color: #fff;
     }
-
+    small {
+        font-size: 14px;
+        padding: 0 12px;
+    }
 }
 
 .navbar-submenu {
@@ -164,4 +167,72 @@ a.contact-us {
     &:hover {
         color: #fff;
     }
+}
+
+#homeHeader {
+    .navbar-header {
+        height: 64px;
+    }
+    i {
+        font-size: 18px;
+    }
+    .btn {
+        width: 48px;
+        height: 48px;
+        margin: 8px 0;
+    }
+    .navbar-brand {
+        height: 72px;
+        padding: 24px 0 0 0;
+        font-size: 25px;
+        font-weight: normal;
+    }
+    @media (min-width: 992px) {
+        .container {
+            padding: 0;
+        }
+    }
+}
+
+.cover {
+    height: 280px;
+    overflow: hidden;
+    img {
+        height: 280px;
+        float: right;
+        width: auto;
+    }
+}
+
+.home-nav {
+    height: 192px;
+    background: #989e4b;
+    opacity: .8;
+    padding: 36px 12px;
+    a {
+        height: 48px;
+        display: table;
+        width: 100%;
+        background: #fff;
+        box-shadow: $shadow;
+        border-radius: 8px;
+    }
+    h3 {
+        vertical-align: middle;
+        display: table-cell;
+        text-align: center;
+        font-size: 22px;
+        color: #397338;
+        letter-spacing: 8px;
+        margin: 0;
+    }
+}
+
+.cm-txt {
+    display: none;
+    text-align: center;
+    font-size: 30px;
+    padding: 24px 0 24px 0;
+    background: #777;
+    color: #fff;
 }

@@ -9,10 +9,9 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
     <style>
-      html, body, p {
-      margin:0;
-      padding: 0;
+      html, body{
       background: #f1f1f1;
+      font-size: 15px;
       }
       html, body {
       width: 100%;
@@ -31,16 +30,168 @@
       background: #0097a7;
       color: #fff;
       }
+      h1 {
+          font-size: 24px;
+          border-bottom: 1px solid #ff9900;
+          padding: 12px;
+      }
+      h2 {
+          font-size: 20px;
+      }
+      .solution {
+          padding: 0 12px 12px 12px;
+      }
+      .solution ul {
+          list-style: none;
+          padding: 0;
+      }
+      .solution li::before {
+          content: "♦";
+          color: #ff9900;
+          font-size: 20px;
+          padding-right: 8px;
+      }
+      .solution li > p {
+          display: inline;
+          line-height: 24px;
+      }
+      .solution li {
+          margin-bottom: 8px;
+      }
+      .arrow {
+          text-align: center;
+          font-size: 30px;
+          color: #ff9900;
+          padding: 12px;
+      }
+      .arrow.arrow-small {
+          font-size: 26px;
+          padding: 4px;
+      }
+      .process {
+          box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);
+          display: table;
+          width: 100%;
+      }
+      .process > label {
+          display: table-cell;
+          width: 28px;
+          background: #99ccff;
+          text-align: center;
+          vertical-align: middle;
+      }
+      .process > ul {
+          margin: 8px 0;
+          display: table-cell;
+          background: #ff9900;
+          color: #fff;
+      }
+      .process li {
+          margin: 0;
+      }
+      .process li::before {
+          content: "";
+          padding: 0;
+      }
+      .process ul {
+          list-style: initial;
+          padding: 12px 8px 12px 28px;
+      }
     </style>
   </head>
-  <body>
-    <div class="container" style="padding:0;margin:0 auto;">
-      <img src="http://uploads.tenhs.com/images/20160302/d9ce9861-e36b-4d62-9729-4ba879ad6e5f.jpg" />
-      <a href="http://catering.tenhs.com" class="btn-custom" target="_blank">查看案例</a>
-      <img src="http://uploads.tenhs.com/images/20160302/3a74551f-30fb-4f8b-8934-3726bab0542f.jpg">
-      <button class="btn-custom" data-toggle="modal" data-target="#contactUsModal" id="leaveMessage">留言</button>
-      <img src="http://uploads.tenhs.com/images/20160302/d30f4d8b-29a1-4b36-a9d6-17d5040e8cfc.jpg">
+  <body class="container">
+    <div class="row">
+      <h1>北京拾惠社智慧餐饮解决方案</h1>
+      <div class="solution">
+        <h2>解决方案的构成</h2>
+        <ul>
+          <li><p>北京拾惠社智慧餐饮主要由一套智慧餐饮平台和田间到餐桌的贸易服务平台两大部分组成</p></li>
+          <li><p>拾惠社智慧餐饮不仅仅是一套外卖或者点餐软件，包含了对餐厅业务管理流程的重塑，包括收银、会员管理、会员营销等相关模块。可为每个餐厅提供独立的应用网址或APP，餐厅享有自己的软件访问和数据使用权，通过云化SAAS的模式，低到3000元/年/店的标准。降低餐饮开店软件采买成本和风险</p></li>
+          <li><p>拾惠社田间到餐桌的贸易服务平台，为合作餐厅商户提供云南原产地田间到餐厅的食材供应。价格实时更新，最大程度降低食材采购成本，透明采购环节，田间到餐厅的直配服务，一站式解决采购、食材品质、成本和物流到店的烦恼</p></li>
+        </ul>
+      </div>
+      <div class="solution">
+        <h2>合作商户餐厅能够得到什么？</h2>
+        <ul>
+          <li><p>A:一套独立网址应用的智慧餐饮平台，3000元/年/店的标准。提高餐厅运营效率，降低用工成本，新型互联网餐饮解决方案，提供收银、店内用户自助点餐、无人售票快餐、外卖、预约订座、会员管理、会员营销于一体的独立网址店铺。可依据餐厅需要对接其微信支付、支付宝支付、特殊功能定制的完整服务</p></li>
+          <li><p>B:拾惠社蔬果基地的大宗食材供应，合作商户使用平台后，可后台竞拍大宗食材送货到店。提供种植基地优质性价比特色果蔬，动动手指即可从田间到餐桌的采购配送到店，餐厅食材透明采购。附言：食材采购采用实时竞拍，不必到处比价</p></li>
+        </ul>
+        <div>
+          <%=image_tag "cm_1.jpg"%>
+          <div class="arrow">
+            <i  class="glyphicon glyphicon-arrow-down arrow"></i>
+          </div>
+          <%=image_tag "cm_2.jpg"%>
+          <div class="arrow">
+            <i  class="glyphicon glyphicon-arrow-down"></i>
+          </div>
+          <%=image_tag "cm_3.jpg"%>
+        </div>
+      </div>
+      <div class="solution">
+        <h2>合作商户餐厅业务系统使用流程</h2>
+        <ul>
+          <li>我们假设“云南菜馆”餐厅作为案例。具体的使用主要包括：资料准备=》注册管理员和服务员=》打印桌码=》开始运营。我们可为餐厅具体情况设计相应业务流程和解决方案，业务系统支持订餐订座、外卖、店内点餐、收银与一体的完整餐饮业务解决方案。店内点餐亦可支持快餐类餐厅、桌餐类餐厅特定业务环境</li>
+        </ul>
+        <div>
+          <div class="process">
+            <label>使用前需准备工作</label>
+            <ul>
+              <li>在线缴费（年费3000：300个月），最低6个月</li>
+              <li>营业执照</li>
+              <li>店铺地址</li>
+              <li>店铺名称</li>
+              <li>联系电话（联系人）</li>
+              <li>小票打印机</li>
+              <li>菜品分类及图片</li>
+              <li>管理员IPAD或PC</li>
+              <li>需要对接支付宝或微信支付通道需提供相应APPID和KEY</li>
+            </ul>
+          </div>
+        </div>
+        <div class="arrow arrow-small">
+          <i  class="glyphicon glyphicon-arrow-down arrow"></i>
+        </div>
+        <div class="process">
+          <label>合作餐厅获取资源</label>
+          <ul>
+            <li>餐厅用户访问网址（yncg.tenhs.com）</li>
+            <li>餐厅管理后台网址（yncg.tenhs.com/admin）</li>
+            <li>餐厅获取一个注册时留下手机号为用户名，默认密码为tenhscy的超级管理员用户</li>
+          </ul>
+        </div>
+        <div class="arrow arrow-small">
+          <i  class="glyphicon glyphicon-arrow-down arrow"></i>
+        </div>
+        <div class="process">
+          <label>合作餐厅使用流程</label>
+          <ul>
+            <li>yncg.tenhs.com可集成到餐厅微信菜单或制作二维码等使用</li>
+            <li>注册自己的管理员和服务员</li>
+            <li>生成桌台二维码并打印贴于桌台</li>
+            <li>新建外卖，店内点餐菜品类目及菜品</li>
+            <li>根据需要对接支付方式，外卖及店内支持支付宝支付、微信支付、现金支付</li>
+            <li>可定制扩展其他需求</li>
+          </ul>
+        </div>
+        <div class="arrow arrow-small">
+          <i  class="glyphicon glyphicon-arrow-down arrow"></i>
+        </div>
+        <div class="process">
+          <label>合作餐厅系统运营</label>
+          <ul>
+            <li>yncg.tenhs.com主页提供外卖点餐及订座订餐功能入口</li>
+            <li>yncg.tenhs.com/admin可实时获取用户外卖、店内、订座的订单，并且通过微信通知</li>
+            <li>管理员、服务员登录后可对店内订单加菜、收银，每日销售流水</li>
+            <li>店内收银、订座、外卖、用户多人自助店内点餐、店内服务员协助点餐、会员管理、折扣营销一套搞定</li>
+            <li>合作餐厅可在线竞拍基地直供食材到店</li>
+          </ul>
+        </div>
+      </div>
     </div>
+    <div class="fab">
+      <i class="glyphicon glyphicon-comment" data-toggle="modal" data-target="#contactUsModal" style="padding-left:8px;"></i>
+,    </div>
     <!-- Modal -->
     <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel">
       <div class="modal-dialog" role="document">
@@ -59,6 +210,17 @@
         </div>
       </div>
     </div>
+
+    <footer>
+      <div class="container">
+        <p class="copyright">Copyright © 2015 北京拾惠社农业科技有限公司</p>
+        <ul>
+          <li><span class="glyphicon glyphicon-map-marker"></span> 北京市中关村科技园平谷分园</li>
+          <li>京ICP备15036211号</li>
+        </ul>
+      </div>
+    </footer>
+
     <%= javascript_include_tag 'application' %>
     <%= javascript_include_tag params[:controller] %>
   </body>
