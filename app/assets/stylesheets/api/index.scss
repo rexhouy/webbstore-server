@@ -195,6 +195,7 @@ a.contact-us {
 }
 
 .cover {
+    position: relative;
     height: 200px;
     overflow: hidden;
     img {
@@ -235,4 +236,15 @@ a.contact-us {
     padding: 24px 0 24px 0;
     background: #777;
     color: #fff;
+}
+
+.cm {
+    position: absolute;
+    top: 0;
+     writing-mode: tb-rl;
+    height: 200px;
+    text-align: center;
+    font-size: 30px;
+    color: #999;
+    font-weight: normal;
 }
