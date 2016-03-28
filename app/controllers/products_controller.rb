@@ -9,6 +9,7 @@ class ProductsController < ApiController
 
         def bulk
                 @title = "大宗采购"
+                @no_cart = true
                 session[:is_bulk] = true
                 list(true)
         end
@@ -54,15 +55,34 @@ class ProductsController < ApiController
                         }
                         format.json {
                                 @product = Product.find(params[:id])
-                                @hists = ProductPriceHistory.where(product_id: params[:id], start_date: @product.start_date).order(id: :asc)
-                                @hists_by_spec = group_histories_by_specifications(@hists)
+                                specs = @product.specifications.map do |spec|
+                                        spec.value
+                                end
+                                @hists = ProductPriceHistory.where(product_id: params[:id], start_date: @product.start_date, spec_name: specs).order(id: :asc)
+                                @hists_by_spec = group_histories_by_specifications(@hists, @product.specifications)
                                 add_current_data(@hists_by_spec)
+                                align_data(@hists_by_spec)
                                 @labels = get_labels(@hists_by_spec)
                         }
                 end
         end
 
         private
+        def align_data(hists)
+                max_length = 0
+                hists.each do |k, v|
+                        max_length = v.size if v.size > max_length
+                end
+                hists.each do |k, v|
+                        delta = max_length - v.size
+                        delta.times do |i|
+                                v.unshift({
+                                                  price_km: 0,
+                                                  price_bj: 0
+                                          })
+                        end
+                end
+        end
         def get_labels(hists)
                 labels = []
                 hists[hists.keys[0]].each do |hist|
@@ -80,7 +100,7 @@ class ProductsController < ApiController
                 end
                 hists
         end
-        def group_histories_by_specifications(hists)
+        def group_histories_by_specifications(hists, specs)
                 hists_by_spec = {}
                 hists.each do |hist|
                         hists_by_spec[hist.spec_name] ||= []
