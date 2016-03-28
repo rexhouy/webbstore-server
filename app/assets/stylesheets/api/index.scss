@@ -205,46 +205,46 @@ a.contact-us {
     }
 }
 
-.home-nav {
-    height: 168px;
-    background: #989e4b;
-    opacity: .8;
-    padding: 36px 24px;
-    a {
-        height: 36px;
-        display: table;
-        width: 100%;
-        background: #fff;
-        box-shadow: $shadow;
-        border-radius: 8px;
-    }
+/* .home-nav { */
+/*     height: 168px; */
+/*     background: #989e4b; */
+/*     opacity: .8; */
+/*     padding: 36px 24px; */
+/*     a { */
+/*         height: 36px; */
+/*         display: table; */
+/*         width: 100%; */
+/*         background: #fff; */
+/*         box-shadow: $shadow; */
+/*         border-radius: 8px; */
+/*     } */
+/*     h3 { */
+/*         vertical-align: middle; */
+/*         display: table-cell; */
+/*         text-align: center; */
+/*         font-size: 18px; */
+/*         color: #397338; */
+/*         letter-spacing: 4px; */
+/*         margin: 0; */
+/*     } */
+/* } */
+
+.channel-card {
+    color: #555;
+    height: 180px;
+    display: block;
+    margin: 0 -15px;
+    overflow: hidden;
     h3 {
-        vertical-align: middle;
-        display: table-cell;
-        text-align: center;
-        font-size: 18px;
-        color: #397338;
-        letter-spacing: 4px;
-        margin: 0;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        font-size: 22px;
+        letter-spacing: 8px;
+        color: #fff;
     }
-}
-
-.cm-txt {
-    display: none;
-    text-align: center;
-    font-size: 30px;
-    padding: 24px 0 24px 0;
-    background: #777;
-    color: #fff;
-}
-
-.cm {
-    position: absolute;
-    top: 0;
-     writing-mode: tb-rl;
-    height: 200px;
-    text-align: center;
-    font-size: 30px;
-    color: #999;
-    font-weight: normal;
+    img {
+        height: 100%;
+        width: auto;
+    }
 }
