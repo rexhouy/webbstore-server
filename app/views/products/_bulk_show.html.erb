@@ -7,3 +7,4 @@
          onclick="return bulkProduct.selectSpec();" value="<%=price_range(@product)%>"></input>
 </div>
 <% end%>
+<input type="hidden" id="sale_start" value="<%=@product.started?%>">

@@ -56,7 +56,7 @@
                         if ($("#is_bulk_product").val() == "false") {
                                 return;
                         }
-                        if (new Date($("#start_date").val()) > new Date()) {
+                        if ($("#sale_start").val() == "false") {
                                 return;
                         }
                         if (!$("#user_location")[0]) {
