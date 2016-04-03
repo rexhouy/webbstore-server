@@ -1,4 +1,6 @@
+<% if @product.started? %>
 <%=alert_info%>
+<% end %>
 <%= form_tag "/orders/confirm_bulk", method: "POST", id: "buy_form", class: "inherit-height table-center-wrap pull-right" do%>
 <%= hidden_field_tag :id, @product.id %>
 <%= hidden_field_tag :spec_id %>
