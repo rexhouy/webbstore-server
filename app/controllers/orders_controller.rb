@@ -23,7 +23,7 @@ class OrdersController < ApiController
         def confirm_bulk
                 @specification = Specification.find(params[:spec_id])
                 @product = @specification.product
-                return redirect_to "/products/#{@product.id}", notice: "拍卖尚未开始" if @product.started?
+                return redirect_to "/products/#{@product.id}", notice: "拍卖尚未开始" unless @product.started?
                 @back_url = "/products/#{params[:id]}"
                 @order = @order || Order.new
                 render :confirm_bulk
