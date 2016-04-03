@@ -1,4 +1,5 @@
 <article class="row main">
+  <%= alert_info %>
   <div class="order-detail" style="margin-bottom: 20px;">
     <section>
       <h2 class="pull-left inherit-height table-center-wrap" style="font-size: 20px;margin-top: 0;margin-bottom: 4px;">
@@ -100,6 +101,9 @@
     </section>
 
     <section>
+      <% if @order.delivered? %>
+      <%= link_to "评价", "/orders/#{@order.id}/review", class: "btn btn-primary btn-block" %>
+      <% end %>
       <% if @order.immediate_order? && @order.placed? && @order.offline_pay? %>
       <%=link_to "加菜", "/orders/#{@order.id}/add_dishes", method: "GET", class: "btn btn-primary btn-block" %>
       <% end %>

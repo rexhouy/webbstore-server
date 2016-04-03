@@ -141,3 +141,48 @@
         color: #999;
     }
 }
+
+.product-review-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.product-review {
+    width: 100%;
+
+    padding: 12px;
+
+    .product-info {
+        width: 100%;
+        display: table;
+        img {
+            display: table-cell;
+            width: 120px;
+            height: auto;
+        }
+        .product-desc {
+            display: table-cell;
+            padding-left: 12px;
+            vertical-align: top;
+            width: 100%;
+        }
+        h2 {
+            margin: 8px;
+            font-size: 16px;
+        }
+        p {
+            margin: 0 8px;
+            font-size: 12px;
+        }
+    }
+    .review-info {
+        list-style: none;
+        margin: 4px 0 0 8px;
+        padding: 0;
+        li {
+            display: inline-block;
+            font-size: 20px;
+        }
+    }
+}

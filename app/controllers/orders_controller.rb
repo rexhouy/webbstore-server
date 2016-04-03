@@ -4,7 +4,7 @@ require "securerandom"
 class OrdersController < ApiController
 
         before_action :authenticate_user!
-        before_action :set_order, only: [:show, :confirm_payment, :cancel, :received, :add_dishes]
+        before_action :set_order, only: [:show, :confirm_payment, :cancel, :received, :add_dishes, :review]
 
         def index
                 @type = params[:type] || "takeout"
@@ -114,6 +114,18 @@ class OrdersController < ApiController
         def received
                 OrderService.new.change_status(@order, Order.statuses[:delivered], current_user.id)
                 redirect_to action: "show", id: @order.id
+        end
+
+        def review
+                @title = "订单评价"
+                @back_url = "/orders/#{@order.id}"
+        end
+
+        def update_review
+                params["orders_products"].each do |k, v|
+                        OrdersProducts.where(id: v["id"]).update_all(stars: v["stars"]) if v["stars"].to_i > 0
+                end
+                redirect_to "/orders/#{params[:id]}", notice: "感谢您的评价！"
         end
 
         private

@@ -112,6 +112,17 @@
                         $("#total_amount").html("¥ " + format(paymentAmount));
                 };
 
+                self.review = function(id, index) {
+                        $("#review_info_"+id).find(".glyphicon").each(function(i) {
+                                if (i <= index) {
+                                        $(this).removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+                                } else {
+                                        $(this).removeClass("glyphicon-star").addClass("glyphicon-star-empty");
+                                }
+                        });
+                        $("#orders_product_stars_"+id).val(index);
+                };
+
                 return self;
         };
 

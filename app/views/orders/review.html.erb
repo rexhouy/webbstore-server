@@ -1,0 +1,31 @@
+<div class="row">
+  <%= form_tag "/orders/#{@order.id}/review", method: "POST" do %>
+  <ul class="product-review-list">
+    <% @order.orders_products.each_with_index do |op, index| %>
+    <li>
+      <div class="product-review">
+        <input type="hidden" name="orders_products[<%=index%>][id]" value="<%=op.id%>">
+        <div class="product-info">
+          <%= image_tag op.product.cover_image %>
+          <div class="product-desc">
+            <h2><%=op.product.name%></h2>
+            <p><%=op.specification.value %></p>
+            <ul class="review-info" id="review_info_<%=op.id%>">
+              <% 5.times do |i| %>
+              <% if op.stars.present? && op.stars > i %>
+              <li><i class="glyphicon glyphicon-star" onclick="orders.review(<%=op.id%>, <%=i%>)"></i></li>
+              <% else %>
+              <li><i class="glyphicon glyphicon-star-empty" onclick="orders.review(<%=op.id%>, <%=i%>)"></i></li>
+              <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <input type="hidden" name="orders_products[<%=index%>][stars]" id="orders_product_stars_<%=op.id%>" value="<%=op.stars%>">
+      </div>
+    </li>
+    <% end %>
+  </ul>
+  <%= submit_tag "提交", class: "btn btn-primary pull-right", style: "margin:24px;" %>
+  <% end %>
+</div>

@@ -67,6 +67,8 @@ Rails.application.routes.draw do
         put 'orders/:id' => 'orders#cancel', as: :orders_cancel
         post "orders/:id/confirm_payment" => "orders#confirm_payment"
         put "orders/:id/received" => "orders#received", as: :order_received
+        get "orders/:id/review" => "orders#review"
+        post "orders/:id/review" => "orders#update_review"
 
 
         # User home

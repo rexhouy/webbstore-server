@@ -11,7 +11,13 @@
             <h3><%=product[:product].name%></h3>
             <span class="price">&yen; <%=product[:product].price%></span>
             <div class="desc-viewport">
-              <div class="desc"><%=product[:product].description%></div>
+              <div class="star">
+                <% if product["stars"] %>
+                <% product["stars"].times do |i| %>
+                  <i class="glyphicon glyphicon-star"></i>
+                <% end %>
+                <% end %>
+              </div>
             </div>
             <div class="control">
               <% if product[:specs].empty? %>

@@ -44,14 +44,14 @@ class ProductsController < ApiController
                 cart = get_cart
                 products.each do |product|
                         next if menu? && !is_menu?(product)
-                        next if takeout? && !is_takeout?(product)
+                        next if takeout? && !is_takeout_menu?(product)
                         specs = []
                         product.specifications.each do |spec|
                                 cart_spec_p = cart["#{product.id}_#{spec.id}"]
                                 specs << {spec: spec, count: cart_spec_p.present? ? cart_spec_p["count"] : 0}
                         end
                         cart_spec_p = cart["#{product.id}_"]
-                        @products << {product: product, count: cart_spec_p.present? ? cart_spec_p["count"] : 0, specs: specs}
+                        @products << {product: product, stars: product.stars, count: cart_spec_p.present? ? cart_spec_p["count"] : 0, specs: specs}
                 end
                 @cart_count = cart_count(get_cart)
                 @back_url = "javascript:window.history.back()"

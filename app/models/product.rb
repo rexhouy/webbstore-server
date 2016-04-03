@@ -17,6 +17,7 @@ class Product < ActiveRecord::Base
                 self.sales = 0
                 self.priority = 0
                 self.status = Product.statuses[:available]
+                self.stars = 0
         end
 
         #validations

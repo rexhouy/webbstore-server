@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160308010055) do
+ActiveRecord::Schema.define(version: 20160403035719) do
 
   create_table "account_balance_histories", force: :cascade do |t|
     t.decimal  "receipt",                 precision: 8, scale: 2
@@ -229,6 +229,7 @@ ActiveRecord::Schema.define(version: 20160308010055) do
     t.integer  "supplier_id",      limit: 4
     t.integer  "status",           limit: 4
     t.integer  "seller_id",        limit: 4
+    t.integer  "stars",            limit: 4
   end
 
   add_index "orders_products", ["order_id"], name: "fk_rails_889bfce267", using: :btree
@@ -261,6 +262,7 @@ ActiveRecord::Schema.define(version: 20160308010055) do
     t.string   "barcode",      limit: 255
     t.decimal  "origin_price",               precision: 8, scale: 2
     t.string   "type",         limit: 255
+    t.integer  "stars",        limit: 4
   end
 
   add_index "products", ["name", "description", "article"], name: "fulltext_index", type: :fulltext
