@@ -9,7 +9,7 @@
           <%= image_tag op.product.cover_image %>
           <div class="product-desc">
             <h2><%=op.product.name%></h2>
-            <p><%=op.specification.value %></p>
+            <p><%=op.specification.value if op.specification.present? %></p>
             <ul class="review-info" id="review_info_<%=op.id%>">
               <% 5.times do |i| %>
               <% if op.stars.present? && op.stars > i %>
