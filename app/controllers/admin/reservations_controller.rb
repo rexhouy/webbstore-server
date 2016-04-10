@@ -11,6 +11,7 @@ class Admin::ReservationsController < AdminController
                         @status = params[:status] || "placed"
                         @reservations = Reservation.status(@status).paginate(page: params[:page])
                 end
+                @unpaid_count = ImmediateOrder.unpaid(owner)
         end
 
         def confirm

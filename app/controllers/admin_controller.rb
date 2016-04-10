@@ -34,7 +34,8 @@ class AdminController < ApplicationController
                           {url: admin_dinning_tables_url, text: "桌台", class: "", resource: DinningTable },
                           {url: admin_groups_url, text: "店铺", class: "", resource: Group },
                           {url: admin_shops_url, text: "店铺", class: "", resource: Shop },
-                          {url: admin_users_url, text: "用户", class: "", resource: User }]
+                          {url: admin_users_url, text: "用户", class: "", resource: User },
+                         {url: "https://www.tenhs.com/bulk", text: "采购", class: "", resource: Order }]
                 @menus.select! do |menu|
                         menu[:class] = "active" if menu[:url].end_with? controller_name
                         can? :read, menu[:resource]

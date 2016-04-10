@@ -58,7 +58,7 @@
         <div class="scroll-container" onscroll="nav.setScrollIndicator()">
           <ul>
             <% @submenu.each do |link| %>
-            <li class="<%=link[:class]%>"><h2><%= link_to link[:name], link[:href] %></h2></li>
+            <li class="<%=link[:class]%>"><h2><%= link_to link[:name].html_safe, link[:href] %></h2></li>
             <% end %>
           </ul>
         </div>

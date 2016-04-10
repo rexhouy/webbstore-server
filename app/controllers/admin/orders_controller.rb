@@ -10,6 +10,7 @@ class Admin::OrdersController < AdminController
 
         def takeout
                 search_or_list(TakeoutOrder)
+                @unpaid_count = ImmediateOrder.unpaid(owner)
         end
 
         def immediate
@@ -17,6 +18,7 @@ class Admin::OrdersController < AdminController
                         params[:order_date] = Time.current.strftime("%Y-%m-%d")
                 end
                 search_or_list(ImmediateOrder)
+                @unpaid_count = ImmediateOrder.unpaid(owner)
         end
 
         def index

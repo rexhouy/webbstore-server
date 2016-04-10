@@ -9,4 +9,8 @@ class ImmediateOrder < Order
                 end
         end
 
+        def self.unpaid(owner)
+                self.search(nil, Time.current.strftime("%Y-%m-%d")).where(status: Order.statuses[:placed]).owner(owner).count()
+        end
+
 end

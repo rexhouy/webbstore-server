@@ -12,7 +12,7 @@
           <% elsif order.type.eql? "TakeoutOrder" %>
             <span class="pull-left"><%= order_status order %></span>
             <span class="pull-right"><%= display_date order.created_at %></span>
-            <% else %>
+          <% else %>
             <span class="pull-left"><%= payment_status order %></span>
             <span class="pull-right"><%= display_date order.created_at %></span>
           <% end %>
@@ -21,4 +21,4 @@
     <% end %>
   </ul>
   <%= paginate "/orders/#{@type}", @orders %>
-</div>
+  </div>

@@ -13,10 +13,13 @@ class OrdersController < ApiController
                 else
                         @orders = ImmediateOrder.where(customer: current_user).owner(Rails.application.config.owner).order(id: :desc).paginate(page: params[:page])
                 end
+                unpaid_count = ImmediateOrder.unpaid(Rails.application.config.owner)
+                immediate_txt = (current_user.waiter? && unpaid_count > 0) ?
+                "店内消费订单<i class='tab-chip'>#{unpaid_count}</i>" : "店内消费订单"
                 @submenu = [
                             {name: "外卖订单", class: @type.eql?("takeout") ? "active" : "", href: "/orders?type=takeout"},
                             {name: "预订订单", class: "", href: "/reservations"},
-                            {name: "店内消费订单", class: @type.eql?("immediate") ? "active" : "", href: "/orders?type=immediate"}]
+                            {name: immediate_txt, class: @type.eql?("immediate") ? "active" : "", href: "/orders?type=immediate"}]
         end
 
         def confirm_payment

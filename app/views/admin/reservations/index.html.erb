@@ -1,6 +1,8 @@
 <h1 class="page-header">订单管理</h1>
 <ul class="nav nav-tabs">
-  <li role="presentation"><a href="/admin/immediate_orders" role="tab">店内点餐</a></li>
+  <li role="presentation"><a href="/admin/immediate_orders" role="tab">店内点餐
+      <% if @unpaid_count > 0 %><i class="tab-chips"><%=@unpaid_count%></i><% end %>
+  </a></li>
   <li role="presentation"><a href="/admin/takeout_orders" role="tab">外卖订单</a></li>
   <li role="presentation" class="active"><a href="/admin/reservations" role="tab">预订订单</a></li>
 </ul>

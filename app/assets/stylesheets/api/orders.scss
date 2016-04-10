@@ -186,3 +186,15 @@
         }
     }
 }
+
+.tab-chip {
+    border-radius: 12px;
+    background: $accent-color;
+    color: #fff;
+    font-weight: bold;
+    font-size: 10px !important;
+    padding: 2px 8px;
+    margin-left: 4px;
+    position: relative;
+    top: -2px;
+}
